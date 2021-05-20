@@ -1,0 +1,85 @@
+{
+  "name": "timecamp-chrome-extension",
+  "version": "2.0.0",
+  "description": "TimeCamp Google Chrome Time Tracking Extension",
+  "main": "index.js",
+  "scripts": {
+    "cosmos": "cosmos",
+    "cosmos:export": "cosmos-export",
+    "start": "webpack-cli --mode development --watch",
+    "build": "webpack-cli --mode production && npm run merge-background-files && npm run zip",
+    "build-dev": "webpack-cli --mode development && npm run merge-background-files",
+    "merge-background-files": "cat 'dist/plugin/scripts-2.0/background-2.0.js' >> 'dist/plugin/scripts/background.js'",
+    "zip": "pushd dist/plugin && zip -rq ../tc-google-chrome-extension.zip * && popd"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-optional-chaining",
+      [
+        "@babel/plugin-transform-react-jsx"
+      ]
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timecamp/timecamp-chrome-extension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timecamp/timecamp-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/timecamp/timecamp-chrome-extension#readme",
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.2",
+    "css-loader": "^5.1.3",
+    "dotenv-webpack": "^7.0.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "raw-loader": "^4.0.2",
+    "react-cosmos": "^5.6.0",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.18",
+    "typescript": "^4.2.3",
+    "webextension-polyfill": "^0.7.0",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge-and-include-globally": "^2.3.3"
+  },
+  "dependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/runtime": "^7.13.8",
+    "@fortawesome/fontawesome-pro": "^5.15.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/pro-light-svg-icons": "^5.15.3",
+    "@fortawesome/pro-regular-svg-icons": "^5.15.3",
+    "@fortawesome/pro-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "filemanager-webpack-plugin": "^3.1.0",
+    "moment": "^2.29.1",
+    "node-sass": "^5.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-html-parser": "^2.0.2",
+    "react-vtree": "^2.0.4",
+    "react-window": "^1.8.6",
+    "sass-loader": "^11.0.1",
+    "svg-url-loader": "^7.1.1",
+    "webpack-log": "^3.0.1"
+  }
+}

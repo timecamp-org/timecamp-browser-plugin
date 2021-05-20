@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg class="tc-stop-button" style="display:none" viewBox="28.792 14.573 152 39" xmlns="http://www.w3.org/2000/svg">
+  <rect stroke-width="null" opacity="undefined" id="svg_1" stroke="#ffffff" stroke-opacity="0" x="-0.007" y="0.022" width="152" height="39" rx="8" ry="8" style="fill: rgb(255, 60, 0);" transform="matrix(1, 0, 0, 1, 28.799301, 14.550518)"/>
+  <text style="fill: rgb(255, 255, 255); font-family: Poppins; font-size: 14px; white-space: pre;" x="39.453" y="24.927" transform="matrix(1, 0, 0, 1, 28.799301, 14.550518)" class="timer">Stop timer</text>
+  <rect style="fill: rgb(255, 255, 255);" x="15.123" y="11.67" width="15" height="15" rx="2" ry="2" transform="matrix(1, 0, 0, 1, 28.799301, 14.550518)"/>
+</svg>

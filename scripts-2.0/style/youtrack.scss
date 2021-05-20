@@ -1,0 +1,22 @@
+.tc-button.youtrack {
+  float: right;
+  
+  &:not(.min) {
+    margin: 0 30px 0 0;
+    
+    svg {
+      width: 100px;
+    }
+  }
+  
+  &.min {
+    margin: -2px 3px 0 6px;
+  }
+}
+
+.yt-agile-card__summary .tc-button.youtrack:not(.active) {
+  display: none !important;
+}
+.yt-agile-card__summary:hover .tc-button.youtrack, .yt-agile-card:hover .tc-button.youtrack {
+  display: block !important;
+}

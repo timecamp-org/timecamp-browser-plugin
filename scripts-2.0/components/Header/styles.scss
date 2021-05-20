@@ -1,0 +1,10 @@
+@import '../../style/common';
+
+.header {
+  margin: 0 0 30px 0;
+
+  &__logo-svg {
+    top: 5px;
+    position: relative;
+  }
+}

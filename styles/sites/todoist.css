@@ -1,0 +1,105 @@
+.tc-button-cont {
+    cursor: pointer;
+}
+
+.timecamp-track-button {
+    background-color: #4bb063;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: normal;
+    outline: none;
+    display: flex;
+}
+
+.timecamp-track-button.timeTrackingActive {
+    background-color: #ff3c00;
+}
+
+.timecamp-track-button .startTrackingIcon {
+    line-height: inherit;
+}
+
+.timecamp-track-button .stopTrackingIcon {
+    display: none;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 2px;
+    line-height: inherit;
+}
+
+.timecamp-track-button.timeTrackingActive .startTrackingIcon {
+    display: none;
+}
+
+.timecamp-track-button.timeTrackingActive .stopTrackingIcon {
+    display: inline-block;
+}
+
+/*Task page*/
+.timecamp-track-button-taskPage {
+    width: 113px;
+    height: 27px;
+    margin: 1px 0 0 6px;
+}
+
+.timecamp-track-button-taskPage .startTrackingIcon {
+    font-size: 17px;
+    margin: 5px 0 0 9px;
+}
+
+.timecamp-track-button-taskPage .stopTrackingIcon {
+    margin: 6px 0 0 9px;
+}
+
+.timecamp-track-button-taskPage .text {
+    /*display: none;*/
+display: block;
+    margin: 6px 0 0 8px;
+    font-weight: 300;
+}
+.timecamp-track-button-taskPage.timeTrackingActive .text {
+    display: none;
+    /**/
+    /*margin: 6px 0 0 8px;*/
+    /*font-weight: 300;*/
+}
+
+.timecamp-track-button-taskPage .time {
+    margin: 6px 0 0 8px;
+}
+
+/*Tasks list*/
+.timecamp-track-button-list {
+    /*width: 22px;*/
+    /*height: 22px;*/
+    margin: 0 0 0 0;
+}
+
+.timecamp-track-button-list.timeTrackingActive {
+    width: 78px;
+    height: 24px;
+}
+
+.timecamp-track-button-list .startTrackingIcon {
+    font-size: 11px;
+    color: white;
+}
+
+.timecamp-track-button-list .stopTrackingIcon {
+    width: 11px;
+    height: 11px;
+    margin: 0 0 2px -17px;
+}
+
+.timecamp-track-button-list .text {
+    display: none;
+}
+
+.timecamp-track-button-list .time {
+    margin: 0 0 0 6px;
+    color: white;
+    font-size: 12px;
+}

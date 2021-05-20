@@ -1,0 +1,591 @@
+[
+  {
+    "matches": ["*://docs.google.com/*"],
+    "script": ["google-docs.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.huskymarketingplanner.com/*"],
+    "script": ["husky-marketing-planner.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.liquidplanner.com/*"],
+    "script": ["liquidplanner.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.openproject.com/*"],
+    "script": ["openproject.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.produck.io/*"],
+    "script": ["produck.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.redbooth.com/*"],
+    "script": ["redbooth.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://ticktick.com/*', '*://*.ticktick.com/*"],
+    "script": ["ticktick.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.toodledo.com/*"],
+    "script": ["toodledo.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://airtable.com/*"],
+    "script": ["airtable.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.bitbucket.org/*"],
+    "script": ["bitbucket.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.clubhouse.io/*"],
+    "script": ["clubhouse.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://keep.google.com/*"],
+    "script": ["google-keep.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://mail.google.com/*"],
+    "script": ["google-mail.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.ladesk.com/*"],
+    "script": ["liveagent.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.mantishub.io/*"],
+    "script": ["mantishub.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.notion.so/*"],
+    "script": ["notion.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.phacility.com/*"],
+    "script": ["phabricator.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.redmine.org/*"],
+    "script": ["redmine.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://sprint.ly/*"],
+    "script": ["sprintly.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.axosoft.com/*"],
+    "script": ["axosoft.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.supportsystem.com/*"],
+    "script": ["osticket.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.unfuddle.com/*"],
+    "script": ["unfuddle.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.zammad.com/*"],
+    "script": ["zammad.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.myjetbrains.com/*"],
+    "script": ["youtrack.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.backlog.jp/*"],
+    "script": ["backlog.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.bitrix24.com/*", "*://*.bitrix24.pl/*"],
+    "script": ["bitrix24.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.brokerengine.com.au/*"],
+    "script": ["brokerengine.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.bugherd.com/*"],
+    "script": ["bugherd.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://bugzilla.mozilla.org/*"],
+    "script": ["bugzilla.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.cloudes.me/*"],
+    "script": ["cloudes.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.codeable.io/*"],
+    "script": ["codeable.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.codebasehq.com/*"],
+    "script": ["codebase.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.corgee.com/*"],
+    "script": ["corgee.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.desk.com/web/agent/*"],
+    "script": ["desk.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://devdocs.io/*"],
+    "script": ["devdocs.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.dobambam.com/*"],
+    "script": ["dobambam.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.dokuwiki.org/*"],
+    "script": ["dokuwiki.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.draftin.com/*"],
+    "script": ["draftin.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.drupal.org/*"],
+    "script": ["drupal.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.dynamics.com/*"],
+    "script": ["dynamics.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.eproject.me/*"],
+    "script": ["eproject.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.esa.io/*"],
+    "script": ["esa.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.feedly.com/*"],
+    "script": ["feedly.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.fibery.io/*"],
+    "script": ["fibery.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.focuster.com/*"],
+    "script": ["focuster.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.fogbugz.com/*"],
+    "script": ["fogbugz.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.ongemini.com/*"],
+    "script": ["gemini.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.getflow.com/*"],
+    "script": ["getflow.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://gingkoapp.com/*"],
+    "script": ["gingkoapp.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.gogs.io/*"],
+    "script": ["gogs.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://classroom.google.com/*"],
+    "script": ["google-classroom.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://inbox.google.com/*"],
+    "script": ["google-inbox.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.gqueues.com/*"],
+    "script": ["gqueues.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://habitica.com/*"],
+    "script": ["habitica.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.heflo.com/*"],
+    "script": ["heflo.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.kanbanery.com/*"],
+    "script": ["kanbanery.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.kanban.ist/*"],
+    "script": ["kanbanist.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.kantree.io/*"],
+    "script": ["kantree.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.khanacademy.org/*"],
+    "script": ["khanacademy.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.minicrm.pl/*"],
+    "script": ["minicrm.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.newsletter2go.com/*"],
+    "script": ["newsletter2go.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.odoo.com/*"],
+    "script": ["odoo.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.onlyoffice.com/*"],
+    "script": ["onlyoffice.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.onshape.com/*"],
+    "script": ["onshape.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://outlook.live.com/*"],
+    "script": ["outlook.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://outlook.live.com/*"],
+    "script": ["outlook.js"]
+  },
+  {
+    "matches": ["*://overv.io/*"],
+    "script": ["overv.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.pagerduty.com/*"],
+    "script": ["pagerduty.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.placker.com/*"],
+    "script": ["placker.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.planbox.com/*"],
+    "script": ["planbox.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.producteev.com/*"],
+    "script": ["producteev.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.protonmail.com/*"],
+    "script": ["protonmail.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.proworkflow.net/*"],
+    "script": ["proworkflow.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.rememberthemilk.com/*"],
+    "script": ["rememberthemilk.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.rbcommons.com/*"],
+    "script": ["reviewboard.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.rindle.com/*"],
+    "script": ["rindle.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.rollbar.com/*"],
+    "script": ["rollbar.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://scrapbox.io/*"],
+    "script": ["scrapbox.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.sherpadesk.com/*"],
+    "script": ["sherpadesk.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.sifterapp.com/*"],
+    "script": ["sifterapp.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.smartboard.cl/*"],
+    "script": ["smartboard.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.sourcelair.com/*"],
+    "script": ["sourcelair.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.spidergap.com/*"],
+    "script": ["spidergap.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.teamleader.eu/"],
+    "script": ["teamleader.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.testrail.com/*', '*://*.testrail.net/*"],
+    "script": ["testrail.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://plan.toggl.com/*"],
+    "script": ["toggl-plan.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://trac.edgewall.org/*', '*://*.trac.wordpress.org/*"],
+    "script": ["trac.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.turtle.ai/*"],
+    "script": ["turtle.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.v1host.com/*"],
+    "script": ["versionone.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.visualstudio.com/*"],
+    "script": ["visualstudio.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://app.vivifyscrum.com/*"],
+    "script": ["vivifyscrum.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://waffle.io/*"],
+    "script": ["waffle.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://wordpress.com/*"],
+    "script": ["wordpress.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.workast.io/*"],
+    "script": ["workast.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://workflowy.com/*"],
+    "script": ["workflowy.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.my.workfront.com/*"],
+    "script": ["workfront.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.worksection.com/*"],
+    "script": ["worksection.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://app.zenhub.com/*"],
+    "script": ["zenhub.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://books.zoho.com/*"],
+    "script": ["zohobooks.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://zube.io/*"],
+    "script": ["zube.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.cerb.ai/*"],
+    "script": ["cerb.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.coda.io/*"],
+    "script": ["coda.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.figma.com/*"],
+    "script": ["figma.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://app.getflow.com/*"],
+    "script": ["flow.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.freedcamp.com/*"],
+    "script": ["freedcamp.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.freshrelease.com/*"],
+    "script": ["freshrelease.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.freshservice.com/*"],
+    "script": ["freshservice.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://*.groupnwork.com/*"],
+    "script": ["groupnwork.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://app.hubspot.com/*"],
+    "script": ["hubspot.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.startinfinity.com/*"],
+    "script": ["infinity.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.manuscript.com/*"],
+    "script": ["manuscript.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.nela.com.br/*"],
+    "script": ["nela.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.pipedrive.com/*"],
+    "script": ["pipedrive.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://app.pipefy.com/*"],
+    "script": ["pipefy.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.scoro.com/*"],
+    "script": ["scoro.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.usepixie.net/*"],
+    "script": ["usepixie.js"],
+    "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.wikipedia.org/*"],
+    "script": ["wikipedia.js"],
+    "isActiveInProd": true
+  },
+  {
+    "matches": ["*://zenkit.com/*"],
+    "script": ["zenkit.js"],
+    "isActiveInProd": false
+  }
+]

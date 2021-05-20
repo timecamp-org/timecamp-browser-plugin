@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+        body {
+            padding:0;
+            background-color: transparent;
+            width: 305px;
+            margin: 25px;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        input {
+            display: block;
+            width: calc(100% - 1.45rem);
+            padding: .375rem .75rem;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        button {
+            display: inline-block;
+            background-color: #4bb063;
+            color: white;
+            border: none;
+            letter-spacing: 1px;
+            box-shadow: none;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+            font-size: 12px;
+            padding: 8px 47px 9px;
+            line-height: 1;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            background-origin: padding-box;
+            background-position: 0 0;
+            margin: 0 0 9px 0;
+            height: 33px;
+        }
+
+        #status {
+            color: #468847;
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            margin-bottom: 1em;
+            padding: 8px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        #status.error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .web-app-link {
+            margin: 15px 0 16px 0;
+            display: block;
+            text-decoration: none;
+            color: #1d68dc;
+        }
+
+        .web-app-link:visited {
+            color: #1d68dc;
+        }
+
+        .displaySidebarCheckboxContainer {
+            display: block;
+            position: relative;
+            padding-left: 21px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            font-size: 12px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .displaySidebarCheckboxContainer input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .displaySidebarCheckboxContainer .checkmark {
+            position: absolute;
+            top: 3px;
+            left: 0;
+            height: 13px;
+            width: 13px;
+            background-color: #eee;
+            border-radius: 2px;
+        }
+
+        .displaySidebarCheckboxContainer:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .displaySidebarCheckboxContainer input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .displaySidebarCheckboxContainer .checkmark:after {
+            left: 4px;
+            top: 2px;
+            width: 3px;
+            height: 6px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .displaySidebarCheckboxContainer input:checked ~ .checkmark {
+            background-color: #4bb063;
+        }
+
+        .displaySidebarCheckboxContainer input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        #displaySidebarCheckbox {
+            vertical-align: bottom;
+            display: inline-block;
+            float: left;
+            width: auto;
+        }
+    </style>
+    <script src="scripts/lib/jquery-2.1.1.min.js"></script>
+    <script src="scripts/lib/Chart.js"></script>
+    <script src="scripts/lib/ICanHaz.min.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/TokenManager.js"></script>
+    <script src="scripts/ApiService.js"></script>
+    <script src="scripts/ChartService.js"></script>
+    <script src="scripts/sidebar.js"></script>
+    <script src="scripts/TokenManager.js"></script>
+    <script src="scripts/common.js"></script>
+    <script src="scripts/third_party/popup.js"></script>
+</head>
+<body>
+    <div>
+        <div style="text-align: center; margin: 0 auto; ">
+            <img src="images/logoTC-with-name.svg" style="height: 37px;" />
+        </div>
+        <div id="status" style="display:none">&nbsp;</div>
+        <div style="text-align:center; display: none;" id="logged-out">
+            <p>Log in to your account</p>
+            <form id="login-form" method="post" accept-charset="utf-8" name="form">
+                <input type="hidden" value="true" name="dont_log_out" />
+                <input type="email" name="email" value="" required placeholder="E-mail">
+                <input type="password" name="pass_hash" value="" required placeholder="Password">
+                <button type="submit" id="log-in">Log in</button>
+            </form>
+            <p style="color: #aaa;">
+                New here? <a href="https://www.timecamp.com" target="_blank" style="color: #aaa; font-weight: bold;">Sign up</a> for a free account!
+            </p>
+        </div>
+        <div style="display: none; text-align:center;" id="logged-in">
+            <p>Add a timer to the tool you use and track time with a single click, without switching to another tab.</p>
+            <a href="https://app.timecamp.com/app#/timesheets/timer" class="web-app-link" target="_blank">Go to web app</a>
+            <button id="log-out">Log out</button>
+
+            <div style="margin-top: 20px;" id="displaySidebarOption">
+                <label for="displaySidebarCheckbox" class="noselect displaySidebarCheckboxContainer" style="display: inline-block; float: left;">
+                    <input id="displaySidebarCheckbox" type="checkbox" checked="" name="sidebar" value="show">
+                    <span class="checkmark"></span>
+                    Display sidebar
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div id="task-picker">
+    </div>
+
+    <script type="module" src="./scripts-2.0/popup.js"></script>
+</body>
+</html>

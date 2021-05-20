@@ -1,0 +1,26 @@
+.tc-logo.tc-logo-19 {
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/icon-19.png');
+    width: 19px;
+    height: 19px;
+}
+
+.tc-logo.tc-logo-38 {
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/icon-38.png');
+    width: 38px;
+    height: 38px;
+}
+.tc-logo.tc-logo-30 {
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/icon-30.png');
+    width: 30px;
+    height: 30px;
+}
+
+.tc-logo.tc-logo-48 {
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/icon-48.png');
+    width: 48px;
+    height: 48px;
+}
+
+.clearfix {
+    clear: both;
+}

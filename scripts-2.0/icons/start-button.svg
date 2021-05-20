@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg class="tc-start-button"  viewBox="28.792 14.573 152 39" xmlns="http://www.w3.org/2000/svg">
+  <rect fill="#4bb063" stroke-width="null" opacity="undefined" id="svg_1" stroke="#ffffff" stroke-opacity="0" x="-0.007" y="0.022" width="152" height="39" rx="8" ry="8" transform="matrix(1, 0, 0, 1, 28.799301, 14.550518)"/>
+  <path d="M 29.344 12.422 C 30.244 10.891 31.144 10.891 32.044 12.422 L 38.344 23.136 C 39.244 24.667 38.794 25.432 36.994 25.432 L 24.394 25.432 C 22.594 25.432 22.144 24.667 23.044 23.136 Z" style="fill: rgb(255, 255, 255);" transform="matrix(0.866033, -0.499987, 0.499987, 0.866033, 23.735088, 32.355799)"/>
+  <text style="fill: rgb(255, 255, 255); font-family: Poppins; font-size: 14px; white-space: pre;" x="50.754" y="24.879" transform="matrix(1, 0, 0, 1, 28.799301, 14.550518)">Start timer</text>
+</svg>

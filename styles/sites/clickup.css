@@ -1,0 +1,70 @@
+.tc-sidebar {
+    display: none !important;
+}
+
+#tc-logo {
+    vertical-align: middle;
+    margin-top: -1px;
+    padding: 0;
+}
+
+#timecamp-track-button {
+    margin-left: 15px;
+    height: 35px;
+    width: 140px;
+    overflow: hidden;
+    border-radius: 3px;
+    background-color: #4bb063;
+}
+
+.fa {
+    color: #ffffff;
+    margin-right: 3px;
+    margin-left: 10px;
+    margin-top: 9px;
+    font-size: 18px;
+    display: inline-block;
+}
+
+#timecamp-track-button .text {
+    vertical-align: middle;
+    margin-bottom: 4px;
+    margin-left: 6px;
+    display: inline-block;
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+#timecamp-track-button .time {
+    font-size: 15px;
+    display: block;
+    position: relative;
+    margin-top: -16px;
+    padding-left: 55px;
+    color: #ffffff !important;
+}
+
+#tc-badge {
+    padding: 1px 4px;
+    height: 14px;
+}
+
+#tc-integration-link {
+    margin-top: 5px;
+}
+
+.tc-button-cont {
+    display: inline;
+    cursor: pointer;
+}
+
+.button-link {
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
+    padding: 0px 0px 0px 5px;
+}
+
+

@@ -1,0 +1,192 @@
+﻿{
+	"NAME":
+	{
+		"message": "TimeCamp"
+	},
+	"DESCRIPTION":
+	{
+		"message": "Put your favorite free time tracker into any tool you use."
+	},
+	"TITLE":
+	{
+		"message": "Time Tracking"
+	},
+	"SYNCHRONIZING":
+	{
+		"message": "Synchronizing..."
+	},
+    "SYNCING":
+    {
+        "message": "Syncing"
+    },
+	"BUTTON_CONNECTION_ERROR":
+	{
+		"message": "Error"
+	},
+	"BUTTON_LOG_IN":
+	{
+		"message": "Log in"
+	},
+	"STATUS_SUCCESS":
+	{
+		"message": "Success!"
+	},
+	"STATUS_LOGGING_IN":
+	{
+		"message": "Logging in..."
+	},
+	"BUTTON_LOG_Out":
+	{
+		"message": "Log out"
+	},
+	"BADGE_TIMER_RUNNING":
+	{
+		"message": "TimeCamp timer is running for this card"
+	},
+	"BUTTON_TIMER_STARTED":
+	{
+		"message": "Stop timer"
+	},
+	"BUTTON_TIMER_STOPPED":
+	{
+		"message": "Start timer"
+	},
+    "BUTTON_TIMER_STARTED_SHORT":
+    {
+        "message": "Stop"
+    },
+    "BUTTON_TIMER_STOPPED_SHORT":
+    {
+        "message": "Start"
+    },
+	"BUTTON_TIMER_STARTING":
+	{
+		"message": "Starting..."
+	},
+	"BUTTON_TIMER_STOPPING":
+	{
+		"message": "Stopping..."
+	},
+	"BUTTON_TIMER_STOPPING_SHORT":
+	{
+		"message": "..."
+	},
+	"BUTTON_TIMER_STOP_TRACKING_ANOTHER_TASK":
+	{
+		"message": "Start new timer"
+	},
+    "EMPTY_MESSAGE":
+    {
+        "message": ""
+    },
+    "PLEASE_REFRESH":
+    {
+        "message": "Please refresh the page to apply changes"
+    },
+	"LOG_IN_ERROR":
+	{
+		"message": "Incorrect email or password"
+	},
+	"note": {
+		"message": "Note"
+	},
+	"add_notes": {
+		"message": "Add notes"
+	},
+	"duration": {
+		"message": "Duration"
+	},
+	"billable_time_entry": {
+		"message": "Billable time entry"
+	},
+	"unbillable_time_entry": {
+		"message": "Unbillable time entry"
+	},
+	"save": {
+		"message": "Save"
+	},
+	"cancel": {
+		"message": "Cancel"
+	},
+	"select_at_least_one_mandatory_tag": {
+		"message": "Select at least one mandatory tag"
+	},
+	"select_tags": {
+		"message": "Select tags"
+	},
+	"apply": {
+		"message": "Apply"
+	},
+	"tags": {
+		"message": "Tags"
+	},
+	"mandatory": {
+		"message": "Mandatory"
+	},
+	"search": {
+		"message": "Search"
+	},
+	"add_a_timer_to_the_tool_you_use_and_track_time_with_a_single_click_without_switching_to_another_tab": {
+		"message": "Add a timer to the tool you use and track time with a single click, without switching to another tab."
+	},
+	"log_in": {
+		"message": "Log in"
+	},
+	"log_out": {
+		"message": "Log out"
+	},
+	"log_in_to_your_account": {
+		"message": "Log in to your account"
+	},
+	"new_here": {
+		"message": "New here?"
+	},
+	"sign_up": {
+		"message": "Sign up"
+	},
+	"for_a_free_account": {
+		"message": "for a free account"
+	},
+	"recently_used": {
+		"message": "Recently Used"
+	},
+	"projects_and_tasks": {
+		"message": "Projects and Tasks"
+	},
+	"no_results_found": {
+		"message": "No results found"
+	},
+	"select_task": {
+		"message": "Select task"
+	},
+	"select_task_to_see_tags": {
+		"message": "Select task to see available tags"
+	},
+	"no_tags_added_label": {
+		"message": "There are no tags yet"
+	},
+	"no_tags_added_message_administrator": {
+		"message": "<a target='_blank' href='https://app.timecamp.com/app#/settings/addons/tags'>Create your first tag</a> to improve your time tracking experience"
+	},
+	"no_tags_added_message_user": {
+		"message": "Ask your administrator to create first tag list"
+	},
+	"time_traking_to_task_not_allowed": {
+		"message": "You're not allowed to track time to this task"
+	},
+	"time_traking_to_project_not_allowed": {
+		"message": "You're not allowed to track time to this project"
+	},
+	"incorrect_login_or_password": {
+		"message": "Incorrect email or password"
+	},
+	"email": {
+		"message": "E-mail"
+	},
+	"password": {
+		"message": "Password"
+	},
+	"start_timer": {
+		"message": "Start timer"
+	}
+}

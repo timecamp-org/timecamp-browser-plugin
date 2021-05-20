@@ -1,0 +1,30 @@
+$primaryColor: #4bb063;
+$primaryBackgroundColor: #ffffff;
+$primaryBorderColor: #dbdbdb;
+$hoverBorderColor: rgba($primaryColor, 0.5);
+
+$primaryTextColor: #3d3d3d;
+$secondaryTextColor: #8a8a8a;
+$tertiaryTextColor: #6b6b6b;
+
+$buttonTextColor: $primaryTextColor;
+$buttonColor: #ffffff;
+$buttonActiveColor: $primaryColor;
+$buttonActiveTextColor: #ffffff;
+$durationInputBackgroundColor: #f2f2f2;
+$buttonDisabledColor: #f2f2f2;
+
+$disabledFontColor: #8a8a8a;
+
+$taskPickerFontColor: #3d3d3d;
+$taskPickerPathFontColor: #4f4f4f;
+
+$labelFontColor: #8a8a8a;
+$redOrangeColor: #ff4c00;
+$algaeColor: #4bb063;
+
+$defaultBorderRadius: 8px;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+$defaultFontFamily: 'Poppins', sans-serif;
+$defaultFontSize: 14px;

@@ -1,0 +1,29 @@
+@import '../../style/common';
+
+.context-menu {
+  font-family: $defaultFontFamily;
+  font-size: 14px;
+  color: $primaryTextColor;
+  width: 440px;
+  height: 563px;
+  padding: 20px;
+  box-sizing: border-box;
+  border: #aea6ab 1px solid;
+  display: block;
+  position: absolute;
+  background-color: $primaryBackgroundColor;
+  line-height: initial;
+  z-index: 99999;
+
+  &--hidden {
+    display: none;
+  }
+  
+  .TaskPicker, .TagPicker, .note, .duration {
+    margin-top: 15px;
+  }
+  
+  .billable {
+    margin-top: 15px;
+  }
+}

@@ -1,0 +1,12 @@
+.git
+.idea
+firefox
+.gitignore
+scss
+zip.vbs
+zipit.cmd
+zipexclude.txt
+README.md
+pack.zip
+zipit.sh
+scss

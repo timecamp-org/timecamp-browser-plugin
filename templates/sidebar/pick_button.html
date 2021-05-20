@@ -1,0 +1,38 @@
+<div>
+    <div id="tc-sidebar-pick-button" class="btn btn-success">
+        {{#isEmpty}}
+            <div class="task-name">No tasks available</div>
+        {{/isEmpty}}
+        {{^isEmpty}}
+            {{#taskName}}
+                <div class="task-name">{{taskName}}</div>
+            {{/taskName}}
+            {{^taskName}}
+                <span class="task-name">
+                    {{^isRunning}}Select Task{{/isRunning}}
+                </span>
+            {{/taskName}}
+            <div class="tc-timer-state-icon">
+                <i class="fa fa-play fa-lg fa-rotate-90"></i>
+            </div>
+        {{/isEmpty}}
+    </div>
+    {{^isEmpty}}
+    <div class="tc-subtask-picker">
+        <ul>
+            {{#hasRecent}}
+              <li class="tc-subtask-picker-list-header">Recently used</li>
+                {{#recent}}
+                    <li class="tc-subtask-picker-entry" data-taskId="{{taskId}}">{{taskName}}</li>
+                {{/recent}}
+            {{/hasRecent}}
+            {{#hasSubtasks}}
+                <li class="tc-subtask-picker-list-header">All tasks</li>
+                {{#subtasks}}
+                    <li class="tc-subtask-picker-entry" data-taskId="{{taskId}}">{{taskName}}</li>
+                {{/subtasks}}
+            {{/hasSubtasks}}
+        </ul>
+    </div>
+    {{/isEmpty}}
+</div>
