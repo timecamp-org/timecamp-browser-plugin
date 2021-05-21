@@ -21,7 +21,7 @@ const tagList = {
         id: 3,
         name: "Test3",
         mandatory: false,
-        tags: 
+        tags:
         {1: {
             id: 3,
             name: "jakis inny tag",
@@ -38,7 +38,7 @@ const tagList = {
         id: 7,
         name: "Test3",
         mandatory: true,
-        tags: 
+        tags:
         {8: {
             id: 9,
             name: "jakis inny tag",
@@ -55,7 +55,7 @@ const tagList = {
         id: 22,
         name: "Test3",
         mandatory: false,
-        tags: 
+        tags:
         {23: {
             id: 24,
             name: "jakis inny tag",
@@ -77,10 +77,10 @@ const browser = {
                 return Promise.resolve(tagList);
             }
         }
-        
+
 };
 
-export default <React.Fragment><TagPicker canCreateTags={true} browser={browser} taskId={1} clearTrigger={false} handleSelectedTagsChange={(selectedTags: number[]) => {
+export default <React.Fragment><TagPicker canCreateTags={true} browser={browser} taskId={1} handleSelectedTagsChange={(selectedTags: number[]) => {
     console.log(selectedTags);
 }} handleTagsValidity={(isValid: boolean) => console.log(isValid)}/>
 </React.Fragment>;

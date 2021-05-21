@@ -27,8 +27,7 @@ export interface TagPicker {
     handleTagsValidity: (isValid: boolean) => void,
     browser: any,
     canCreateTags: boolean,
-    taskId?: number,
-    clearTrigger: boolean,
+    taskId?: number
 }
 
 const logger = new Logger();
@@ -288,7 +287,7 @@ const TagPicker: React.FC<TagPicker> = (props) => {
         } else {
             tagPickerHook.setTagLists([]);
         }
-    }, [props.taskId, props.clearTrigger]);
+    }, [props.taskId]);
 
     React.useEffect(() => {
         const valid = checkIfMandatoryTagsListChecked();
