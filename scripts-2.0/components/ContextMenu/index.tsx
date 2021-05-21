@@ -64,7 +64,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const onClickOutside = e => {
         const shouldStayOpen = node.current !== null && node.current.contains(e.target);
-        
+
         if (!shouldStayOpen) {
             clearAndClose();
         }
@@ -108,23 +108,23 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
         clearAndClose();
     };
-    
+
     const clearAndClose = () => {
         setClearTrigger(!clearTrigger);
         setOpen(false);
+        setTaskId(0);
     };
 
     const renderTagPicker = () => {
         return <React.Fragment>
             <div className="TagPicker">
                 <div className="TagPicker__title">Tag</div>
-                <TagPicker 
-                    taskId={taskId} 
-                    handleTagsValidity={setIsSelectedTagsValid} 
-                    handleSelectedTagsChange={setSelectedTags} 
-                    browser={browser} 
+                <TagPicker
+                    taskId={taskId}
+                    handleTagsValidity={setIsSelectedTagsValid}
+                    handleSelectedTagsChange={setSelectedTags}
+                    browser={browser}
                     canCreateTags={canCreateTags}
-                    clearTrigger={clearTrigger}
                 />
             </div>
         </React.Fragment>;
@@ -133,10 +133,10 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     return (
         <div ref={node} className={`context-menu  ${!open ? "context-menu--hidden" : ""}`}  style={props.position}>
             <Header />
-            <TaskPicker 
-                browser={browser} 
-                onTaskClick={(taskId) => {setTaskId(taskId)}} 
-                userId={userId} 
+            <TaskPicker
+                browser={browser}
+                onTaskClick={(taskId) => {setTaskId(taskId)}}
+                userId={userId}
                 clearTrigger={clearTrigger}
             />
             {isTagModuleEnabled && renderTagPicker()}
