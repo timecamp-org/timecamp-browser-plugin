@@ -23,7 +23,7 @@ export default class PathService {
     getLoginUrl() {
         return this.serverUrl + 'auth/token';
     }
-    
+
     getTokenUrl() {
         return this.serverUrl + 'auth/token';
     }
@@ -86,5 +86,9 @@ export default class PathService {
 
     getAssignTagsToEntryUrl(entryId) {
         return this.serverUrl + "third_party/api/entries/" + entryId + "/tags";
+    }
+
+    getFeatureFlagUrl() {
+        return this.serverUrl + 'third_party/api/feature_flag';
     }
 }

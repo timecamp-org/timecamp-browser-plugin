@@ -15,6 +15,7 @@ export interface ContextMenuInterface {
     note: string,
     billable: boolean,
     startTimerCallback: Function,
+    billableInputVisibility: boolean,
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -23,6 +24,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [service, setService] = useState(props.service);
     const [note, setNote] = useState(props.note);
     const [billable, setBillable] = useState(props.billable);
+    const [billableInputVisibility, setBillableInputVisibility] = useState<boolean>(props.billableInputVisibility);
     const [taskId, setTaskId] = useState(0);
     const [selectedTags, setSelectedTags] = useState<number[]>([]);
     const [isSelectedTagsValid, setIsSelectedTagsValid] = useState<boolean>(true);
@@ -32,9 +34,20 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [userId, setUserId] = useState<number>(0);
     const [clearTrigger, setClearTrigger] = useState<boolean>(false);
 
+    if (billableInputVisibility === null) {
+        setBillableInputVisibility(true);
+        browser.runtime.sendMessage({
+            type: 'getBillableInputVisibilityFromStorage',
+        }).then((value) => {
+            setBillableInputVisibility(value);
+        }).catch(() => {
+        });
+    }
+
     useEffect(() => {
         setNote(props.note);
         setBillable(props.billable);
+        setBillableInputVisibility(props.billableInputVisibility);
         setService(props.service);
         setOpen(true);
         document.addEventListener("click", onClickOutside);
@@ -59,7 +72,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             setCanCreateTags(data.permissions.can_change_group_settings);
             setUserId(parseInt(data.user_id));
         });
-
     }, []);
 
     const onClickOutside = e => {
@@ -135,7 +147,12 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             <Header />
             <TaskPicker
                 browser={browser}
-                onTaskClick={(taskId) => {setTaskId(taskId)}}
+                onTaskClick={
+                    (task) => {
+                        setBillable(task.billable);
+                        setTaskId(task.id);
+                    }
+                }
                 userId={userId}
                 clearTrigger={clearTrigger}
             />
@@ -144,10 +161,13 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 note={note}
                 onNoteChange={(newNote) => {setNote(newNote)}}
             />
-            <Billable
-                billable={billable}
-                onBillableChange={(newBillable) => {setBillable(newBillable)}}
-            />
+            {
+                billableInputVisibility &&
+                <Billable
+                    billable={billable}
+                    onBillableChange={(newBillable) => {setBillable(newBillable)}}
+                />
+            }
             <Footer
                 idDisabled={!isSelectedTagsValid}
                 onClickSave={onClickSave}
