@@ -54,6 +54,7 @@ window.tcbutton = {
     lastButtonClicked: null,
     timerInterval: null,
     queryTimerLinkInterval: null,
+    billableInputVisibility: null,
     render: function (selector, opts, renderer, mutationSelector) {
         try {
             if (opts.observe) {
@@ -183,6 +184,7 @@ window.tcbutton = {
                 position={position}
                 note={note}
                 billable={DEFAULT_BILLABLE}
+                billableInputVisibility={tcbutton.billableInputVisibility}
                 startTimerCallback={tcbutton.startTimerCallback}
             />,
             tcbutton.contextMenuContainer
@@ -282,8 +284,6 @@ window.tcbutton = {
     },
 
     queryAndUpdateTimerLink: function () {
-        tcbutton.updateDurationFormat();
-
         browser.runtime.sendMessage({ type: 'currentEntry' })
             .then((currentEntry) => {
                 logger.log(currentEntry);
@@ -305,12 +305,31 @@ window.tcbutton = {
 
     updateDurationFormat: function () {
         if (tcbutton.durationFormat === null) {
-            browser.runtime.sendMessage({ type: 'updateDurationFormat' })
+            browser.runtime.sendMessage({ type: 'getDurationFormatFromStorage' })
                 .then((durationFormat) => {
                     if (durationFormat !== null) {
                         tcbutton.durationFormat = durationFormat;
                     }
-                });
+                })
+                .catch((e) => {
+                    Logger.error(e);
+                })
+            ;
+        }
+    },
+
+    updateBillableInputVisibility: function () {
+        if (tcbutton.billableInputVisibility === null) {
+            browser.runtime.sendMessage({type: 'getBillableInputVisibilityFromStorage'})
+                .then((billableInputVisibility) => {
+                    if (billableInputVisibility !== null) {
+                        tcbutton.billableInputVisibility = billableInputVisibility;
+                    }
+                })
+                .catch((e) => {
+                    Logger.error(e);
+                })
+            ;
         }
     },
 
@@ -374,23 +393,37 @@ window.tcbutton = {
         link.querySelector('.tc-start-button').style.display = timerActive ? 'none' : 'inline-block';
     },
 
-    cleanupAfterLogout: function () {
-        window.tcbutton.deactivateAllTimerLinks();
-        if (window.tcbutton.contextMenuContainer !== null) {
-            ReactDOM.unmountComponentAtNode(window.tcbutton.contextMenuContainer);
-            window.tcbutton.contextMenuContainer = null;
+    doAfterLogout: () => {
+        tcbutton.deactivateAllTimerLinks();
+        if (tcbutton.contextMenuContainer !== null) {
+            ReactDOM.unmountComponentAtNode(tcbutton.contextMenuContainer);
+            tcbutton.contextMenuContainer = null;
         }
+
+        tcbutton.loginFormContainer = null;
+        tcbutton.durationFormat = null;
+        tcbutton.billableInputVisibility = null;
+    },
+
+    doAfterLogin: () => {
+        tcbutton.updateDurationFormat();
+        tcbutton.updateBillableInputVisibility();
     },
 
     newMessage: function (request, sender, sendResponse) {
-        if (request.type === 'stop-entry') {
-            tcbutton.updateTimerLink();
+        switch (request.type) {
+            case 'stop-entry':
+                tcbutton.updateTimerLink();
+                break;
+            case 'doAfterLogout':
+                tcbutton.doAfterLogout();
+                break;
+            case 'doAfterLogin':
+                tcbutton.doAfterLogin();
+                break;
+            default:
+                return undefined;
         }
-        if (request.type === 'cleanupAfterLogout') {
-            tcbutton.cleanupAfterLogout();
-        }
-
-        return undefined;
     },
 
     timerUpdate: function () {
@@ -413,7 +446,10 @@ browser.runtime.onMessage.addListener(tcbutton.newMessage);
 window.addEventListener('focus', function (e) {
     tcbutton.isUserLogged().then((isUserLogged) => {
         if (isUserLogged === false) {
-            tcbutton.cleanupAfterLogout();
+            tcbutton.doAfterLogout();
+        } else {
+            tcbutton.updateDurationFormat();
+            tcbutton.updateBillableInputVisibility();
         }
         tcbutton.queryAndUpdateTimerLink();
     });

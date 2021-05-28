@@ -32,20 +32,25 @@ export default class ApiService {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             const method = opts.method || METHOD_GET;
-            const url = opts.url;
             const apiToken = opts.apiToken;
+            let url = opts.url;
+            
+            if (opts.queryStringParams) {
+                let queryStringParams = new URLSearchParams(opts.queryStringParams).toString();
+                url = url + '?' + queryStringParams
+            }
 
             logger.log('Request:')
             logger.table(opts);
 
             xhr.open(method, url, true);
-            
+
             if (opts.contentType) {
                 xhr.setRequestHeader('content-type', opts.contentType);
             } else {
                 xhr.setRequestHeader('content-type', 'application/json');
-            }   
-            
+            }
+
             if (opts.accept) {
                 xhr.setRequestHeader('accept', opts.accept);
             } else {
@@ -81,7 +86,7 @@ export default class ApiService {
                     response: xhr.response
                 });
             };
-            
+
             let body;
             if (opts.bodyAsQueryString === true) {
                 let payload = opts.payload;
@@ -339,23 +344,51 @@ export default class ApiService {
         service = this.defaultServiceName
     ) {
         return this.authorizeAndCall((token, resolve, reject) => {
-                let data = {
-                    service: service,
-                };
-                this.call({
-                    url: pathService.getRecentlyUsedUrl(),
-                    method: METHOD_GET,
-                    apiToken: token,
-                    payload: data,
+            let data = {
+                service: service,
+            };
+            this.call({
+                url: pathService.getRecentlyUsedUrl(),
+                method: METHOD_GET,
+                apiToken: token,
+                payload: data,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
                 })
-                    .then((response) => {
-                        let responseData = JSON.parse(response.response);
-                        resolve(responseData);
-                    })
-                    .catch((response) => {
-                        logger.error(response);
-                        reject(response)
-                    });
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        );
+    }
+
+    getFeatureFlag(
+        rootGroupId,
+        feature,
+        service = this.defaultServiceName
+    ) {
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getFeatureFlagUrl(),
+                method: METHOD_GET,
+                apiToken: token,
+                queryStringParams: {
+                    feature: feature,
+                    group: rootGroupId,
+                    service: service,
+                }
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
             }
         );
     }
@@ -364,23 +397,23 @@ export default class ApiService {
         service = this.defaultServiceName
     ) {
         return this.authorizeAndCall((token, resolve, reject) => {
-                let data = {
-                    service: service,
-                };
-                this.call({
-                    url: pathService.getTasksUrl(),
-                    method: METHOD_GET,
-                    apiToken: token,
-                    payload: data,
+            let data = {
+                service: service,
+            };
+            this.call({
+                url: pathService.getTasksUrl(),
+                method: METHOD_GET,
+                apiToken: token,
+                payload: data,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
                 })
-                    .then((response) => {
-                        let responseData = JSON.parse(response.response);
-                        resolve(responseData);
-                    })
-                    .catch((response) => {
-                        logger.error(response);
-                        reject(response)
-                    });
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
             }
         );
     }
@@ -455,7 +488,7 @@ export default class ApiService {
         );
     }
 
-    
+
     logIn(login, password) {
         return new Promise((resolve, reject) => {
             this.call({
@@ -468,7 +501,7 @@ export default class ApiService {
                 },
                 bodyAsQueryString: true,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            }).then((response) => {
+            }, false).then((response) => {
                 let status = response.status;
                 let responseData = response.response;
 
@@ -493,7 +526,7 @@ export default class ApiService {
             });
         });
     }
-   
+
     obtainNewToken() {
         return new Promise((resolve, reject) => {
             this.call(

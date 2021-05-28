@@ -2,13 +2,13 @@ import * as React from "react";
 import { Task } from "./index";
 
 export interface TaskPickerHook {
-  toggleTask: (taskId: number) => void;
-  selectedTask: Task;
+    toggleTask: (taskId: number) => void;
+    selectedTask: Task;
 }
 
 export const useTaskPickerHook = () => {
-    const emptyTask = {id: 0, parentId: 0, name: "", children: [], path: []};
-    
+    const emptyTask = {id: 0, parentId: 0, name: "", children: [], path: [], billable: false};
+
     const [taskList, setTaskList] = React.useState<Task[]>([]);
     const [fullTaskTree, setFullTaskTree] = React.useState<Task[]>([]);
     const [recentlyUsedTaskList, setRecentlyUsedTaskList] = React.useState<Task[]>([]);
@@ -26,7 +26,7 @@ export const useTaskPickerHook = () => {
         selectedTask["path"] = task.path;
 
         setSelectedTask(selectedTask);
-      };
+    };
 
     return {
         selectTask,

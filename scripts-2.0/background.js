@@ -4,9 +4,13 @@ const EMPTY_NAME = '(No title)';
 import browser from 'webextension-polyfill';
 import ApiService from './ApiService';
 import Logger from './Logger';
+import StorageManager from './StorageManager';
+import GroupSetting from "./GroupSetting";
+import FeatureFlag from "./FeatureFlag";
 
 window.apiService = new ApiService();
 window.logger = new Logger();
+window.storageManager = new StorageManager();
 
 window.TcButton = {
     currentEntry: undefined,
@@ -47,6 +51,7 @@ window.TcButton = {
                     case 'currentEntry':
                         if (TcButton.isUserLogged === false) {
                             reject();
+                            return;
                         }
                         if (TcButton.currentEntry === undefined) {
                             TcButton.updateCurrentEntry().then(() => {
@@ -97,19 +102,36 @@ window.TcButton = {
                         });
                         break;
 
-                    case 'updateDurationFormat':
-                        TcButton.getCurrentRootGroup().then((rootGroupId) => {
-                            apiService.getGroupSetting('hoursAndMinutesFormat', rootGroupId)
-                                .then((response) => {
-                                    if (response.value) {
-                                        resolve(parseInt(response.value));
-                                    }
-                                    resolve(null)
-                                })
-                                .catch((e) => {
+                    case 'getDurationFormatFromStorage':
+                        TcButton.getCurrentRootGroup()
+                            .then((rootGroupId) => {
+                                storageManager.get(
+                                    storageManager.buildKey([rootGroupId, GroupSetting.HOURS_AND_MINUTES_FORMAT])
+                                ).then((data) => {
+                                    resolve(data);
+                                }).catch((e) => {
                                     reject(e);
-                                });
-                        });
+                                })
+                            })
+                            .catch((e) => {
+                                reject(e);
+                            });
+                        break;
+
+                    case 'getBillableInputVisibilityFromStorage':
+                        TcButton.getCurrentRootGroup()
+                            .then((rootGroupId) => {
+                                storageManager.get(
+                                    storageManager.buildKey([rootGroupId, GroupSetting.CHANGE_BILLING_FLAG])
+                                ).then((data) => {
+                                    resolve(data);
+                                }).catch((e) => {
+                                    reject(e);
+                                })
+                            })
+                            .catch((e) => {
+                                reject(e);
+                            });
                         break;
 
                     case 'isTagModuleEnabled':
@@ -165,7 +187,7 @@ window.TcButton = {
                                 password
                             ).then((response) => {
                                 if (response.status === 200) {
-                                    TcButton.isUserLogged = true;
+                                    TcButton.doAfterLogin();
                                     resolve(true);
                                 }
 
@@ -177,6 +199,7 @@ window.TcButton = {
                             reject(false);
                         }
                         break;
+
                     case 'getUserData':
                         apiService.me().then((response) => {
                             resolve(response);
@@ -193,7 +216,7 @@ window.TcButton = {
                             browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
                                 if (tabs.length > 0) {
                                     let activeTab = tabs[0];
-                                    browser.tabs.sendMessage(activeTab.id, {"type": "cleanupAfterLogout"});
+                                    browser.tabs.sendMessage(activeTab.id, {"type": "doAfterLogout"});
                                 }
                             });
 
@@ -261,6 +284,95 @@ window.TcButton = {
         });
     },
 
+    doAfterLogin: () => {
+        return new Promise((resolve, reject) => {
+            TcButton.isUserLogged = true;
+            TcButton.getCurrentRootGroup()
+                .then((rootGroupId) => {
+                    Promise.all([
+                        TcButton.loadAndSaveBillingSetting(GroupSetting.CHANGE_BILLING_FLAG, rootGroupId),
+                        TcButton.loadAndSaveGroupSetting(GroupSetting.HOURS_AND_MINUTES_FORMAT, rootGroupId)
+                    ]).then((response) => {
+                        browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+                            if (tabs.length > 0) {
+                                let activeTab = tabs[0];
+                                browser.tabs.sendMessage(activeTab.id, {"type": "doAfterLogin"});
+                            }
+                        });
+                        resolve(response);
+                    }).catch((e) => {
+                        reject(e);
+                    });
+                })
+                .catch((e) => {
+                    reject(e);
+                })
+            ;
+
+            resolve([])
+        });
+    },
+
+    loadAndSaveBillingSetting: (settingName, rootGroupId) => {
+        return new Promise((resolve, reject) => {
+            //first check BUDGET feature flag
+            apiService.getFeatureFlag(rootGroupId, FeatureFlag.BUDGET).then((response) => {
+                if (response && response.enabled) {
+                    TcButton.loadAndSaveGroupSetting(GroupSetting.CHANGE_BILLING_FLAG, rootGroupId)
+                        .then((response) => {
+                            resolve(response);
+                        })
+                        .catch((e) => {
+                            reject(e);
+                        });
+                } else {
+                    storageManager.set(
+                        storageManager.buildKey([rootGroupId, GroupSetting.CHANGE_BILLING_FLAG]),
+                        false
+                    ).then(() => {
+                        resolve();
+                    });
+                }
+            }).catch((e) => {
+                reject(e);
+            });
+        });
+    },
+
+    loadAndSaveGroupSetting: (settingName, rootGroupId) => {
+        return new Promise((resolve, reject) => {
+            apiService.getGroupSetting(settingName, rootGroupId)
+                .then((response) => {
+                    let data = null;
+
+                    if (response.value) {
+                        switch (settingName) {
+                            case GroupSetting.CHANGE_BILLING_FLAG:
+                                data = !parseInt(response.value);
+                                break;
+
+                            case GroupSetting.HOURS_AND_MINUTES_FORMAT:
+                                data = parseInt(response.value);
+                                break;
+
+                            default:
+                                data = response.value;
+                        }
+                    }
+
+                    storageManager.set(
+                        storageManager.buildKey([rootGroupId, settingName]),
+                        data
+                    ). then(() => {
+                        resolve();
+                    });
+                })
+                .catch((e) => {
+                    reject(e);
+                });
+        });
+    },
+
     createCurrentEntryObject: function(start, name, note, externalTaskId) {
         return {
             start: start,
@@ -292,7 +404,7 @@ window.TcButton = {
                     TcButton.updateIcon();
                     resolve(TcButton.currentEntry);
                 });
-        })
+        });
     },
 
     getCurrentRootGroup: function () {

@@ -17,11 +17,12 @@ export interface Task {
   parentId: number;
   children: Task[];
   path?: string[];
+  billable: boolean;
 }
 
 export interface TaskPicker {
     browser: any;
-    onTaskClick(taskId: number): any,
+    onTaskClick(taskId: Task): any,
     userId: number,
     clearTrigger: boolean,
 }
@@ -200,7 +201,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
     dropdownHook.onBackdropClick(event);
 
     setIsSearching(false);
-    props.onTaskClick(task.id)
+    props.onTaskClick(task)
     taskPickerHook.setSearchText("");
   };
 
@@ -293,6 +294,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                   id: task.task_id,
                   name: task.name,
                   parentId: task.parent_id,
+                  billable: !!task.billable
               } as Task;
           });
 
@@ -338,6 +340,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
               id: task.task_id,
               name: task.name,
               parentId: task.parent_id,
+              billable: !!task.billable
             } as Task;
           })
         );
