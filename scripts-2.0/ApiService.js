@@ -32,8 +32,13 @@ export default class ApiService {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             const method = opts.method || METHOD_GET;
-            const url = opts.url;
             const apiToken = opts.apiToken;
+            let url = opts.url;
+            
+            if (opts.queryStringParams) {
+                let queryStringParams = new URLSearchParams(opts.queryStringParams).toString();
+                url = url + '?' + queryStringParams
+            }
 
             logger.log('Request:')
             logger.table(opts);
@@ -366,18 +371,15 @@ export default class ApiService {
         service = this.defaultServiceName
     ) {
         return this.authorizeAndCall((token, resolve, reject) => {
-            let data = {
-                feature: feature,
-                group: rootGroupId,
-                service: service,
-            };
-
-            let getParams = new URLSearchParams(data).toString();
-
             this.call({
-                url: pathService.getFeatureFlagUrl() + '?' + getParams,
+                url: pathService.getFeatureFlagUrl(),
                 method: METHOD_GET,
                 apiToken: token,
+                queryStringParams: {
+                    feature: feature,
+                    group: rootGroupId,
+                    service: service,
+                }
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
