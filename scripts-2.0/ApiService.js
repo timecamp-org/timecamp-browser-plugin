@@ -392,6 +392,32 @@ export default class ApiService {
             }
         );
     }
+    
+    hasBackendIntegrationEnabled(
+        integration,
+        service = this.defaultServiceName
+    ) {
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.hasIntegration(),
+                method: METHOD_GET,
+                apiToken: token,
+                queryStringParams: {
+                    integration: integration,
+                    service: service,
+                }
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        );
+    }
 
     getFullTaskTree(
         service = this.defaultServiceName

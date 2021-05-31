@@ -188,5 +188,8 @@
 	},
 	"start_timer": {
 		"message": "Start timer"
+	},
+	"asana_task_not_found_in_backend_integration_info": {
+		"message": "This task is not synchronized in TimeCamp. Choose task by yourself or check workspaces in integration settings"
 	}
 }

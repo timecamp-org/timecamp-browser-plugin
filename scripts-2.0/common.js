@@ -5,6 +5,7 @@ import tcStopButton from '!!raw-loader!./icons/stop-button.svg';
 import tcStopButtonSmall from '!!raw-loader!./icons/stop-button-small.svg';
 import TimeFormatter from "./TimeFormatter";
 import Logger from "./Logger";
+import translate from "./Translator";
 
 import * as React from "react";
 import ReactDOM from 'react-dom';
@@ -125,7 +126,18 @@ window.tcbutton = {
 
         const project = invokeIfFunction(params.projectName);
         const description = invokeIfFunction(params.description);
-        const externalTaskId = this.buildExternalTaskId(params.className, description);
+        let externalTaskId = this.buildExternalTaskId(params.className, description);
+        let taskNotFoundInBackendIntegrationInfo = '';
+        let isActiveBackendIntegration = false;
+
+        if (params.externalTaskId) {
+            isActiveBackendIntegration = true;
+            externalTaskId = params.externalTaskId;
+        }
+
+        if (params.taskNotFoundInfo && isActiveBackendIntegration) {
+            taskNotFoundInBackendIntegrationInfo = translate(params.taskNotFoundInfo);
+        }
 
         tcbutton.currentProject = project;
         tcbutton.currentDescription = description;
@@ -133,6 +145,10 @@ window.tcbutton = {
         button.title = description + (project ? ' - ' + project : '');
         button.dataset.externalTaskId = externalTaskId;
         button.classList.add(params.className);
+
+        if (params.additionalClasses) {
+            button.classList.add(...params.additionalClasses);
+        }
 
         let startButtonSVG = tcStartButton;
         let stopButtonSVG = tcStopButton;
@@ -146,7 +162,14 @@ window.tcbutton = {
         button.innerHTML += stopButtonSVG;
 
         button.addEventListener('click', (e) => {
-            tcbutton.onTimerButtonClick(e, button, description);
+            tcbutton.onTimerButtonClick(
+                e,
+                button,
+                description,
+                externalTaskId,
+                isActiveBackendIntegration,
+                taskNotFoundInBackendIntegrationInfo
+            );
             tcbutton.lastButtonClicked = button;
         });
 
@@ -172,7 +195,13 @@ window.tcbutton = {
         return container.appendChild(div)
     },
 
-    showContextMenuWindow: function (note, service) {
+    showContextMenuWindow: function (
+        note,
+        externalTaskId,
+        service,
+        isActiveBackendIntegration,
+        taskNotFoundInBackendIntegrationInfo
+    ) {
         const position = tcbutton.getPosition(563, 440)
         if (tcbutton.contextMenuContainer === null) {
             tcbutton.contextMenuContainer = tcbutton.createContainer();
@@ -185,13 +214,23 @@ window.tcbutton = {
                 note={note}
                 billable={DEFAULT_BILLABLE}
                 billableInputVisibility={tcbutton.billableInputVisibility}
+                isActiveBackendIntegration={isActiveBackendIntegration}
+                externalTaskId={externalTaskId}
                 startTimerCallback={tcbutton.startTimerCallback}
+                taskNotFoundInBackendIntegrationInfo={taskNotFoundInBackendIntegrationInfo}
             />,
             tcbutton.contextMenuContainer
         );
     },
 
-    showLoginWindow: (callback, note, serviceName) => {
+    showLoginWindow: (
+        callback,
+        note,
+        externalTaskId,
+        serviceName,
+        isActiveBackendIntegration,
+        taskNotFoundInBackendIntegrationInfo
+    ) => {
         const position = tcbutton.getPosition(312, 361)
         if (tcbutton.loginFormContainer === null) {
             tcbutton.loginFormContainer = tcbutton.createContainer();
@@ -201,20 +240,27 @@ window.tcbutton = {
             <LoginWindow
                 position={position}
                 onCorrectLoginCallback={() => {
-                    callback(note, serviceName)
+                    callback(
+                        note,
+                        externalTaskId,
+                        serviceName,
+                        isActiveBackendIntegration,
+                        taskNotFoundInBackendIntegrationInfo
+                    )
                 }}
             />,
             tcbutton.loginFormContainer
         );
     },
 
-    startTimerCallback: (taskId, note, service) => {
+    startTimerCallback: (taskId, note, service, externalTaskId) => {
         return new Promise((resolve, reject) => {
             let startTime = moment().format("YYYY-MM-DD HH:mm:ss");
             tcbutton.currentTimerStartedAt = startTime;
 
-            const externalTaskId = tcbutton.buildExternalTaskId(service, note);
             tcbutton.lastButtonClicked.dataset.externalTaskId = externalTaskId;
+
+            tcbutton.deactivateAllTimerLinks();
 
             browser.runtime.sendMessage({
                 type: 'timeEntry',
@@ -225,6 +271,7 @@ window.tcbutton = {
                 service: service,
             }).then((response) => {
                 tcbutton.activateTimerLink(tcbutton.lastButtonClicked);
+                tcbutton.queryAndUpdateTimerLink();
 
                 resolve(response);
             }).catch((response) => {
@@ -233,27 +280,47 @@ window.tcbutton = {
         });
     },
 
-    onTimerButtonClick: (e, button, note) => {
+    onTimerButtonClick: (
+        e,
+        button,
+        note,
+        externalTaskId,
+        isActiveBackendIntegration,
+        taskNotFoundInBackendIntegrationInfo
+    ) => {
         e.preventDefault();
         e.stopPropagation();
         tcbutton.element = e.currentTarget;
 
         if (button.classList.contains('active')) {
-            tcbutton.deactivateAllButtonsAndStopTimer(button);
+            tcbutton.deactivateAllButtonsAndStopTimer();
         } else {
             tcbutton.isUserLogged().then((isUserLogged) => {
                 if (isUserLogged === true) {
-                    tcbutton.showContextMenuWindow(note, tcbutton.serviceName);
+                    tcbutton.showContextMenuWindow(
+                        note,
+                        externalTaskId,
+                        tcbutton.serviceName,
+                        isActiveBackendIntegration,
+                        taskNotFoundInBackendIntegrationInfo
+                    );
                 } else {
-                    tcbutton.showLoginWindow(tcbutton.showContextMenuWindow, note, tcbutton.serviceName);
+                    tcbutton.showLoginWindow(
+                        tcbutton.showContextMenuWindow,
+                        note,
+                        externalTaskId,
+                        tcbutton.serviceName,
+                        isActiveBackendIntegration,
+                        taskNotFoundInBackendIntegrationInfo
+                    );
                 }
             }).catch((error) => {
             });
         }
     },
 
-    deactivateAllButtonsAndStopTimer: (button) => {
-        tcbutton.deactivateTimerLink(button);
+    deactivateAllButtonsAndStopTimer: () => {
+        tcbutton.deactivateAllTimerLinks();
         tcbutton.currentTimerStartedAt = null;
         let opts = {
             type: 'stop',
@@ -339,29 +406,35 @@ window.tcbutton = {
             return;
         }
 
-        let matchingButton = tcbutton.matchButton(entry.externalTaskId, entry.note)
-        if (matchingButton) {
+        let matchingButtons = tcbutton.matchButton(entry.externalTaskId, entry.note);
+        tcbutton.deactivateAllTimerLinks();
+        for (const matchingButton of matchingButtons) {
             tcbutton.activateTimerLink(matchingButton);
-        } else {
-            tcbutton.deactivateAllTimerLinks();
         }
     },
 
     matchButton: function (externalTaskId, note) {
         let buttons = $$('.tc-button:not(.tc-button-edit-form-button)');
 
+        let matchingButtons = [];
         for (const button of buttons) {
             if (button.dataset.externalTaskId === externalTaskId) {
-                return button;
+                matchingButtons.push(button);
             }
+        }
+
+        if (matchingButtons.length > 0) {
+            return matchingButtons;
         }
 
         const externalTaskIdToMach = this.buildExternalTaskId(tcbutton.serviceName, note);
         for (const button of buttons) {
             if (button.dataset.externalTaskId === externalTaskIdToMach) {
-                return button;
+                matchingButtons.push(button);
             }
         }
+
+        return matchingButtons;
     },
 
     activateTimerLink: function (link) {
@@ -371,7 +444,6 @@ window.tcbutton = {
             return;
         }
 
-        tcbutton.deactivateAllTimerLinks();
         link.classList.add('active');
     },
 

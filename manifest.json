@@ -50,16 +50,6 @@
         },
         {
             "matches": [
-                "*://app.asana.com/*"
-            ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
-                "styles/sites/asana.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
-                "scripts/third_party/asana.js"]
-        },
-        {
-            "matches": [
                 "*://*.teamwork.com/*"
             ],
             "exclude_matches" : [

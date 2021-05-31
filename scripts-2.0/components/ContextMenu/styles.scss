@@ -18,12 +18,20 @@
   &--hidden {
     display: none;
   }
-  
+
   .TaskPicker, .TagPicker, .note, .duration {
     margin-top: 15px;
   }
-  
+
   .billable {
     margin-top: 15px;
+  }
+
+  &__info-field {
+    padding: 10px 14px 10px 16px;
+    border-radius: 8px;
+    background-color: $infoFieldBackgroundColor;
+    border: solid 1px $infoFieldBorderColor;
+    color: $infoFieldTextColor;
   }
 }

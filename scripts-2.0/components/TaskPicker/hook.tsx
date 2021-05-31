@@ -7,7 +7,7 @@ export interface TaskPickerHook {
 }
 
 export const useTaskPickerHook = () => {
-    const emptyTask = {id: 0, parentId: 0, name: "", children: [], path: [], billable: false};
+    const emptyTask = {id: 0, parentId: 0, name: "", children: [], path: [], billable: false, externalTaskId: null};
 
     const [taskList, setTaskList] = React.useState<Task[]>([]);
     const [fullTaskTree, setFullTaskTree] = React.useState<Task[]>([]);
