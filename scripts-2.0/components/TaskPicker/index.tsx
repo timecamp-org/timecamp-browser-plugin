@@ -428,7 +428,6 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
       }
   }, [props.userId, props.presetTaskByExternalId]);
 
-
   React.useEffect(() => {
       taskPickerHook.selectTask(taskPickerHook.emptyTask);
   }, [props.clearTrigger]);

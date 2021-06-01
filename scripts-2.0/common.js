@@ -128,14 +128,14 @@ window.tcbutton = {
         const description = invokeIfFunction(params.description);
         let externalTaskId = this.buildExternalTaskId(params.className, description);
         let taskNotFoundInBackendIntegrationInfo = '';
-        let isActiveBackendIntegration = false;
+        let isBackendIntegration = false;
 
         if (params.externalTaskId) {
-            isActiveBackendIntegration = true;
+            isBackendIntegration = true;
             externalTaskId = params.externalTaskId;
         }
 
-        if (params.taskNotFoundInfo && isActiveBackendIntegration) {
+        if (params.taskNotFoundInfo && isBackendIntegration) {
             taskNotFoundInBackendIntegrationInfo = translate(params.taskNotFoundInfo);
         }
 
@@ -167,7 +167,7 @@ window.tcbutton = {
                 button,
                 description,
                 externalTaskId,
-                isActiveBackendIntegration,
+                isBackendIntegration,
                 taskNotFoundInBackendIntegrationInfo
             );
             tcbutton.lastButtonClicked = button;
@@ -199,7 +199,7 @@ window.tcbutton = {
         note,
         externalTaskId,
         service,
-        isActiveBackendIntegration,
+        isBackendIntegration,
         taskNotFoundInBackendIntegrationInfo
     ) {
         const position = tcbutton.getPosition(563, 440)
@@ -214,7 +214,7 @@ window.tcbutton = {
                 note={note}
                 billable={DEFAULT_BILLABLE}
                 billableInputVisibility={tcbutton.billableInputVisibility}
-                isActiveBackendIntegration={isActiveBackendIntegration}
+                isBackendIntegration={isBackendIntegration}
                 externalTaskId={externalTaskId}
                 startTimerCallback={tcbutton.startTimerCallback}
                 taskNotFoundInBackendIntegrationInfo={taskNotFoundInBackendIntegrationInfo}
@@ -228,7 +228,7 @@ window.tcbutton = {
         note,
         externalTaskId,
         serviceName,
-        isActiveBackendIntegration,
+        isBackendIntegration,
         taskNotFoundInBackendIntegrationInfo
     ) => {
         const position = tcbutton.getPosition(312, 361)
@@ -244,7 +244,7 @@ window.tcbutton = {
                         note,
                         externalTaskId,
                         serviceName,
-                        isActiveBackendIntegration,
+                        isBackendIntegration,
                         taskNotFoundInBackendIntegrationInfo
                     )
                 }}
@@ -285,7 +285,7 @@ window.tcbutton = {
         button,
         note,
         externalTaskId,
-        isActiveBackendIntegration,
+        isBackendIntegration,
         taskNotFoundInBackendIntegrationInfo
     ) => {
         e.preventDefault();
@@ -301,7 +301,7 @@ window.tcbutton = {
                         note,
                         externalTaskId,
                         tcbutton.serviceName,
-                        isActiveBackendIntegration,
+                        isBackendIntegration,
                         taskNotFoundInBackendIntegrationInfo
                     );
                 } else {
@@ -310,7 +310,7 @@ window.tcbutton = {
                         note,
                         externalTaskId,
                         tcbutton.serviceName,
-                        isActiveBackendIntegration,
+                        isBackendIntegration,
                         taskNotFoundInBackendIntegrationInfo
                     );
                 }
