@@ -18,6 +18,7 @@ export interface Task {
   children: Task[];
   path?: string[];
   billable: boolean;
+  externalTaskId: string|null;
 }
 
 export interface TaskPicker {
@@ -25,6 +26,9 @@ export interface TaskPicker {
     onTaskClick(taskId: Task): any,
     userId: number,
     clearTrigger: boolean,
+    presetTaskByExternalId: string|null,
+    onNotFoundTaskForActiveBackendIntegration(): any,
+    onAutoDetectTaskForActiveBackendIntegration(): any,
 }
 
 const TaskPicker: React.FC<TaskPicker> = (props) => {
@@ -280,30 +284,34 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
   };
 
   const fetchFullTaskTree = () => {
-    props.browser.runtime
-      .sendMessage({
-        type: "getFullTaskTree",
-      })
-      .then(function (data: any) {
+      return new Promise((resolve) => {
+          props.browser.runtime
+              .sendMessage({
+                  type: "getFullTaskTree",
+              })
+              .then(function (data: any) {
+                  let permsMap = {};
 
-          let permsMap = {};
+                  let taskList = Object.values(data).map((task: any) => {
+                      permsMap[task.task_id] = task.perms;
+                      return {
+                          id: task.task_id,
+                          name: task.name,
+                          parentId: task.parent_id,
+                          billable: !!task.billable,
+                          externalTaskId: task.external_task_id,
+                      } as Task;
+                  });
 
-          let taskList = Object.values(data).map((task: any) => {
-              permsMap[task.task_id] = task.perms;
-              return {
-                  id: task.task_id,
-                  name: task.name,
-                  parentId: task.parent_id,
-                  billable: !!task.billable
-              } as Task;
-          });
+                  taskPickerHook.setTaskPermissionsMap(permsMap);
 
-          taskPickerHook.setTaskPermissionsMap(permsMap);
+                  const taskTree = taskListToTaskTree(taskList);
 
-          const taskTree = taskListToTaskTree(taskList);
+                  taskPickerHook.setTaskList(taskList);
+                  taskPickerHook.setFullTaskTree(taskTree);
 
-          taskPickerHook.setTaskList(taskTree);
-          taskPickerHook.setFullTaskTree(taskTree);
+                  resolve(taskList);
+              });
       });
   };
 
@@ -340,7 +348,8 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
               id: task.task_id,
               name: task.name,
               parentId: task.parent_id,
-              billable: !!task.billable
+              billable: !!task.billable,
+              externalTaskId: task.external_task_id,
             } as Task;
           })
         );
@@ -391,14 +400,37 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
     );
   };
 
+
+    const setTaskForGivenExternalTaskId = (tasks) => {
+        if (props.presetTaskByExternalId !== null) {
+            for (const task of tasks) {
+                if (task.externalTaskId === props.presetTaskByExternalId) {
+                    taskPickerHook.selectTask(task);
+                    props.onTaskClick(task)
+                    props.onAutoDetectTaskForActiveBackendIntegration();
+                    return;
+                }
+            }
+            props.onNotFoundTaskForActiveBackendIntegration();
+        }
+    }
+
   React.useEffect(() => {
       if(props.userId !== 0) {
-          fetchAndPrepareRecentlyUsedTasks();
-          fetchFullTaskTree();
+          if(taskPickerHook.taskList.length === 0) {
+              fetchAndPrepareRecentlyUsedTasks();
+              fetchFullTaskTree().then((a) => {
+                  setTaskForGivenExternalTaskId(a);
+              });
+          } else {
+              setTaskForGivenExternalTaskId(taskPickerHook.taskList);
+          }
       }
-      
+  }, [props.userId, props.presetTaskByExternalId]);
+
+  React.useEffect(() => {
       taskPickerHook.selectTask(taskPickerHook.emptyTask);
-  }, [props.userId, props.clearTrigger]);
+  }, [props.clearTrigger]);
 
   React.useEffect(() => {
     if (taskPickerHook.searchText.length >= MIN_SEARCH_TEXT_LENGTH) {

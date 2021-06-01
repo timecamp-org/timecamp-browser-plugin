@@ -1,5 +1,10 @@
 [
   {
+    "matches": ["*://app.asana.com/*"],
+    "script": ["asana.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://docs.google.com/*"],
     "script": ["google-docs.js"],
     "isActiveInProd": true

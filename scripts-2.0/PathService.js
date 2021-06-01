@@ -91,4 +91,8 @@ export default class PathService {
     getFeatureFlagUrl() {
         return this.serverUrl + 'third_party/api/feature_flag';
     }
+    
+    hasIntegration() {
+        return this.serverUrl + 'chrome_plugin/api/has_integration';
+    }
 }

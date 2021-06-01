@@ -102,6 +102,32 @@ window.TcButton = {
                         });
                         break;
 
+                    case 'hasBackendIntegrationEnabled':
+                        TcButton.getCurrentRootGroup()
+                            .then((rootGroupId) => {
+                                let key = storageManager.buildKey([rootGroupId, request.integration, 'hasBackendIntegration']);
+                                storageManager.get(key).then((data) => {
+                                    if (data) {
+                                        resolve(data);
+                                    } else {
+                                        apiService.hasBackendIntegrationEnabled(
+                                            request.integration,
+                                        ).then((response) => {
+                                            storageManager.set(key, response)
+                                            resolve(response);
+                                        }).catch((error) => {
+                                            reject(error);
+                                        });
+                                    }
+                                }).catch((e) => {
+                                    reject(e);
+                                })
+                            })
+                            .catch((e) => {
+                                reject(e);
+                            });
+                        break;
+
                     case 'getDurationFormatFromStorage':
                         TcButton.getCurrentRootGroup()
                             .then((rootGroupId) => {

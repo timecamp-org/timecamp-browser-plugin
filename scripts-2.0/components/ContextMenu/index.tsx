@@ -16,6 +16,9 @@ export interface ContextMenuInterface {
     billable: boolean,
     startTimerCallback: Function,
     billableInputVisibility: boolean,
+    externalTaskId: string,
+    isBackendIntegration: boolean,
+    taskNotFoundInBackendIntegrationInfo: string,
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -33,6 +36,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const startTimerCallback = props.startTimerCallback;
     const [userId, setUserId] = useState<number>(0);
     const [clearTrigger, setClearTrigger] = useState<boolean>(false);
+    const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
+    const [isBackendIntegration, setIsBackendIntegration] = useState(props.isBackendIntegration);
+    const [noTaskFoundDisplayAlert, setNoTaskFoundDisplayAlert] = useState<boolean>(false);
+    const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
+        = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
 
     if (billableInputVisibility === null) {
         setBillableInputVisibility(true);
@@ -49,6 +57,9 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setBillable(props.billable);
         setBillableInputVisibility(props.billableInputVisibility);
         setService(props.service);
+        setExternalTaskId(props.externalTaskId);
+        setIsBackendIntegrationAndUserHasIntegration(props.isBackendIntegration);
+        setTaskNotFoundInBackendIntegrationInfo(props.taskNotFoundInBackendIntegrationInfo);
         setOpen(true);
         document.addEventListener("click", onClickOutside);
 
@@ -74,6 +85,19 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         });
     }, []);
 
+    const setIsBackendIntegrationAndUserHasIntegration = (isBackendIntegration) => {
+        if (isBackendIntegration === false) {
+            setIsBackendIntegration(false);
+        } else {
+            browser.runtime.sendMessage({
+                type: 'hasBackendIntegrationEnabled',
+                integration: service,
+            }).then((isBackendActiveIntegration) => {
+                setIsBackendIntegration(isBackendActiveIntegration);
+            });
+        }
+    }
+
     const onClickOutside = e => {
         const shouldStayOpen = node.current !== null && node.current.contains(e.target);
 
@@ -88,7 +112,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         startTimerCallback(
             taskId,
             note,
-            service
+            service,
+            externalTaskId
         ).then((response) => {
             //todo change backend to do startTimer and editEntry in one request
             browser.runtime.sendMessage({
@@ -142,9 +167,24 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         </React.Fragment>;
     }
 
+    const onNotFoundTaskForActiveBackendIntegration = () => {
+        setNoTaskFoundDisplayAlert(true);
+        setTaskId(0);
+        setClearTrigger(!clearTrigger);
+    }
+
+    const onAutoDetectTaskForActiveBackendIntegration = () => {
+        setNote('');
+        setNoTaskFoundDisplayAlert(false);
+    }
+
     return (
         <div ref={node} className={`context-menu  ${!open ? "context-menu--hidden" : ""}`}  style={props.position}>
             <Header />
+            {
+                isBackendIntegration && noTaskFoundDisplayAlert &&
+                <div className="context-menu__info-field">{taskNotFoundInBackendIntegrationInfo}</div>
+            }
             <TaskPicker
                 browser={browser}
                 onTaskClick={
@@ -153,8 +193,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                         setTaskId(task.id);
                     }
                 }
+                onNotFoundTaskForActiveBackendIntegration={onNotFoundTaskForActiveBackendIntegration}
+                onAutoDetectTaskForActiveBackendIntegration={onAutoDetectTaskForActiveBackendIntegration}
                 userId={userId}
                 clearTrigger={clearTrigger}
+                presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
             />
             {isTagModuleEnabled && renderTagPicker()}
             <Note
