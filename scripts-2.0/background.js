@@ -316,8 +316,8 @@ window.TcButton = {
             TcButton.getCurrentRootGroup()
                 .then((rootGroupId) => {
                     Promise.all([
-                        TcButton.loadAndSaveBillingSetting(GroupSetting.CHANGE_BILLING_FLAG, rootGroupId),
-                        TcButton.loadAndSaveGroupSetting(GroupSetting.HOURS_AND_MINUTES_FORMAT, rootGroupId)
+                        TcButton.loadAndSaveBillingSetting(rootGroupId),
+                        TcButton.loadAndSaveHoursAndMinutesFormatSetting(rootGroupId)
                     ]).then((response) => {
                         browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
                             if (tabs.length > 0) {
@@ -339,23 +339,36 @@ window.TcButton = {
         });
     },
 
-    loadAndSaveBillingSetting: (settingName, rootGroupId) => {
+    loadAndSaveBillingSetting: (rootGroupId) => {
         return new Promise((resolve, reject) => {
             //first check BUDGET feature flag
             apiService.getFeatureFlag(rootGroupId, FeatureFlag.BUDGET).then((response) => {
+                let key = storageManager.buildKey([rootGroupId, GroupSetting.CHANGE_BILLING_FLAG]);
                 if (response && response.enabled) {
-                    TcButton.loadAndSaveGroupSetting(GroupSetting.CHANGE_BILLING_FLAG, rootGroupId)
-                        .then((response) => {
-                            resolve(response);
+                    TcButton.loadGroupSetting(GroupSetting.CHANGE_BILLING_FLAG, rootGroupId)
+                        .then((canUserSeeBillableSwitch) => {
+                            if (!canUserSeeBillableSwitch) {
+                                apiService.me().then((response) => {
+                                    canUserSeeBillableSwitch = response.permissions.role_administrator;
+                                    storageManager.set(key, canUserSeeBillableSwitch).then(() => {
+                                        resolve();
+                                    });
+                                    resolve(canUserSeeBillableSwitch);
+                                }).catch((error) => {
+                                    reject(error);
+                                });
+                            } else {
+                                storageManager.set(key, canUserSeeBillableSwitch).then(() => {
+                                    resolve();
+                                });
+                                resolve(canUserSeeBillableSwitch);
+                            }
                         })
                         .catch((e) => {
                             reject(e);
                         });
                 } else {
-                    storageManager.set(
-                        storageManager.buildKey([rootGroupId, GroupSetting.CHANGE_BILLING_FLAG]),
-                        false
-                    ).then(() => {
+                    storageManager.set(key, false).then(() => {
                         resolve();
                     });
                 }
@@ -365,7 +378,24 @@ window.TcButton = {
         });
     },
 
-    loadAndSaveGroupSetting: (settingName, rootGroupId) => {
+    loadAndSaveHoursAndMinutesFormatSetting: (rootGroupId) => {
+        return new Promise((resolve, reject) => {
+            TcButton.loadGroupSetting(GroupSetting.HOURS_AND_MINUTES_FORMAT, rootGroupId)
+                .then((data) => {
+                    storageManager.set(
+                        storageManager.buildKey([rootGroupId, GroupSetting.HOURS_AND_MINUTES_FORMAT]),
+                        data
+                    ).then(() => {
+                        resolve(data);
+                    });
+                })
+                .catch((e) => {
+                    reject(e);
+                });
+        });
+    },
+
+    loadGroupSetting: (settingName, rootGroupId) => {
         return new Promise((resolve, reject) => {
             apiService.getGroupSetting(settingName, rootGroupId)
                 .then((response) => {
@@ -385,13 +415,7 @@ window.TcButton = {
                                 data = response.value;
                         }
                     }
-
-                    storageManager.set(
-                        storageManager.buildKey([rootGroupId, settingName]),
-                        data
-                    ). then(() => {
-                        resolve();
-                    });
+                    resolve(data);
                 })
                 .catch((e) => {
                     reject(e);
