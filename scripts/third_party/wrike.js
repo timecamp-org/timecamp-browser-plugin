@@ -274,31 +274,6 @@ $(document).ready(function () {
     console.log("timecamp", "started wrike");
     WrikeTimer.prototype = new TimerBase();
     timer = new WrikeTimer();
-    var fixHeader = function() {
-        chrome.storage.sync.get({"isSidebarEnabled": true}, function (items)
-        {
-            if (items['isSidebarEnabled']) {
-                var headerElem = $("header#header");
-                if (headerElem.length > 0) {
-                    headerElem.css("width", "calc(100% - 50px");
-                } else {
-                    setTimeout(fixHeader, 300);
-                }
-            }
-        });
-    };
-
-    fixHeader();
 });
-
-Sidebar.cssUpdate = [
-    {
-        selector: "#ext-gen3",
-        property: "margin-left",
-        value   : "50px"
-    }
-];
-Sidebar.clickBindSelector = ["body"];
-Sidebar.appendSelector = "body";
 
 Service = "wrike";

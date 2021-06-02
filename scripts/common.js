@@ -137,21 +137,7 @@ $(document).ready(function() {
             request.setRequestHeader("Accept", "application/json");
         }
     });
-
-    var interceptor = document.createElement('script');
-    interceptor.src = chrome.extension.getURL('scripts/interceptHistoryChanges.js');
-    interceptor.type ='text/javascript';
-
-    document.body.appendChild(interceptor);
 });
-
-toggleSidebarEnabled = function(value)
-{
-    chrome.storage.sync.set({"isSidebarEnabled": value});
-};
-
-
-
 
 Messages = {
     buttonTimerStopping                 : chrome.i18n.getMessage('BUTTON_TIMER_STOPPING'),
@@ -171,8 +157,6 @@ Messages = {
 
 var TokenManager    = new TokenManager();
 var ApiService      = new ApiService();
-var ChartService    = new ChartService();
-var Sidebar         = new Sidebar();
 var ButtonList      = {};
 var Service         = "ChromePlugin";
 
