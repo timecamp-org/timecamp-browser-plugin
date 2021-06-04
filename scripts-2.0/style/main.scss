@@ -15,7 +15,7 @@
     height: auto;
     display: inline-block;
     vertical-align: middle;
-    
+
     text {
       font-family: $defaultFontFamily!important;
     }
@@ -136,6 +136,7 @@
 @import "teamleader";
 @import "testrail";
 @import "ticktick";
+@import "todoist";
 @import "toggl-plan";
 @import "toodledo";
 @import "trac";

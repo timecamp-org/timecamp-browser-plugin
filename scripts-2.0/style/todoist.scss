@@ -1,0 +1,19 @@
+.tc-button.todoist {
+  &__task-view {
+    margin-left: 5px;
+    svg {
+      width: 110px;
+    }
+  }
+
+  &__task-list {
+    margin: 0 0 0 10px;
+    background-color: inherit;
+    svg {
+      width: 24px;
+    }
+  }
+
+  &__task-board {
+  }
+}
