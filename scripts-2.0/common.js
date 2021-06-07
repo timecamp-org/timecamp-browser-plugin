@@ -188,9 +188,13 @@ window.tcbutton = {
         return tcbutton.topPosition(elemRect, width, height);
     },
 
-    createContainer: function () {
+    createContainer: function (className) {
         const div = document.createElement('div');
         const container = document.body;
+
+        if(className) {
+            div.classList.add(className);
+        }
 
         return container.appendChild(div)
     },
@@ -233,7 +237,7 @@ window.tcbutton = {
     ) => {
         const position = tcbutton.getPosition(312, 361)
         if (tcbutton.loginFormContainer === null) {
-            tcbutton.loginFormContainer = tcbutton.createContainer();
+            tcbutton.loginFormContainer = tcbutton.createContainer('timecamp');
         }
 
         ReactDOM.render(

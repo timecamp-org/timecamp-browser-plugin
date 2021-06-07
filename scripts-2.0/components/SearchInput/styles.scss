@@ -3,37 +3,39 @@
 $backgroundColor: #f8f8f8;
 $fontColor: #8a8a8a;
 
-.SearchInput {
-  position: relative;
-  color: $fontColor;
-}
-
-.SearchInput__icon {
-  position: absolute;
-  height: 100%;
-  left: 15px;
-}
-
-.SearchInput__input {
-  border: 1px solid;
-  border-color: $backgroundColor;
-  background: $backgroundColor;
-  border-radius: $defaultBorderRadius;
-  outline: none;
-  font-size: 14px;
-  width: calc(100% - 30px);
-  color: $primaryTextColor;
-  padding: 10px 15px;
-
-  &:hover, &:focus {
-    border-color: $hoverBorderColor;
+.timecamp {
+  .SearchInput {
+    position: relative;
+    color: $fontColor;
   }
 
-  &:active, &:focus {
-    border-color: $primaryColor;
+  .SearchInput__icon {
+    position: absolute;
+    height: 100%;
+    left: 15px;
   }
 
-  &--with-icon {
-    padding: 10px 15px 10px 40px;
+  .SearchInput__input {
+    border: 1px solid;
+    border-color: $backgroundColor;
+    background: $backgroundColor;
+    border-radius: $defaultBorderRadius;
+    outline: none;
+    font-size: 14px;
+    width: calc(100% - 30px);
+    color: $primaryTextColor;
+    padding: 10px 15px;
+
+    &:hover, &:focus {
+      border-color: $hoverBorderColor;
+    }
+
+    &:active, &:focus {
+      border-color: $primaryColor;
+    }
+
+    &--with-icon {
+      padding: 10px 15px 10px 40px;
+    }
   }
 }

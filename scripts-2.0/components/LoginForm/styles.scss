@@ -1,11 +1,12 @@
 @import '../../style/common';
 
-.loginForm {
+.timecamp {
+  .loginForm {
     &__login {
       display: block;
       margin: auto;
     }
-  
+
     input {
       display: block;
       border: 1px solid $primaryBorderColor;
@@ -14,14 +15,15 @@
       height: 29px;
       padding-left: 8px;
     }
-  
+
     &__password {
     }
-  
+
     &__button-login {
       background-color: $buttonActiveColor;
       color: $buttonActiveTextColor;
       border: none;
       border-radius: $defaultBorderRadius;
     }
+  }
 }

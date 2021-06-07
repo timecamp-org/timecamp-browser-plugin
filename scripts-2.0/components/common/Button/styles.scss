@@ -1,13 +1,15 @@
 @import '../../../style/common';
 
-.button {
-  width: 81px;
-  height: 39px;
-  margin: 0 10px 0 0;
-  padding: 10px 8px 10px 9px;
-  border-radius: 8px;
-  background-color: $buttonColor;
-  color: $buttonTextColor;
-  outline: none;
-  cursor: pointer;
+.timecamp {
+  .button {
+    width: 81px;
+    height: 39px;
+    margin: 0 10px 0 0;
+    padding: 10px 8px 10px 9px;
+    border-radius: 8px;
+    background-color: $buttonColor;
+    color: $buttonTextColor;
+    outline: none;
+    cursor: pointer;
+  }
 }

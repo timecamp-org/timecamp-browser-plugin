@@ -1,37 +1,39 @@
 @import '../../style/common';
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  margin: 0 0 0 -20px;
-  padding: 20px 0 20px 0;
-  width: 100%;
-  border-top: $primaryBorderColor 1px solid;
-  background-color: inherit;
+.timecamp {
+  .footer {
+    position: absolute;
+    bottom: 0;
+    margin: 0 0 0 -20px;
+    padding: 20px 0 20px 0;
+    width: 100%;
+    border-top: $primaryBorderColor 1px solid;
+    background-color: inherit;
 
-  &__buttons {
-    float: right;
-    margin: 0 21px 0 0;
-  }
+    &__buttons {
+      float: right;
+      margin: 0 21px 0 0;
+    }
 
-  &__button-save {
-    background-color: $buttonActiveColor;
-    color: $buttonActiveTextColor;
-    border: none;
-    font-family: $defaultFontFamily;
-    font-size: $defaultFontSize;
-    width: 133px;
-  }
+    &__button-save {
+      background-color: $buttonActiveColor;
+      color: $buttonActiveTextColor;
+      border: none;
+      font-family: $defaultFontFamily;
+      font-size: $defaultFontSize;
+      width: 133px;
+    }
 
-  &__button-cancel {
-    border: solid 1px $primaryBorderColor;
-    font-family: $defaultFontFamily;
-    font-size: $defaultFontSize;
-  }
+    &__button-cancel {
+      border: solid 1px $primaryBorderColor;
+      font-family: $defaultFontFamily;
+      font-size: $defaultFontSize;
+    }
 
-  &__button-disabled {
-    background-color: $buttonDisabledColor;
-    color: $disabledFontColor;
-    cursor: not-allowed;
+    &__button-disabled {
+      background-color: $buttonDisabledColor;
+      color: $disabledFontColor;
+      cursor: not-allowed;
+    }
   }
 }

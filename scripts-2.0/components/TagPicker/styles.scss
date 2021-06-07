@@ -1,150 +1,154 @@
 @import '../../style/common';
 
-.TagPicker {
-  &__dropdown {
-    &__invalid {
-      .Dropdown__button {
-        border-color: $redOrangeColor;
-        
-        &-text span {
+.timecamp {
+  .TagPicker {
+    &__dropdown {
+      &__invalid {
+        .Dropdown__button {
+          border-color: $redOrangeColor;
+
+          &-text span {
+            color: $redOrangeColor;
+          }
+        }
+
+        .Dropdown__icon-box svg {
           color: $redOrangeColor;
         }
       }
-
-      .Dropdown__icon-box svg {
-        color: $redOrangeColor;
-      }
     }
   }
-}
 
-.TagPicker__dropdown {
-  max-width: 410px;;
-}
-
-.TagPicker__content {
-  -webkit-box-shadow: 0 6px 32px hsla(0,0%,70%,.5)!important;
-  box-shadow: 0 6px 32px hsla(0,0%,70%,.5)!important;
-  border-radius: 8px;
-  box-shadow: 0 6px 32px 0 var(--white-five);
-  background-color: var(--white);
-  font-family: Poppins;
-  width: 100%;
-  background-color: #ffffff;
-  color: $primaryTextColor;
-}
-
-.TagPicker__invalid {
-  color :$redOrangeColor;
-  padding: 7px 3px;
-  font-family: Poppins;
-  font-size: 14px;
-}
-
-.TagPicker__list {
-  padding: 15px;
-  max-height: 40vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.TagPicker__search_container {
-  padding: 15px 15px 0 15px;
-  margin-bottom: 5px;
-}
-
-.TagPicker__label {
-  font-size: 12px;
-  font-weight: bold;
-  color: $labelFontColor;
-  text-transform: uppercase;
-}
-
-.TagPicker__TagList {
-  padding: 10px 0px;
-  font-size: 12px;
-}
-
-.TagPicker__TagList__label {
-  font-family: Poppins;
-  font-size: 14px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-
-  &__disabled {
-    color: $disabledFontColor;
+  .TagPicker__dropdown {
+    max-width: 410px;;
   }
-}
 
-.TagPicker__TagRow {
-  margin-left: 10px;
-  padding: 3px 10px;
-  font-size: 14px;
-  font-weight: 400;
-}
+  .TagPicker__content {
+    -webkit-box-shadow: 0 6px 32px hsla(0, 0%, 70%, .5) !important;
+    box-shadow: 0 6px 32px hsla(0, 0%, 70%, .5) !important;
+    border-radius: 8px;
+    box-shadow: 0 6px 32px 0 var(--white-five);
+    background-color: var(--white);
+    font-family: Poppins;
+    width: 100%;
+    background-color: #ffffff;
+    color: $primaryTextColor;
+  }
 
-.TagPicker__TagList__label, .TagPicker__TagRow__label {
-  cursor: pointer;
-}
+  .TagPicker__invalid {
+    color: $redOrangeColor;
+    padding: 7px 3px;
+    font-family: Poppins;
+    font-size: 14px;
+  }
 
-.TagPicker__mandatory {
-  width: 68px;
-  height: 17px;
-  margin-left: 8px;
-  padding: 3px 5px 2px 5px;
-  border-radius: 11px;
-  border: solid 1px $redOrangeColor;
-  color: $redOrangeColor;
-  display: inline-block;
-  text-align: center;
-  font-size: 12px;
-  font-weight: normal;
-}
+  .TagPicker__list {
+    padding: 15px;
+    max-height: 40vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
 
-.TagPicker__button_container {
-  width: calc(100% - 30px);
-  padding: 15px;
-  border-top: 1px solid #d8d8d8;
-}
+  .TagPicker__search_container {
+    padding: 15px 15px 0 15px;
+    margin-bottom: 5px;
+  }
 
-.TagPicker__button {
-  background-color: $algaeColor;
-  color: white;
-  padding: 10px;
-  font-size: 14px;
-  text-align: center;
-  font-size: 14px;
-  border-radius: 8px;
-  font-family: Poppins;
-  cursor: pointer;
-}
+  .TagPicker__label {
+    font-size: 12px;
+    font-weight: bold;
+    color: $labelFontColor;
+    text-transform: uppercase;
+  }
 
-.Test {
-  margin: 100px 100px; border: 1px solid black; width: 100px;
-}
+  .TagPicker__TagList {
+    padding: 10px 0px;
+    font-size: 12px;
+  }
 
-.TagPicker__not_found {
-  text-align: center;
-  margin: 20px;
-}
+  .TagPicker__TagList__label {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
 
-.TagPicker__not_found_image {
-  width: 176px;
-  height: 137px;
-}
+    &__disabled {
+      color: $disabledFontColor;
+    }
+  }
 
-.TagPicker__not_found_text {
-  height: 26px;
-  font-family: Poppins;
-  font-size: 14px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
-  color: $primaryTextColor;
+  .TagPicker__TagRow {
+    margin-left: 10px;
+    padding: 3px 10px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .TagPicker__TagList__label, .TagPicker__TagRow__label {
+    cursor: pointer;
+  }
+
+  .TagPicker__mandatory {
+    width: 68px;
+    height: 17px;
+    margin-left: 8px;
+    padding: 3px 5px 2px 5px;
+    border-radius: 11px;
+    border: solid 1px $redOrangeColor;
+    color: $redOrangeColor;
+    display: inline-block;
+    text-align: center;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  .TagPicker__button_container {
+    width: calc(100% - 30px);
+    padding: 15px;
+    border-top: 1px solid #d8d8d8;
+  }
+
+  .TagPicker__button {
+    background-color: $algaeColor;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 8px;
+    font-family: Poppins;
+    cursor: pointer;
+  }
+
+  .Test {
+    margin: 100px 100px;
+    border: 1px solid black;
+    width: 100px;
+  }
+
+  .TagPicker__not_found {
+    text-align: center;
+    margin: 20px;
+  }
+
+  .TagPicker__not_found_image {
+    width: 176px;
+    height: 137px;
+  }
+
+  .TagPicker__not_found_text {
+    height: 26px;
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: $primaryTextColor;
+  }
 }
