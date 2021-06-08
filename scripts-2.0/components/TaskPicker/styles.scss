@@ -116,7 +116,6 @@ ul.TaskPicker__TcUiClearedUl li {
   white-space: nowrap;
   word-break: break-all;
   overflow: hidden;
-  padding: 2px 0px;
 }
 
 .TaskPicker__list > .TaskPicker__TcUiClearedUl > li {
@@ -141,6 +140,8 @@ ul.TaskPicker__TcUiClearedUl li {
   width: 100%;
   background-color: #ffffff;
   width: 100%;
+  height: 500px;
+  overflow-y: auto;
 }
 
 .TaskPicker__content_box {
