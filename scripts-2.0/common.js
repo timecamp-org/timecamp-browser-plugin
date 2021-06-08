@@ -192,7 +192,7 @@ window.tcbutton = {
         const div = document.createElement('div');
         const container = document.body;
 
-        if(className) {
+        if (className) {
             div.classList.add(className);
         }
 
