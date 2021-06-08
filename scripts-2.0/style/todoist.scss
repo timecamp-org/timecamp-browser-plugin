@@ -15,5 +15,26 @@
   }
 
   &__task-board {
+    opacity: 0;
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    &.active {
+      opacity: 1;
+    }
+  }
+}
+
+.board_task {
+  .board_task__details__content {
+    margin-right: 44px;
+  }
+  &:hover {
+    .tc-button.todoist {
+      &__task-board {
+        opacity: 1;
+        right: 30px;
+      }
+    }
   }
 }

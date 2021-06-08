@@ -10,7 +10,7 @@ const buildExternalIdForAsana = (taskId) => {
 //Task view
 tcbutton.render(
     '.item_overview_sub:not(.tc)',
-    {observe: true,},
+    {observe: true},
     elem => {
         const description = () => elem.dataset.itemContent || '';
         const taskId = $$('.reactist_modal_box .sub_items_tab_container .items:first-child')[0].dataset.subitemListId;
@@ -35,7 +35,7 @@ tcbutton.render(
 //List view
 tcbutton.render(
     '.task_list_item .task_list_item__actions:not(.tc)',
-    {observe: true,},
+    {observe: true},
     elem => {
         if ($('.tc-button', elem)) {
             return;
@@ -68,7 +68,7 @@ tcbutton.render(
 //Board view
 tcbutton.render(
     '.board_section__task_list .board_task:not(.tc)',
-    {observe: true,},
+    {observe: true},
     elem => {
         const externalTaskId = buildExternalIdForAsana(elem.dataset.selectionId);
         if (!externalTaskId) {
@@ -88,6 +88,6 @@ tcbutton.render(
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
-        $('.board_task__details__menu_assignee', elem).appendChild(link);
+        $('.board_task__details__content', elem).insertAdjacentElement('afterend', link);
     }
 );
