@@ -3,7 +3,7 @@
 const TODOIST = 'todoist';
 const TASK_NOT_FOUND_INFO = 'todoist_task_not_found_in_backend_integration_info';
 
-const buildExternalIdForAsana = (taskId) => {
+const buildExternalIdForTodoist = (taskId) => {
     return TODOIST + '_' + taskId
 }
 
@@ -14,7 +14,7 @@ tcbutton.render(
     elem => {
         const description = () => elem.dataset.itemContent || '';
         const taskId = $$('.reactist_modal_box .sub_items_tab_container .items:first-child')[0].dataset.subitemListId;
-        const externalTaskId = buildExternalIdForAsana(taskId);
+        const externalTaskId = buildExternalIdForTodoist(taskId);
 
         if (!externalTaskId) {
             return;
@@ -43,7 +43,7 @@ tcbutton.render(
 
         let listItem = elem.closest('.task_list_item');
 
-        const externalTaskId = buildExternalIdForAsana(listItem.dataset.itemId);
+        const externalTaskId = buildExternalIdForTodoist(listItem.dataset.itemId);
         if (!externalTaskId) {
             return;
         }
@@ -70,7 +70,7 @@ tcbutton.render(
     '.board_section__task_list .board_task:not(.tc)',
     {observe: true},
     elem => {
-        const externalTaskId = buildExternalIdForAsana(elem.dataset.selectionId);
+        const externalTaskId = buildExternalIdForTodoist(elem.dataset.selectionId);
         if (!externalTaskId) {
             return;
         }
