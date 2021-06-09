@@ -49,7 +49,7 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
             setErrorMessageVisible(true);
         });
     };
-    
+
     const clearForm = () => {
         setLogin('');
         setPassword('');
@@ -63,7 +63,7 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
             <div className={`loginWindow__error-div  ${!errorMessageVisible ? "loginWindow__error-div--hidden" : ""}`}>
                 {translate('incorrect_login_or_password')}
             </div>
-            <LoginForm 
+            <LoginForm
                 login={login}
                 password={password}
                 onLoginClick={onLoginClick}

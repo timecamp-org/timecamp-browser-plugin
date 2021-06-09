@@ -2,8 +2,9 @@ $redOrangeColor: #ff3c00;
 $algaeColor: #4bb063;
 $whiteThreeColor: #dbdbdb;
 
-/* The Checkbox */
-.Checkbox {
+.timecamp {
+  /* The Checkbox */
+  .Checkbox {
     $self: &;
     padding: 6px;
     display: block;
@@ -16,18 +17,19 @@ $whiteThreeColor: #dbdbdb;
     -ms-user-select: none;
     user-select: none;
     display: inline-block;
+
     &--invalid {
       .Checkbox__checkmark {
         border-color: $redOrangeColor;
       }
     }
   }
-  
+
   .Checkbox--disabled .Checkbox__checkmark {
     cursor: not-allowed;
 
   }
-  
+
   /* Hide the browser's default checkbox */
   .Checkbox input {
     position: absolute;
@@ -36,7 +38,7 @@ $whiteThreeColor: #dbdbdb;
     height: 0;
     width: 0;
   }
-  
+
   /* Create a custom checkbox */
   .Checkbox__checkmark {
     position: absolute;
@@ -51,7 +53,7 @@ $whiteThreeColor: #dbdbdb;
     border-radius: 2px;
     border-color: $whiteThreeColor;
   }
-  
+
   .Checkbox__middleCheckmark {
     position: absolute;
     top: 0;
@@ -65,24 +67,24 @@ $whiteThreeColor: #dbdbdb;
     border-radius: 2px;
     z-index: 1;
   }
-  
+
   /* Create the Checkbox__checkmark/indicator (hidden when not checked) */
   .Checkbox__checkmark:after, .Checkbox__middleCheckmark:after {
     content: "";
     position: absolute;
     display: none;
   }
-  
+
   /* Show the Checkbox__checkmark when checked */
   .Checkbox input:checked ~ .Checkbox__checkmark:after {
     display: block;
   }
-  
+
   .Checkbox input:checked ~ .Checkbox__checkmark {
     background-color: $algaeColor;
     border: 1px solid $algaeColor;
   }
-  
+
   /* Style the Checkbox__checkmark/indicator */
   .Checkbox .Checkbox__checkmark:after {
     left: 4px;
@@ -95,7 +97,7 @@ $whiteThreeColor: #dbdbdb;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-  
+
   .Checkbox .Checkbox__middleCheckmark:after {
     display: block;
     left: 4px;
@@ -108,4 +110,4 @@ $whiteThreeColor: #dbdbdb;
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
   }
-  
+}
