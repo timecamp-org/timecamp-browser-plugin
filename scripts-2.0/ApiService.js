@@ -34,7 +34,7 @@ export default class ApiService {
             const method = opts.method || METHOD_GET;
             const apiToken = opts.apiToken;
             let url = opts.url;
-            
+
             if (opts.queryStringParams) {
                 let queryStringParams = new URLSearchParams(opts.queryStringParams).toString();
                 url = url + '?' + queryStringParams
@@ -90,7 +90,7 @@ export default class ApiService {
             let body;
             if (opts.bodyAsQueryString === true) {
                 let payload = opts.payload;
-                body = Object.keys(payload).map(key => key + '=' + payload[key]).join('&')
+                body = Object.keys(payload).map(key => key + '=' + encodeURIComponent(payload[key])).join('&')
             } else {
                 body = JSON.stringify(opts.payload);
             }

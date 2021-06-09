@@ -165,7 +165,7 @@ window.tcbutton = {
             tcbutton.onTimerButtonClick(
                 e,
                 button,
-                description,
+                invokeIfFunction(params.description),
                 externalTaskId,
                 isBackendIntegration,
                 taskNotFoundInBackendIntegrationInfo

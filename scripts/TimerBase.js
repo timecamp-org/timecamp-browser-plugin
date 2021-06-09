@@ -486,7 +486,6 @@ function TimerBase() {
         $(document).on('click', '.timecamp-track-button', $this.buttonClick);
         $(document).on('click', '#timecamp-track-button', $this.buttonClick);
         $(document).on('click', '#timecamp-track-button-new', $this.buttonClick);
-        $(document).on('click', '#tc-sidebar-start-button', $this.buttonClick);
         $(document).on('showTimer', $this.handleShowTimer);
         $(document).on('hideTimer', $this.handleHideTimer);
 

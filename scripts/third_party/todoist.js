@@ -174,19 +174,4 @@ $(document).ready(function () {
     timer = new TodoistTimer();
 });
 
-Sidebar.cssUpdate = [
-    {
-        selector: "#todoist_app",
-        property: "padding-left",
-        value: "15px"
-    },
-    {
-        selector: "#left_menu",
-        property: "padding-left",
-        value: "50px"
-    }
-];
-Sidebar.clickBindSelector = ["body"];
-Sidebar.appendSelector = "body";
-
 Service = "todoist";

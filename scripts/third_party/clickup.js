@@ -1,6 +1,5 @@
 function ClickupTimer () {
     var $this = this;
-    this.isSidebarEnabled = false;
     this.timeFormat = 'classic';
 
     Messages.set('buttonTimerStopped', 'BUTTON_TIMER_STOPPED');
@@ -199,8 +198,5 @@ $(document).ready(function () {
     ClickupTimer.prototype = new TimerBase();
     timer = new ClickupTimer();
 });
-
-Sidebar.clickBindSelector = ["body"];
-Sidebar.appendSelector = "body";
 
 Service = "clickup";

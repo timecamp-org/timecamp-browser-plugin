@@ -251,32 +251,9 @@ function TeamworkTimer() {
     this.bindEvents(this);
 }
 
-$(document).on('scroll', function () {setTimeout(function () {
-    var sd = $(".sidebarHolder");
-    if (sd.css('position') == 'fixed')
-        sd.css('margin-left','50px');
-    else
-        sd.css('margin-left','0');
-})});
-
 $(document).ready(function () {
     TeamworkTimer.prototype = new TimerBase();
     timer = new TeamworkTimer();
 });
-
-Sidebar.cssUpdate = [
-    {
-        selector: "body",
-        property: "margin-left",
-        value   : "50px"
-    },
-    {
-        selector: "sidebarHolder",
-        property: "left",
-        value   : "50px"
-    }
-];
-Sidebar.clickBindSelector = ["body"];
-Sidebar.appendSelector = "body";
 
 Service = "teamwork";
