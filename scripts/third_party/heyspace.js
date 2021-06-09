@@ -186,7 +186,4 @@ $(document).ready(function () {
 });
 
 
-Sidebar.clickBindSelector = ["body"];
-Sidebar.appendSelector = "body";
-
 Service = "heyspace";

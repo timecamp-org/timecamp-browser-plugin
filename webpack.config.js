@@ -92,7 +92,7 @@ module.exports = (env, argv) => {
             // Creates `style` nodes from JS strings
             "style-loader",
             // Translates CSS into CommonJS
-            "css-loader",            
+            "css-loader",
             // Compiles Sass to CSS
             "sass-loader",
           ]
@@ -136,10 +136,6 @@ module.exports = (env, argv) => {
           ...copy({
             from: 'styles/',
             to: 'styles/'
-          }),
-          ...copy({
-            from: 'templates/',
-            to: 'templates/'
           }),
           ...copy({
             from: 'scripts/',
@@ -206,7 +202,7 @@ function transformManifest(isDebug = false) {
       ...manifest.permissions,
       ENV.SERVER_PROTOCOL + '://*.' + ENV.SERVER_DOMAIN + '/*'
     ];
-    
+
     manifest.content_scripts = [
       ...manifest.content_scripts,
       ...ManifestBuilder.build(isDebug)

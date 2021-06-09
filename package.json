@@ -27,14 +27,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/timecamp/timecamp-chrome-extension.git"
+    "url": "git+https://github.com/timecamp-org/timecamp-browser-plugin.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/timecamp/timecamp-chrome-extension/issues"
+    "url": "https://github.com/timecamp-org/timecamp-browser-plugin/issues"
   },
-  "homepage": "https://github.com/timecamp/timecamp-chrome-extension#readme",
+  "homepage": "https://github.com/timecamp-org/timecamp-browser-plugin#readme",
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-transform-react-jsx": "^7.12.17",

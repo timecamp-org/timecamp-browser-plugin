@@ -334,20 +334,6 @@ function PodioTimer() {
         }
     });
 
-    $(document).on('tcTimerStopped', function(event, args) {
-        var currentTaskId = $this.currentTaskId();
-        if (currentTaskId != $this.timerButton.taskId) {
-            Sidebar.onTaskChange(
-                "tcTaskChangeDetected",
-                {
-                    externalTaskId: currentTaskId,
-                    taskId: currentTaskId,
-                    taskName: $this.currentTaskName()
-                }
-            );
-        }
-    });
-
     this.bindEvents(this);
 }
 
@@ -355,43 +341,5 @@ $(document).ready(function () {
     PodioTimer.prototype = new TimerBase();
     timer = new PodioTimer();
 });
-
-Sidebar.cssUpdate = [
-    {
-        selector: "#global-container",
-        property: "margin-left",
-        value   : "50px"
-    },{
-        selector: ".global-container",
-        property: "margin-left",
-        value   : "50px"
-    },{
-        selector: ".content-container",
-        property: "margin-left",
-        value   : "50px"
-    },
-    {
-        selector: "#header-global",
-        property: "margin-left",
-        value   : "50px"
-    },
-    {
-        selector: ".space-switcher-sidebar",
-        property: "margin-left",
-        value   : "50px"
-    },
-    {
-        selector: ".footer-global",
-        property: "margin-left",
-        value   : "50px"
-    },
-    {
-        selector: ".item-topbar",
-        property: "left",
-        value   : "50px"
-    }
-];
-Sidebar.clickBindSelector = [".global-container",'body'];
-Sidebar.appendSelector = "body";
 
 Service = "podio";

@@ -237,19 +237,4 @@ $(document).ready(function () {
     timer.timeFetchMethod = timer.timeFetchMethods.FOR_SUBTASKS;
 });
 
-Sidebar.cssUpdate = [
-    {
-        selector: "body",
-        property: "padding-left",
-        value: "50px"
-    },
-    {
-        selector: "#boards-drawer .boards-drawer",
-        property: "margin-left",
-        value: "50px"
-    }
-];
-Sidebar.clickBindSelector = ["#surface"];
-Sidebar.appendSelector = "#surface";
-
 Service = "trello";

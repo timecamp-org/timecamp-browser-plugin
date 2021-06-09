@@ -13,10 +13,6 @@ function refreshPopup(loggedIn, statusText, statusFlag)
         for (tab in tabs) {
             var a = document.createElement('a');
             a.href = tabs[tab].url;
-            if (a.hostname == 'app.hey.space') {
-                $("#displaySidebarOption").hide();
-                break;
-            }
         }
     });
 
@@ -44,20 +40,6 @@ function refreshPopup(loggedIn, statusText, statusFlag)
 }
 
 $(document).ready(function () {
-
-    $('#displaySidebarCheckbox').unbind('click').click(function () {
-        toggleSidebarEnabled($(this).is(":checked"));
-        refreshPopup(null, chrome.i18n.getMessage("PLEASE_REFRESH"));
-    });
-
-    chrome.storage.sync.get({"isSidebarEnabled": true}, function (items)
-    {
-        if (!items['isSidebarEnabled'])
-            $('#displaySidebarCheckbox').removeAttr('checked');
-        else
-            $('#displaySidebarCheckbox').attr('checked','checked');
-    });
-
     $("#login-form").submit(function (event) {
         event.preventDefault();
         var data = $(this).serializeArray().reduce(function(obj, item) {

@@ -359,19 +359,4 @@ $(document).ready(function () {
     timer = new MondayTimer();
 });
 
-Sidebar.cssUpdate = [
-    {
-        selector: "body",
-        property: "padding-left",
-        value: "50px"
-    },
-    {
-        selector: "#boards-drawer .boards-drawer",
-        property: "margin-left",
-        value: "50px"
-    }
-];
-Sidebar.clickBindSelector = ["#main"];
-Sidebar.appendSelector = "#main";
-
 Service = "monday";

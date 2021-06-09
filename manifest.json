@@ -27,10 +27,10 @@
                 "*://blog.trello.com/*",
                 "*://help.trello.com/*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/trello.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
                 "scripts/third_party/trello.js"]
         },
         {
@@ -42,10 +42,10 @@
                 "*://podio.com/site/*",
                 "*://podio.com/login*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/podio.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
             "scripts/third_party/podio.js"]
         },
         {
@@ -57,10 +57,10 @@
                 "*://happines.teamwork.com/*",
                 "*://developer.teamwork.com/*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/teamwork.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
             "scripts/third_party/teamwork.js"]
         },
         {
@@ -71,10 +71,10 @@
                 "*://api.insight.ly/*",
                 "*://support.insight.ly/*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/insightly.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
             "scripts/third_party/insightly.js"]
         },
         {
@@ -85,40 +85,40 @@
                 "*://api.insight.ly/*",
                 "*://support.insight.ly/*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/insightly.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
                 "scripts/third_party/insight.ly.js"]
         },
         {
                 "matches": [
                     "*://*.wrike.com/workspace.htm*"
                 ],
-                "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+                "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                     "styles/sites/wrike.css"],
-                "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                    "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+                "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                    "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
                     "scripts/third_party/wrike.js"]
         },
         {
             "matches": [
                 "*://app.hey.space/projects/*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/heyspace.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
                 "scripts/third_party/heyspace.js"]
         },
         {
             "matches": [
                 "*://app.clickup.com/*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/clickup.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
                 "scripts/third_party/clickup.js"]
         },
         {
@@ -128,10 +128,10 @@
             "exclude_matches" : [
                 "*://developers.monday.com/*"
             ],
-            "css": ["styles/common.css", "styles/sidebar.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
+            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
                 "styles/sites/monday.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
                 "scripts/third_party/monday.js"]
         }
     ],
@@ -144,8 +144,8 @@
         "https://*.timecamp.com/*"
     ],
     "background": {
-        "scripts": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js", "scripts/lib/Chart.js", "scripts/lib/ICanHaz.min.js",
-          "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/ChartService.js", "scripts/sidebar.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
+        "scripts": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
+          "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
           "scripts/background.js"],
         "persistent": false
     },

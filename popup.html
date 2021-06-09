@@ -88,87 +88,11 @@
         .web-app-link:visited {
             color: #1d68dc;
         }
-
-        .displaySidebarCheckboxContainer {
-            display: block;
-            position: relative;
-            padding-left: 21px;
-            margin-bottom: 25px;
-            cursor: pointer;
-            font-size: 12px;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        .displaySidebarCheckboxContainer input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-
-        .displaySidebarCheckboxContainer .checkmark {
-            position: absolute;
-            top: 3px;
-            left: 0;
-            height: 13px;
-            width: 13px;
-            background-color: #eee;
-            border-radius: 2px;
-        }
-
-        .displaySidebarCheckboxContainer:hover input ~ .checkmark {
-            background-color: #ccc;
-        }
-
-        .checkmark:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-
-        .displaySidebarCheckboxContainer input:checked ~ .checkmark:after {
-            display: block;
-        }
-
-        .displaySidebarCheckboxContainer .checkmark:after {
-            left: 4px;
-            top: 2px;
-            width: 3px;
-            height: 6px;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            -webkit-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-            transform: rotate(45deg);
-        }
-
-        .displaySidebarCheckboxContainer input:checked ~ .checkmark {
-            background-color: #4bb063;
-        }
-
-        .displaySidebarCheckboxContainer input:checked ~ .checkmark:after {
-            display: block;
-        }
-
-        #displaySidebarCheckbox {
-            vertical-align: bottom;
-            display: inline-block;
-            float: left;
-            width: auto;
-        }
     </style>
     <script src="scripts/lib/jquery-2.1.1.min.js"></script>
-    <script src="scripts/lib/Chart.js"></script>
-    <script src="scripts/lib/ICanHaz.min.js"></script>
     <script src="scripts/config.js"></script>
     <script src="scripts/TokenManager.js"></script>
     <script src="scripts/ApiService.js"></script>
-    <script src="scripts/ChartService.js"></script>
-    <script src="scripts/sidebar.js"></script>
     <script src="scripts/TokenManager.js"></script>
     <script src="scripts/common.js"></script>
     <script src="scripts/third_party/popup.js"></script>
@@ -195,14 +119,6 @@
             <p>Add a timer to the tool you use and track time with a single click, without switching to another tab.</p>
             <a href="https://app.timecamp.com/app#/timesheets/timer" class="web-app-link" target="_blank">Go to web app</a>
             <button id="log-out">Log out</button>
-
-            <div style="margin-top: 20px;" id="displaySidebarOption">
-                <label for="displaySidebarCheckbox" class="noselect displaySidebarCheckboxContainer" style="display: inline-block; float: left;">
-                    <input id="displaySidebarCheckbox" type="checkbox" checked="" name="sidebar" value="show">
-                    <span class="checkmark"></span>
-                    Display sidebar
-                </label>
-            </div>
         </div>
     </div>
 

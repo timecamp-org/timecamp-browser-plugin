@@ -389,14 +389,4 @@ $(document).ready(function () {
     timer = new InsightlyTimer();
 });
 
-Sidebar.cssUpdate = [
-    {
-        selector: "#wrapper",
-        property: "margin-left",
-        value   : "50px"
-    }
-];
-Sidebar.clickBindSelector = ["body"];
-Sidebar.appendSelector = "body";
-
 Service = "insightly";
