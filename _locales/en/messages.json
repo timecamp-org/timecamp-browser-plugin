@@ -194,5 +194,8 @@
 	},
 	"todoist_task_not_found_in_backend_integration_info": {
 		"message": "This task is not synchronized in TimeCamp. Choose task by yourself."
+	},
+	"trello_task_not_found_in_backend_integration_info": {
+		"message": "This task is not synchronized in TimeCamp. Choose task by yourself or check boards in integration settings"
 	}
 }

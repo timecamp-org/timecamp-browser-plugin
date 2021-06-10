@@ -1,4 +1,5 @@
 @import 'common';
+@import 'reset-styles';
 
 .tc-button {
   display: inline-block !important;
@@ -140,6 +141,7 @@
 @import "toggl-plan";
 @import "toodledo";
 @import "trac";
+@import "trello";
 @import "turtle";
 @import "unfuddle";
 @import "usepixie";

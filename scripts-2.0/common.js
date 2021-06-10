@@ -82,8 +82,9 @@ window.tcbutton = {
                 });
                 const observeTarget = opts.observeTarget || document;
                 observer.observe(observeTarget, { childList: true, subtree: true });
+            } else {
+                tcbutton.renderTo(selector, renderer);
             }
-            tcbutton.renderTo(selector, renderer);
         } catch (e) {
             logger.error(e);
         }
@@ -208,7 +209,7 @@ window.tcbutton = {
     ) {
         const position = tcbutton.getPosition(563, 440)
         if (tcbutton.contextMenuContainer === null) {
-            tcbutton.contextMenuContainer = tcbutton.createContainer();
+            tcbutton.contextMenuContainer = tcbutton.createContainer('timecamp');
         }
 
         ReactDOM.render(

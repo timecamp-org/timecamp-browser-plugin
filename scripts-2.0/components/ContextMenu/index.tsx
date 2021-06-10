@@ -178,8 +178,14 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setNoTaskFoundDisplayAlert(false);
     }
 
+    //data-elevation is fix for trello card modal (it close when click on context menu)
     return (
-        <div ref={node} className={`timecamp context-menu  ${!open ? "context-menu--hidden" : ""}`}  style={props.position}>
+        <div
+            ref={node}
+            className={`context-menu  ${!open ? "context-menu--hidden" : ""}`}
+            style={props.position}
+            data-elevation={open ? "2" : ""}
+        >
             <Header />
             {
                 isBackendIntegration && noTaskFoundDisplayAlert &&
