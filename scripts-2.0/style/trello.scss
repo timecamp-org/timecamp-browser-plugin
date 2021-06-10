@@ -49,19 +49,16 @@
       }
 
       path, rect:last-child {
-        //fill: #172B4D!important;
         fill: #42526e!important;
       }
 
       &.tc-start-button {
         text {
-          //transform: matrix(1, 0, 0, 1, 28.7993, 10.5505);
           transform: matrix(1, 0, 0, 1, 6.7993, 8.5505);
           font-size: 12px!important;
         }
 
         path {
-          //transform: matrix(0.866033, -0.499987, 0.499987, 0.866033, 23.7351, 27.3558);
           transform: matrix(0.86603, -0.49999, 0.49999, 0.86603, 6.7351, 27.3558);
           d: path("M 28.4752 12.9376 C 29.1952 11.7128 29.9152 11.7128 30.6352 12.9376 L 35.6752 21.5088 C 36.3952 22.7336 36.0352 23.3456 34.5952 23.3456 L 24.5152 23.3456 C 23.0752 23.3456 22.7152 22.7336 23.4352 21.5088 Z");
         }
@@ -75,7 +72,6 @@
         }
 
         rect:last-child {
-          //transform: matrix(1, 0, 0, 1, 28.7993, 11.5505);
           transform: matrix(1, 0, 0, 1, 21.7993, 10.5505);
           width: 13px;
           height: 13px;
