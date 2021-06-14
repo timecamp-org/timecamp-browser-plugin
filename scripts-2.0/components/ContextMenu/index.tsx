@@ -42,15 +42,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
         = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
 
-    if (billableInputVisibility === null) {
-        setBillableInputVisibility(true);
-        browser.runtime.sendMessage({
-            type: 'getBillableInputVisibilityFromStorage',
-        }).then((value) => {
-            setBillableInputVisibility(value);
-        }).catch(() => {
-        });
-    }
 
     useEffect(() => {
         setNote(props.note);
@@ -83,6 +74,16 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             setCanCreateTags(data.permissions.can_change_group_settings);
             setUserId(parseInt(data.user_id));
         });
+        
+        if (billableInputVisibility === null) {
+            setBillableInputVisibility(true);
+            browser.runtime.sendMessage({
+                type: 'getBillableInputVisibilityFromStorage',
+            }).then((value) => {
+                setBillableInputVisibility(value);
+            }).catch(() => {
+            });
+        }
     }, []);
 
     const setIsBackendIntegrationAndUserHasIntegration = (isBackendIntegration) => {
