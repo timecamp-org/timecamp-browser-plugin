@@ -12,8 +12,11 @@ tcbutton.render(
     '.item_overview_sub:not(.tc)',
     {observe: true},
     elem => {
-        const description = () => elem.dataset.itemContent || '';
-        const taskId = $$('.reactist_modal_box .sub_items_tab_container .items:first-child')[0].dataset.subitemListId;
+        const description = () => $('.task_content', elem.parentNode).textContent.trim() || '';
+        const taskId = $(
+            '.reactist_modal_box .sub_items_tab_container .items:nth-of-type(1)',
+            elem.parentNode.parentNode.parentNode
+        ).dataset.subitemListId;
         const externalTaskId = buildExternalIdForTodoist(taskId);
 
         if (!externalTaskId) {
@@ -49,7 +52,7 @@ tcbutton.render(
         }
 
         const description = () => {
-            return $('.task_list_item__content .task_content', listItem).textContent.trim()
+            return $('.task_list_item__content .task_content', listItem).textContent.trim();
         };
 
         const link = tcbutton.createTimerLink({
@@ -76,7 +79,7 @@ tcbutton.render(
         }
 
         const description = () => {
-            return $('.board_task__details .task_content', elem).textContent.trim()
+            return $('.board_task__details .task_content', elem).textContent.trim();
         };
 
         const link = tcbutton.createTimerLink({
