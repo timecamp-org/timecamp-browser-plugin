@@ -4,7 +4,7 @@ import translate from "../../Translator";
 import ReactHtmlParser from "react-html-parser";
 import Icon from "../Icon";
 import {IconName} from "../../icons/types";
-import {useState} from "react";
+import {MouseEventHandler} from "react";
 import PathService from '../../PathService';
 
 export interface BackendIntegrationAdMessageInterface {
@@ -13,12 +13,12 @@ export interface BackendIntegrationAdMessageInterface {
     userId: number,
     service: string | React.ReactNode,
     browser: any,
+    onClose: MouseEventHandler<HTMLDivElement>;
 }
 
 const pathService = new PathService();
 
 const BackendIntegrationAdMessage: React.FC<BackendIntegrationAdMessageInterface> = (props) => {
-    const [messageClosed, setMessageClosed] = useState<boolean>(true);
 
     const renderLightBulbIcon = () => {
         return <div className={"backend-integration-ad-icon"}><Icon iconPrefix={"fal"} name={IconName.LIGHT_BULB} /></div>
@@ -41,16 +41,7 @@ const BackendIntegrationAdMessage: React.FC<BackendIntegrationAdMessageInterface
 
     const renderCloseSection = () => {
         return <React.Fragment>
-            <div className={"backend-integration-close-section"} onClick={(e) => {
-                e.stopPropagation();
-                props.browser.runtime.sendMessage({
-                    type: 'saveUserSetting',
-                    name: 'dont_show_backend_integration_browser_plugin_ad',
-                    userId: props.userId
-                }).then(() => {
-                });
-                setMessageClosed(true);
-            }}>
+            <div className={"backend-integration-close-section"} onClick={props.onClose}>
                 <div className={"backend-integration-ad-icon"}><Icon name={IconName.CLOSE}/></div>
                 <div className={"backend-integration-ad-dont-show-up-message"}>
                     { translate('backend_integration_ad_message_dont_show_up_button') }
@@ -67,37 +58,9 @@ const BackendIntegrationAdMessage: React.FC<BackendIntegrationAdMessageInterface
         </div>
     };
 
-    React.useEffect(() => {
-        props.browser.runtime.sendMessage({
-            type: 'getUserSetting',
-            name: 'dont_show_backend_integration_browser_plugin_ad',
-            userId: props.userId,
-            timestamp: true
-        }).then((resolve) => {
-            console.log(resolve);
-            if(resolve.modify_time === false || (new Date().getTime() - new Date(resolve.modify_time).getTime()) > 2592000000) {
-                setMessageClosed(false);
-                return;
-            }
-
-            if(parseInt(resolve.value) === 1) {
-                setMessageClosed(true);
-                return;
-            }
-
-            if(resolve.value === "" || parseInt(resolve.value) === 0) {
-                setMessageClosed(false);
-                return;
-            }
-
-        }).catch(() => {
-            setMessageClosed(false);
-        });
-    }, [props.userId]);
-
     return <React.Fragment>
         {
-            props.visible && !messageClosed && renderContainer()
+            props.visible && renderContainer()
         }
     </React.Fragment>;
 };

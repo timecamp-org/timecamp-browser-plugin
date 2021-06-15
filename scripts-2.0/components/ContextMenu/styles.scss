@@ -20,6 +20,10 @@
     display: none;
   }
 
+  &-extended-height {
+    height: 666px;
+  }
+
   .TaskPicker, .TagPicker, .note, .duration {
     margin-top: 15px;
   }

@@ -43,6 +43,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [noTaskFoundDisplayAlert, setNoTaskFoundDisplayAlert] = useState<boolean>(false);
     const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
         = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
+    const [showBackendIntegrationAdMessage, setShowBackendIntegrationAdMessage] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -76,6 +77,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             setCanCreateTags(data.permissions.can_change_group_settings);
             setUserId(parseInt(data.user_id));
             setIsAdmin(data.permissions.role_administrator);
+            getBackendIntegrationAdData(data.user_id);
+
         });
 
         if (billableInputVisibility === null) {
@@ -88,6 +91,33 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             });
         }
     }, []);
+
+    const getBackendIntegrationAdData = (userId: number) => {
+        browser.runtime.sendMessage({
+            type: 'getUserSetting',
+            name: 'dont_show_backend_integration_browser_plugin_ad',
+            userId: userId,
+            timestamp: true
+        }).then((resolve) => {
+            if(resolve.modify_time === false || (new Date().getTime() - new Date(resolve.modify_time).getTime()) > 2592000000) {
+                setShowBackendIntegrationAdMessage(true);
+                return;
+            }
+
+            if(parseInt(resolve.value) === 1) {
+                setShowBackendIntegrationAdMessage(false);
+                return;
+            }
+
+            if(resolve.value === "" || parseInt(resolve.value) === 0) {
+                setShowBackendIntegrationAdMessage(true);
+                return;
+            }
+
+        }).catch(() => {
+            setShowBackendIntegrationAdMessage(false);
+        });
+    };
 
     const setIsBackendIntegrationAndUserHasIntegration = (isBackendIntegration) => {
         if (isBackendIntegration === false) {
@@ -182,18 +212,28 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     };
 
     return (
-        <div ref={node} className={`timecamp context-menu  ${!open ? "context-menu--hidden" : ""}`}  style={props.position}>
+        <div ref={node} className={`timecamp context-menu  ${!open ? "context-menu--hidden" : ""} ${showBackendIntegrationAdMessage ? "context-menu-extended-height" : ""}`}  style={props.position}>
             <Header />
             {
                 isBackendIntegration && noTaskFoundDisplayAlert &&
                 <div className="context-menu__info-field">{taskNotFoundInBackendIntegrationInfo}</div>
             }
             <BackendIntegrationAdMessage
-                visible={isBackendIntegration}
+                visible={true && showBackendIntegrationAdMessage}
                 isAdmin={isAdmin}
                 userId={userId}
                 service={props.service}
-                browser={browser} />
+                browser={browser}
+                onClose={(e) => {
+                e.stopPropagation();
+                browser.runtime.sendMessage({
+                    type: 'saveUserSetting',
+                    name: 'dont_show_backend_integration_browser_plugin_ad',
+                    userId: userId
+                }).then(() => {
+                });
+                setShowBackendIntegrationAdMessage(false);
+            }}/>
             <TaskPicker
                 browser={browser}
                 onTaskClick={
