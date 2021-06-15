@@ -1,0 +1,13 @@
+section.item-content .task-list [data-id] .bd,
+#wrapper.space .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id] .bd {
+  position: relative;
+}
+
+.tc-button.podio {
+  &__tasks-list-widget {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -60%);
+    margin-left: 10px;
+  }
+}

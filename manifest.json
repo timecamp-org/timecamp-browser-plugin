@@ -35,21 +35,6 @@
         },
         {
             "matches": [
-                "*://*.podio.com/*"
-            ],
-            "exclude_matches" : [
-                "*://*.podio.com/",
-                "*://podio.com/site/*",
-                "*://podio.com/login*"
-            ],
-            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
-                "styles/sites/podio.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
-            "scripts/third_party/podio.js"]
-        },
-        {
-            "matches": [
                 "*://*.teamwork.com/*"
             ],
             "exclude_matches" : [
