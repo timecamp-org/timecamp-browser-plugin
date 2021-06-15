@@ -304,6 +304,65 @@ export default class ApiService {
         );
     }
 
+    getUserSetting(
+        name,
+        userId,
+        timestamp,
+        service = this.defaultServiceName
+    ) {
+        return this.authorizeAndCall((token, resolve, reject) => {
+                let data = {
+                    service: service,
+                };
+                const path = pathService.getUserSettingUrl(userId) + '?name=' + name + "&timestamp=" + (timestamp ? "true" : "false");
+                this.call({
+                    url: path,
+                    method: METHOD_GET,
+                    apiToken: token,
+                    payload: data,
+                })
+                    .then((response) => {
+                        let responseData = JSON.parse(response.response);
+                        resolve(responseData);
+                    })
+                    .catch((response) => {
+                        logger.error(response);
+                        reject(response)
+                    });
+            }
+        );
+    }
+
+    saveUserSetting(
+        name,
+        userId,
+        service = this.defaultServiceName
+    ) {
+        return this.authorizeAndCall((token, resolve, reject) => {
+                let data = {
+                    service: service,
+                    name: name,
+                    value: 1
+                };
+                let path = pathService.getUserSettingUrl(userId);
+                this.call({
+                    url: path,
+                    method: METHOD_PUT,
+                    apiToken: token,
+                    payload: data,
+                })
+                    .then((response) => {
+                        let responseData = JSON.parse(response.response);
+                        resolve(responseData);
+                    })
+                    .catch((response) => {
+                        logger.error(response);
+                        reject(response)
+                    });
+            }
+        );
+    }
+
     getTagLists(
         tags,
         archived,
@@ -392,7 +451,7 @@ export default class ApiService {
             }
         );
     }
-    
+
     hasBackendIntegrationEnabled(
         integration,
         service = this.defaultServiceName

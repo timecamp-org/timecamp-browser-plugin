@@ -8,6 +8,7 @@ const browser = require('webextension-polyfill');
 import './styles.scss';
 import TagPicker from "../TagPicker";
 import TaskPicker from "../TaskPicker";
+import BackendIntegrationAdMessage from "../BackendIntegrationAdMessage";
 
 export interface ContextMenuInterface {
     service: string | React.ReactNode;
@@ -35,6 +36,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [isTagModuleEnabled, setIsTagModuleEnabled] = useState<boolean>(true);
     const startTimerCallback = props.startTimerCallback;
     const [userId, setUserId] = useState<number>(0);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTrigger, setClearTrigger] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
     const [isBackendIntegration, setIsBackendIntegration] = useState(props.isBackendIntegration);
@@ -73,8 +75,9 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         }).then((data) => {
             setCanCreateTags(data.permissions.can_change_group_settings);
             setUserId(parseInt(data.user_id));
+            setIsAdmin(data.permissions.role_administrator);
         });
-        
+
         if (billableInputVisibility === null) {
             setBillableInputVisibility(true);
             browser.runtime.sendMessage({
@@ -143,7 +146,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const onClickCancel = (e) => {
         e.stopPropagation();
-
         clearAndClose();
     };
 
@@ -166,18 +168,18 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 />
             </div>
         </React.Fragment>;
-    }
+    };
 
     const onNotFoundTaskForActiveBackendIntegration = () => {
         setNoTaskFoundDisplayAlert(true);
         setTaskId(0);
         setClearTrigger(!clearTrigger);
-    }
+    };
 
     const onAutoDetectTaskForActiveBackendIntegration = () => {
         setNote('');
         setNoTaskFoundDisplayAlert(false);
-    }
+    };
 
     return (
         <div ref={node} className={`timecamp context-menu  ${!open ? "context-menu--hidden" : ""}`}  style={props.position}>
@@ -186,6 +188,12 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 isBackendIntegration && noTaskFoundDisplayAlert &&
                 <div className="context-menu__info-field">{taskNotFoundInBackendIntegrationInfo}</div>
             }
+            <BackendIntegrationAdMessage
+                visible={isBackendIntegration}
+                isAdmin={isAdmin}
+                userId={userId}
+                service={props.service}
+                browser={browser} />
             <TaskPicker
                 browser={browser}
                 onTaskClick={

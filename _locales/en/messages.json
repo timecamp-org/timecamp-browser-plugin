@@ -194,5 +194,14 @@
 	},
 	"todoist_task_not_found_in_backend_integration_info": {
 		"message": "This task is not synchronized in TimeCamp. Choose task by yourself."
+	},
+	"backend_integration_ad_message_admin": {
+		"message": "Instead of building up project structure from scratch and manually switching between tasks *linkStart*import your projects from *service* *linkClose* and make your time tracking seamless."
+	},
+	"backend_integration_ad_message_user": {
+		"message": "Instead of building up project structure from scratch and manually switching between tasks ask your Administrator to turn on *linkStart* *service* Integration *linkClose* to import your projects"
+	},
+	"backend_integration_ad_message_dont_show_up_button": {
+		"message": "Don't show up again"
 	}
 }

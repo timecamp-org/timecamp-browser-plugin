@@ -46,4 +46,5 @@ export enum IconName {
   EXCLAMATION_TRIANGLE = 'exclamation-triangle',
   CHECK_CIRCLE = 'check-circle',
   DOLLAR = 'dollar-sign',
+  LIGHT_BULB = 'lightbulb'
 }
