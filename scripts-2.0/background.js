@@ -489,6 +489,7 @@ window.TcButton = {
     },
 }
 
+browser.runtime.setUninstallURL('https://forms.gle/R7kQXZbC2vVS4rGD8');
 browser.tabs.onUpdated.addListener(TcButton.updateIcon);
 browser.runtime.onMessage.addListener(TcButton.newMessage);
 setInterval(TcButton.updateCurrentEntry, 30000);
