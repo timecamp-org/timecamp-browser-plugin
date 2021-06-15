@@ -10,4 +10,9 @@ section.item-content .task-list [data-id] .bd,
     transform: translate(0, -60%);
     margin-left: 10px;
   }
+  &__items-list {
+    vertical-align: middle;
+    margin-right: 4px;
+    margin-top: -4px;
+  }
 }

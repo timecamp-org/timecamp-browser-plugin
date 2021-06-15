@@ -170,9 +170,50 @@ tcbutton.render(
 
 // tasks in workspace view
 tcbutton.render(
-    '#wrapper.space .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id]',
+    '#wrapper.space.spaces .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id]',
     {observe: true,},
     elem => {
         podioRenderTimerInTasksList(elem);
+    }
+);
+
+// items in app view
+tcbutton.render(
+    '#wrapper.space.apps .items-list [data-id]',
+    {observe: true,},
+    elem => {
+        if ($('.tc-button', elem)) {
+            return;
+        }
+
+        if (!elem.querySelector('.app-badge-header')) {
+            return;
+        }
+
+        const description = elem.querySelector('.app-badge-header').innerText.trim();
+        const externalTaskId = buildExternalIdForPodio(
+            'item',
+            elem.getAttribute('data-id')
+        );
+
+        if (!externalTaskId) {
+            return;
+        }
+
+        const link = tcbutton.createTimerLink({
+            className: PODIO,
+            additionalClasses: [PODIO + '__items-list'],
+            description: description,
+            buttonType: 'minimal',
+            externalTaskId: externalTaskId,
+            taskNotFoundInfo: TASK_NOT_FOUND_INFO
+        });
+
+        const injectContainer = elem.querySelector('footer .app-badge-footer-2');
+        if (!injectContainer) {
+            return;
+        }
+
+        injectContainer.insertAdjacentElement('afterbegin', link);
     }
 );
