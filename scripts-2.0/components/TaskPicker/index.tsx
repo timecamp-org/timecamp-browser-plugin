@@ -179,7 +179,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                   </div>
               )}
               {!isSearching && (
-                  <div className="TaskPicker__content_box">
+                  <div className="TaskPicker__content_box_invisible_scroll">
                     <div className="TaskPicker__label">
                       {translate("projects_and_tasks")}
                     </div>
