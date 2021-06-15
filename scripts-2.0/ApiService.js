@@ -392,7 +392,7 @@ export default class ApiService {
             }
         );
     }
-    
+
     hasBackendIntegrationEnabled(
         integration,
         service = this.defaultServiceName

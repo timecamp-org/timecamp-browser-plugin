@@ -238,6 +238,9 @@ window.TcButton = {
                         apiService.removeStoredToken().then(() => {
                             TcButton.isUserLogged = false;
                             TcButton.currentEntry = null;
+                            apiService.rootGroupId = null;
+                            apiService.userId = null;
+
                             TcButton.updateIcon();
                             browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
                                 if (tabs.length > 0) {
@@ -465,6 +468,7 @@ window.TcButton = {
 
             if (apiService.rootGroupId) {
                 resolve(apiService.rootGroupId);
+                return;
             }
 
             apiService.me().then((meResponse) => {
