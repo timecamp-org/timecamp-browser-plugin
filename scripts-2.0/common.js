@@ -99,17 +99,18 @@ window.tcbutton = {
             return;
         }
 
-        try {
-            for (i = 0, len = elems.length; i < len; i += 1) {
+        for (i = 0, len = elems.length; i < len; i += 1) {
+            try {
                 if(renderer(elems[i]) === true) {
                     elems[i].classList.add('tc');
                 }
+            } catch (e) {
+                logger.error(e);
             }
-
-            tcbutton.queryAndUpdateTimerLink();
-        } catch (e) {
-            logger.error(e);
         }
+
+        tcbutton.queryAndUpdateTimerLink();
+
     },
 
     buildExternalTaskId: function (service, desc) {
