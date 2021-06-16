@@ -9,6 +9,7 @@ import './styles.scss';
 import TagPicker from "../TagPicker";
 import TaskPicker from "../TaskPicker";
 import BackendIntegrationAdMessage from "../BackendIntegrationAdMessage";
+import GroupSetting from "../../GroupSetting";
 
 export interface ContextMenuInterface {
     service: string | React.ReactNode;
@@ -44,6 +45,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
         = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
     const [showBackendIntegrationAdMessage, setShowBackendIntegrationAdMessage] = useState<boolean>(false);
+
+    const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
 
     useEffect(() => {
@@ -95,11 +98,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const getBackendIntegrationAdData = (userId: number) => {
         browser.runtime.sendMessage({
             type: 'getUserSetting',
-            name: 'dont_show_backend_integration_browser_plugin_ad',
+            name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
             userId: userId,
             timestamp: true
         }).then((resolve) => {
-            if(resolve.modify_time === false || (new Date().getTime() - new Date(resolve.modify_time).getTime()) > 2592000000) {
+            if(resolve.modify_time === false || (new Date().getTime() - new Date(resolve.modify_time).getTime()) > THIRTY_DAYS_IN_MILISEC) {
                 setShowBackendIntegrationAdMessage(true);
                 return;
             }
@@ -225,21 +228,23 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 <div className="context-menu__info-field">{taskNotFoundInBackendIntegrationInfo}</div>
             }
             <BackendIntegrationAdMessage
-                visible={true && showBackendIntegrationAdMessage}
+                visible={isBackendIntegration && showBackendIntegrationAdMessage}
                 isAdmin={isAdmin}
                 userId={userId}
                 service={props.service}
                 browser={browser}
                 onClose={(e) => {
-                e.stopPropagation();
-                browser.runtime.sendMessage({
-                    type: 'saveUserSetting',
-                    name: 'dont_show_backend_integration_browser_plugin_ad',
-                    userId: userId
-                }).then(() => {
-                });
-                setShowBackendIntegrationAdMessage(false);
-            }}/>
+                    e.stopPropagation();
+                    browser.runtime.sendMessage({
+                        type: 'saveUserSetting',
+                        name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
+                        userId: userId,
+                        value: 1
+                    }).then(() => {
+                    });
+                    setShowBackendIntegrationAdMessage(false);
+                }}
+            />
             <TaskPicker
                 browser={browser}
                 onTaskClick={

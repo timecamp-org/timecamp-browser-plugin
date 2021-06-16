@@ -105,7 +105,7 @@ export default class PathService {
         return this.serverUrl + 'addons/' + this.getIntegrationNameFromTimeCampApp(service) + '/';
     }
 
-    getIntegrationWebsiteUrl(service) {
+    getIntegrationMarketingWebsiteUrl(service) {
         switch(service) {
             case 'zoho':
                 return this.marketingPageUrl + 'kb/zoho-crm-integration/';

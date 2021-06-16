@@ -336,13 +336,14 @@ export default class ApiService {
     saveUserSetting(
         name,
         userId,
+        value,
         service = this.defaultServiceName
     ) {
         return this.authorizeAndCall((token, resolve, reject) => {
                 let data = {
                     service: service,
                     name: name,
-                    value: 1
+                    value: value
                 };
                 let path = pathService.getUserSettingUrl(userId);
                 this.call({

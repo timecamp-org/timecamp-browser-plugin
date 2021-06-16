@@ -249,7 +249,8 @@ window.TcButton = {
                     case 'saveUserSetting':
                         apiService.saveUserSetting(
                             request.name,
-                            request.userId
+                            request.userId,
+                            request.value
                         ).then((response) => {
                             resolve(response);
                         }).catch((error) => {
