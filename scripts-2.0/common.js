@@ -82,8 +82,9 @@ window.tcbutton = {
                 });
                 const observeTarget = opts.observeTarget || document;
                 observer.observe(observeTarget, { childList: true, subtree: true });
+            } else {
+                tcbutton.renderTo(selector, renderer);
             }
-            tcbutton.renderTo(selector, renderer);
         } catch (e) {
             logger.error(e);
         }

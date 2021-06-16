@@ -74,8 +74,8 @@ const podioRenderTimerInTasksList = (elem) => {
 
 // task view
 tcbutton.render(
-    '#task-permalink',
-    {observe: true},
+    '#task-permalink:not(.tc)',
+    {observe: true, debounceInterval: 2000},
     elem => {
         const link = podioCreateTimerButton(
             'task',
