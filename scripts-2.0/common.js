@@ -110,7 +110,6 @@ window.tcbutton = {
         }
 
         tcbutton.queryAndUpdateTimerLink();
-
     },
 
     buildExternalTaskId: function (service, desc) {
