@@ -44,7 +44,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [noTaskFoundDisplayAlert, setNoTaskFoundDisplayAlert] = useState<boolean>(false);
     const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
         = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
-    const [showBackendIntegrationAdMessage, setShowBackendIntegrationAdMessage] = useState<boolean>(false);
+    const [dontShowAdSettingValue, setDontShowAdSettingValue] = useState<number>(1);
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
@@ -103,22 +103,22 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             timestamp: true
         }).then((resolve) => {
             if(resolve.modify_time === false || (new Date().getTime() - new Date(resolve.modify_time).getTime()) > THIRTY_DAYS_IN_MILISEC) {
-                setShowBackendIntegrationAdMessage(true);
+                setDontShowAdSettingValue(0);
                 return;
             }
 
-            if(parseInt(resolve.value) === 1) {
-                setShowBackendIntegrationAdMessage(false);
+            if(parseInt(resolve.value) > 0) {
+                setDontShowAdSettingValue(parseInt(resolve.value));
                 return;
             }
 
             if(resolve.value === "" || parseInt(resolve.value) === 0) {
-                setShowBackendIntegrationAdMessage(true);
+                setDontShowAdSettingValue(0);
                 return;
             }
 
         }).catch(() => {
-            setShowBackendIntegrationAdMessage(false);
+            setDontShowAdSettingValue(0);
         });
     };
 
@@ -218,7 +218,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     return (
         <div
             ref={node}
-            className={`context-menu  ${!open ? "context-menu--hidden" : ""} ${showBackendIntegrationAdMessage ? "context-menu-extended-height" : ""}`}
+            className={`context-menu  ${!open ? "context-menu--hidden" : ""} ${props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0 ? "context-menu-extended-height" : ""}`}
             style={props.position}
             data-elevation={open ? "2" : ""}
         >
@@ -228,7 +228,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 <div className="context-menu__info-field">{taskNotFoundInBackendIntegrationInfo}</div>
             }
             <BackendIntegrationAdMessage
-                visible={isBackendIntegration && showBackendIntegrationAdMessage}
+                visible={props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0}
                 isAdmin={isAdmin}
                 userId={userId}
                 service={props.service}
@@ -239,10 +239,10 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                         type: 'saveUserSetting',
                         name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
                         userId: userId,
-                        value: 1
+                        value: (dontShowAdSettingValue + 1)
                     }).then(() => {
                     });
-                    setShowBackendIntegrationAdMessage(false);
+                    setDontShowAdSettingValue(dontShowAdSettingValue + 1);
                 }}
             />
             <TaskPicker
