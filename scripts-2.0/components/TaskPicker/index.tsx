@@ -179,7 +179,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                   </div>
               )}
               {!isSearching && (
-                  <div className="TaskPicker__content_box">
+                  <div className="TaskPicker__content_box_invisible_scroll">
                     <div className="TaskPicker__label">
                       {translate("projects_and_tasks")}
                     </div>
@@ -291,26 +291,35 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
               })
               .then(function (data: any) {
                   let permsMap = {};
+                  let taskListWithExternalTaskId = {};
 
                   let taskList = Object.values(data).map((task: any) => {
                       permsMap[task.task_id] = task.perms;
-                      return {
+
+                      let t = {
                           id: task.task_id,
                           name: task.name,
                           parentId: task.parent_id,
                           billable: !!task.billable,
                           externalTaskId: task.external_task_id,
                       } as Task;
+
+                      if (task.external_task_id) {
+                          taskListWithExternalTaskId[task.external_task_id] = t;
+                      }
+
+                      return t;
                   });
 
                   taskPickerHook.setTaskPermissionsMap(permsMap);
 
                   const taskTree = taskListToTaskTree(taskList);
 
-                  taskPickerHook.setTaskList(taskList);
+                  taskPickerHook.setTaskListWithExternalTaskId(taskListWithExternalTaskId);
+                  taskPickerHook.setTaskList(taskTree);
                   taskPickerHook.setFullTaskTree(taskTree);
 
-                  resolve(taskList);
+                  resolve(taskListWithExternalTaskId);
               });
       });
   };
@@ -401,15 +410,14 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
   };
 
 
-    const setTaskForGivenExternalTaskId = (tasks) => {
+    const setTaskForGivenExternalTaskId = (taskListWithExternalTaskId) => {
         if (props.presetTaskByExternalId !== null) {
-            for (const task of tasks) {
-                if (task.externalTaskId === props.presetTaskByExternalId) {
-                    taskPickerHook.selectTask(task);
-                    props.onTaskClick(task)
-                    props.onAutoDetectTaskForActiveBackendIntegration();
-                    return;
-                }
+            if (props.presetTaskByExternalId in taskListWithExternalTaskId) {
+                let task = taskListWithExternalTaskId[props.presetTaskByExternalId];
+                taskPickerHook.selectTask(task);
+                props.onTaskClick(task)
+                props.onAutoDetectTaskForActiveBackendIntegration();
+                return;
             }
             props.onNotFoundTaskForActiveBackendIntegration();
         }
@@ -419,11 +427,11 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
       if(props.userId !== 0) {
           if(taskPickerHook.taskList.length === 0) {
               fetchAndPrepareRecentlyUsedTasks();
-              fetchFullTaskTree().then((a) => {
-                  setTaskForGivenExternalTaskId(a);
+              fetchFullTaskTree().then((taskListWithExternalTaskId) => {
+                  setTaskForGivenExternalTaskId(taskListWithExternalTaskId);
               });
           } else {
-              setTaskForGivenExternalTaskId(taskPickerHook.taskList);
+              setTaskForGivenExternalTaskId(taskPickerHook.taskListWithExternalTaskId);
           }
       }
   }, [props.userId, props.presetTaskByExternalId]);

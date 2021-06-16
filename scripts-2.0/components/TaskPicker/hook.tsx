@@ -10,6 +10,7 @@ export const useTaskPickerHook = () => {
     const emptyTask = {id: 0, parentId: 0, name: "", children: [], path: [], billable: false, externalTaskId: null};
 
     const [taskList, setTaskList] = React.useState<Task[]>([]);
+    const [taskListWithExternalTaskId, setTaskListWithExternalTaskId] = React.useState({});
     const [fullTaskTree, setFullTaskTree] = React.useState<Task[]>([]);
     const [recentlyUsedTaskList, setRecentlyUsedTaskList] = React.useState<Task[]>([]);
     const [hideTreeList, setHideTreeList] = React.useState<number[]>([]);
@@ -36,6 +37,8 @@ export const useTaskPickerHook = () => {
         setSelectedTask,
         taskList,
         setTaskList,
+        taskListWithExternalTaskId,
+        setTaskListWithExternalTaskId,
         fullTaskTree,
         setFullTaskTree,
         recentlyUsedTaskList,

@@ -261,6 +261,9 @@ window.TcButton = {
                         apiService.removeStoredToken().then(() => {
                             TcButton.isUserLogged = false;
                             TcButton.currentEntry = null;
+                            apiService.rootGroupId = null;
+                            apiService.userId = null;
+
                             TcButton.updateIcon();
                             browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
                                 if (tabs.length > 0) {
@@ -488,6 +491,7 @@ window.TcButton = {
 
             if (apiService.rootGroupId) {
                 resolve(apiService.rootGroupId);
+                return;
             }
 
             apiService.me().then((meResponse) => {
@@ -508,6 +512,7 @@ window.TcButton = {
     },
 }
 
+browser.runtime.setUninstallURL('https://forms.gle/R7kQXZbC2vVS4rGD8');
 browser.tabs.onUpdated.addListener(TcButton.updateIcon);
 browser.runtime.onMessage.addListener(TcButton.newMessage);
 setInterval(TcButton.updateCurrentEntry, 30000);

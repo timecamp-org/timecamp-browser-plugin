@@ -1,24 +1,25 @@
 @import '../../style/common';
 
-.context-menu {
-  font-family: $defaultFontFamily;
-  font-size: 14px;
-  font-weight: normal;
-  color: $primaryTextColor;
-  width: 440px;
-  height: 563px;
-  padding: 20px;
-  box-sizing: border-box;
-  border: #aea6ab 1px solid;
-  display: block;
-  position: absolute;
-  background-color: $primaryBackgroundColor;
-  line-height: initial;
-  z-index: 99999;
+.timecamp {
+  .context-menu {
+    font-family: $defaultFontFamily;
+    font-size: 14px;
+    font-weight: normal;
+    color: $primaryTextColor;
+    width: 440px;
+    height: 563px;
+    padding: 20px;
+    box-sizing: border-box;
+    border: #aea6ab 1px solid;
+    display: block;
+    position: absolute;
+    background-color: $primaryBackgroundColor;
+    line-height: initial;
+    z-index: 99999;
 
-  &--hidden {
-    display: none;
-  }
+    &--hidden {
+      display: none;
+    }
 
   &-extended-height {
     height: 666px;
@@ -28,15 +29,16 @@
     margin-top: 15px;
   }
 
-  .billable {
-    margin-top: 15px;
-  }
+    .billable {
+      margin-top: 15px;
+    }
 
-  &__info-field {
-    padding: 10px 14px 10px 16px;
-    border-radius: 8px;
-    background-color: $infoFieldBackgroundColor;
-    border: solid 1px $infoFieldBorderColor;
-    color: $infoFieldTextColor;
+    &__info-field {
+      padding: 10px 14px 10px 16px;
+      border-radius: 8px;
+      background-color: $infoFieldBackgroundColor;
+      border: solid 1px $infoFieldBorderColor;
+      color: $infoFieldTextColor;
+    }
   }
 }
