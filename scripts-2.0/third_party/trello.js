@@ -3,13 +3,13 @@
 const TRELLO = 'trello';
 const TRELLO_EXTERNAL_ID_PREFIX = 'card';
 const TASK_NOT_FOUND_INFO = 'trello_task_not_found_in_backend_integration_info';
+const TRELLO_URL_SUBSTRING = 'https://trello.com/c/';
 
 const buildExternalIdForTrello = (taskId) => {
     return TRELLO_EXTERNAL_ID_PREFIX + '_' + taskId;
 }
 const getCardIdFromUrl = (url) => {
-    const substringToRemoveFromBeginning = "https://trello.com/c/";
-    let restOfUrl = url.slice(substringToRemoveFromBeginning.length);
+    let restOfUrl = url.slice(TRELLO_URL_SUBSTRING.length);
 
     return restOfUrl.split('/')[0];
 }
@@ -86,9 +86,6 @@ tcbutton.render(
         }
 
         const description = () => {
-            console.log(elem.parentNode);
-            console.log($('.window-title h2', elem.parentNode));
-            console.log($('.window-title h2', elem.parentNode).innerText.trim());
             return $('.window-title h2', elem.parentNode).innerText.trim();
         };
 
