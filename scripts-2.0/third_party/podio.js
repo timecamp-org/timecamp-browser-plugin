@@ -4,8 +4,7 @@ const TASK_NOT_FOUND_INFO = 'podio_task_not_found_in_backend_integration_info';
 
 const buildExternalIdForPodio = (type, dataId) => {
     let prefix = '';
-    switch (type)
-    {
+    switch (type) {
         case 'app':
             prefix = 'a';
             break;
@@ -57,7 +56,6 @@ const podioRenderTimerInTasksList = (elem) => {
         elem.getAttribute('data-id'),
         'tasks-list-widget',
         'minimal'
-
     );
 
     if (!link) {
@@ -75,7 +73,7 @@ const podioRenderTimerInTasksList = (elem) => {
 // task view
 tcbutton.render(
     '#task-permalink:not(.tc)',
-    {observe: true, debounceInterval: 2000},
+    {observe: true, debounceInterval: 500},
     elem => {
         const link = podioCreateTimerButton(
             'task',
@@ -84,7 +82,6 @@ tcbutton.render(
             location.pathname.split('/').pop(),
             'task-view',
             'normal'
-
         );
 
         if(!link) {
@@ -113,8 +110,8 @@ tcbutton.render(
 
 // app item view
 tcbutton.render(
-    'section.item-content',
-    {observe: true},
+    'section.item-content:not(.tc)',
+    {observe: true, debounceInterval: 500},
     elem => {
         const link = podioCreateTimerButton(
             'item',
@@ -123,7 +120,6 @@ tcbutton.render(
             $('.share[data-id]').getAttribute('data-id'),
             'item-view',
             'normal'
-
         );
 
         if(!link) {
@@ -155,8 +151,8 @@ tcbutton.render(
 
 // tasks in app item view
 tcbutton.render(
-    'section.item-content .task-list [data-id]',
-    {observe: true},
+    'section.item-content .task-list [data-id]:not(.tc)',
+    {observe: true, debounceInterval: 500},
     elem => {
         podioRenderTimerInTasksList(elem);
     }
@@ -164,8 +160,8 @@ tcbutton.render(
 
 // tasks in workspace view
 tcbutton.render(
-    '#wrapper.space.spaces .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id]',
-    {observe: true},
+    '#wrapper.space.spaces .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id]:not(.tc)',
+    {observe: true, debounceInterval: 500},
     elem => {
         podioRenderTimerInTasksList(elem);
     }
@@ -173,8 +169,8 @@ tcbutton.render(
 
 // items in app view
 tcbutton.render(
-    '#wrapper.space.apps .items-list [data-id]',
-    {observe: true},
+    '#wrapper.space.apps .items-list [data-id]:not(.tc)',
+    {observe: true, debounceInterval: 500},
     elem => {
         const link = podioCreateTimerButton(
             'item',
@@ -183,7 +179,6 @@ tcbutton.render(
             elem.getAttribute('data-id'),
             'items-list',
             'minimal'
-
         );
 
         if(!link) {
