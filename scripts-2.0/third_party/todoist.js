@@ -13,13 +13,16 @@ tcbutton.render(
     {observe: true},
     elem => {
         const description = () => $('.task_content', elem.parentNode).textContent.trim() || '';
-        const taskId = $(
-            '.reactist_modal_box .sub_items_tab_container .items:nth-of-type(1)',
-            elem.parentNode.parentNode.parentNode
-        ).dataset.subitemListId;
-        const externalTaskId = buildExternalIdForTodoist(taskId);
+        const externalTaskId = () => {
+            const taskId = $(
+                '.reactist_modal_box .sub_items_tab_container .items:nth-of-type(1)',
+                elem.parentNode.parentNode.parentNode
+            ).dataset.subitemListId;
 
-        if (!externalTaskId) {
+            return buildExternalIdForTodoist(taskId);
+        };
+
+        if (!externalTaskId()) {
             return;
         }
 
