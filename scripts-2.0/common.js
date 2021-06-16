@@ -209,7 +209,7 @@ window.tcbutton = {
     ) {
         const position = tcbutton.getPosition(563, 440)
         if (tcbutton.contextMenuContainer === null) {
-            tcbutton.contextMenuContainer = tcbutton.createContainer();
+            tcbutton.contextMenuContainer = tcbutton.createContainer('timecamp');
         }
 
         ReactDOM.render(

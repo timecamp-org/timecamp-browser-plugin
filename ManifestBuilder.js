@@ -10,19 +10,22 @@ module.exports = {
                 "script": ["for-development-only.js"]
             })
         }
-        
+
         let contentScripts = [];
         for (const integration of integrations) {
             if (!isDebug && integration.isActiveInProd !== true) {
                 continue;
             }
-            
+
             contentScripts.push({
                 'matches': [
                     ...this.defaults.matches,
                     ...integration.matches
                 ],
-                'exclude_matches': this.defaults.exclude_matches,
+                'exclude_matches': [
+                    ...this.defaults.exclude_matches,
+                    ...(integration.exclude_matches ? integration.exclude_matches : [])
+                ],
                 'css': this.defaults.css,
                 'js': [
                     ...this.defaults.js,
@@ -30,7 +33,7 @@ module.exports = {
                 ],
             });
         }
-        
+
         return contentScripts;
     },
     defaults: {
@@ -49,20 +52,20 @@ module.exports = {
 // {
 //     "matches": [""],
 //     "script": ["doit.js"],
-// },   
+// },
 // {
 //     "matches": [""],
 //     "script": ["eventum.js"],
-// },    
+// },
 // {
 //     "matches": [""],
 //     "script": ["kanboard.js"],
-// },  
+// },
 // {
 //     "matches": [""],
 //     "script": ["processwire.js"],
-// },   
+// },
 // {
 //     "matches": ["*://*.wekan.*/*"],
 //     "script": ["wekan.js"],
-// }, 
+// },

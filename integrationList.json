@@ -35,7 +35,7 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://ticktick.com/*', '*://*.ticktick.com/*"],
+    "matches": ["*://ticktick.com/*", "*://*.ticktick.com/*"],
     "script": ["ticktick.js"],
     "isActiveInProd": true
   },
@@ -429,7 +429,7 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.testrail.com/*', '*://*.testrail.net/*"],
+    "matches": ["*://*.testrail.com/*", "*://*.testrail.net/*"],
     "script": ["testrail.js"],
     "isActiveInProd": false
   },
@@ -439,9 +439,15 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://trac.edgewall.org/*', '*://*.trac.wordpress.org/*"],
+    "matches": ["*://trac.edgewall.org/*", "*://*.trac.wordpress.org/*"],
     "script": ["trac.js"],
     "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.trello.com/*"],
+    "exclude_matches": ["*://blog.trello.com/*", "*://help.trello.com/*"],
+    "script": ["trello.js"],
+    "isActiveInProd": true
   },
   {
     "matches": ["*://*.turtle.ai/*"],
