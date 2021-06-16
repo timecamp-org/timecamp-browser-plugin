@@ -59,21 +59,23 @@ const podioRenderTimerInTasksList = (elem) => {
     );
 
     if (!link) {
-        return;
+        return false;
     }
 
     const injectContainer = $('.bd', elem);
     if (!injectContainer) {
-        return;
+        return false;
     }
 
     injectContainer.insertAdjacentElement('beforeend', link);
+
+    return true;
 }
 
 // task view
 tcbutton.render(
     '#task-permalink:not(.tc)',
-    {observe: true, debounceInterval: 500},
+    {observe: true},
     elem => {
         const link = podioCreateTimerButton(
             'task',
@@ -85,12 +87,12 @@ tcbutton.render(
         );
 
         if(!link) {
-            return;
+            return false;
         }
 
         const injectContainer = $('.task-body.fields', elem);
         if (!injectContainer) {
-            return;
+            return false;
         }
 
         let col = createTag('div', 'label');
@@ -105,13 +107,15 @@ tcbutton.render(
         field.insertAdjacentElement('afterbegin', col);
 
         injectContainer.insertAdjacentElement('afterbegin', field);
+
+        return true;
     }
 );
 
 // app item view
 tcbutton.render(
     'section.item-content:not(.tc)',
-    {observe: true, debounceInterval: 500},
+    {observe: true},
     elem => {
         const link = podioCreateTimerButton(
             'item',
@@ -123,12 +127,12 @@ tcbutton.render(
         );
 
         if(!link) {
-            return;
+            return false;
         }
 
         const injectContainer = $('.app-fields-list', elem);
         if (!injectContainer) {
-            return;
+            return false;
         }
 
         let col = createTag('div', 'frame-label');
@@ -146,31 +150,33 @@ tcbutton.render(
         item.insertAdjacentElement('afterbegin', field);
 
         injectContainer.insertAdjacentElement('afterbegin', item);
+
+        return true;
     }
 );
 
 // tasks in app item view
 tcbutton.render(
     'section.item-content .task-list [data-id]:not(.tc)',
-    {observe: true, debounceInterval: 500},
+    {observe: true},
     elem => {
-        podioRenderTimerInTasksList(elem);
+        return podioRenderTimerInTasksList(elem);
     }
 );
 
 // tasks in workspace view
 tcbutton.render(
     '#wrapper.space.spaces .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id]:not(.tc)',
-    {observe: true, debounceInterval: 500},
+    {observe: true},
     elem => {
-        podioRenderTimerInTasksList(elem);
+        return podioRenderTimerInTasksList(elem);
     }
 );
 
 // items in app view
 tcbutton.render(
     '#wrapper.space.apps .items-list [data-id]:not(.tc)',
-    {observe: true, debounceInterval: 500},
+    {observe: true},
     elem => {
         const link = podioCreateTimerButton(
             'item',
@@ -182,14 +188,16 @@ tcbutton.render(
         );
 
         if(!link) {
-            return;
+            return false;
         }
 
         const injectContainer = $('footer .app-badge-footer-2', elem);
         if (!injectContainer) {
-            return;
+            return false;
         }
 
         injectContainer.insertAdjacentElement('afterbegin', link);
+
+        return true;
     }
 );
