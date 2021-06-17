@@ -14,5 +14,7 @@ tcbutton.render(
         });
 
         $('.nav-tabs').appendChild(link);
+
+        return true;
     }
 );

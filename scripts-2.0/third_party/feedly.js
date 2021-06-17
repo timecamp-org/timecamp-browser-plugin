@@ -13,4 +13,6 @@ tcbutton.render('.entryHeader:not(.tc)', { observe: true }, function (
 
     elem.querySelector('.entryHeader > .metadata').appendChild(textnode);
     elem.querySelector('.entryHeader > .metadata').appendChild(link);
+
+    return true;
 });

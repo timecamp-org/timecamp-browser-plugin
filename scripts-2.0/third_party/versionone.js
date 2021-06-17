@@ -24,5 +24,7 @@ tcbutton.render(
         });
         link.setAttribute('style', 'margin-right: 10px');
         container.insertBefore(link, $('.share', container));
+
+        return true;
     }
 );

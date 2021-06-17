@@ -13,4 +13,6 @@ tcbutton.render('.task-details-main:not(.tc)', {observe: true}, function (elem) 
     link.style.display = "block";
     link.style.cursor = 'pointer';
     elem.appendChild(link);
+
+    return true;
 });

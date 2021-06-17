@@ -18,4 +18,6 @@ tcbutton.render('#issue-header:not(.tc)', {}, function (elem) {
     });
 
     $('#issue-header').appendChild(link);
+
+    return true;
 });

@@ -17,4 +17,6 @@ tcbutton.render('.case:not(.tc)', {observe: true}, (elem) => {
     link.style.left = "15px";
     tcDiv.appendChild(link);
     appendTo.parentNode.insertBefore(tcDiv, appendTo);
+
+    return true;
 });

@@ -13,6 +13,8 @@ const renderTcButton = () => {
         });
 
         $('div.ObjectEditorHeader > .HeaderLayout').appendChild(link);
+
+        return true;
     });
 };
 

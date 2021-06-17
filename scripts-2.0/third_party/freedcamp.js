@@ -16,6 +16,8 @@ tcbutton.render('.FastTaskItemComponent--fk-FastTaskItemComponent-MainContent:no
     link.style.paddingTop = "0px";
     link.style.paddingRight = "10px";
     elem.parentNode.prepend(link);
+
+    return true;
 });
 
 tcbutton.render('#mainItemWrap:not(.tc)', {observe: true}, (elem) => {
@@ -31,6 +33,8 @@ tcbutton.render('#mainItemWrap:not(.tc)', {observe: true}, (elem) => {
     link.style.paddingTop = "10px";
     link.style.paddingLeft = "20px";
     elem.parentNode.prepend(link);
+
+    return true;
 });
 
 tcbutton.render('.al_container .item-title-group:not(.tc)', {observe: true}, (elem) => {
@@ -44,6 +48,8 @@ tcbutton.render('.al_container .item-title-group:not(.tc)', {observe: true}, (el
     });
     
     elem.parentNode.appendChild(link);
+
+    return true;
 });
 
 tcbutton.render('.td_content:not(.tc)', {observe: true}, (elem) => {
@@ -60,6 +66,8 @@ tcbutton.render('.td_content:not(.tc)', {observe: true}, (elem) => {
     link.style.paddingTop = "0px";
     link.style.paddingTop = "10px";
     elem.parentNode.prepend(link);
+
+    return true;
 });
 
 tcbutton.render('.body_width .item-title-group:not(.tc)', {observe: true}, (elem) => {
@@ -73,6 +81,8 @@ tcbutton.render('.body_width .item-title-group:not(.tc)', {observe: true}, (elem
     });
     
     elem.parentNode.appendChild(link);
+
+    return true;
 });
 
 tcbutton.render('.issue_title:not(.tc)', {observe: true}, (elem) => {
@@ -87,4 +97,6 @@ tcbutton.render('.issue_title:not(.tc)', {observe: true}, (elem) => {
     });
     
     elem.parentNode.appendChild(link);
+
+    return true;
 });

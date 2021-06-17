@@ -16,4 +16,6 @@ tcbutton.render('#dokuwiki__content', { observe: false }, function (elem) {
     });
 
     target.prepend(link);
+
+    return true;
 });

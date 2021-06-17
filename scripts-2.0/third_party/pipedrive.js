@@ -17,6 +17,8 @@ tcbutton.render('.actionsContent:not(.tc)', {observe: true}, function (elem) {
     link.style.marginTop = "10px";
     link.style.cursor = 'pointer';
     elem.appendChild(link);
+
+    return true;
 });
 
 tcbutton.render('.cui4-modal__wrap .cui4-modal__header:not(.tc)', {observe: true}, function (elem) {
@@ -38,6 +40,8 @@ tcbutton.render('.cui4-modal__wrap .cui4-modal__header:not(.tc)', {observe: true
         link.style.top = '2px';
         elem.appendChild(link);
     }, 500);
+
+    return true;
 });
 
 tcbutton.render('.detailView .content .spacer:not(.tc)', {observe: true}, function (elem) {
@@ -55,4 +59,6 @@ tcbutton.render('.detailView .content .spacer:not(.tc)', {observe: true}, functi
     link.style.marginTop = "10px";
     link.style.cursor = 'pointer';
     elem.appendChild(link);
+
+    return true;
 });

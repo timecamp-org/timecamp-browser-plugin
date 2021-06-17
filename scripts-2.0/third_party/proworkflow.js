@@ -16,5 +16,7 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );

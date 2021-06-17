@@ -13,6 +13,8 @@ setTimeout(() => {
             projectName: projectElem
         });
         container.appendChild(link);
+
+        return true;
     });
 
 }, 1000);

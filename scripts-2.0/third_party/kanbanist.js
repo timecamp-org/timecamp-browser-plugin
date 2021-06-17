@@ -28,12 +28,12 @@ tcbutton.render(
         link.setAttribute('style', linkStyle);
         $('.ListItem-text', $container).after(link);
         $container.onmouseenter = () => {
-            console.log(link.style.visibility);
             link.style.visibility = 'visible';
         };
         $container.onmouseleave = () => {
-            console.log(link.style.visibility);
             link.style.visibility = 'hidden';
         };
+
+        return true;
     }
 );

@@ -14,4 +14,6 @@ tcbutton.render('.review-request:not(.tc)', { observe: true }, function () {
     li.appendChild(link);
 
     $('.review-request-actions-left').appendChild(li);
+
+    return true;
 });

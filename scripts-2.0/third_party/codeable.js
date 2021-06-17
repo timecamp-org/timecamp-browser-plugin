@@ -13,4 +13,6 @@ tcbutton.render('.main__header:not(.tc)', { observe: true }, function (
     });
 
     $('.task-developer .body').appendChild(link);
+
+    return true;
 });

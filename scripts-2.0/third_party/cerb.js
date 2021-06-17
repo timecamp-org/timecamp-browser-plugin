@@ -15,4 +15,6 @@ tcbutton.render('#widget99:not(.tc)', {observe: true}, function (elem) {
         projectName: projectName
     });
     elem.appendChild(link);
+
+    return true;
 });

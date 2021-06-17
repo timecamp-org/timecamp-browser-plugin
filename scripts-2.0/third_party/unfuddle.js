@@ -20,5 +20,7 @@ tcbutton.render(
         });
 
         $('.primary-properties', elem).appendChild(link);
+
+        return true;
     }
 );

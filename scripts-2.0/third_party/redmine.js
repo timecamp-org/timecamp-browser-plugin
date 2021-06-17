@@ -10,7 +10,7 @@ tcbutton.render(
         let description;
 
         if ($('.tc-button')) {
-            return;
+            return false;
         }
 
         if (titleElem) {
@@ -31,5 +31,7 @@ tcbutton.render(
         });
 
         $('#content h2').appendChild(link);
+
+        return true;
     }
 );

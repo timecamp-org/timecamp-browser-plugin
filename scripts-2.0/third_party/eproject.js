@@ -22,6 +22,8 @@ tcbutton.render(
         });
 
         $('.tc-timer').appendChild(link);
+
+        return true;
     }
 );
 

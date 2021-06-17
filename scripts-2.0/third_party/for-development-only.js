@@ -11,6 +11,8 @@ tcbutton.render('.tcdev-button:not(.tc)', {}, function (elem) {
     });
 
     $('.button-placeholder').appendChild(link);
+
+    return true;
 });
 
 tcbutton.render('.tcdev-button2:not(.tc)', {}, function (elem) {
@@ -24,4 +26,6 @@ tcbutton.render('.tcdev-button2:not(.tc)', {}, function (elem) {
     });
 
     $('.button-placeholder2').appendChild(link);
+
+    return true;
 });
