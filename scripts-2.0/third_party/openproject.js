@@ -16,5 +16,7 @@ tcbutton.render(
         });
 
         container.prepend(link);
+
+        return true;
     }
 );

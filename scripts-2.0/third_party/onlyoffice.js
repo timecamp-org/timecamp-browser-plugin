@@ -18,6 +18,8 @@ tcbutton.render(
             buttonType: 'minimal'
         });
         $('.project-title').appendChild(link);
+
+        return true;
     }
 );
 
@@ -43,6 +45,8 @@ tcbutton.render(
         if (button && button.style) {
             button.style.float = 'left';
         }
+
+        return true;
     }
 );
 
@@ -68,5 +72,7 @@ tcbutton.render(
         if (button && button.style) {
             button.style.float = 'left';
         }
+
+        return true;
     }
 );

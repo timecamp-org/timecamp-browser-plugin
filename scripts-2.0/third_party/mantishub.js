@@ -14,6 +14,8 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );
 
@@ -31,5 +33,7 @@ tcbutton.render(
         });
 
         $('.form-title', elem).appendChild(link);
+
+        return true;
     }
 );

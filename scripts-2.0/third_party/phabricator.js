@@ -17,6 +17,8 @@ tcbutton.render(
         });
 
         $('.phui-oi-name', elem).appendChild(link);
+
+        return true;
     }
 );
 
@@ -46,5 +48,7 @@ tcbutton.render(
 
         wrap.appendChild(link);
         container.prepend(wrap);
+
+        return true;
     }
 );

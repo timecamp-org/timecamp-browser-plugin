@@ -40,7 +40,7 @@ tcbutton.render(
 
         const externalTaskId = buildExternalIdForTrello(cardId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -58,6 +58,8 @@ tcbutton.render(
         });
 
         $('a', elem).insertAdjacentElement('beforeend', link);
+
+        return true;
     }
 );
 
@@ -75,7 +77,7 @@ tcbutton.render(
 
         const externalTaskId = buildExternalIdForTrello(cardId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -93,6 +95,8 @@ tcbutton.render(
         });
 
         $('.badges', elem).insertAdjacentElement('beforeend', link);
+
+        return true;
     }
 );
 
@@ -110,7 +114,7 @@ tcbutton.render(
 
         const externalTaskId = buildExternalIdForTrello(cardId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -127,5 +131,7 @@ tcbutton.render(
         });
 
         $('.window-module.u-clearfix  .js-move-card', elem).insertAdjacentElement('beforebegin', link);
+
+        return true;
     }
 );

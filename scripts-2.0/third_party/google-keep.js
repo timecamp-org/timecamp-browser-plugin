@@ -11,6 +11,8 @@ tcbutton.render('.IZ65Hb-TBnied:not(.tc)', { observe: true }, function (
     description: description,
   });
   toolbar.appendChild(link);
+
+  return true;
 });
 
 tcbutton.render(
@@ -26,5 +28,7 @@ tcbutton.render(
       description: description
     });
     position.appendChild(link);
+
+    return true;
   }
 );

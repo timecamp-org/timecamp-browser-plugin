@@ -14,4 +14,6 @@ tcbutton.render('#edit-card-title:not(.tc)', {observe: true}, (elem) => {
     link.style.left = "15px";
     link.style.fontSize = "16px";
     elem.parentNode.appendChild(link);
+
+    return true;
 });

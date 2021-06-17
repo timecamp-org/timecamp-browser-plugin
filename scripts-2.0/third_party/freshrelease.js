@@ -17,6 +17,8 @@ tcbutton.render('.entity-wrap:not(.tc)', { observe: true }, function (elem) {
     link.style.paddingRight = "4px";
 
     $(".entity--header", elem).append(link);
+
+    return true;
 });
 
 tcbutton.render('.app-container:not(.tc)', { observe: true }, function (elem) {
@@ -34,6 +36,8 @@ tcbutton.render('.app-container:not(.tc)', { observe: true }, function (elem) {
     link.style.float = "right";
 
     $('.title', elem).append(link);
+
+    return true;
 });
 
 tcbutton.render('.ember-modal-header:not(.tc)', { observe: true }, function (elem) {
@@ -50,4 +54,6 @@ tcbutton.render('.ember-modal-header:not(.tc)', { observe: true }, function (ele
     link.style.float = "right";
 
     $(".summary-title--content", elem).append(link);
+
+    return true;
 });

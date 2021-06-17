@@ -24,6 +24,8 @@ tcbutton.render('.edit-container:not(.tc)', { observe: true }, function (
     });
 
     $('.header-btn-container', elem).appendChild(link);
+
+    return true;
 });
 
 tcbutton.render(
@@ -52,5 +54,7 @@ tcbutton.render(
             liTag,
             lastEl.querySelector('.navbar-save-button').nextSibling
         );
+
+        return true;
     }
 );

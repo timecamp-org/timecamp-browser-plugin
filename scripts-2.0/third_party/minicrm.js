@@ -13,4 +13,6 @@ tcbutton.render('.task-header .meta:not(.tc)', {}, function (elem) {
     });
 
     elem.appendChild(link);
+
+    return true;
 });

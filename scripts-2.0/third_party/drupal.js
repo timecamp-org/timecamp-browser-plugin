@@ -10,5 +10,7 @@ tcbutton.render(
         });
 
         elem.appendChild(document.createElement('li').appendChild(link));
+
+        return true;
     }
 );

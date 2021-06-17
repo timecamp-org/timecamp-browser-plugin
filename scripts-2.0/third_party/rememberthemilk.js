@@ -26,15 +26,19 @@ tcbutton.render(
                 "div[role='listbox'] [role='option'] span[style*='user-select: text']"
             );
 
-        if (task) {
-            const link = tcbutton.createTimerLink({
-                className: 'rememberthemilk',
-                description: getDescription,
-                projectName: getProject,
-                buttonType: 'minimal'
-            });
-
-            task.parentElement.appendChild(link);
+        if (!task) {
+            return false;
         }
+
+        const link = tcbutton.createTimerLink({
+            className: 'rememberthemilk',
+            description: getDescription,
+            projectName: getProject,
+            buttonType: 'minimal'
+        });
+
+        task.parentElement.appendChild(link);
+
+        return true;
     }
 );

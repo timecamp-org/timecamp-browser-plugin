@@ -30,6 +30,7 @@ const SERVICE = 'usepixie';
             plusBtn.dataset.flitem = "";
             container.insertBefore(link, plusBtn);
 
+            return true;
         });
     });
 
@@ -51,6 +52,7 @@ const SERVICE = 'usepixie';
             plusBtn.dataset.flitem = "";
             container.insertBefore(link, plusBtn);
 
+            return true;
         });
     });
 

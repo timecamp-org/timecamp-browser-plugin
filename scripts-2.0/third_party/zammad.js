@@ -13,6 +13,8 @@ tcbutton.render(
             buttonType: 'minimal'
         });
         appendTcLinkAsButton(tcLink, $container);
+
+        return true;
     }
 );
 

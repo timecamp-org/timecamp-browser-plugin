@@ -32,5 +32,7 @@ tcbutton.render(
             description: getDescription
         });
         header.appendChild(link);
+
+        return true;
     }
 );

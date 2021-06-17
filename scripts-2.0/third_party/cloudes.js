@@ -15,4 +15,6 @@ tcbutton.render('#left-panel:not(.tc)', {}, function () {
     wrap.appendChild(link);
     wrap.className = 'boxedDotted';
     prevElem.parentNode.insertBefore(wrap, prevElem.nextSibling);
+
+    return true;
 });

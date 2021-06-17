@@ -19,9 +19,13 @@ tcbutton.render(
         wrapper.appendChild(link);
 
         const root = elem.querySelector('div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)');
-        if (root) {
-            root.prepend(wrapper);
+        if (!root) {
+            return false;
         }
+
+        root.prepend(wrapper);
+
+        return true;
     }
 );
 
@@ -44,5 +48,7 @@ tcbutton.render(
         });
 
         elem.prepend(link);
+
+        return true;
     }
 );

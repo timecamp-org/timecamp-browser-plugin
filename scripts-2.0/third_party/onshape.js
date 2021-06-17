@@ -14,5 +14,7 @@ tcbutton.render(
         });
 
         $('.navbar-document-and-workspace-names').appendChild(link);
+
+        return true;
     }
 );

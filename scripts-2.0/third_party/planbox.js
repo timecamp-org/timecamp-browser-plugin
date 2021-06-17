@@ -20,5 +20,7 @@ tcbutton.render(
 
         div.appendChild(link);
         collectorDiv.insertBefore(div, importanceDiv.nextSibling);
+
+        return true;
     }
 );

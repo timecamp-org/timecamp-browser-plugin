@@ -10,4 +10,6 @@ tcbutton.render('#edit_menu_group:not(.tc)', { observe: true }, function (
     });
 
     elem.parentNode.insertBefore(link, elem);
+
+    return true;
 });

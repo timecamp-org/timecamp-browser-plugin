@@ -9,6 +9,8 @@ const button = (link, elem) => {
     wrapper.appendChild(link);
 
     elem.insertBefore(wrapper, elem.firstChild);
+
+    return true;
 };
 
 const descriptionSelector = () => {
@@ -28,7 +30,7 @@ tcbutton.render(
             description: descriptionSelector
         });
 
-        button(link, elem);
+        return button(link, elem);
     }
 );
 
@@ -45,5 +47,5 @@ tcbutton.render('.ArticleDetails:not(.tc)', { observe: true }, (articleDetails) 
         description: knowledgeBaseName
     });
 
-    button(link, articleDetails);
+    return button(link, articleDetails);
 });

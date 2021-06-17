@@ -9,13 +9,15 @@ function addTimerLink (elem, description, location) {
     });
 
     $(location, elem).appendChild(link);
+
+    return true;
 }
 
 tcbutton.render(
     '.sidebar-content .page-header + .table-list .table-list-row:not(.tc)',
     { observe: true },
     function (elem) {
-        addTimerLink(elem, '.table-list-title a', '.table-list-title');
+        return addTimerLink(elem, '.table-list-title a', '.table-list-title');
     }
 );
 
@@ -23,7 +25,7 @@ tcbutton.render(
     '.sidebar-content .page-header + .table-list .table-list-row .task-list-subtask:not(.tc)',
     { observe: true },
     function (elem) {
-        addTimerLink(elem, '.subtask-title a', '.subtask-time-tracking');
+        return addTimerLink(elem, '.subtask-title a', '.subtask-time-tracking');
     }
 );
 
@@ -31,7 +33,7 @@ tcbutton.render(
     '.page > .table-list > .table-list-row:not(.tc)',
     { observe: true },
     function (elem) {
-        addTimerLink(elem, '.table-list-title a', '.table-list-title');
+        return addTimerLink(elem, '.table-list-title a', '.table-list-title');
     }
 );
 
@@ -43,14 +45,14 @@ tcbutton.render('#task-summary:not(.tc)', { observe: true }, function (
         div.className = 'buttons-header';
         $('.task-summary-container', elem).after(div);
     }
-    addTimerLink(elem, 'h2', '.buttons-header');
+    return addTimerLink(elem, 'h2', '.buttons-header');
 });
 
 tcbutton.render(
     '.subtasks-table tbody tr:not(.tc)',
     { observe: true },
     function (elem) {
-        addTimerLink(elem, '.subtask-title a', '.subtask-time-tracking');
+        return addTimerLink(elem, '.subtask-title a', '.subtask-time-tracking');
     }
 );
 
@@ -61,6 +63,6 @@ tcbutton.render(
         const span = document.createElement('span');
         span.setAttribute('style', 'padding-left: 10px');
         $('.subtask-title', elem).after(span);
-        addTimerLink(elem, '.subtask-title a', '.subtask-title + span');
+        return addTimerLink(elem, '.subtask-title a', '.subtask-title + span');
     }
 );

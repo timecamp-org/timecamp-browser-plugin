@@ -18,7 +18,11 @@ tcbutton.render('#task-detail-view:not(.tc)', { observe: true }, function render
     });
 
     const root = elem.querySelector('#td-caption');
-    if (root) {
-        root.insertBefore(button, root.firstChild);
+    if (!root) {
+        return false;
     }
+
+    root.insertBefore(button, root.firstChild);
+
+    return true;
 });
