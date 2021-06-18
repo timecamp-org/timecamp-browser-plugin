@@ -64,6 +64,7 @@ $disabledFontColor: #8a8a8a;
     left: 0;
     box-shadow: 0 6px 32px 0 #dcdcdc;
     border-radius: $defaultBorderRadius;
+    overflow-y: hidden;
     z-index: 999999;
   }
 

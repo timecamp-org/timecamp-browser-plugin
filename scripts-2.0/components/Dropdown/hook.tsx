@@ -10,8 +10,7 @@ export interface DropdownHookInterface {
   calculateDropdownPosition: () => {
     top: number,
     left: number,
-    width: number,
-    maxHeight: number
+    width: number
   };
   onDropdownButtonClick: (e) => void;
   onBackdropClick: (e) => void;
@@ -35,8 +34,6 @@ export const useDropdownHook = (): DropdownHookInterface => {
     let top = 0;
     let left = 0;
     let width = 0;
-    let maxHeight = 0;
-    const windowHeight = window.innerHeight;
 
     if (buttonRef) {
       const tmp = buttonRef.current?.getBoundingClientRect();
@@ -45,17 +42,15 @@ export const useDropdownHook = (): DropdownHookInterface => {
         const { x, y, height } = tmp;
 
         top = y + height + 10;
-        maxHeight = windowHeight - top - 20;
         left = x;
         width = tmp.width;
       }
     }
 
-    return { 
+    return {
       top,
       left,
-      width,
-      maxHeight
+      width
     };
   };
 
