@@ -2,74 +2,135 @@
 const PODIO = 'podio';
 const TASK_NOT_FOUND_INFO = 'podio_task_not_found_in_backend_integration_info';
 
-const buildExternalIdForPodio = (type, dataId) => {
-    let prefix = '';
-    switch (type) {
-        case 'app':
-            prefix = 'a';
-            break;
+class PodioRenderer
+{
+    constructor(options) {
+        this.settings = {
+            type: '',
+            container: null,
+            titleSelector: '',
+            podioId: '',
+            additionalCSSClass: '',
+            buttonType: 'normal',
+            buttonOnHover: false,
+            injectContainerSelector: ''
+        }
+        this.settings = Object.assign(this.settings, options);
 
-        case 'item':
-            prefix = 'i';
-            break;
+        this.link = null;
+        this.injectContainer = null;
     }
 
-    return PODIO + '_' + prefix + dataId
+    buildExternalIdForPodio() {
+        let prefix = '';
+        switch (this.settings.type) {
+            case 'app':
+                prefix = 'a';
+                break;
+
+            case 'item':
+                prefix = 'i';
+                break;
+        }
+
+        return PODIO + '_' + prefix + this.settings.podioId;
+    }
+
+    podioCreateTimerButton() {
+        if ($('.tc-button', this.settings.container)) {
+            return false;
+        }
+
+        let titleElem = $(this.settings.titleSelector, this.settings.container);
+        if (!titleElem) {
+            return false;
+        }
+
+        const description = titleElem.innerText.trim();
+        const externalTaskId = this.buildExternalIdForPodio();
+
+        if (!externalTaskId) {
+            return false;
+        }
+
+        let additionalClasses = [];
+        if (this.settings.additionalCSSClass !== '') {
+            additionalClasses.push(PODIO + '__' + this.settings.additionalCSSClass)
+        }
+        if (this.settings.buttonOnHover) {
+            additionalClasses.push('tc-on-hover');
+        }
+
+        let buttonType = this.settings.buttonType;
+
+        return tcbutton.createTimerLink({
+            className: PODIO,
+            additionalClasses: additionalClasses,
+            description: description,
+            buttonType,
+            externalTaskId: externalTaskId,
+            taskNotFoundInfo: TASK_NOT_FOUND_INFO
+        });
+    }
+
+    render() {
+        this.link = this.podioCreateTimerButton();
+
+        if(!this.link) {
+            return false;
+        }
+
+        if (this.settings.injectContainerSelector === '') {
+            this.injectContainer = this.settings.container;
+        } else {
+            this.injectContainer = $(this.settings.injectContainerSelector, this.settings.container);
+        }
+
+        if (!this.injectContainer) {
+            return false;
+        }
+
+        return true;
+    }
+
+    insert(elem, position) {
+        if (!elem) {
+            elem = this.link;
+        }
+
+        if (!position) {
+            position = 'beforeend'
+        }
+
+        this.injectContainer.insertAdjacentElement(position, elem);
+
+        return true;
+    }
+
+    renderAndInsert(elem, position) {
+        let rendered = this.render();
+
+        if (!rendered) {
+            return false;
+        }
+
+        return this.insert(elem, position);
+    }
 }
-
-const podioCreateTimerButton = (type, elem, titleSelector, podioId, cssClassName, buttonType) => {
-    if ($('.tc-button', elem)) {
-        return false;
-    }
-
-    let titleElem = $(titleSelector, elem);
-    if (!titleElem) {
-        return false;
-    }
-
-    const description = titleElem.innerText.trim();
-    const externalTaskId = buildExternalIdForPodio(
-        type,
-        podioId
-    );
-
-    if (!externalTaskId) {
-        return false;
-    }
-
-    return tcbutton.createTimerLink({
-        className: PODIO,
-        additionalClasses: [PODIO + '__' + cssClassName],
-        description: description,
-        buttonType,
-        externalTaskId: externalTaskId,
-        taskNotFoundInfo: TASK_NOT_FOUND_INFO
-    });
-}
-
 
 const podioRenderTimerInTasksList = (elem) => {
-    const link = podioCreateTimerButton(
-        'task',
-        elem,
-        '.task-title',
-        elem.getAttribute('data-id'),
-        'tasks-list-widget',
-        'minimal'
-    );
+    let renderer = new PodioRenderer({
+        type: 'task',
+        container: elem,
+        titleSelector: '.task-title',
+        podioId: elem.getAttribute('data-id'),
+        additionalCSSClass: 'tasks-list-widget',
+        buttonType: 'minimal',
+        buttonOnHover: true,
+        injectContainerSelector: '.bd'
+    });
 
-    if (!link) {
-        return false;
-    }
-
-    const injectContainer = $('.bd', elem);
-    if (!injectContainer) {
-        return false;
-    }
-
-    injectContainer.insertAdjacentElement('beforeend', link);
-
-    return true;
+    return renderer.renderAndInsert();
 }
 
 // task view
@@ -77,21 +138,18 @@ tcbutton.render(
     '#task-permalink:not(.tc)',
     {observe: true},
     elem => {
-        const link = podioCreateTimerButton(
-            'task',
-            elem,
-            '.task-header .task-title',
-            location.pathname.split('/').pop(),
-            'task-view',
-            'normal'
-        );
+        let renderer = new PodioRenderer({
+            type: 'task',
+            container: elem,
+            titleSelector: '.task-header .task-title',
+            podioId: location.pathname.split('/').pop(),
+            additionalCSSClass: 'task-view',
+            injectContainerSelector: '.task-body.fields'
+        });
 
-        if(!link) {
-            return false;
-        }
+        let rendered = renderer.render();
 
-        const injectContainer = $('.task-body.fields', elem);
-        if (!injectContainer) {
+        if (!rendered) {
             return false;
         }
 
@@ -100,38 +158,32 @@ tcbutton.render(
         col.insertAdjacentElement('beforeend', createTag('span', 'icon-16 icon-16-black-wrench'));
 
         let value = createTag('div', 'value');
-        value.insertAdjacentElement('afterbegin', link);
+        value.insertAdjacentElement('afterbegin', renderer.link);
 
         let field = createTag('div', 'field')
         field.insertAdjacentElement('afterbegin', value);
         field.insertAdjacentElement('afterbegin', col);
 
-        injectContainer.insertAdjacentElement('afterbegin', field);
-
-        return true;
+        return renderer.insert(field, 'afterbegin');
     }
 );
 
 // app item view
 tcbutton.render(
-    'section.item-content:not(.tc)',
+    'section.item-content .app-fields-list:not(.tc)',
     {observe: true},
     elem => {
-        const link = podioCreateTimerButton(
-            'item',
-            elem,
-            '#title .value',
-            $('.share[data-id]').getAttribute('data-id'),
-            'item-view',
-            'normal'
-        );
+        let renderer = new PodioRenderer({
+            type: 'item',
+            container: elem,
+            titleSelector: '#title .value',
+            podioId: $('.share[data-id]').getAttribute('data-id'),
+            additionalCSSClass: 'item-view',
+        });
 
-        if(!link) {
-            return false;
-        }
+        let rendered = renderer.render();
 
-        const injectContainer = $('.app-fields-list', elem);
-        if (!injectContainer) {
+        if (!rendered) {
             return false;
         }
 
@@ -140,7 +192,7 @@ tcbutton.render(
         col.insertAdjacentElement('beforeend', createTag('span', 'icon-16 icon-16-black-wrench'));
 
         let value = createTag('div', 'frame-content');
-        value.insertAdjacentElement('afterbegin', link);
+        value.insertAdjacentElement('afterbegin', renderer.link);
 
         let field = createTag('div', 'frame-wrapper')
         field.insertAdjacentElement('afterbegin', value);
@@ -149,9 +201,7 @@ tcbutton.render(
         let item = createTag('li');
         item.insertAdjacentElement('afterbegin', field);
 
-        injectContainer.insertAdjacentElement('afterbegin', item);
-
-        return true;
+        return renderer.insert(item,'afterbegin');
     }
 );
 
@@ -173,31 +223,120 @@ tcbutton.render(
     }
 );
 
-// items in app view
+// items in app view badge
 tcbutton.render(
     '#wrapper.space.apps .items-list [data-id]:not(.tc)',
     {observe: true},
     elem => {
-        const link = podioCreateTimerButton(
-            'item',
-            elem,
-            '.app-badge-header',
-            elem.getAttribute('data-id'),
-            'items-list',
-            'minimal'
-        );
+        let renderer = new PodioRenderer({
+            type: 'item',
+            container: elem,
+            titleSelector: '.app-badge-header',
+            podioId: elem.getAttribute('data-id'),
+            additionalCSSClass: 'items-list-badge',
+            buttonType: 'minimal',
+            buttonOnHover: true,
+            injectContainerSelector: 'footer .app-badge-footer-2'
+        });
 
-        if(!link) {
+        return renderer.renderAndInsert(null, 'afterbegin');
+    }
+);
+
+// items in app view table
+tcbutton.render(
+    '.items-list .items-table table.data tr:not(.tc)',
+    {observe: true},
+    elem => {
+        let index = $('.is-print', elem).innerText.trim();
+        if (!index) {
             return false;
         }
 
-        const injectContainer = $('footer .app-badge-footer-2', elem);
-        if (!injectContainer) {
+        let podioId = $('.items-list .items-table table.count [data-index="'+index+'"]');
+        if (!podioId) {
+            return  false;
+        }
+
+        let renderer = new PodioRenderer({
+            type: 'item',
+            container: elem,
+            titleSelector: 'td[title]',
+            podioId: podioId.getAttribute('data-id'),
+            additionalCSSClass: 'items-list-table',
+            buttonType: 'minimal',
+            buttonOnHover: true,
+            injectContainerSelector: 'td[title]'
+        });
+
+        return renderer.renderAndInsert();
+    }
+);
+
+// items in app view card
+tcbutton.render(
+    '.items-list .items-card .card-item .card-component:not(.tc)',
+    {observe: true},
+    elem => {
+        let renderer = new PodioRenderer({
+            type: elem.getAttribute('data-ref_type'),
+            container: elem,
+            titleSelector: 'header',
+            podioId: elem.getAttribute('data-id'),
+            additionalCSSClass: 'item-card-view',
+            buttonType: 'minimal',
+            buttonOnHover: true,
+        });
+
+        return renderer.renderAndInsert();
+    }
+);
+
+// items in app view activity and tasks in workspace
+tcbutton.render(
+    '#stream [data-ref-type]:not(.tc)',
+    {observe: true},
+    elem => {
+        let e = $('.like', elem);
+
+        let renderer = new PodioRenderer({
+            type: e.getAttribute('data-ref_type'),
+            container: elem,
+            titleSelector: '.title',
+            podioId: e.getAttribute('data-ref_id'),
+            additionalCSSClass: 'stream-list-activity',
+            buttonType: 'minimal',
+            buttonOnHover: true,
+            injectContainerSelector: '.body .bd'
+        });
+
+       return renderer.renderAndInsert();
+    }
+);
+
+// my tasks
+tcbutton.render(
+    '.task-group-list [data-single-view]:not(.tc)',
+    {observe: true},
+    elem => {
+        let renderer = new PodioRenderer({
+            type: 'task',
+            container: elem,
+            titleSelector: '.single-task .task-summary .task-link',
+            podioId: elem.getAttribute('data-task-id'),
+            additionalCSSClass: 'tasks-list-expanded',
+            injectContainerSelector: '.task-detail .task-right-column'
+        });
+
+        let rendered = renderer.render();
+
+        if (!rendered) {
             return false;
         }
 
-        injectContainer.insertAdjacentElement('afterbegin', link);
+        let container = createTag('div', 'task-via');
+        container.insertAdjacentElement('afterbegin', renderer.link);
 
-        return true;
+        return renderer.insert(container);
     }
 );

@@ -32,3 +32,17 @@ $infoFieldTextColor: #4193f8;
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 $defaultFontFamily: 'Poppins', sans-serif;
 $defaultFontSize: 14px;
+
+.tc-button.tc-on-hover {
+  opacity: 0;
+}
+
+.tc-button.tc-on-hover.active {
+  opacity: 1;
+}
+
+.tc:hover {
+  .tc-button.tc-on-hover {
+    opacity: 1;
+  }
+}

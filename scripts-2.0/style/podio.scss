@@ -1,5 +1,7 @@
 section.item-content .task-list [data-id] .bd,
-#wrapper.space .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id] .bd {
+#wrapper.space .gridster .tasks-wrapper .gridster-widget.tasks .content [data-id] .bd,
+#stream .body .bd,
+.items-list .items-card .card-item .card-component {
   position: relative;
 }
 
@@ -10,9 +12,24 @@ section.item-content .task-list [data-id] .bd,
     transform: translate(0, -60%);
     margin-left: 10px;
   }
-  &__items-list {
+
+  &__items-list-badge {
     vertical-align: middle;
     margin-right: 4px;
     margin-top: -4px;
+  }
+
+  &__stream-list-activity,
+  &__items-list-table {
+    vertical-align: middle;
+    margin-left: 4px;
+    margin-top: -4px;
+  }
+
+  &__item-card-view {
+    position: absolute;
+    right: 5px;
+    top: 12px;
+    border-left: 5px solid #fff;
   }
 }
