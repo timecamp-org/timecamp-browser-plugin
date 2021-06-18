@@ -144,23 +144,6 @@
     overflow-y: auto;
   }
 
-  .TaskPicker__content_box_invisible_scroll {
-    padding: 15px;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-break: break-all;
-    div {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none;  /* Internet Explorer 10+ */
-
-      &::-webkit-scrollbar { /* WebKit */
-        width: 0;
-        height: 0;
-      }
-    }
-  }
-
   .TaskPicker__content_box {
     padding: 15px;
     -o-text-overflow: ellipsis;
