@@ -279,7 +279,7 @@ tcbutton.render(
     {observe: true},
     elem => {
         let renderer = new PodioRenderer({
-            type: elem.getAttribute('data-ref_type'),
+            type: 'item',
             container: elem,
             titleSelector: 'header',
             podioId: elem.getAttribute('data-id'),
