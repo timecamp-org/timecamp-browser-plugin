@@ -255,7 +255,7 @@ tcbutton.render(
 
         let podioId = $('.items-list .items-table table.count [data-index="'+index+'"]');
         if (!podioId) {
-            return  false;
+            return false;
         }
 
         let renderer = new PodioRenderer({
