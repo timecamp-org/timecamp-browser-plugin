@@ -40,11 +40,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.todoist.com/app*"],
-    "script": ["todoist.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.toodledo.com/*"],
     "script": ["toodledo.js"],
     "isActiveInProd": true
