@@ -75,6 +75,11 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://calendar.google.com/*"],
+    "script": ["google-calendar.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://*.ladesk.com/*"],
     "script": ["liveagent.js"],
     "isActiveInProd": true
