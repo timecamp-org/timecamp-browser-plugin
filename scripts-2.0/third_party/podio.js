@@ -69,6 +69,7 @@ class PodioRenderer
             description: description,
             buttonType,
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
     }
