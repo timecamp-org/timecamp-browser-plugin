@@ -1,0 +1,42 @@
+@import '../../style/common';
+
+.timecamp .backend-integration-message-container {
+  font-size: 14px;
+  font-family: Poppins;
+  background-color: #f8f8f8;
+  padding: 15px;
+  margin: 2px;
+}
+
+.timecamp .backend-integration-message-text {
+  font-size: 14px;
+  font-family: Poppins;
+  display: inline-block;
+  width: 318px;
+  padding: 0 10px;
+}
+
+.timecamp .backend-integration-ad-icon {
+  font-size: 26px;
+  font-family: Poppins;
+  color: #8a8a8a;
+  float: left;
+  margin-top: -2px;
+}
+
+.timecamp .backend-integration-ad-dont-show-up-message {
+  font-size: 14px;
+  font-family: Poppins;
+  display: inline-block;
+  padding: 5px;
+}
+
+.timecamp .backend-integration-ad-close-icon {
+  font-size: 14px;
+  font-family: Poppins;
+}
+
+.timecamp .backend-integration-close-section {
+  margin-left: 25px;
+  cursor: pointer;
+}

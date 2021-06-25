@@ -11,7 +11,8 @@ const ManifestBuilder = require('./ManifestBuilder.js');
 const ENV = {
   SERVER_PROTOCOL: process.env.SERVER_PROTOCOL || 'https',
   SERVER_DOMAIN: process.env.SERVER_DOMAIN || 'app.timecamp.com',
-  NEXT_SERVER_DOMAIN: "v4.api.timecamp.com"
+  NEXT_SERVER_DOMAIN: "v4.api.timecamp.com",
+  MARKETING_PAGE_DOMAIN: 'www.timecamp.com'
 };
 
 const CUSTOM_DOMAINS = {
@@ -117,7 +118,8 @@ module.exports = (env, argv) => {
         SERVER_DOMAIN: ENV.SERVER_DOMAIN,
         NEXT_SERVER_DOMAIN: ENV.NEXT_SERVER_DOMAIN,
         DEBUG: development,
-        CUSTOM_DOMAINS: CUSTOM_DOMAINS
+        CUSTOM_DOMAINS: CUSTOM_DOMAINS,
+        MARKETING_PAGE_DOMAIN: ENV.MARKETING_PAGE_DOMAIN
       }),
       new CleanPlugin(),
       new CopyPlugin({'patterns': [

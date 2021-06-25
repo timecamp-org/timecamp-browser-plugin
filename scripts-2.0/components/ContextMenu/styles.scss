@@ -21,9 +21,13 @@
       display: none;
     }
 
-    .TaskPicker, .TagPicker, .note, .duration {
-      margin-top: 15px;
-    }
+  &-extended-height {
+    height: 666px;
+  }
+
+  .TaskPicker, .TagPicker, .note, .duration {
+    margin-top: 15px;
+  }
 
     .billable {
       margin-top: 15px;

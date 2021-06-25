@@ -8,6 +8,8 @@ const browser = require('webextension-polyfill');
 import './styles.scss';
 import TagPicker from "../TagPicker";
 import TaskPicker from "../TaskPicker";
+import BackendIntegrationAdMessage from "../BackendIntegrationAdMessage";
+import GroupSetting from "../../GroupSetting";
 
 export interface ContextMenuInterface {
     service: string | React.ReactNode;
@@ -35,12 +37,16 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [isTagModuleEnabled, setIsTagModuleEnabled] = useState<boolean>(true);
     const startTimerCallback = props.startTimerCallback;
     const [userId, setUserId] = useState<number>(0);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTrigger, setClearTrigger] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
     const [isBackendIntegration, setIsBackendIntegration] = useState(props.isBackendIntegration);
     const [noTaskFoundDisplayAlert, setNoTaskFoundDisplayAlert] = useState<boolean>(false);
     const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
         = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
+    const [dontShowAdSettingValue, setDontShowAdSettingValue] = useState<number>(1);
+
+    const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
 
     useEffect(() => {
@@ -73,8 +79,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         }).then((data) => {
             setCanCreateTags(data.permissions.can_change_group_settings);
             setUserId(parseInt(data.user_id));
+            setIsAdmin(data.permissions.role_administrator);
+            getBackendIntegrationAdData(data.user_id);
+
         });
-        
+
         if (billableInputVisibility === null) {
             setBillableInputVisibility(true);
             browser.runtime.sendMessage({
@@ -85,6 +94,33 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             });
         }
     }, []);
+
+    const getBackendIntegrationAdData = (userId: number) => {
+        browser.runtime.sendMessage({
+            type: 'getUserSetting',
+            name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
+            userId: userId,
+            timestamp: true
+        }).then((resolve) => {
+            if(resolve.modify_time === false || (new Date().getTime() - new Date(resolve.modify_time).getTime()) > THIRTY_DAYS_IN_MILISEC) {
+                setDontShowAdSettingValue(0);
+                return;
+            }
+
+            if(parseInt(resolve.value) > 0) {
+                setDontShowAdSettingValue(parseInt(resolve.value));
+                return;
+            }
+
+            if(resolve.value === "" || parseInt(resolve.value) === 0) {
+                setDontShowAdSettingValue(0);
+                return;
+            }
+
+        }).catch(() => {
+            setDontShowAdSettingValue(0);
+        });
+    };
 
     const setIsBackendIntegrationAndUserHasIntegration = (isBackendIntegration) => {
         if (isBackendIntegration === false) {
@@ -143,7 +179,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const onClickCancel = (e) => {
         e.stopPropagation();
-
         clearAndClose();
     };
 
@@ -166,24 +201,24 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 />
             </div>
         </React.Fragment>;
-    }
+    };
 
     const onNotFoundTaskForActiveBackendIntegration = () => {
         setNoTaskFoundDisplayAlert(true);
         setTaskId(0);
         setClearTrigger(!clearTrigger);
-    }
+    };
 
     const onAutoDetectTaskForActiveBackendIntegration = () => {
         setNote('');
         setNoTaskFoundDisplayAlert(false);
-    }
+    };
 
     //data-elevation is fix for trello card modal (it close when click on context menu)
     return (
         <div
             ref={node}
-            className={`context-menu  ${!open ? "context-menu--hidden" : ""}`}
+            className={`context-menu  ${!open ? "context-menu--hidden" : ""} ${props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0 ? "context-menu-extended-height" : ""}`}
             style={props.position}
             data-elevation={open ? "2" : ""}
         >
@@ -192,6 +227,24 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 isBackendIntegration && noTaskFoundDisplayAlert &&
                 <div className="context-menu__info-field">{taskNotFoundInBackendIntegrationInfo}</div>
             }
+            <BackendIntegrationAdMessage
+                visible={props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0}
+                isAdmin={isAdmin}
+                userId={userId}
+                service={props.service}
+                browser={browser}
+                onClose={(e) => {
+                    e.stopPropagation();
+                    browser.runtime.sendMessage({
+                        type: 'saveUserSetting',
+                        name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
+                        userId: userId,
+                        value: (dontShowAdSettingValue + 1)
+                    }).then(() => {
+                    });
+                    setDontShowAdSettingValue(dontShowAdSettingValue + 1);
+                }}
+            />
             <TaskPicker
                 browser={browser}
                 onTaskClick={
