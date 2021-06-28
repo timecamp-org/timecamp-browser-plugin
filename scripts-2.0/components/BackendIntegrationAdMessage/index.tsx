@@ -27,12 +27,12 @@ const BackendIntegrationAdMessage: React.FC<BackendIntegrationAdMessageInterface
     const renderMessage = (service: string | React.ReactNode) => {
         return <div className={"backend-integration-message-text"}>
             {props.isAdmin ? ReactHtmlParser((translate('backend_integration_ad_message_admin')
-                        .replace('*service*', service)
+                        .replace('*service*', pathService.getIntegrationNameFromMessage(service))
                         .replace('*linkStart*', "<a style='text-transform: capitalize; text-decoration: underline;' target='_blank' href='" + pathService.getIntegrationUrl(service) + "'>")
                         .replace('*linkClose*', '</a>')
             )) :
                 ReactHtmlParser((translate('backend_integration_ad_message_user')
-                .replace('*service*', service)
+                .replace('*service*', pathService.getIntegrationNameFromMessage(service))
                 .replace('*linkStart*', "<a style='text-transform: capitalize; text-decoration: underline;' target='_blank' href='" + pathService.getIntegrationMarketingWebsiteUrl(service) + "'>")
                 .replace('*linkClose*', '</a>')))
             }

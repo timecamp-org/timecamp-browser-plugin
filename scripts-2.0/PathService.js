@@ -102,6 +102,10 @@ export default class PathService {
     }
 
     getIntegrationUrl(service) {
+        switch (service) {
+            case 'googlecalendar':
+                return this.serverUrl + 'app#/settings/users/me#google-calendar-box';
+        }
         return this.serverUrl + 'addons/' + this.getIntegrationNameFromTimeCampApp(service) + '/';
     }
 
@@ -127,6 +131,17 @@ export default class PathService {
         switch(service) {
             case 'dropboxpaper':
                 return 'dropbox-paper';
+            case 'googlecalendar':
+                return 'google-calendar';
+            default:
+                return service;
+        }
+    }
+
+    getIntegrationNameFromMessage(service) {
+        switch (service) {
+            case 'googlecalendar':
+                return 'Google Calendar';
             default:
                 return service;
         }
