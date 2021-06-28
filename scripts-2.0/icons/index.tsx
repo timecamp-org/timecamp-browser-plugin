@@ -31,7 +31,7 @@ import {
   faTimesCircle,
   faPlus,
   faHeartBroken,
-  faDollarSign
+  faDollarSign,
 } from '@fortawesome/pro-solid-svg-icons';
 
 import {
@@ -52,7 +52,8 @@ import {
   faExclamationCircle as falExclamationCircle,
   faExclamationTriangle as falExclamationTriangle,
   faCheckCircle as falCheckCircle,
-  faChevronLeft as falChevronLeft
+  faChevronLeft as falChevronLeft,
+  faLightbulb as falLightbulb
 } from '@fortawesome/pro-light-svg-icons';
 
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
@@ -106,5 +107,6 @@ library.add(
   falExclamationCircle,
   falExclamationTriangle,
   falCheckCircle,
-  falChevronLeft
+  falChevronLeft,
+  falLightbulb
 );
