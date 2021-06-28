@@ -14,7 +14,7 @@ tcbutton.render(
         if ($('.tc-button', elem)) {
             return;
         }
-        
+
         const description = elem.querySelector('.BoardCard-taskName').textContent.trim();
         const externalTaskId = buildExternalIdForAsana(
             elem.dataset.taskId
@@ -22,16 +22,17 @@ tcbutton.render(
         if (!externalTaskId) {
             return;
         }
-        
+
         const link = tcbutton.createTimerLink({
             className: ASANA,
             additionalClasses: [ASANA + '__board-view'],
             description: description,
             buttonType: 'minimal',
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
-        
+
         const injectContainer = elem.querySelector('.BoardCardLayout-actionButtons');
         if (injectContainer) {
             injectContainer.insertAdjacentElement('afterbegin', link);
@@ -41,13 +42,13 @@ tcbutton.render(
 
 //List view
 tcbutton.render(
-    '.SpreadsheetRow .SpreadsheetTaskName:not(.tc)', 
+    '.SpreadsheetRow .SpreadsheetTaskName:not(.tc)',
     { observe: true },
     (elem) => {
         if ($('.tc-button', elem.parentNode)) {
             return;
         }
-        
+
         //child textaread id split
         const description = elem.querySelector('textarea').textContent.trim();
         const externalTaskId = buildExternalIdForAsana(
@@ -56,13 +57,14 @@ tcbutton.render(
         if (!externalTaskId) {
             return;
         }
-        
+
         const link = tcbutton.createTimerLink({
             className: ASANA,
             additionalClasses: [ASANA + '__list-view'],
             description: description,
             buttonType: 'minimal',
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
@@ -82,12 +84,13 @@ tcbutton.render(
         if (!externalTaskId) {
             return;
         }
-        
+
         const link = tcbutton.createTimerLink({
             className: ASANA,
             additionalClasses: [ASANA + '__task-details'],
             description: description,
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
@@ -98,8 +101,8 @@ tcbutton.render(
 
 //Subtasks
 tcbutton.render(
-    '.ItemRowTwoColumnStructure-left:not(.tc)', 
-    {observe: true}, 
+    '.ItemRowTwoColumnStructure-left:not(.tc)',
+    {observe: true},
     (elem) => {
         let description = $('.simpleTextarea.AutogrowTextarea-input', elem).textContent.trim();
 
@@ -109,16 +112,17 @@ tcbutton.render(
         if (!externalTaskId) {
             return;
         }
-        
+
         const link = tcbutton.createTimerLink({
             className: ASANA,
             additionalClasses: [ASANA + '__subtasks'],
             description: description,
             buttonType: 'minimal',
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
-        
+
         elem.appendChild(link);
     }
 );

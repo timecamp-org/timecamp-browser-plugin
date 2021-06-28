@@ -44,6 +44,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [noTaskFoundDisplayAlert, setNoTaskFoundDisplayAlert] = useState<boolean>(false);
     const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
         = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
+    const [taskIdToPreset, setTaskIdToPreset] = useState<number|null>(null);
     const [dontShowAdSettingValue, setDontShowAdSettingValue] = useState<number>(1);
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
@@ -55,6 +56,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setBillableInputVisibility(props.billableInputVisibility);
         setService(props.service);
         setExternalTaskId(props.externalTaskId);
+        setTaskIdToPreset(null);
         setIsBackendIntegrationAndUserHasIntegration(props.isBackendIntegration);
         setTaskNotFoundInBackendIntegrationInfo(props.taskNotFoundInBackendIntegrationInfo);
         setOpen(true);
@@ -131,6 +133,12 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 integration: service,
             }).then((isBackendActiveIntegration) => {
                 setIsBackendIntegration(isBackendActiveIntegration);
+                let googleCalendarTaskId = parseInt(isBackendActiveIntegration);
+                if (googleCalendarTaskId > 0) {
+                    setTaskIdToPreset(googleCalendarTaskId);
+                } else {
+                    setTaskIdToPreset(null);
+                }
             });
         }
     }
@@ -204,13 +212,17 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     };
 
     const onNotFoundTaskForActiveBackendIntegration = () => {
-        setNoTaskFoundDisplayAlert(true);
+        if (taskIdToPreset === null) {
+            setNoTaskFoundDisplayAlert(true);
+        }
         setTaskId(0);
         setClearTrigger(!clearTrigger);
     };
 
     const onAutoDetectTaskForActiveBackendIntegration = () => {
-        setNote('');
+        if (taskIdToPreset === null) {
+            setNote('');
+        }
         setNoTaskFoundDisplayAlert(false);
     };
 
@@ -258,6 +270,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 userId={userId}
                 clearTrigger={clearTrigger}
                 presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
+                presetTaskByTaskId={taskIdToPreset}
             />
             {isTagModuleEnabled && renderTagPicker()}
             <Note

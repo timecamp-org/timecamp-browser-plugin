@@ -26,6 +26,7 @@ export interface TaskPicker {
     onTaskClick(taskId: Task): any,
     userId: number,
     clearTrigger: boolean,
+    presetTaskByTaskId: number|null,
     presetTaskByExternalId: string|null,
     onNotFoundTaskForActiveBackendIntegration(): any,
     onAutoDetectTaskForActiveBackendIntegration(): any,
@@ -319,7 +320,9 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                   taskPickerHook.setTaskList(taskTree);
                   taskPickerHook.setFullTaskTree(taskTree);
 
-                  resolve(taskListWithExternalTaskId);
+                  findAndPresetTask(taskListWithExternalTaskId, taskTree);
+
+                  resolve(null);
               });
       });
   };
@@ -409,14 +412,30 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
     );
   };
 
+    const pickTask = (task) => {
+        taskPickerHook.selectTask(task);
+        props.onTaskClick(task)
+        props.onAutoDetectTaskForActiveBackendIntegration();
+    }
 
-    const setTaskForGivenExternalTaskId = (taskListWithExternalTaskId) => {
+    const findAndPresetTask = (taskListWithExternalTaskId, fullTaskTree) => {
+        //try to set task by taskId (used only for Google Calendar)
+        if (props.presetTaskByTaskId !== null) {
+            for (const task of fullTaskTree) {
+                if (task.id == props.presetTaskByTaskId) {
+                    pickTask(task);
+
+                    return;
+                }
+            }
+        }
+
+        //try to set task by externalTaskId (used for all backend integrations)
         if (props.presetTaskByExternalId !== null) {
             if (props.presetTaskByExternalId in taskListWithExternalTaskId) {
                 let task = taskListWithExternalTaskId[props.presetTaskByExternalId];
-                taskPickerHook.selectTask(task);
-                props.onTaskClick(task)
-                props.onAutoDetectTaskForActiveBackendIntegration();
+                pickTask(task);
+
                 return;
             }
             props.onNotFoundTaskForActiveBackendIntegration();
@@ -427,14 +446,12 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
       if(props.userId !== 0) {
           if(taskPickerHook.taskList.length === 0) {
               fetchAndPrepareRecentlyUsedTasks();
-              fetchFullTaskTree().then((taskListWithExternalTaskId) => {
-                  setTaskForGivenExternalTaskId(taskListWithExternalTaskId);
-              });
+              fetchFullTaskTree();
           } else {
-              setTaskForGivenExternalTaskId(taskPickerHook.taskListWithExternalTaskId);
+              findAndPresetTask(taskPickerHook.taskListWithExternalTaskId, taskPickerHook.fullTaskTree);
           }
       }
-  }, [props.userId, props.presetTaskByExternalId]);
+  }, [props.userId, props.presetTaskByExternalId, props.presetTaskByTaskId]);
 
   React.useEffect(() => {
       taskPickerHook.selectTask(taskPickerHook.emptyTask);
