@@ -73,7 +73,7 @@ window.TcButton = {
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
-                        })
+                        });
                         break;
 
                     case 'getTagLists':
@@ -228,6 +228,30 @@ window.TcButton = {
 
                     case 'getUserData':
                         apiService.me().then((response) => {
+                            resolve(response);
+                        }).catch((error) => {
+                            reject(error);
+                        });
+                        break;
+
+                    case 'getUserSetting':
+                        apiService.getUserSetting(
+                            request.name,
+                            request.userId,
+                            request.timestamp
+                        ).then((response) => {
+                            resolve(response);
+                        }).catch((error) => {
+                            reject(error);
+                        });
+                        break;
+
+                    case 'saveUserSetting':
+                        apiService.saveUserSetting(
+                            request.name,
+                            request.userId,
+                            request.value
+                        ).then((response) => {
                             resolve(response);
                         }).catch((error) => {
                             reject(error);

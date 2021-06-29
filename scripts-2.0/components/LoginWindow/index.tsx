@@ -57,7 +57,7 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
     }
 
     return (
-        <div ref={node} className={`loginWindow ${!open ? "loginWindow--hidden" : ""}`} style={props.position}>
+        <div ref={node} className={`loginWindow ${!open ? "loginWindow--hidden" : ""}`} style={props.position} data-elevation='2'>
             <Header/>
             <div className='loginWindow__top-info'>Log in to your account</div>
             <div className={`loginWindow__error-div  ${!errorMessageVisible ? "loginWindow__error-div--hidden" : ""}`}>
@@ -70,7 +70,7 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
             />
             <div className='loginWindow__bottom-info'>
                 New here?&nbsp;
-                <a href="https://www.timecamp.com" target="_blank" className='loginWindow__bottom-info-link'>Sign up</a>
+                <a href="https://www.timecamp.com/auth/register" target="_blank" className='loginWindow__bottom-info-link'>Sign up</a>
                 &nbsp;for a free account!
             </div>
         </div>

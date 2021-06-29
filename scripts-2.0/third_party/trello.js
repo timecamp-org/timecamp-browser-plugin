@@ -37,6 +37,7 @@ tcbutton.render(
             description: description,
             buttonType: 'minimal',
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
@@ -68,6 +69,7 @@ tcbutton.render(
             description: description,
             buttonType: 'minimal',
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
@@ -98,6 +100,7 @@ tcbutton.render(
             additionalClasses: [TRELLO + '__card-view'],
             description: description,
             externalTaskId: externalTaskId,
+            isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 

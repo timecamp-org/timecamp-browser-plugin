@@ -127,10 +127,8 @@ window.tcbutton = {
         const description = invokeIfFunction(params.description);
         let externalTaskId = this.buildExternalTaskId(params.className, description);
         let taskNotFoundInBackendIntegrationInfo = '';
-        let isBackendIntegration = false;
-
+        let isBackendIntegration = !!params.isBackendIntegration;
         if (params.externalTaskId) {
-            isBackendIntegration = true;
             externalTaskId = params.externalTaskId;
         }
 
