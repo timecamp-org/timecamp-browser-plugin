@@ -199,10 +199,10 @@
 		"message": "This task is not synchronized in TimeCamp. Choose task by yourself or check boards in integration settings"
 	},
 	"backend_integration_ad_message_admin": {
-		"message": "Instead of building up project structure from scratch and manually switching between tasks *linkStart*import your projects from *service* *linkClose* and make your time tracking seamless."
+		"message": "Turn on *linkStart* *service* *linkClose* Integration to import your projects and tasks to TimeCamp automatically."
 	},
 	"backend_integration_ad_message_user": {
-		"message": "Instead of building up project structure from scratch and manually switching between tasks ask your Administrator to turn on *linkStart* *service* Integration *linkClose* to import your projects"
+		"message": "Ask your Admin to turn on *linkStart* *service* *linkClose* Integration to import your projects and tasks to TimeCamp automatically."
 	},
 	"backend_integration_ad_message_dont_show_up_button": {
 		"message": "Don't show up again"
