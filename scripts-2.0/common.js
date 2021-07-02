@@ -1,4 +1,3 @@
-import moment from 'moment';
 import tcStartButton from '!!raw-loader!./icons/start-button.svg';
 import tcStartButtonSmall from '!!raw-loader!./icons/start-button-small.svg';
 import tcStopButton from '!!raw-loader!./icons/stop-button.svg';
@@ -6,6 +5,7 @@ import tcStopButtonSmall from '!!raw-loader!./icons/stop-button-small.svg';
 import TimeFormatter from "./TimeFormatter";
 import Logger from "./Logger";
 import translate from "./Translator";
+import DateTime from "./helpers/DateTime";
 
 import * as React from "react";
 import ReactDOM from 'react-dom';
@@ -17,6 +17,7 @@ const DEFAULT_BILLABLE = true;
 const browser = require('webextension-polyfill');
 const timeFormatter = new TimeFormatter();
 const logger = new Logger();
+const dateTime = new DateTime();
 
 
 window.$ = (s, elem) => {
@@ -265,7 +266,7 @@ window.tcbutton = {
 
     startTimerCallback: (taskId, note, service, externalTaskId, buttonHash) => {
         return new Promise((resolve, reject) => {
-            let startTime = moment().format("YYYY-MM-DD HH:mm:ss");
+            let startTime = dateTime.now();
             tcbutton.currentTimerStartedAt = startTime;
 
             tcbutton.lastButtonClicked.dataset.externalTaskId = externalTaskId;
