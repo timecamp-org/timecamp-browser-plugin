@@ -27,13 +27,14 @@ window.TcButton = {
                                     response.name,
                                     response.note,
                                     request.externalTaskId,
+                                    request.buttonHash,
                                 );
 
                                 if (response.message) {
                                     logger.warn(response.message, true);
                                 }
 
-                                TcButton.currentEntry = currentEntry;
+                                TcButton.setCurrentEntry(currentEntry);
                                 TcButton.updateIcon();
 
                                 resolve(response);
@@ -315,6 +316,7 @@ window.TcButton = {
             apiService.start(
                 timeEntry.description,
                 timeEntry.externalTaskId,
+                timeEntry.buttonHash,
                 timeEntry.startTime,
                 timeEntry.taskId,
                 timeEntry.service
@@ -450,12 +452,14 @@ window.TcButton = {
         });
     },
 
-    createCurrentEntryObject: function(start, name, note, externalTaskId) {
+    createCurrentEntryObject: function(start, name, note, externalTaskId, buttonHash, color) {
         return {
             start: start,
             description: name,
             note: note,
-            externalTaskId: externalTaskId
+            externalTaskId: externalTaskId,
+            buttonHash: buttonHash,
+            color: color
         };
     },
 
@@ -474,13 +478,24 @@ window.TcButton = {
                             response.name,
                             response.note,
                             response.external_task_id,
+                            response.browser_plugin_button_hash,
+                            response.color,
                         );
                     }
 
-                    TcButton.currentEntry = currentEntry;
+                    TcButton.setCurrentEntry(currentEntry);
                     TcButton.updateIcon();
                     resolve(TcButton.currentEntry);
                 });
+        });
+    },
+
+    setCurrentEntry: (currentEntry) => {
+        TcButton.currentEntry = currentEntry;
+
+        browser.runtime.sendMessage({
+            type: 'currentEntryUpdated',
+            currentEntry: TcButton.currentEntry
         });
     },
 

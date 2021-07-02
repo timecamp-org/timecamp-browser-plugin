@@ -114,7 +114,7 @@ window.tcbutton = {
         }
     },
 
-    buildExternalTaskId: function (service, desc) {
+    buildButtonHash: function (service, desc) {
         return service + '_' + desc
             .split(' ')
             .join('_')
@@ -127,9 +127,10 @@ window.tcbutton = {
 
         const project = invokeIfFunction(params.projectName);
         const description = invokeIfFunction(params.description);
-        let externalTaskId = this.buildExternalTaskId(params.className, description);
         let taskNotFoundInBackendIntegrationInfo = '';
         let isBackendIntegration = !!params.isBackendIntegration;
+        let buttonHash = this.buildButtonHash(params.className, description);
+        let externalTaskId = null;
         if (params.externalTaskId) {
             externalTaskId = params.externalTaskId;
         }
@@ -143,6 +144,7 @@ window.tcbutton = {
         tcbutton.serviceName = params.className;
         button.title = description + (project ? ' - ' + project : '');
         button.dataset.externalTaskId = externalTaskId;
+        button.dataset.buttonHash = buttonHash;
         button.classList.add(params.className);
 
         if (params.additionalClasses) {
@@ -166,6 +168,7 @@ window.tcbutton = {
                 button,
                 invokeIfFunction(params.description),
                 externalTaskId,
+                buttonHash,
                 isBackendIntegration,
                 taskNotFoundInBackendIntegrationInfo
             );
@@ -201,6 +204,7 @@ window.tcbutton = {
     showContextMenuWindow: function (
         note,
         externalTaskId,
+        buttonHash,
         service,
         isBackendIntegration,
         taskNotFoundInBackendIntegrationInfo
@@ -219,6 +223,7 @@ window.tcbutton = {
                 billableInputVisibility={tcbutton.billableInputVisibility}
                 isBackendIntegration={isBackendIntegration}
                 externalTaskId={externalTaskId}
+                buttonHash={buttonHash}
                 startTimerCallback={tcbutton.startTimerCallback}
                 taskNotFoundInBackendIntegrationInfo={taskNotFoundInBackendIntegrationInfo}
             />,
@@ -230,6 +235,7 @@ window.tcbutton = {
         callback,
         note,
         externalTaskId,
+        buttonHash,
         serviceName,
         isBackendIntegration,
         taskNotFoundInBackendIntegrationInfo
@@ -246,6 +252,7 @@ window.tcbutton = {
                     callback(
                         note,
                         externalTaskId,
+                        buttonHash,
                         serviceName,
                         isBackendIntegration,
                         taskNotFoundInBackendIntegrationInfo
@@ -256,7 +263,7 @@ window.tcbutton = {
         );
     },
 
-    startTimerCallback: (taskId, note, service, externalTaskId) => {
+    startTimerCallback: (taskId, note, service, externalTaskId, buttonHash) => {
         return new Promise((resolve, reject) => {
             let startTime = moment().format("YYYY-MM-DD HH:mm:ss");
             tcbutton.currentTimerStartedAt = startTime;
@@ -272,6 +279,7 @@ window.tcbutton = {
                 taskId: taskId,
                 description: note,
                 service: service,
+                buttonHash: buttonHash
             }).then((response) => {
                 tcbutton.activateTimerLink(tcbutton.lastButtonClicked);
                 tcbutton.queryAndUpdateTimerLink();
@@ -288,6 +296,7 @@ window.tcbutton = {
         button,
         note,
         externalTaskId,
+        buttonHash,
         isBackendIntegration,
         taskNotFoundInBackendIntegrationInfo
     ) => {
@@ -303,6 +312,7 @@ window.tcbutton = {
                     tcbutton.showContextMenuWindow(
                         note,
                         externalTaskId,
+                        buttonHash,
                         tcbutton.serviceName,
                         isBackendIntegration,
                         taskNotFoundInBackendIntegrationInfo
@@ -312,6 +322,7 @@ window.tcbutton = {
                         tcbutton.showContextMenuWindow,
                         note,
                         externalTaskId,
+                        buttonHash,
                         tcbutton.serviceName,
                         isBackendIntegration,
                         taskNotFoundInBackendIntegrationInfo
@@ -409,14 +420,14 @@ window.tcbutton = {
             return;
         }
 
-        let matchingButtons = tcbutton.matchButton(entry.externalTaskId, entry.note);
+        let matchingButtons = tcbutton.matchButton(entry.externalTaskId, entry.buttonHash);
         tcbutton.deactivateAllTimerLinks();
         for (const matchingButton of matchingButtons) {
             tcbutton.activateTimerLink(matchingButton);
         }
     },
 
-    matchButton: function (externalTaskId, note) {
+    matchButton: function (externalTaskId, buttonHash) {
         let buttons = $$('.tc-button:not(.tc-button-edit-form-button)');
 
         let matchingButtons = [];
@@ -424,15 +435,8 @@ window.tcbutton = {
             if (button.dataset.externalTaskId === externalTaskId) {
                 matchingButtons.push(button);
             }
-        }
 
-        if (matchingButtons.length > 0) {
-            return matchingButtons;
-        }
-
-        const externalTaskIdToMach = this.buildExternalTaskId(tcbutton.serviceName, note);
-        for (const button of buttons) {
-            if (button.dataset.externalTaskId === externalTaskIdToMach) {
+            if (button.dataset.buttonHash === buttonHash) {
                 matchingButtons.push(button);
             }
         }
