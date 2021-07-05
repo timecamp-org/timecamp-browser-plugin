@@ -17,10 +17,13 @@ export interface ContextMenuInterface {
     note: string,
     billable: boolean,
     startTimerCallback: Function,
-    billableInputVisibility: boolean,
+    onCloseCallback?: Function,
+    billableInputVisibility: boolean|null,
     externalTaskId: string,
+    buttonHash: string|null,
     isBackendIntegration: boolean,
     taskNotFoundInBackendIntegrationInfo: string,
+    embedOnPopup?: boolean|null,
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -29,23 +32,26 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [service, setService] = useState(props.service);
     const [note, setNote] = useState(props.note);
     const [billable, setBillable] = useState(props.billable);
-    const [billableInputVisibility, setBillableInputVisibility] = useState<boolean>(props.billableInputVisibility);
+    const [billableInputVisibility, setBillableInputVisibility] = useState<boolean|null>(props.billableInputVisibility);
     const [taskId, setTaskId] = useState(0);
     const [selectedTags, setSelectedTags] = useState<number[]>([]);
     const [isSelectedTagsValid, setIsSelectedTagsValid] = useState<boolean>(true);
     const [canCreateTags, setCanCreateTags] = useState<boolean>(false);
     const [isTagModuleEnabled, setIsTagModuleEnabled] = useState<boolean>(true);
     const startTimerCallback = props.startTimerCallback;
+    const onCloseCallback = props.startTimerCallback;
     const [userId, setUserId] = useState<number>(0);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTrigger, setClearTrigger] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
+    const [buttonHash, setButtonHash] = useState(props.buttonHash);
     const [isBackendIntegration, setIsBackendIntegration] = useState(props.isBackendIntegration);
     const [noTaskFoundDisplayAlert, setNoTaskFoundDisplayAlert] = useState<boolean>(false);
     const [taskNotFoundInBackendIntegrationInfo, setTaskNotFoundInBackendIntegrationInfo]
         = useState<string>(props.taskNotFoundInBackendIntegrationInfo);
     const [taskIdToPreset, setTaskIdToPreset] = useState<number|null>(null);
     const [dontShowAdSettingValue, setDontShowAdSettingValue] = useState<number>(1);
+    const [embedOnPopup, setEmbedOnPopup] = useState<boolean>(props.embedOnPopup !== undefined);
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
@@ -56,9 +62,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setBillableInputVisibility(props.billableInputVisibility);
         setService(props.service);
         setExternalTaskId(props.externalTaskId);
+        setButtonHash(props.buttonHash);
         setTaskIdToPreset(null);
         setIsBackendIntegrationAndUserHasIntegration(props.isBackendIntegration);
         setTaskNotFoundInBackendIntegrationInfo(props.taskNotFoundInBackendIntegrationInfo);
+        setEmbedOnPopup(props.embedOnPopup !== undefined)
         setOpen(true);
         document.addEventListener("click", onClickOutside);
 
@@ -158,7 +166,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             taskId,
             note,
             service,
-            externalTaskId
+            externalTaskId,
+            buttonHash
         ).then((response) => {
             //todo change backend to do startTimer and editEntry in one request
             browser.runtime.sendMessage({
@@ -187,7 +196,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const onClickCancel = (e) => {
         e.stopPropagation();
-        clearAndClose();
+        onCloseCallback();
+
+        if (!embedOnPopup) {
+            clearAndClose();
+        }
     };
 
     const clearAndClose = () => {

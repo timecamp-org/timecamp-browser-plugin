@@ -1,0 +1,88 @@
+@import '../../../style/common';
+
+.working-timer {
+  font-family: $defaultFontFamily;
+  font-size: 14px;
+  font-weight: normal;
+  padding-top: 15px;
+
+  &__title {
+    margin: 0 0 10px 7px;
+    font-weight: bold;
+  }
+
+  &__entry {
+    border: solid 1px $popupBorderGray;
+    border-radius: 8px;
+    width: 360px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+
+    .entry-empty-info {
+      color: $popupDisabledFontColor;
+    }
+
+    .entry {
+      display: none;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      flex: 1;
+
+      &__task-name {
+        .dot {
+          height: 6px;
+          width: 6px;
+          min-width: 6px;
+          border-radius: 10px;
+          margin: 6px 10px 0 1px;
+        }
+        display: flex;
+        flex-direction: row;
+        font-size: 14px;
+      }
+
+      &__tags {
+        font-size: 12px;
+      }
+
+      &__note {
+        font-size: 11px;
+      }
+
+      &__timer-button {
+        align-self: flex-end;
+        margin-top: 10px;
+        cursor: pointer;
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      .left {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &--active {
+      .entry-empty-info {
+        display: none;
+      }
+
+      .entry {
+        display: flex;
+      }
+    }
+  }
+}

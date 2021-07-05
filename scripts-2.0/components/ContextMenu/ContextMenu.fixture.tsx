@@ -9,6 +9,7 @@ export default <ContextMenu
     startTimerCallback={()=>{}}
     billableInputVisibility={true}
     externalTaskId={''}
+    buttonHash={''}
     isBackendIntegration={false}
     taskNotFoundInBackendIntegrationInfo={'Test info'}
 />;
