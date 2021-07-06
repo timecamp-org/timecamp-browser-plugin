@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import './styles.scss';
 import Button from "../../common/Button";
 import Icon from "../../Icon";
@@ -27,10 +27,6 @@ const Footer: React.FC<FooterInterface> = (props) => {
     useEffect(() => {
         setIsUserWindowOpen(props.isUserWindowOpen);
     }, [props]);
-
-
-    useMemo(() => {
-    }, []);
 
     return (
         <div className='tc-popup-footer'>
