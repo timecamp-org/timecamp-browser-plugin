@@ -153,6 +153,7 @@ export default class ApiService {
     start(
         title,
         externalTaskId,
+        buttonHash,
         startedAt,
         taskId = null,
         service = this.defaultServiceName
@@ -165,7 +166,8 @@ export default class ApiService {
                 external_task_name: title,
                 external_task_id: externalTaskId,
                 started_at: startedAt,
-                service: service,
+                browser_plugin_button_hash: buttonHash,
+                service: service
             };
 
             if (taskId !== null) {
