@@ -22,11 +22,11 @@ const Footer: React.FC<FooterInterface> = (props) => {
 
     useEffect(() => {
         setUser(props.user);
-    }, [props]);
+    }, [props.user]);
 
     useEffect(() => {
         setIsUserWindowOpen(props.isUserWindowOpen);
-    }, [props.isUserWindowOpen]);
+    }, [props]);
 
 
     useMemo(() => {

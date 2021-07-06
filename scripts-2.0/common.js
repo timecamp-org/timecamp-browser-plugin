@@ -226,6 +226,7 @@ window.tcbutton = {
                 externalTaskId={externalTaskId}
                 buttonHash={buttonHash}
                 startTimerCallback={tcbutton.startTimerCallback}
+                onCloseCallback={() => {}}
                 taskNotFoundInBackendIntegrationInfo={taskNotFoundInBackendIntegrationInfo}
             />,
             tcbutton.contextMenuContainer

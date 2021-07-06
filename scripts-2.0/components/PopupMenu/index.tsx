@@ -92,9 +92,9 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         browser.runtime.sendMessage({
             type: 'logOut'
         }).then(() => {
+            setIsUserWindowOpen(false);
             setIsUserLogged(false);
             setUser(emptyUser);
-            setIsUserWindowOpen(false);
         }).catch(() => {
         });
     };
@@ -120,29 +120,33 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         service,
         externalTaskId
     ) => {
-        let startTime = dateTime.now();
+        return new Promise((resolve, reject) => {
+            let startTime = dateTime.now();
 
-        browser.runtime.sendMessage({
-            type: 'timeEntry',
-            startTime: startTime,
-            externalTaskId: externalTaskId,
-            taskId: taskId,
-            description: note,
-            service: service,
-            buttonHash: ''
-        }).then((response) => {
-            setIsTimerWorking(true);
-            setIsContextMenuOpen(false);
+            browser.runtime.sendMessage({
+                type: 'timeEntry',
+                startTime: startTime,
+                externalTaskId: externalTaskId,
+                taskId: taskId,
+                description: note,
+                service: service,
+                buttonHash: ''
+            }).then((response) => {
+                setIsTimerWorking(true);
+                setIsContextMenuOpen(false);
 
-            let entry = {
-                taskName: response.name === null ? emptyEntry.taskName : response.name,
-                note: note,
-                startedAt: startTime,
-                color: emptyEntry.color
-            } as Entry;
+                let entry = {
+                    taskName: response.name === null ? emptyEntry.taskName : response.name,
+                    note: note,
+                    startedAt: startTime,
+                    color: emptyEntry.color
+                } as Entry;
 
-            setEntry(entry);
-        }).catch(() => {
+                setEntry(entry);
+                resolve(response);
+            }).catch((e) => {
+                reject(e);
+            });
         });
     };
 

@@ -297,10 +297,6 @@ window.TcButton = {
             });
         }
 
-        if (timeEntry.description === '') {
-            timeEntry.description = EMPTY_NAME;
-        }
-
         return new Promise((resolve, reject) => {
             apiService.start(
                 timeEntry.description,

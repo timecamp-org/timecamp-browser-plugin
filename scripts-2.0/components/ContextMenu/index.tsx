@@ -1,10 +1,10 @@
+const browser = require('webextension-polyfill');
 import * as React from "react";
 import Header from "../Header";
 import Note from "../Note";
 import Billable from "../Billable";
 import Footer from "../Footer";
 import {useEffect, useState, useRef, useMemo} from "react";
-const browser = require('webextension-polyfill');
 import './styles.scss';
 import TagPicker from "../TagPicker";
 import TaskPicker from "../TaskPicker";
@@ -17,7 +17,7 @@ export interface ContextMenuInterface {
     note: string,
     billable: boolean,
     startTimerCallback: Function,
-    onCloseCallback?: Function,
+    onCloseCallback: Function,
     billableInputVisibility: boolean|null,
     externalTaskId: string,
     buttonHash: string|null,
@@ -39,7 +39,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [canCreateTags, setCanCreateTags] = useState<boolean>(false);
     const [isTagModuleEnabled, setIsTagModuleEnabled] = useState<boolean>(true);
     const startTimerCallback = props.startTimerCallback;
-    const onCloseCallback = props.startTimerCallback;
+    const onCloseCallback = props.onCloseCallback;
     const [userId, setUserId] = useState<number>(0);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTrigger, setClearTrigger] = useState<boolean>(false);

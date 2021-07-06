@@ -7,6 +7,7 @@ export default <ContextMenu
     note={''}
     billable={true}
     startTimerCallback={()=>{}}
+    onCloseCallback={()=>{}}
     billableInputVisibility={true}
     externalTaskId={''}
     buttonHash={''}
