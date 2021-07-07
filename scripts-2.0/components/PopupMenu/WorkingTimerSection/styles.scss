@@ -43,14 +43,23 @@
         display: flex;
         flex-direction: row;
         font-size: 14px;
+        width: 240px;
+        overflow: hidden;
+        white-space: nowrap;
       }
 
-      &__tags {
+      &__breadcrumb {
         font-size: 12px;
+        width: 260px;
+        overflow: hidden;
+        white-space: nowrap;
       }
 
       &__note {
         font-size: 11px;
+        width: 260px;
+        overflow: hidden;
+        white-space: nowrap;
       }
 
       &__timer-button {

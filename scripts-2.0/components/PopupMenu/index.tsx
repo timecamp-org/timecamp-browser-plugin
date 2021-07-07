@@ -1,9 +1,9 @@
+const browser = require('webextension-polyfill');
 import * as React from "react";
 import Header from "../Header";
 import {useEffect, useState, useMemo} from "react";
 import WorkingTimerSection from "./WorkingTimerSection";
 import Footer from "./Footer";
-const browser = require('webextension-polyfill');
 import './styles.scss';
 import LoginWindow from "../LoginWindow";
 import ContextMenu from "../ContextMenu";
@@ -182,7 +182,6 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
     return (
         <div className='popup-container'>
             <div className={`tc-popup ${!isUserLogged || isContextMenuOpen ? 'tc-popup--hidden' : ''}`}>
-
                 <Header />
                 <WorkingTimerSection
                     isTimerWorking={isTimerWorking}

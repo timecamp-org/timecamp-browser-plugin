@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import './styles.scss';
 import Button from "../../common/Button";
 import Icon from "../../Icon";
@@ -15,6 +15,7 @@ export interface FooterInterface {
 }
 
 const Footer: React.FC<FooterInterface> = (props) => {
+    const node = useRef<HTMLDivElement>(null);
     const [isUserWindowOpen, setIsUserWindowOpen] = useState(props.isUserWindowOpen);
     const [user, setUser] = useState<User>(props.user);
     const logoutCallback = props.logoutCallback;
@@ -27,7 +28,23 @@ const Footer: React.FC<FooterInterface> = (props) => {
 
     useEffect(() => {
         setIsUserWindowOpen(props.isUserWindowOpen);
+        document.addEventListener("click", onClickOutside);
+
+        return () => {
+            document.removeEventListener("click", onClickOutside);
+        };
     }, [props]);
+
+    const onClickOutside = e => {
+        if (e.target.classList.contains('user-img')) {
+            return;
+        }
+
+        const shouldStayOpen = node.current !== null && node.current.contains(e.target);
+        if (!shouldStayOpen) {
+            setIsUserWindowOpen(false);
+        }
+    };
 
     return (
         <div className='tc-popup-footer'>
@@ -36,7 +53,7 @@ const Footer: React.FC<FooterInterface> = (props) => {
                     class={'tc-popup-footer__button-add'}
                     onClick={onPlusButtonClickCallback}
                 >
-                    <Icon name={IconName.PLUS}/>
+                    <Icon name={IconName.PLAY}/>
                 </Button>
 
                 <a href={serverUrl + 'app#/reports/projects_and_tasks/projectsAndTasks'} target='_blank'>
@@ -51,7 +68,10 @@ const Footer: React.FC<FooterInterface> = (props) => {
                 <img className='user-img' src={user.gravatarUrl} />
             </div>
 
-            <div className={`tc-popup-footer__user-slide-window ' ${isUserWindowOpen ? 'tc-popup-footer__user-slide-window--visible' : ''}`}>
+            <div
+                className={`tc-popup-footer__user-slide-window ' ${isUserWindowOpen ? 'tc-popup-footer__user-slide-window--visible' : ''}`}
+                ref={node}
+            >
                 <div>
                     <div className='section-top user'>
                         <a href={serverUrl + 'app#/settings/users/me'} target='_blank'>

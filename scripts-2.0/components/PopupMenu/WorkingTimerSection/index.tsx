@@ -66,7 +66,7 @@ const WorkingTimerSection: React.FC<WorkingTimerSectionInterface> = (props) => {
                             <div className='dot' style={entry.color !== null ? {backgroundColor: entry.color} : {}}/>
                             <div className='name'>{entry.taskName}</div>
                         </div>
-                        {entry.breadcrumb && <div className='entry__tags'>{entry.breadcrumb}</div>}
+                        {entry.breadcrumb && <div className='entry__breadcrumb'>{entry.breadcrumb}</div>}
                         <div className='entry__note'>{entry.note}</div>
                     </div>
 
