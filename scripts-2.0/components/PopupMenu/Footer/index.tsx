@@ -19,6 +19,7 @@ const Footer: React.FC<FooterInterface> = (props) => {
     const [user, setUser] = useState<User>(props.user);
     const logoutCallback = props.logoutCallback;
     const onPlusButtonClickCallback = props.onPlusButtonClickCallback;
+    const serverUrl = process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/';
 
     useEffect(() => {
         setUser(props.user);
@@ -38,7 +39,7 @@ const Footer: React.FC<FooterInterface> = (props) => {
                     <Icon name={IconName.PLUS}/>
                 </Button>
 
-                <a href='https://app.timecamp.com/app#/reports/projects_and_tasks/projectsAndTasks' target='_blank'>
+                <a href={serverUrl + 'app#/reports/projects_and_tasks/projectsAndTasks'} target='_blank'>
                     <Button class={'tc-popup-footer__button-show-reports'} onClick={() => {}}>
                         <Icon name={IconName.CHART_PIE} iconPrefix={'far'}/>
                         {translate('show_reports')}
@@ -53,7 +54,7 @@ const Footer: React.FC<FooterInterface> = (props) => {
             <div className={`tc-popup-footer__user-slide-window ' ${isUserWindowOpen ? 'tc-popup-footer__user-slide-window--visible' : ''}`}>
                 <div>
                     <div className='section-top user'>
-                        <a href='https://app.timecamp.com/app#/settings/users/me' target='_blank'>
+                        <a href={serverUrl + 'app#/settings/users/me'} target='_blank'>
                             <img className='user__img user-img' src={user.gravatarUrl} />
                             <div>
                                 <div className='user__display-name' style={user.displayName === null ? {marginTop: '10px'} : {}}>

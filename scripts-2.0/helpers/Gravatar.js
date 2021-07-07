@@ -1,11 +1,13 @@
 import md5 from 'crypto-js/md5';
 
+const AVATAR_URL = 'https://www.gravatar.com/avatar/';
+
 export default class Gravatar {
     constructor() {
     }
 
     getGravatarUrlForEmail = (email, s = 120) => {
-        let url = 'https://www.gravatar.com/avatar/';
+        let url = AVATAR_URL;
         url += md5(email.trim().toLowerCase());
         url += '?s=' + s + '&d=mm';
 
@@ -13,6 +15,6 @@ export default class Gravatar {
     }
 
     getDefaultImageUrl = () => {
-        return 'https://www.gravatar.com/avatar/aaa?s=120&d=mm';
+        return AVATAR_URL + 'aaa?s=120&d=mm';
     }
 }

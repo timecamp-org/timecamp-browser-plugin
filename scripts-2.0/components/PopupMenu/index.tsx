@@ -172,7 +172,8 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
             switch (request.type) {
                 case 'currentEntryUpdated':
                     setCurrentEntry(request.currentEntry);
-
+                    break;
+                default:
                     break;
             }
         });
