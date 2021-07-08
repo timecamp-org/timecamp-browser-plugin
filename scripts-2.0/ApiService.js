@@ -493,6 +493,9 @@ export default class ApiService {
                 method: METHOD_GET,
                 apiToken: token,
                 payload: data,
+                queryStringParams: {
+                    allow_global_admin_access: false,
+                }
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
