@@ -494,7 +494,7 @@ export default class ApiService {
                 apiToken: token,
                 payload: data,
                 queryStringParams: {
-                    allow_global_admin_access: false,
+                    ignoreAdminRights: true,
                 }
             })
                 .then((response) => {
