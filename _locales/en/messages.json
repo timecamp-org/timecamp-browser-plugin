@@ -206,5 +206,14 @@
 	},
 	"backend_integration_ad_message_dont_show_up_button": {
 		"message": "Don't show up again"
+	},
+	"there_are_no_running_timers": {
+		"message": "There are no running timers"
+	},
+	"currently_running_timer": {
+		"message": "Currently running timer"
+	},
+	"show_reports": {
+		"message": "Show reports"
 	}
 }

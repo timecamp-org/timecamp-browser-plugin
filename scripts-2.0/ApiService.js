@@ -163,7 +163,7 @@ export default class ApiService {
             let data = {
                 action: 'start',
                 entry_id: 'create',
-                external_task_name: title,
+                note: title,
                 external_task_id: externalTaskId,
                 started_at: startedAt,
                 browser_plugin_button_hash: buttonHash,
@@ -493,6 +493,9 @@ export default class ApiService {
                 method: METHOD_GET,
                 apiToken: token,
                 payload: data,
+                queryStringParams: {
+                    ignoreAdminRights: true,
+                }
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);

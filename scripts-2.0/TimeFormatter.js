@@ -1,4 +1,4 @@
-const DURATION_FORMATS = {
+export const DURATION_FORMATS = {
     CLASSIC: 0,
     CLASSIC_WITH_SECONDS: 4,
     HHMM: 1,
@@ -62,7 +62,7 @@ export default class TimeFormatter {
             case DURATION_FORMATS.DECIMAL_DOT:
                 decimal = this.makeDecimal(hours, minutes, seconds);
                 return decimal + ' h';
-                
+
             case DURATION_FORMATS.CLASSIC:
             default:
                 return hours + 'h ' + minutes + 'm';
@@ -73,7 +73,7 @@ export default class TimeFormatter {
         hours = parseInt(hours);
         minutes = parseInt(minutes);
         seconds = parseInt(seconds);
-        
+
         let decimal = hours + (minutes + (seconds / 60)) / 60;
         decimal = parseFloat(decimal).toFixed(2);
 

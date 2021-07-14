@@ -15,6 +15,7 @@ window.storageManager = new StorageManager();
 window.TcButton = {
     currentEntry: undefined,
     isUserLogged: false,
+    user: null,
     newMessage: function (request, sender, sendResponse) {
         return new Promise((resolve, reject) => {
             try {
@@ -261,19 +262,7 @@ window.TcButton = {
 
                     case 'logOut':
                         apiService.removeStoredToken().then(() => {
-                            TcButton.isUserLogged = false;
-                            TcButton.currentEntry = null;
-                            apiService.rootGroupId = null;
-                            apiService.userId = null;
-
-                            TcButton.updateIcon();
-                            browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
-                                if (tabs.length > 0) {
-                                    let activeTab = tabs[0];
-                                    browser.tabs.sendMessage(activeTab.id, {"type": "doAfterLogout"});
-                                }
-                            });
-
+                            TcButton.doAfterLogout();
                             resolve();
                         }).catch((error) => {
                             reject(error);
@@ -306,10 +295,6 @@ window.TcButton = {
                     success: false
                 });
             });
-        }
-
-        if (timeEntry.description === '') {
-            timeEntry.description = EMPTY_NAME;
         }
 
         return new Promise((resolve, reject) => {
@@ -365,6 +350,21 @@ window.TcButton = {
             ;
 
             resolve([])
+        });
+    },
+
+    doAfterLogout: () => {
+        TcButton.isUserLogged = false;
+        TcButton.currentEntry = null;
+        apiService.rootGroupId = null;
+        apiService.userId = null;
+
+        TcButton.updateIcon();
+        browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+            if (tabs.length > 0) {
+                let activeTab = tabs[0];
+                browser.tabs.sendMessage(activeTab.id, {"type": "doAfterLogout"});
+            }
         });
     },
 
@@ -452,14 +452,15 @@ window.TcButton = {
         });
     },
 
-    createCurrentEntryObject: function(start, name, note, externalTaskId, buttonHash, color) {
+    createCurrentEntryObject: function(start, name, note, externalTaskId, buttonHash, color, breadcrumb) {
         return {
             start: start,
             description: name,
             note: note,
             externalTaskId: externalTaskId,
             buttonHash: buttonHash,
-            color: color
+            color: color,
+            breadcrumb: breadcrumb,
         };
     },
 
@@ -480,6 +481,7 @@ window.TcButton = {
                             response.external_task_id,
                             response.browser_plugin_button_hash,
                             response.color,
+                            response.breadcrumb,
                         );
                     }
 

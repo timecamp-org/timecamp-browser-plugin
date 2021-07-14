@@ -1,19 +1,26 @@
-;
-import { isDebug } from './utils';
+import * as React from "react";
+import ReactDOM from 'react-dom';
+import PopupMenu from "./components/PopupMenu";
 
-import './icons';
+window.$ = (s, elem) => {
+    elem = elem || document;
+    return elem.querySelector(s);
+};
 
-function renderTaskPicker() {
-  // const element = document.querySelector('#task-picker');
-  // ReactDOM.render(<TaskPicker />, element);
+window.$$ = (s, elem) => {
+    elem = elem || document;
+    return elem.querySelectorAll(s);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    Popup.render();
+});
+
+const Popup = {
+    render: () => {
+        const element = $('#popup-wrapper');
+        ReactDOM.render(
+            <PopupMenu/>
+        , element);
+    }
 }
-//
-// document.addEventListener('DOMContentLoaded', function () {
-//
-//   // TODO: TCD-1053
-//
-//   // example
-//   if (isDebug()) {
-//     renderTaskPicker();
-//   }
-// });
