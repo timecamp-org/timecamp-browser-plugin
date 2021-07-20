@@ -539,7 +539,7 @@ const showInstructionsPage = () => {
 browser.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
         showInstructionsPage();
-    } else if(details.reason === 'update') {
+    } else if (details.reason === 'update') {
         let thisVersion = browser.runtime.getManifest().version;
         let versionWhenActionIsPerformed = '2.21.1';
         if (thisVersion === versionWhenActionIsPerformed && details.previousVersion !== versionWhenActionIsPerformed) {
