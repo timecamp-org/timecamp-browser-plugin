@@ -530,6 +530,24 @@ window.TcButton = {
     },
 }
 
+const showInstructionsPage = () => {
+    chrome.tabs.create({
+        url: process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/browser-plugin-update'
+    });
+}
+
+browser.runtime.onInstalled.addListener((details) => {
+    if (details.reason === 'install') {
+        showInstructionsPage();
+    } else if(details.reason === 'update') {
+        let thisVersion = browser.runtime.getManifest().version;
+        let versionWhenActionIsPerformed = '2.21.1';
+        if (thisVersion === versionWhenActionIsPerformed && details.previousVersion !== versionWhenActionIsPerformed) {
+            showInstructionsPage();
+        }
+    }
+});
+
 browser.runtime.setUninstallURL('https://forms.gle/R7kQXZbC2vVS4rGD8');
 browser.tabs.onUpdated.addListener(TcButton.updateIcon);
 browser.runtime.onMessage.addListener(TcButton.newMessage);
