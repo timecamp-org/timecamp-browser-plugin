@@ -38,7 +38,9 @@ import {
   faTimesCircle as farTimesCircle,
   faCompressAlt as farCompressAlt,
   faExpandAlt as farExpandAlt,
-  faCalendarAlt as farCalendarAlt
+  faCalendarAlt as farCalendarAlt,
+  faSignOutAlt as farSignOutAlt,
+  faChartPie as farChartPie,
 } from '@fortawesome/pro-regular-svg-icons';
 
 import {
@@ -108,5 +110,7 @@ library.add(
   falExclamationTriangle,
   falCheckCircle,
   falChevronLeft,
-  falLightbulb
+  falLightbulb,
+  farSignOutAlt,
+  farChartPie,
 );

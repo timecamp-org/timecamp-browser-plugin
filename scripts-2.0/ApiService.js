@@ -153,6 +153,7 @@ export default class ApiService {
     start(
         title,
         externalTaskId,
+        buttonHash,
         startedAt,
         taskId = null,
         service = this.defaultServiceName
@@ -162,10 +163,11 @@ export default class ApiService {
             let data = {
                 action: 'start',
                 entry_id: 'create',
-                external_task_name: title,
+                note: title,
                 external_task_id: externalTaskId,
                 started_at: startedAt,
-                service: service,
+                browser_plugin_button_hash: buttonHash,
+                service: service
             };
 
             if (taskId !== null) {
@@ -491,6 +493,9 @@ export default class ApiService {
                 method: METHOD_GET,
                 apiToken: token,
                 payload: data,
+                queryStringParams: {
+                    ignoreAdminRights: true,
+                }
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);

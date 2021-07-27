@@ -7,8 +7,10 @@ export default <ContextMenu
     note={''}
     billable={true}
     startTimerCallback={()=>{}}
+    onCloseCallback={()=>{}}
     billableInputVisibility={true}
     externalTaskId={''}
+    buttonHash={''}
     isBackendIntegration={false}
     taskNotFoundInBackendIntegrationInfo={'Test info'}
 />;

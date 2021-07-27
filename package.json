@@ -1,6 +1,6 @@
 {
   "name": "timecamp-chrome-extension",
-  "version": "2.19.1",
+  "version": "2.20.1",
   "description": "TimeCamp Google Chrome Time Tracking Extension",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "build": "webpack-cli --mode production && npm run merge-background-files && npm run zip",
     "build-dev": "webpack-cli --mode development && npm run merge-background-files",
     "merge-background-files": "cat 'dist/plugin/scripts-2.0/background-2.0.js' >> 'dist/plugin/scripts/background.js'",
-    "zip": "bash -c \"pushd dist/plugin && zip -rq ../tc-google-chrome-extension.zip * && popd\""
+    "zip": "bash -c \"pushd dist/plugin && zip -rq ../timecamp-browser-extension-`node -p \"require('./package.json').version\"`.zip * && popd\""
   },
   "babel": {
     "presets": [
@@ -70,6 +70,7 @@
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^7.0.0",
+    "crypto-js": "^4.0.0",
     "filemanager-webpack-plugin": "^3.1.0",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",

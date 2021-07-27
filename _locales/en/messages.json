@@ -209,5 +209,14 @@
 	},
 	"podio_task_not_found_in_backend_integration_info": {
 		"message": "This task is not synchronized in TimeCamp. Choose task by yourself or check workspaces in Podio integration settings"
+	},
+	"there_are_no_running_timers": {
+		"message": "There are no running timers"
+	},
+	"currently_running_timer": {
+		"message": "Currently running timer"
+	},
+	"show_reports": {
+		"message": "Show reports"
 	}
 }
