@@ -77,7 +77,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setIsBackendIntegrationAndUserHasIntegration(props.isBackendIntegration);
         setTaskNotFoundInBackendIntegrationInfo(props.taskNotFoundInBackendIntegrationInfo);
         setEmbedOnPopup(props.embedOnPopup !== undefined)
-        setTrelloPowerUpAdVisible(props.trelloPowerUpAdVisible ?? trelloPowerUpAdVisible)
         setOpen(true);
         document.addEventListener("click", onClickOutside);
 
