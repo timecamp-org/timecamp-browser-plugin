@@ -17,6 +17,8 @@ import PathService from '../../PathService';
 
 const pathService = new PathService();
 
+const TRELLO = 'trello';
+
 export interface ContextMenuInterface {
     service: string | React.ReactNode;
     position: object,
@@ -86,7 +88,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
 
     useMemo(() => {
-        if (service === 'trello') {
+        if (service === TRELLO) {
             browser.runtime.sendMessage({
                 type: 'getSettingFromStorage',
                 name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE
