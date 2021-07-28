@@ -2,9 +2,9 @@
 
 .timecamp {
   .context-menu-message {
-    font-size: 14px;
-    font-family: Poppins;
-    background-color: #f8f8f8;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+    background-color: $defaultFieldBackgroundColor;
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -13,9 +13,9 @@
 
     &.info {
       padding: 10px;
-      background-color: #d9e9fe;
-      border: solid 1px #388ef8;
-      color: #4193f8;
+      background-color: $infoFieldBackgroundColor;
+      border: solid 1px $infoFieldBorderColor;
+      color: $infoFieldTextColor;
     }
 
     &__close-section {
@@ -24,25 +24,25 @@
       flex-basis: 100%;
 
       &--bottom {
-        font-size: 14px;
-        font-family: Poppins;
+        font-size: $defaultFontSize;
+        font-family: $defaultFontFamily;
         display: inline-block;
         padding: 5px;
-        color: #2380e3;
+        color: $infoFieldTextColor2;
       }
     }
 
     &__icon {
       font-size: 26px;
-      font-family: Poppins;
-      color: #8a8a8a;
+      font-family: $defaultFontFamily;
+      color: $secondaryTextColor;
       float: left;
       margin: -2px 15px 0px 0;
     }
 
     &__message-text {
-      font-size: 14px;
-      font-family: Poppins;
+      font-size: $defaultFontSize;
+      font-family: $defaultFontFamily;
       display: inline-block;
       flex: 1;
     }
