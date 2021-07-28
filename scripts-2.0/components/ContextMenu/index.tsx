@@ -8,8 +8,14 @@ import {useEffect, useState, useRef, useMemo} from "react";
 import './styles.scss';
 import TagPicker from "../TagPicker";
 import TaskPicker from "../TaskPicker";
-import BackendIntegrationAdMessage from "../BackendIntegrationAdMessage";
+import ContextMenuMessage from "../ContextMenuMessage";
 import GroupSetting from "../../GroupSetting";
+import StorageManager from "../../StorageManager";
+import ReactHtmlParser from "react-html-parser";
+import translate from "../../Translator";
+import PathService from '../../PathService';
+
+const pathService = new PathService();
 
 export interface ContextMenuInterface {
     service: string | React.ReactNode;
@@ -24,6 +30,7 @@ export interface ContextMenuInterface {
     isBackendIntegration: boolean,
     taskNotFoundInBackendIntegrationInfo: string,
     embedOnPopup?: boolean|null,
+    trelloPowerUpAdVisible?: boolean|null,
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -52,6 +59,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [taskIdToPreset, setTaskIdToPreset] = useState<number|null>(null);
     const [dontShowAdSettingValue, setDontShowAdSettingValue] = useState<number>(1);
     const [embedOnPopup, setEmbedOnPopup] = useState<boolean>(props.embedOnPopup !== undefined);
+    const [trelloPowerUpAdVisible, setTrelloPowerUpAdVisible] = useState<boolean>(props.trelloPowerUpAdVisible ?? false);
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
@@ -67,6 +75,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setIsBackendIntegrationAndUserHasIntegration(props.isBackendIntegration);
         setTaskNotFoundInBackendIntegrationInfo(props.taskNotFoundInBackendIntegrationInfo);
         setEmbedOnPopup(props.embedOnPopup !== undefined)
+        setTrelloPowerUpAdVisible(props.trelloPowerUpAdVisible ?? trelloPowerUpAdVisible)
         setOpen(true);
         document.addEventListener("click", onClickOutside);
 
@@ -77,6 +86,18 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
 
     useMemo(() => {
+        if (service === 'trello') {
+            browser.runtime.sendMessage({
+                type: 'getSettingFromStorage',
+                name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE
+            }).then((value) => {
+                if (value !== false) {
+                    setTrelloPowerUpAdVisible(true);
+                }
+            }).catch(() => {
+            });
+        }
+
         browser.runtime.sendMessage({
             type: 'isTagModuleEnabled',
         }).then((value) => {

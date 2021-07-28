@@ -16,6 +16,7 @@
     background-color: $primaryBackgroundColor;
     line-height: initial;
     z-index: 99999;
+    overflow: hidden;
 
     &--hidden {
       display: none;

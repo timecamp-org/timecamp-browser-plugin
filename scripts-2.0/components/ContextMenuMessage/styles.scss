@@ -1,0 +1,50 @@
+@import '../../style/common';
+
+.timecamp {
+  .context-menu-message {
+    font-size: 14px;
+    font-family: Poppins;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+
+    &.info {
+      padding: 10px;
+      background-color: #d9e9fe;
+      border: solid 1px #388ef8;
+      color: #4193f8;
+    }
+
+    &__close-section {
+      cursor: pointer;
+      text-align: end;
+      flex-basis: 100%;
+
+      &--bottom {
+        font-size: 14px;
+        font-family: Poppins;
+        display: inline-block;
+        padding: 5px;
+        color: #2380e3;
+      }
+    }
+
+    &__icon {
+      font-size: 26px;
+      font-family: Poppins;
+      color: #8a8a8a;
+      float: left;
+      margin: -2px 15px 0px 0;
+    }
+
+    &__message-text {
+      font-size: 14px;
+      font-family: Poppins;
+      display: inline-block;
+      flex: 1;
+    }
+  }
+}
