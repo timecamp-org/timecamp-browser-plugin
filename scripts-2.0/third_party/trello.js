@@ -101,7 +101,7 @@ tcbutton.render(
     '.window-sidebar:not(.tc)',
     {observe: true},
     elem => {
-        let isTimecampPowerUpOn = checkForTimecampPowerUp();
+        const isTimecampPowerUpOn = checkForTimecampPowerUp();
         if (isTimecampPowerUpOn) {
             return false;
         }
