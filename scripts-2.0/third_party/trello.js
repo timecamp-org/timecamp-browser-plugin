@@ -30,7 +30,7 @@ tcbutton.render(
     '.tabbed-pane-main-col div[data-test-class="table-row"]:not(.tc)',
     {observe: true},
     elem => {
-        let isTimecampPowerUpOn = checkForTimecampPowerUp();
+        const isTimecampPowerUpOn = checkForTimecampPowerUp();
         if (isTimecampPowerUpOn) {
             return false;
         }
