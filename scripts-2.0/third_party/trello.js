@@ -18,7 +18,6 @@ const checkForTimecampPowerUp = () => {
     let buttons = $$('.board-header-plugin-btns');
     for (let i = 0, len = buttons.length; i < len; i++) {
         if (buttons[i].textContent === 'TimeCamp') {
-
             return true;
         }
     }
