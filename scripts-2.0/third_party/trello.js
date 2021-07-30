@@ -66,7 +66,7 @@ tcbutton.render(
     '.list-card:not(.tc)',
     {observe: true, debounceInterval: 2000},
     elem => {
-        let isTimecampPowerUpOn = checkForTimecampPowerUp();
+        const isTimecampPowerUpOn = checkForTimecampPowerUp();
         if (isTimecampPowerUpOn) {
             return false;
         }
