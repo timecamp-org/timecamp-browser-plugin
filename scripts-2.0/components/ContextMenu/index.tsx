@@ -8,8 +8,16 @@ import {useEffect, useState, useRef, useMemo} from "react";
 import './styles.scss';
 import TagPicker from "../TagPicker";
 import TaskPicker from "../TaskPicker";
-import BackendIntegrationAdMessage from "../BackendIntegrationAdMessage";
+import ContextMenuMessage from "../ContextMenuMessage";
 import GroupSetting from "../../GroupSetting";
+import StorageManager from "../../StorageManager";
+import ReactHtmlParser from "react-html-parser";
+import translate from "../../Translator";
+import PathService from '../../PathService';
+
+const pathService = new PathService();
+
+const TRELLO = 'trello';
 
 export interface ContextMenuInterface {
     service: string | React.ReactNode;
@@ -24,6 +32,7 @@ export interface ContextMenuInterface {
     isBackendIntegration: boolean,
     taskNotFoundInBackendIntegrationInfo: string,
     embedOnPopup?: boolean|null,
+    trelloPowerUpAdVisible?: boolean|null,
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -52,6 +61,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [taskIdToPreset, setTaskIdToPreset] = useState<number|null>(null);
     const [dontShowAdSettingValue, setDontShowAdSettingValue] = useState<number>(1);
     const [embedOnPopup, setEmbedOnPopup] = useState<boolean>(props.embedOnPopup !== undefined);
+    const [trelloPowerUpAdVisible, setTrelloPowerUpAdVisible] = useState<boolean>(props.trelloPowerUpAdVisible ?? false);
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
@@ -77,6 +87,18 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
 
     useMemo(() => {
+        if (service === TRELLO) {
+            browser.runtime.sendMessage({
+                type: 'getSettingFromStorage',
+                name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE
+            }).then((value) => {
+                if (value !== false) {
+                    setTrelloPowerUpAdVisible(true);
+                }
+            }).catch(() => {
+            });
+        }
+
         browser.runtime.sendMessage({
             type: 'isTagModuleEnabled',
         }).then((value) => {
@@ -239,6 +261,21 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setNoTaskFoundDisplayAlert(false);
     };
 
+    const getIntegrationAdMessage = () => {
+        if (isAdmin) {
+            return ReactHtmlParser((translate('backend_integration_ad_message_admin')
+                    .replace('*service*', pathService.getIntegrationNameFromMessage(service))
+                    .replace('*linkStart*', "<a style='text-transform: capitalize; text-decoration: none; color: #2380e3;' target='_blank' href='" + pathService.getIntegrationUrl(service) + "'>")
+                    .replace('*linkClose*', '</a>')
+            ))
+        }
+
+        return ReactHtmlParser((translate('backend_integration_ad_message_user')
+            .replace('*service*', pathService.getIntegrationNameFromMessage(service))
+            .replace('*linkStart*', "<a style='text-transform: capitalize; text-decoration: none; color: #2380e3;' target='_blank' href='" + pathService.getIntegrationMarketingWebsiteUrl(service) + "'>")
+            .replace('*linkClose*', '</a>')));
+    };
+
     //data-elevation is fix for trello card modal (it close when click on context menu)
     return (
         <div
@@ -248,16 +285,21 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             data-elevation={open ? "2" : ""}
         >
             <Header />
-            {
-                isBackendIntegration && noTaskFoundDisplayAlert &&
-                <div className="context-menu__info-field">{taskNotFoundInBackendIntegrationInfo}</div>
-            }
-            <BackendIntegrationAdMessage
+            <ContextMenuMessage
+                visible={isBackendIntegration && noTaskFoundDisplayAlert}
+                onClose={(e) => {
+                    e.stopPropagation();
+                    setNoTaskFoundDisplayAlert(false);
+                }}
+                message={taskNotFoundInBackendIntegrationInfo}
+                style={'info'}
+                bottomCloseSectionVisible={false}
+                topCloseSectionVisible={true}
+                iconVisible={false}
+            />
+
+            <ContextMenuMessage
                 visible={props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0}
-                isAdmin={isAdmin}
-                userId={userId}
-                service={props.service}
-                browser={browser}
                 onClose={(e) => {
                     e.stopPropagation();
                     browser.runtime.sendMessage({
@@ -269,7 +311,26 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     });
                     setDontShowAdSettingValue(dontShowAdSettingValue + 1);
                 }}
+                message={getIntegrationAdMessage()}
             />
+
+            <ContextMenuMessage
+                visible={trelloPowerUpAdVisible}
+                onClose={(e) => {
+                    e.stopPropagation();
+
+                    browser.runtime.sendMessage({
+                        type: 'saveSettingToStorage',
+                        name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE,
+                        value: false
+                    }).then(() => {
+                    }).catch(() => {
+                    });
+                    setTrelloPowerUpAdVisible(false);
+                }}
+                message={translate('trello_powerup_ad')}
+            />
+
             <TaskPicker
                 browser={browser}
                 onTaskClick={

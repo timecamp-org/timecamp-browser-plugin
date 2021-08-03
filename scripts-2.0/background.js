@@ -115,12 +115,45 @@ window.TcButton = {
                                         apiService.hasBackendIntegrationEnabled(
                                             request.integration,
                                         ).then((response) => {
-                                            storageManager.set(key, response)
+                                            storageManager.set(key, response);
                                             resolve(response);
                                         }).catch((error) => {
                                             reject(error);
                                         });
                                     }
+                                }).catch((e) => {
+                                    reject(e);
+                                })
+                            })
+                            .catch((e) => {
+                                reject(e);
+                            });
+                        break;
+
+                    case 'getSettingFromStorage':
+                        TcButton.getCurrentRootGroup()
+                            .then((rootGroupId) => {
+                                storageManager.get(
+                                    storageManager.buildKey([rootGroupId, request.name])
+                                ).then((data) => {
+                                    resolve(data);
+                                }).catch((e) => {
+                                    reject(e);
+                                })
+                            })
+                            .catch((e) => {
+                                reject(e);
+                            });
+                        break;
+
+                    case 'saveSettingToStorage':
+                        TcButton.getCurrentRootGroup()
+                            .then((rootGroupId) => {
+                                storageManager.set(
+                                    storageManager.buildKey([rootGroupId, request.name]),
+                                    request.value
+                                ).then((data) => {
+                                    resolve(data);
                                 }).catch((e) => {
                                     reject(e);
                                 })
