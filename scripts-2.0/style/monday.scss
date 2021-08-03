@@ -1,0 +1,38 @@
+.tc-button.monday {
+  &__table-view {
+    margin-top: 10px;
+    height: 100%;
+
+    svg {
+      width: 20px;
+    }
+  }
+
+  &__edit-view {
+    margin-top: 5px;
+
+    svg {
+      width: 115px;
+    }
+  }
+
+  &__calendar-view {
+    margin: 3px 0 0 5px;
+    position: absolute;
+    opacity: 0;
+
+    svg {
+      width: 18px;
+    }
+  }
+}
+
+.personal-assistant-content-view .ds-text-component {
+  position: relative;
+}
+
+.deadline-task-component-content:hover {
+  .tc-button.monday__calendar-view {
+    opacity: 1;
+  }
+}
