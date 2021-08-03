@@ -56,10 +56,10 @@ const Footer: React.FC<FooterInterface> = (props) => {
                     <Icon name={IconName.PLAY}/>
                 </Button>
 
-                <a href={serverUrl + 'app#/timesheets/graphical'} target='_blank'>
-                    <Button class={'tc-popup-footer__button-go-to-timesheet'} onClick={() => {}}>
-                        <Icon name={IconName.CLOCK} iconPrefix={'far'}/>
-                        {translate('go_to_timesheet')}
+                <a href={serverUrl + 'app#/reports/projects_and_tasks/projectsAndTasks'} target='_blank'>
+                    <Button class={'tc-popup-footer__button-show-reports'} onClick={() => {}}>
+                        <Icon name={IconName.CHART_PIE} iconPrefix={'far'}/>
+                        {translate('show_reports')}
                     </Button>
                 </a>
             </div>
