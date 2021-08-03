@@ -101,18 +101,16 @@ window.tcbutton = {
         }
 
         for (i = 0, len = elems.length; i < len; i += 1) {
-            elems[i].classList.add('tc');
-        }
-
-        try {
-            for (i = 0, len = elems.length; i < len; i += 1) {
-                renderer(elems[i]);
+            try {
+                if(renderer(elems[i]) === true) {
+                    elems[i].classList.add('tc');
+                }
+            } catch (e) {
+                logger.error(e);
             }
-
-            tcbutton.queryAndUpdateTimerLink();
-        } catch (e) {
-            logger.error(e);
         }
+
+        tcbutton.queryAndUpdateTimerLink();
     },
 
     buildButtonHash: function (service, desc) {
