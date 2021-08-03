@@ -215,5 +215,8 @@
 	},
 	"show_reports": {
 		"message": "Show reports"
+	},
+	"go_to_timesheet": {
+		"message": "Go to Timesheet"
 	}
 }
