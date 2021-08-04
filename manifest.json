@@ -116,19 +116,6 @@
             "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
                 "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
                 "scripts/third_party/clickup.js"]
-        },
-        {
-            "matches": [
-                "*://*.monday.com/*"
-            ],
-            "exclude_matches" : [
-                "*://developers.monday.com/*"
-            ],
-            "css": ["styles/common.css", "styles/font-awesome.css", "styles/bootstrap.min.css", "styles/jquery-ui.structure.min.css", "styles/jquery-ui.theme.min.css",
-                "styles/sites/monday.css"],
-            "js": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
-                "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
-                "scripts/third_party/monday.js"]
         }
     ],
     "homepage_url": "http://www.timecamp.com/",

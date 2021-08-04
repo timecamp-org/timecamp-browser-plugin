@@ -310,6 +310,12 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://*.monday.com/*"],
+    "exclude_matches": ["*://developers.monday.com/*"],
+    "script": ["monday.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://*.newsletter2go.com/*"],
     "script": ["newsletter2go.js"],
     "isActiveInProd": false

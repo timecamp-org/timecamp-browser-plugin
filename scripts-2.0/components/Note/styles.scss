@@ -12,10 +12,11 @@
       border: solid 1px $primaryBorderColor;
       background-color: $primaryBackgroundColor;
       color: $primaryTextColor;
-      font-family: unset;
       outline: none;
       resize: none;
       box-sizing: unset;
+      font-family: $defaultFontFamily;
+      font-size: $defaultFontSize;
 
       &::placeholder {
         color: $secondaryTextColor;
