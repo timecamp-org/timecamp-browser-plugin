@@ -18,4 +18,6 @@ tcbutton.render('#navbar:not(.tc)', { observe: true }, function (elem) {
     link.style.margin = '9px';
 
     $('.right-block').appendChild(link);
+
+    return true;
 });

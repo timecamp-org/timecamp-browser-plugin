@@ -17,4 +17,6 @@ tcbutton.render('section.case:not(.tc)', { observe: true }, function (
 
     container.appendChild(link);
     controlsElem.appendChild(container);
+
+    return true;
 });

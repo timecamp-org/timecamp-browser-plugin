@@ -11,5 +11,7 @@ tcbutton.render(
         });
 
         $('.card_container .card .top', elem).appendChild(link);
+
+        return true;
     }
 );

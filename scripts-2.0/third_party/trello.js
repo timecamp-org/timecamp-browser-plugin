@@ -14,17 +14,33 @@ const getCardIdFromUrl = (url) => {
     return restOfUrl.split('/')[0];
 }
 
+const checkForTimecampPowerUp = () => {
+    let buttons = $$('.board-header-plugin-btns');
+    for (let i = 0, len = buttons.length; i < len; i++) {
+        if (buttons[i].textContent === 'TimeCamp') {
+            return true;
+        }
+    }
+
+    return false;
+};
+
 //Table view
 tcbutton.render(
     '.tabbed-pane-main-col div[data-test-class="table-row"]:not(.tc)',
     {observe: true},
     elem => {
+        const isTimecampPowerUpOn = checkForTimecampPowerUp();
+        if (isTimecampPowerUpOn) {
+            return false;
+        }
+
         let aElem = $('a', elem);
         let cardId = getCardIdFromUrl(aElem.href);
 
         const externalTaskId = buildExternalIdForTrello(cardId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -42,6 +58,8 @@ tcbutton.render(
         });
 
         $('a', elem).insertAdjacentElement('beforeend', link);
+
+        return true;
     }
 );
 
@@ -50,11 +68,16 @@ tcbutton.render(
     '.list-card:not(.tc)',
     {observe: true, debounceInterval: 2000},
     elem => {
+        const isTimecampPowerUpOn = checkForTimecampPowerUp();
+        if (isTimecampPowerUpOn) {
+            return false;
+        }
+
         let cardId = getCardIdFromUrl(elem.href);
 
         const externalTaskId = buildExternalIdForTrello(cardId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -72,6 +95,8 @@ tcbutton.render(
         });
 
         $('.badges', elem).insertAdjacentElement('beforeend', link);
+
+        return true;
     }
 );
 
@@ -80,11 +105,16 @@ tcbutton.render(
     '.window-sidebar:not(.tc)',
     {observe: true},
     elem => {
+        const isTimecampPowerUpOn = checkForTimecampPowerUp();
+        if (isTimecampPowerUpOn) {
+            return false;
+        }
+
         let cardId = getCardIdFromUrl(document.URL);
 
         const externalTaskId = buildExternalIdForTrello(cardId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -101,5 +131,7 @@ tcbutton.render(
         });
 
         $('.window-module.u-clearfix  .js-move-card', elem).insertAdjacentElement('beforebegin', link);
+
+        return true;
     }
 );

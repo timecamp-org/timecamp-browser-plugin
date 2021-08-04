@@ -24,4 +24,6 @@ tcbutton.render('.container:not(.tc)', { observe: true }, function (elem) {
     });
 
     elem.getElementsByClassName('widgettitle')[0].appendChild(link);
+
+    return true;
 });

@@ -20,7 +20,7 @@ tcbutton.render('a.task-list__item:not(.tc)', { observe: true }, function (
     const taskUndone = $('.task--undone', elem);
 
     if (!titleContainer || !taskUndone) {
-        return;
+        return false;
     }
 
     const subProject = !subProjectContainer
@@ -68,4 +68,6 @@ tcbutton.render('a.task-list__item:not(.tc)', { observe: true }, function (
     });
 
     titleContainer.parentNode.insertBefore(link, titleContainer);
+
+    return true;
 });

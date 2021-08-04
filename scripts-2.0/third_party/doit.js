@@ -21,6 +21,8 @@ tcbutton.render(
 
         const firstOp = $('li.task-op').children[0];
         $('li.task-op').insertBefore(link, firstOp);
+
+        return true;
     }
 );
 

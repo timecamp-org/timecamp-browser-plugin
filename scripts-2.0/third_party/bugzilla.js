@@ -11,7 +11,11 @@ tcbutton.render('input[name=id]', {}, function (elem) {
 
     const targetElement = $('#summary_alias_container') || $('#summary_container');
 
-    if (targetElement !== null) {
-        targetElement.appendChild(link);
+    if (targetElement === null) {
+        return false;
     }
+
+    targetElement.appendChild(link);
+
+    return true;
 });

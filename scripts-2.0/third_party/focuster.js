@@ -15,5 +15,7 @@ tcbutton.render(
         linkContainer.append(link);
 
         elem.querySelector('.meta-list').prepend(linkContainer);
+
+        return true;
     }
 );

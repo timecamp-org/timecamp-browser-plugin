@@ -28,5 +28,7 @@ tcbutton.render(
 
         elem.style.position = 'relative';
         elem.appendChild(link);
+
+        return true;
     }
 );

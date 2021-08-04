@@ -17,6 +17,8 @@ tcbutton.render(
         });
 
         $('.flush-left h2').append(link);
+
+        return true;
     }
 );
 
@@ -39,5 +41,7 @@ tcbutton.render(
         });
 
         $('.flush-left h2').append(link);
+
+        return true;
     }
 );

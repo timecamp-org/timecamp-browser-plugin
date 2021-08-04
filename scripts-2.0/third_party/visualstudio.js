@@ -54,6 +54,10 @@ tcbutton.render(
             const wrapper = createTag('li', 'menu-item');
             wrapper.appendChild(link);
             activeButtonContainer.appendChild(wrapper);
+
+            return true;
         }
+
+        return false;
     }
 );

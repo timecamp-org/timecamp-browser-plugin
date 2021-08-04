@@ -35,5 +35,7 @@ tcbutton.render(
             liTag,
             elem.querySelector('.case .controls.pull-right li.actions')
         );
+
+        return true;
     }
 );

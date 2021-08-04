@@ -12,6 +12,8 @@ tcbutton.render('.PageListItem:not(.tc)', { observe: true }, function (
     });
 
     elem.appendChild(link);
+
+    return true;
 });
 
 tcbutton.render(
@@ -27,5 +29,7 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );

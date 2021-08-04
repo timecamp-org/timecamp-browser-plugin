@@ -34,4 +34,6 @@ tcbutton.render('#detailBar > div:not(.tc)', { observe: true }, function (
     });
 
     container.appendChild(link);
+
+    return true;
 });

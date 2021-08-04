@@ -3,7 +3,13 @@ import Logger from './Logger';
 
 const logger = new Logger();
 
+const TRELLO_POWER_UP_AD_VISIBLE = 'trello_power_up_ad_visible';
+
 export default class StorageManager {
+    static get TRELLO_POWER_UP_AD_VISIBLE() {
+        return TRELLO_POWER_UP_AD_VISIBLE;
+    }
+
     buildKey(params) {
         return params.join('_');
     }

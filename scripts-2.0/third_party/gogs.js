@@ -17,4 +17,6 @@ tcbutton.render('#issue-title:not(.tc)', { observe: true }, function (
     });
 
     $('.title h1').appendChild(link);
+
+    return true;
 });

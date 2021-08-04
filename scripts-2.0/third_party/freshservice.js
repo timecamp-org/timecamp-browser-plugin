@@ -26,6 +26,8 @@ tcbutton.render(
         } else {
             elem.append(container);
         }
+
+        return true;
     }
 );
 
@@ -54,5 +56,7 @@ tcbutton.render(
         link.style.display = "inline-flex";
         link.style.verticalAlign = "middle";
         elem.prepend(link);
+
+        return true;
     }
 );

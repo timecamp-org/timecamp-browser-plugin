@@ -11,10 +11,13 @@ tcbutton.render('._nav:not(.tc)', { observe: true }, function () {
     });
 
     const nav = $('nav._nav');
-
-    if (nav) {
-        link.classList.add('_nav-link');
-        link.style.marginTop = '0.8rem';
-        nav.insertBefore(link, nav.firstChild);
+    if (!nav) {
+        return false;
     }
+
+    link.classList.add('_nav-link');
+    link.style.marginTop = '0.8rem';
+    nav.insertBefore(link, nav.firstChild);
+
+    return true;
 });

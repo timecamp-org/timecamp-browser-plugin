@@ -14,4 +14,6 @@ tcbutton.render('.toggl-target:not(.tc)', { observe: false }, function (
     });
 
     elem.appendChild(link);
+
+    return true;
 });

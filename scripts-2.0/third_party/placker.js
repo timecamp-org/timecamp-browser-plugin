@@ -8,7 +8,7 @@ tcbutton.render(
             const actionButton = $('.dialogCardHeaderOverviewComponent__bottomRight');
 
             if (!actionButton) {
-                return;
+                return false;
             }
 
             clearInterval(interval);
@@ -39,6 +39,8 @@ tcbutton.render(
             container.appendChild(link);
             actionButton.prepend(container);
         }, 100);
+
+        return true;
     },
     '.plackerModal'
 );

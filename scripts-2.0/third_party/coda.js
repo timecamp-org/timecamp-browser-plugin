@@ -15,4 +15,6 @@ tcbutton.render('[data-coda-ui-id="canvas"]:not(.tc)', {observe: true}, function
     link.style.top = '15px';
     link.style.left = "15px";
     elem.appendChild(link);
+
+    return true;
 });
