@@ -221,5 +221,8 @@
 	},
 	"trello_powerup_ad": {
 		"message": "Turn on/enable the power-up for better experience"
+	},
+	"go_to_timesheet": {
+		"message": "Go to Timesheet"
 	}
 }

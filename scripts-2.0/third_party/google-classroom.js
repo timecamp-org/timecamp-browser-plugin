@@ -19,4 +19,6 @@ tcbutton.render('div[data-without-stream-item-materials]', { observe: true }, el
     link.style.whiteSpace = 'nowrap';
 
     title.nextSibling.appendChild(link);
+
+    return true;
 });

@@ -11,4 +11,6 @@ tcbutton.render('#docs-bars:not(.tc)', {}, function () {
         description: titleFunc,
     });
     $('#docs-menubar').appendChild(link);
+
+    return true;
 });

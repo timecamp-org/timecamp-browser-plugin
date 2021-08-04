@@ -10,6 +10,8 @@ tcbutton.render(
         });
 
         elem.prepend(link);
+
+        return true;
     }
 );
 
@@ -24,5 +26,7 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );

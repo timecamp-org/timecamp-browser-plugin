@@ -47,4 +47,6 @@ tcbutton.render('.card-list-wrapper .card-node:not([data-tc])', { observe: true 
     wrapper.appendChild(link);
     element.setAttribute('data-tc', true);
     element.querySelector('.inline-actions').insertBefore(wrapper, element.querySelector('.more-actions-btn'));
+
+    return true;
 });

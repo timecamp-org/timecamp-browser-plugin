@@ -26,5 +26,7 @@ tcbutton.render('.task-form[data-track-inject-button]:not(.tc)',
         });
 
         container.parentNode.insertBefore(link, container);
+
+        return true;
     }
 );

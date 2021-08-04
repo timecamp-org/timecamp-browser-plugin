@@ -13,17 +13,21 @@ tcbutton.render(
         const titleElem = $('.gq-i-description', elem);
         const projectContainer = $('.gq-queue-container.selected .gq-queue-name');
 
-        if (titleElem) {
-            link = tcbutton.createTimerLink({
-                className: 'gqueues',
-                buttonType: 'minimal',
-                description: titleElem.textContent,
-                projectName: projectContainer.textContent
-            });
-
-            container.appendChild(link);
-            container.style.paddingTop = '5px';
-            insertAfter(container, titleElem);
+        if (!titleElem) {
+            return false;
         }
+
+        link = tcbutton.createTimerLink({
+            className: 'gqueues',
+            buttonType: 'minimal',
+            description: titleElem.textContent,
+            projectName: projectContainer.textContent
+        });
+
+        container.appendChild(link);
+        container.style.paddingTop = '5px';
+        insertAfter(container, titleElem);
+
+        return true;
     }
 );

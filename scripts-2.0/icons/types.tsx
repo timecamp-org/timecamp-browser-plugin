@@ -49,4 +49,5 @@ export enum IconName {
   LIGHT_BULB = 'lightbulb',
   SIGN_OUT_ALT = 'sign-out-alt',
   CHART_PIE = 'chart-pie',
+  CLOCK = 'clock',
 }

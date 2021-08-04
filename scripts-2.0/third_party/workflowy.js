@@ -10,7 +10,7 @@ tcbutton.render(
     $container => {
         if ($container.querySelector('.tc-button')) {
             // Check for existence in case it's there from a previous render
-            return;
+            return false;
         }
 
         link = tcbutton.createTimerLink({
@@ -21,6 +21,8 @@ tcbutton.render(
         });
 
         $container.insertBefore(link, $container.children[3]);
+
+        return true;
     }
 );
 

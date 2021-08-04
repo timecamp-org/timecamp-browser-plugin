@@ -26,9 +26,13 @@ tcbutton.render('.task:not(.tc)', { observe: true }, function (elem) {
     });
 
     const root = document.querySelector('.buts_menu');
-    if (root) {
-        root.appendChild(link);
+    if (!root) {
+        return false;
     }
+
+    root.appendChild(link);
+
+    return true;
 });
 
 tcbutton.render('#tasks_images .item:not(.tc)', { observe: true }, function (elem) {
@@ -45,7 +49,11 @@ tcbutton.render('#tasks_images .item:not(.tc)', { observe: true }, function (ele
     });
 
     const root = elem.querySelector('.td_actions > span');
-    if (root) {
-        root.appendChild(link);
+    if (!root) {
+        return false;
     }
+
+    root.appendChild(link);
+
+    return true;
 });

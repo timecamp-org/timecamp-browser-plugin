@@ -12,6 +12,8 @@ tcbutton.render('#poststuff:not(.tc)', { observe: true }, function (elem) {
     });
 
     heading.append(link);
+
+    return true;
 });
 
 tcbutton.render('.edit-post-header:not(.tc)', { observe: true }, function (
@@ -29,4 +31,6 @@ tcbutton.render('.edit-post-header:not(.tc)', { observe: true }, function (
     });
 
     targetElement.prepend(link);
+
+    return true;
 });

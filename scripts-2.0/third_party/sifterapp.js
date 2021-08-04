@@ -13,6 +13,8 @@ tcbutton.render('.issues .issue:not(.tc)', { observe: true }, function (
     });
 
     $('.subject a.issue-status', elem).appendChild(link);
+
+    return true;
 });
 
 tcbutton.render(
@@ -29,5 +31,7 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );

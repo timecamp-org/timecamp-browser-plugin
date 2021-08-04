@@ -9,4 +9,6 @@ tcbutton.render('.task-list-item', {}, function (elem) {
     });
 
     elem.appendChild(link);
+
+    return true;
 });

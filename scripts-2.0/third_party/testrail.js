@@ -16,5 +16,7 @@ tcbutton.render(
         link.setAttribute('style', 'margin-left: 5px');
 
         $('div.content-header-title').appendChild(link);
+
+        return true;
     }
 );

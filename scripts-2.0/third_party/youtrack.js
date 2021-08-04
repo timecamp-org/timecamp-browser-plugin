@@ -23,6 +23,8 @@ tcbutton.render(
         });
 
         elem.insertBefore(link, titleElem);
+
+        return true;
     }
 );
 
@@ -39,6 +41,8 @@ tcbutton.render(
         });
 
         elem.insertBefore(link, $('.yt-issue-view__star'));
+
+        return true;
     }
 );
 
@@ -66,4 +70,6 @@ tcbutton.render('.yt-agile-card:not(.tc)', { observe: true }, function (
     });
 
     container.appendChild(link);
+
+    return true;
 });

@@ -13,6 +13,8 @@ tcbutton.render(
         });
 
         $description.after(link);
+
+        return true;
     }
 );
 
@@ -28,6 +30,8 @@ tcbutton.render(
         });
 
         $header.append(link);
+
+        return true;
     }
 );
 
@@ -43,5 +47,7 @@ tcbutton.render(
         });
 
         $('[data-toggl="loanDrawer-headerCol"]').append(link);
+
+        return true;
     }
 );

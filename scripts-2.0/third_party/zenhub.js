@@ -21,4 +21,6 @@ tcbutton.render('.zhc-menu-bar > .zhc-menu-bar-item:not(.tc):first-child', { obs
 
     div.appendChild(link);
     elem.parentNode.prepend(div);
+
+    return true;
 });

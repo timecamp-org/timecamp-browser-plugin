@@ -41,6 +41,7 @@ import {
   faCalendarAlt as farCalendarAlt,
   faSignOutAlt as farSignOutAlt,
   faChartPie as farChartPie,
+  faClock as farClock
 } from '@fortawesome/pro-regular-svg-icons';
 
 import {
@@ -113,4 +114,5 @@ library.add(
   falLightbulb,
   farSignOutAlt,
   farChartPie,
+  farClock,
 );

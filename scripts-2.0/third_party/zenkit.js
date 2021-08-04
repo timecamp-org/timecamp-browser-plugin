@@ -11,4 +11,6 @@ tcbutton.render('.zenkit-entry-detail-popup-subheader-left:not(.tc)', {observe: 
     });
     
     elem.append(link);
+
+    return true;
 });

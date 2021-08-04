@@ -5,7 +5,7 @@ const SERVICE = 'groupnwork';
 tcbutton.render('#clockify-view:not(.tc)', {observe: true}, (elem) => {
     var container = $('#tc-container', elem);
     if (!container){
-        return;
+        return false;
     }
 
     let description = $('#task-name');
@@ -21,4 +21,6 @@ tcbutton.render('#clockify-view:not(.tc)', {observe: true}, (elem) => {
     });
 
     container.appendChild(link);
+
+    return true;
 });

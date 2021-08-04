@@ -20,6 +20,8 @@ tcbutton.render('[data-test-id="sticky-subject-header"]:not(.tc)', { observe: tr
 
         elem.appendChild(link);
     }, 500);
+
+    return true;
 });
 
 tcbutton.render('[data-selenium-test="highlightTitle"]:not(.tc)', { observe: true }, elem => {
@@ -44,4 +46,6 @@ tcbutton.render('[data-selenium-test="highlightTitle"]:not(.tc)', { observe: tru
 
         container.appendChild(link);
     }, 500);
+
+    return true;
 });

@@ -5,7 +5,7 @@ tcbutton.render(
     { observe: true },
     function (elem) {
         if (elem.querySelectorAll('.tc-button').length) {
-            return;
+            return false;
         }
 
         const newLayout = $('.tc_title', elem);
@@ -40,5 +40,7 @@ tcbutton.render(
             $('.cellAction', elem) ||
             $('.cellStarSmall', elem);
         landmarkElem.parentElement.insertBefore(newElem, landmarkElem.nextSibling);
+
+        return true;
     }
 );

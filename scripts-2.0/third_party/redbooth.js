@@ -16,6 +16,8 @@ tcbutton.render(
         });
 
         container.appendChild(link);
+
+        return true;
     }
 );
 
@@ -35,5 +37,7 @@ tcbutton.render(
         });
 
         container.appendChild(link);
+
+        return true;
     }
 );

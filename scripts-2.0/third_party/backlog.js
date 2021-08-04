@@ -20,4 +20,6 @@ tcbutton.render('#issueArea:not(.tc)', { observe: true }, function (elem) {
 
     container.appendChild(link);
     containerElem.parentNode.appendChild(container, containerElem);
+
+    return true;
 });

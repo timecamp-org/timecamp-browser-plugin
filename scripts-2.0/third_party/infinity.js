@@ -17,5 +17,6 @@ tcbutton.render('.item-sidebar .mobile-item-navigation:not(.tc)', {observe: true
 
         elem.appendChild(link);
     }, 300);
-
+    
+    return true;
 });

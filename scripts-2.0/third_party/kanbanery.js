@@ -17,5 +17,7 @@ tcbutton.render(
         linkAction.appendChild(link);
 
         actionList.insertBefore(linkAction, firstAction);
+
+        return true;
     }
 );

@@ -25,5 +25,7 @@ tcbutton.render(
         });
 
         container.appendChild(link);
+
+        return true;
     }
 );

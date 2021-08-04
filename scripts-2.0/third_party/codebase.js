@@ -9,7 +9,7 @@ tcbutton.render('#content .right:not(.tc)', { observe: true }, function (
 
     if (existingTag) {
         if (existingTag.parentNode.firstChild.classList.contains('tc')) {
-            return;
+            return false;
         }
         existingTag.parentNode.removeChild(existingTag);
     }
@@ -25,6 +25,8 @@ tcbutton.render('#content .right:not(.tc)', { observe: true }, function (
 
     div.appendChild(link);
     elem.prepend(div);
+
+    return true;
 });
 
 tcbutton.render(
@@ -41,5 +43,7 @@ tcbutton.render(
         });
 
         $('.merge-request-summary__title').appendChild(link);
+
+        return true;
     }
 );

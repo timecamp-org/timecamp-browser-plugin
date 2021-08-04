@@ -12,7 +12,7 @@ tcbutton.render(
     {observe: true,},
     elem => {
         if ($('.tc-button', elem)) {
-            return;
+            return false;
         }
 
         const description = elem.querySelector('.BoardCard-taskName').textContent.trim();
@@ -20,7 +20,7 @@ tcbutton.render(
             elem.dataset.taskId
         );
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const link = tcbutton.createTimerLink({
@@ -34,9 +34,13 @@ tcbutton.render(
         });
 
         const injectContainer = elem.querySelector('.BoardCardLayout-actionButtons');
-        if (injectContainer) {
-            injectContainer.insertAdjacentElement('afterbegin', link);
+        if (!injectContainer) {
+            return false;
         }
+
+        injectContainer.insertAdjacentElement('afterbegin', link);
+
+        return true;
     }
 );
 
@@ -46,7 +50,7 @@ tcbutton.render(
     { observe: true },
     (elem) => {
         if ($('.tc-button', elem.parentNode)) {
-            return;
+            return false;
         }
 
         //child textaread id split
@@ -55,7 +59,7 @@ tcbutton.render(
             $('textarea.SpreadsheetTaskName-input', elem).id.split('_').pop()
         );
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const link = tcbutton.createTimerLink({
@@ -69,6 +73,8 @@ tcbutton.render(
         });
 
         elem.insertAdjacentElement('afterend', link);
+
+        return true;
     }
 );
 
@@ -82,7 +88,7 @@ tcbutton.render(
             elem.dataset.taskId
         );
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const link = tcbutton.createTimerLink({
@@ -96,6 +102,8 @@ tcbutton.render(
 
         const firstButton = elem.querySelector('.SingleTaskPaneToolbar-button');
         firstButton.parentNode.insertBefore(link, firstButton);
+
+        return true;
     }
 );
 
@@ -110,7 +118,7 @@ tcbutton.render(
             elem.parentNode.dataset.taskId
         );
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const link = tcbutton.createTimerLink({
@@ -124,5 +132,7 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );

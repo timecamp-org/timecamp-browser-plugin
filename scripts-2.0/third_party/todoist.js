@@ -23,7 +23,7 @@ tcbutton.render(
         };
 
         if (!externalTaskId()) {
-            return;
+            return false;
         }
 
         const link = tcbutton.createTimerLink({
@@ -36,6 +36,8 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );
 
@@ -45,14 +47,14 @@ tcbutton.render(
     {observe: true},
     elem => {
         if ($('.tc-button', elem)) {
-            return;
+            return false;
         }
 
         let listItem = elem.closest('.task_list_item');
 
         const externalTaskId = buildExternalIdForTodoist(listItem.dataset.itemId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -70,6 +72,8 @@ tcbutton.render(
         });
 
         elem.appendChild(link);
+
+        return true;
     }
 );
 
@@ -80,7 +84,7 @@ tcbutton.render(
     elem => {
         const externalTaskId = buildExternalIdForTodoist(elem.dataset.selectionId);
         if (!externalTaskId) {
-            return;
+            return false;
         }
 
         const description = () => {
@@ -98,5 +102,7 @@ tcbutton.render(
         });
 
         $('.board_task__details__content', elem).insertAdjacentElement('afterend', link);
+
+        return true;
     }
 );

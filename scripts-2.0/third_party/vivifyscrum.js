@@ -15,4 +15,6 @@ tcbutton.render('.vs-c-modal--task:not(.tc)', { observe: true }, function (
     });
 
     container.prepend(link);
+
+    return true;
 });

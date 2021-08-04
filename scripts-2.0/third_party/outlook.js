@@ -7,4 +7,6 @@ tcbutton.render('._1rGA5291Yki5ZAtnlCWE_6:not(.tc)', { observe: true}, elem => {
     });
 
     elem.appendChild(link);
+
+    return true;
 });

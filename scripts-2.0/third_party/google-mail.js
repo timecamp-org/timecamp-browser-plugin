@@ -5,7 +5,7 @@ tcbutton.render('.ha:not(.tc)', { observe: true }, function (elem) {
     const project = $('.hX:last-of-type .hN', elem);
 
     if (!description) {
-        return;
+        return false;
     }
 
     const link = tcbutton.createTimerLink({
@@ -15,4 +15,6 @@ tcbutton.render('.ha:not(.tc)', { observe: true }, function (elem) {
     });
 
     elem.appendChild(link);
+
+    return true;
 });
