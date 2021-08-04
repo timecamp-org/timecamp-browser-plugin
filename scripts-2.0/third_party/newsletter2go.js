@@ -13,4 +13,6 @@ tcbutton.render('#submenu:not(.tc)', { observe: true }, function () {
     li.className = 'sm submenu center';
     li.appendChild(link);
     $('#submenu').appendChild(li);
+
+    return true;
 });

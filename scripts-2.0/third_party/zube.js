@@ -14,6 +14,8 @@ tcbutton.render(
         });
 
         $('#card-primary-attributes-container div').appendChild(link);
+
+        return true;
     }
 );
 
@@ -27,7 +29,7 @@ tcbutton.render(
 
         if (existingTag) {
             if (existingTag.parentNode.firstChild.classList.contains('tc')) {
-                return;
+                return false;
             }
             existingTag.parentNode.removeChild(existingTag);
         }
@@ -43,6 +45,8 @@ tcbutton.render(
 
         div.appendChild(link);
         elem.prepend(div);
+
+        return true;
     }
 );
 
@@ -56,7 +60,7 @@ tcbutton.render(
 
         if (existingTag) {
             if (existingTag.parentNode.firstChild.classList.contains('tc')) {
-                return;
+                return false;
             }
             existingTag.parentNode.removeChild(existingTag);
         }
@@ -72,5 +76,7 @@ tcbutton.render(
 
         div.appendChild(link);
         elem.prepend(div);
+
+        return true;
     }
 );

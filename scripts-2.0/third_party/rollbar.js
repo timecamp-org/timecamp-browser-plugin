@@ -15,5 +15,7 @@ tcbutton.render(
         });
 
         $('.item-status-level-area').appendChild(link);
+
+        return true;
     }
 );

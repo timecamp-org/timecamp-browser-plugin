@@ -25,4 +25,6 @@ tcbutton.render('.story-state:not(.tc)', { observe: true }, function (
     wrap.appendChild(link);
 
     element.parentNode.insertBefore(wrap, element.nextSibling);
+
+    return true;
 });

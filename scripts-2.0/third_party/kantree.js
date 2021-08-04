@@ -21,7 +21,7 @@ tcbutton.render(
         const taskTitle = buildTaskTitle();
 
         if (!descElem || !taskTitle) {
-            return;
+            return false;
         }
 
         const getTags = () => {
@@ -50,6 +50,8 @@ tcbutton.render(
 
         container.appendChild(link);
         descElem.parentNode.insertBefore(container, descElem);
+
+        return true;
     },
     '#card-modal-host, .card-modal'
 );
@@ -93,6 +95,8 @@ tcbutton.render(
         } else {
             subTaskRef.parentNode.prepend(link);
         }
+
+        return true;
     },
     '.card-view-children .children .card-tile, #card-modal-host, .card-modal'
 );

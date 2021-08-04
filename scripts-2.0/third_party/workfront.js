@@ -22,6 +22,8 @@ tcbutton.render('#layout-container:not(.tc)', { observe: true }, function (
 
     const navgroup = document.querySelector('.navbar-item-group.right');
     navgroup.insertBefore(tContainer, navgroup.children[0]);
+
+    return true;
 });
 
 const t = document.querySelector('#minified-scripts').innerHTML;

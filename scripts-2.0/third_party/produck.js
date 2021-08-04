@@ -35,5 +35,7 @@ tcbutton.render(
         li.classList.add('tc-item');
         li.appendChild(link);
         elem.prepend(li);
+
+        return true;
     }
 );

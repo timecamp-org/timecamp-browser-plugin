@@ -17,6 +17,8 @@ tcbutton.render(
         });
 
         container.insertBefore(link, tcButtonLoc);
+
+        return true;
     }
 );
 
@@ -36,5 +38,7 @@ tcbutton.render(
         });
 
         container.insertBefore(link, descriptionElem);
+
+        return true;
     }
 );

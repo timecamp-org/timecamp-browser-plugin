@@ -31,5 +31,7 @@ tcbutton.render(
 
         const spanTag = document.createElement('span');
         container.parentNode.appendChild(spanTag.appendChild(link));
+
+        return true;
     }
 );

@@ -15,7 +15,11 @@ tcbutton.render('.taskScroll:not(.tc)', { observe: true }, function (
         projectName: project && project.textContent.trim()
     });
 
-    if ($('section.jQ_taskHeader')) {
-        $('section.jQ_taskHeader').appendChild(link);
+    if (!$('section.jQ_taskHeader')) {
+        return false;
     }
+
+    $('section.jQ_taskHeader').appendChild(link);
+
+    return true;
 });

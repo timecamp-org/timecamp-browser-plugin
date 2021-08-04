@@ -12,4 +12,6 @@ tcbutton.render('.multiplayer_view--multiplayerView--19Y20:not(.tc)', {observe: 
     });
     
     elem.prepend(link);
+
+    return true;
 });

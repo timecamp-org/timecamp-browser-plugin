@@ -21,6 +21,8 @@ if ((window.location.href.indexOf("main") !== -1) || (window.location.href.index
             $(".tasksContainer").style.paddingLeft = "8px";
             link.style.paddingLeft = "10px";
         }
+
+        return true;
     });
 }
 
@@ -38,5 +40,7 @@ if (window.location.href.indexOf("tasks/view") !== -1) {
         link.style.left = "-35px";
 
         $('.buttonbar.compact-button-bar').parentNode.appendChild(link);
+
+        return true;
     });
 }

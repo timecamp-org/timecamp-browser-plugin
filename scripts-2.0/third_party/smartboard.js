@@ -13,4 +13,6 @@ tcbutton.render('.task:not(.tc)', { observe: true }, function (elem) {
     });
 
     $('.toggle-container', elem).appendChild(link);
+
+    return true;
 });

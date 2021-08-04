@@ -23,4 +23,6 @@ tcbutton.render('#ide:not(.tc)', { observe: true }, function () {
 
     container.appendChild(link);
     $('.editor-panel').appendChild(container);
+
+    return true;
 });

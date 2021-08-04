@@ -10,4 +10,6 @@ tcbutton.render('.comments-number:not(.tc)', { observe: true }, function (
     });
 
     elem.appendChild(link);
+
+    return true;
 });

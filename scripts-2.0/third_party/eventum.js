@@ -22,6 +22,8 @@ tcbutton.render('.issue_view:not(.tc)', {}, function (elem) {
     const container = $('div#issue_menu', elem);
     const spanTag = document.createElement('span');
     container.parentNode.appendChild(spanTag.appendChild(link));
+
+    return true;
 });
 
 function getTags () {

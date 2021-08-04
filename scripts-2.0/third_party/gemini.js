@@ -23,5 +23,7 @@ tcbutton.render(
             link,
             $('#filter-navigator-container')
         );
+
+        return true;
     }
 );

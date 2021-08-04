@@ -20,6 +20,8 @@ tcbutton.render(
         });
         link.classList.add('edit');
         beforeElem.parentNode.insertBefore(link, beforeElem);
+
+        return true;
     }
 );
 
@@ -42,5 +44,7 @@ tcbutton.render(
         });
         link.classList.add('view');
         beforeElem.parentNode.insertBefore(link, beforeElem);
+
+        return true;
     }
 );

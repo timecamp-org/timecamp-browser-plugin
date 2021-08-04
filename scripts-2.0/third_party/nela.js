@@ -27,4 +27,6 @@ tcbutton.render('.modal-content .card-body .card-title:not(.tc)', { observe: tru
     link.classList.add('position-relative', 'pl-3', 'ml-3');
 
     container.appendChild(link);
+
+    return true;
 });

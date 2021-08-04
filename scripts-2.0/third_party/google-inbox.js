@@ -11,4 +11,6 @@ tcbutton.render('.bJ:not(.tc)', { observe: true }, function (elem) {
     });
 
     toolbar.parentElement.insertBefore(link, toolbar);
+
+    return true;
 });
