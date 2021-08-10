@@ -1,4 +1,6 @@
 import Error, {ERROR_MESSAGE, ErrorType} from "./Error";
+import Logger from './Logger';
+const logger = new Logger();
 
 const MAINTENANCE_MODE_HEADER_KEY = 'Browser-plugin';
 const MAINTENANCE_MODE_HEADER_VALUE = 'Maintenance mode';
@@ -9,6 +11,10 @@ export default class Response {
 
     constructor(xhr: XMLHttpRequest) {
         this.detectError(xhr);
+
+        if (this.hasError) {
+            logger.log('[TC plugin]: ' + this.error.message, true)
+        }
     }
 
     detectError = (xhr: XMLHttpRequest) => {
