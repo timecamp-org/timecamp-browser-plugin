@@ -1,5 +1,7 @@
 import PathService from './PathService';
 import Logger from './Logger';
+import browser from "webextension-polyfill";
+import Response from "./Response";
 
 const pathService = new PathService();
 const logger = new Logger();
@@ -21,6 +23,45 @@ export default class ApiService {
             this.rootGroupId = parseInt(response.root_group_id);
             this.userId = parseInt(response.user_id);
             pathService.changeBaseUrlForRootGroup(this.rootGroupId);
+        });
+    }
+
+    handleErrors(xhr) {
+        const response = new Response(xhr);
+        if (!response.hasError) {
+            browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+                if (tabs.length > 0) {
+                    let activeTab = tabs[0];
+                    browser.tabs.sendMessage(activeTab.id, {
+                        type: 'requestOk',
+                    });
+                }
+            });
+
+            browser.runtime.sendMessage({
+                type: 'requestOk',
+            }).then(() => {
+            }).catch(() => {
+            });
+
+            return;
+        }
+
+        browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+            if (tabs.length > 0) {
+                let activeTab = tabs[0];
+                browser.tabs.sendMessage(activeTab.id, {
+                    type: 'requestError',
+                    error: response.error
+                });
+            }
+        });
+
+        browser.runtime.sendMessage({
+            type: 'requestError',
+            error: response.error
+        }).then(() => {
+        }).catch(() => {
         });
     }
 
@@ -67,6 +108,7 @@ export default class ApiService {
                     status: xhr.status,
                     response: xhr.response,
                 });
+                this.handleErrors(xhr);
 
                 resolve({
                     status: xhr.status,
@@ -80,6 +122,7 @@ export default class ApiService {
                     status: xhr.status,
                     response: xhr.response,
                 });
+                this.handleErrors(xhr);
 
                 reject({
                     status: xhr.status,
@@ -479,6 +522,20 @@ export default class ApiService {
                 });
             }
         );
+    }
+
+    ping() {
+        return new Promise((resolve, reject) => {
+            this.call({
+                url: pathService.getBaseUrl(),
+                method: METHOD_GET,
+            }).then((response) => {
+                resolve(response);
+            }).catch((response) => {
+                logger.error(response);
+                reject(response)
+            });
+        });
     }
 
     getFullTaskTree(
