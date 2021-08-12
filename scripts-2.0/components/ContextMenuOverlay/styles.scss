@@ -32,11 +32,16 @@
 
       &__button {
         margin-top: 10px;
+
         button {
           border: solid 1px $primaryBorderColor;
           font-size: $defaultFontSize;
           font-family: $defaultFontFamily;
           width: auto;
+          &:hover {
+            background-color: $popupGrayThird;
+            border-color: $popupBorderGraySecond;
+          }
 
           a {
             font-size: $defaultFontSize;
