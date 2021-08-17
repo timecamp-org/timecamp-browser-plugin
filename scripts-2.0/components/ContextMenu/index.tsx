@@ -284,80 +284,83 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             style={props.position}
             data-elevation={open ? "2" : ""}
         >
-            <Header />
-            <ContextMenuMessage
-                visible={isBackendIntegration && noTaskFoundDisplayAlert}
-                onClose={(e) => {
-                    e.stopPropagation();
-                    setNoTaskFoundDisplayAlert(false);
-                }}
-                message={taskNotFoundInBackendIntegrationInfo}
-                style={'info'}
-                bottomCloseSectionVisible={false}
-                topCloseSectionVisible={true}
-                iconVisible={false}
-            />
-
-            <ContextMenuMessage
-                visible={props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0}
-                onClose={(e) => {
-                    e.stopPropagation();
-                    browser.runtime.sendMessage({
-                        type: 'saveUserSetting',
-                        name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
-                        userId: userId,
-                        value: (dontShowAdSettingValue + 1)
-                    }).then(() => {
-                    });
-                    setDontShowAdSettingValue(dontShowAdSettingValue + 1);
-                }}
-                message={getIntegrationAdMessage()}
-            />
-
-            <ContextMenuMessage
-                visible={trelloPowerUpAdVisible}
-                onClose={(e) => {
-                    e.stopPropagation();
-
-                    browser.runtime.sendMessage({
-                        type: 'saveSettingToStorage',
-                        name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE,
-                        value: false
-                    }).then(() => {
-                    }).catch(() => {
-                    });
-                    setTrelloPowerUpAdVisible(false);
-                }}
-                message={translate('trello_powerup_ad')}
-            />
-
-            <TaskPicker
-                browser={browser}
-                onTaskClick={
-                    (task) => {
-                        setBillable(task.billable);
-                        setTaskId(task.id);
-                    }
-                }
-                onNotFoundTaskForActiveBackendIntegration={onNotFoundTaskForActiveBackendIntegration}
-                onAutoDetectTaskForActiveBackendIntegration={onAutoDetectTaskForActiveBackendIntegration}
-                userId={userId}
-                clearTrigger={clearTrigger}
-                presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
-                presetTaskByTaskId={taskIdToPreset}
-            />
-            {isTagModuleEnabled && renderTagPicker()}
-            <Note
-                note={note}
-                onNoteChange={(newNote) => {setNote(newNote)}}
-            />
-            {
-                billableInputVisibility &&
-                <Billable
-                    billable={billable}
-                    onBillableChange={(newBillable) => {setBillable(newBillable)}}
+            <div className={'context-menu-overflow-wrapper'}>
+                <Header />
+                <ContextMenuMessage
+                    visible={isBackendIntegration && noTaskFoundDisplayAlert}
+                    onClose={(e) => {
+                        e.stopPropagation();
+                        setNoTaskFoundDisplayAlert(false);
+                    }}
+                    message={taskNotFoundInBackendIntegrationInfo}
+                    style={'info'}
+                    bottomCloseSectionVisible={false}
+                    topCloseSectionVisible={true}
+                    iconVisible={false}
                 />
-            }
+
+                <ContextMenuMessage
+                    visible={props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0}
+                    onClose={(e) => {
+                        e.stopPropagation();
+                        browser.runtime.sendMessage({
+                            type: 'saveUserSetting',
+                            name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
+                            userId: userId,
+                            value: (dontShowAdSettingValue + 1)
+                        }).then(() => {
+                        });
+                        setDontShowAdSettingValue(dontShowAdSettingValue + 1);
+                    }}
+                    message={getIntegrationAdMessage()}
+                />
+
+                <ContextMenuMessage
+                    visible={trelloPowerUpAdVisible}
+                    onClose={(e) => {
+                        e.stopPropagation();
+
+                        browser.runtime.sendMessage({
+                            type: 'saveSettingToStorage',
+                            name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE,
+                            value: false
+                        }).then(() => {
+                        }).catch(() => {
+                        });
+                        setTrelloPowerUpAdVisible(false);
+                    }}
+                    message={translate('trello_powerup_ad')}
+                />
+
+                <TaskPicker
+                    browser={browser}
+                    onTaskClick={
+                        (task) => {
+                            setBillable(task.billable);
+                            setTaskId(task.id);
+                        }
+                    }
+                    onNotFoundTaskForActiveBackendIntegration={onNotFoundTaskForActiveBackendIntegration}
+                    onAutoDetectTaskForActiveBackendIntegration={onAutoDetectTaskForActiveBackendIntegration}
+                    userId={userId}
+                    clearTrigger={clearTrigger}
+                    presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
+                    presetTaskByTaskId={taskIdToPreset}
+                />
+                {isTagModuleEnabled && renderTagPicker()}
+                <Note
+                    note={note}
+                    onNoteChange={(newNote) => {setNote(newNote)}}
+                />
+                {
+                    billableInputVisibility &&
+                    <Billable
+                        billable={billable}
+                        onBillableChange={(newBillable) => {setBillable(newBillable)}}
+                    />
+                }
+            </div>
+
             <Footer
                 idDisabled={!isSelectedTagsValid}
                 onClickSave={onClickSave}
