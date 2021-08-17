@@ -66,15 +66,14 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
           ? {
               id,
               isLeaf: children.length === 0,
-              isOpenByDefault:
-                taskPickerHook.searchText.length >= MIN_SEARCH_TEXT_LENGTH,
+              isOpenByDefault: false,
               name,
               nestingLevel,
               task,
             }
           : id;
 
-        if (children.length !== 0 && isOpened) {
+        if (children.length !== 0 && (isOpened || taskPickerHook.searchText.length >= MIN_SEARCH_TEXT_LENGTH)) {
           for (let i = children.length - 1; i >= 0; i--) {
             stack.push({
               nestingLevel: nestingLevel + 1,
