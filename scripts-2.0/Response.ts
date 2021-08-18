@@ -20,7 +20,6 @@ export default class Response {
     detectError = (xhr: XMLHttpRequest) => {
         this.hasError = false;
         const statusCode = xhr.status;
-        const message = this.parseMessage(xhr.responseText);
 
         if (!window.navigator.onLine) {
             this.hasError = true;
@@ -29,6 +28,7 @@ export default class Response {
         }
 
         if (statusCode >= 400) {
+            const message = this.parseMessage(xhr.responseText);
             const maintenanceModeHeaderKey = xhr.getResponseHeader(MAINTENANCE_MODE_HEADER_KEY)
             if (maintenanceModeHeaderKey === MAINTENANCE_MODE_HEADER_VALUE) {
                 this.hasError = true;
@@ -58,6 +58,13 @@ export default class Response {
                 return parsedMessage.Status.message;
             }
 
+            if (message.slice(0, 1) === '"') {
+                message = message.slice(1, message.length);
+            }
+
+            if (message.slice(-1) === '"') {
+                message = message.slice(0, -1);
+            }
             return message;
         } catch (e) {
             return message;

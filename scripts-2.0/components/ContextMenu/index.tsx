@@ -70,6 +70,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [embedOnPopup, setEmbedOnPopup] = useState<boolean>(props.embedOnPopup !== undefined);
     const [trelloPowerUpAdVisible, setTrelloPowerUpAdVisible] = useState<boolean>(props.trelloPowerUpAdVisible ?? false);
     const [errorUnknownVisible, setErrorUnknownVisible] = useState<boolean>(false);
+    const [errorUnknownMessage, setErrorUnknownMessage] = useState<string>('');
     const [errorMaintenanceModeVisible, setErrorMaintenanceModeVisible] = useState<boolean>(false);
     const [errorNoInternetVisible, setErrorNoInternetVisible] = useState<boolean>(false);
     const [errorSubscriptionExpiredVisible, setSubscriptionExpiredVisible] = useState<boolean>(false);
@@ -158,6 +159,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                             break;
                         case ErrorType.UNKNOWN:
                             setErrorUnknownVisible(true);
+                            setErrorUnknownMessage(error.message);
                             break;
                         default:
                             logger.log('Missing error type: ' + error.type)
@@ -339,10 +341,14 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
             <Header />
 
-            <UnknownError visible={errorUnknownVisible} onCloseCallback={(e) => {
-                e.stopPropagation();
-                setErrorUnknownVisible(false);
-            }}/>
+            <UnknownError
+                visible={errorUnknownVisible}
+                message={errorUnknownMessage}
+                onCloseCallback={(e) => {
+                    e.stopPropagation();
+                    setErrorUnknownVisible(false);
+                }}
+            />
 
             <ContextMenuMessage
                 visible={isBackendIntegration && noTaskFoundDisplayAlert}
