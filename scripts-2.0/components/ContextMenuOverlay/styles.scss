@@ -1,0 +1,55 @@
+@import '../../style/common';
+
+.timecamp {
+  .context-menu-overlay {
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+    background-color: $primaryBackgroundColor;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .context-menu-overlay-content {
+      text-align: center;
+      padding-top: 50px;
+
+      &__title {
+        font-size: 16px;
+        font-family: $defaultFontFamily;
+        color: $quaternaryTextColor;
+      }
+
+      &__message {
+        font-size: $defaultFontSize;
+        font-family: $defaultFontFamily;
+        color: $secondaryTextColor;
+      }
+
+      &__button {
+        margin-top: 10px;
+
+        button {
+          border: solid 1px $primaryBorderColor;
+          font-size: $defaultFontSize;
+          font-family: $defaultFontFamily;
+          width: auto;
+          &:hover {
+            background-color: $popupGrayThird;
+            border-color: $popupBorderGraySecond;
+          }
+
+          a {
+            font-size: $defaultFontSize;
+            font-family: $defaultFontFamily;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}

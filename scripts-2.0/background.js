@@ -39,6 +39,8 @@ window.TcButton = {
                                 TcButton.updateIcon();
 
                                 resolve(response);
+                            })
+                            .catch((e) => {
                             });
                         break;
 
@@ -313,6 +315,14 @@ window.TcButton = {
                             resolve(TcButton.isUserLogged)
                         });
                         break;
+
+                    case 'ping':
+                        apiService.ping().then(() => {
+                            resolve();
+                        }).catch((error) => {
+                            reject(error);
+                        });
+                        break;
                 }
             } catch (e) {
                 logger.error(e);
@@ -521,7 +531,9 @@ window.TcButton = {
                     TcButton.setCurrentEntry(currentEntry);
                     TcButton.updateIcon();
                     resolve(TcButton.currentEntry);
-                });
+                }).catch((e) => {
+                    logger.log(e);
+            });
         });
     },
 
@@ -531,6 +543,8 @@ window.TcButton = {
         browser.runtime.sendMessage({
             type: 'currentEntryUpdated',
             currentEntry: TcButton.currentEntry
+        }).then(() => {
+        }).catch(() => {
         });
     },
 
@@ -584,4 +598,14 @@ browser.runtime.onInstalled.addListener((details) => {
 browser.runtime.setUninstallURL('https://forms.gle/R7kQXZbC2vVS4rGD8');
 browser.tabs.onUpdated.addListener(TcButton.updateIcon);
 browser.runtime.onMessage.addListener(TcButton.newMessage);
-setInterval(TcButton.updateCurrentEntry, 30000);
+setInterval(() => {
+    const promise = TcButton.updateCurrentEntry();
+
+    if (promise === undefined) {
+        return;
+    }
+
+    promise.then(()=>{
+    }).catch((e) => {
+    })
+}, 30000);

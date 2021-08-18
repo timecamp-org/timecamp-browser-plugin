@@ -380,7 +380,8 @@ window.tcbutton = {
                 }
                 tcbutton.currentTimerStartedAt = currentTimerStartedAt;
             })
-            .catch(() => {
+            .catch((e) => {
+                logger.log(e);
             });
     },
 
