@@ -8,14 +8,21 @@ import {useEffect, useState, useRef, useMemo} from "react";
 import './styles.scss';
 import TagPicker from "../TagPicker";
 import TaskPicker from "../TaskPicker";
-import ContextMenuMessage from "../ContextMenuMessage";
+import ContextMenuMessage, {MessageType} from "../ContextMenuMessage";
+import MaintenanceModeError from "./Error/MaintenanceModeError";
 import GroupSetting from "../../GroupSetting";
 import StorageManager from "../../StorageManager";
 import ReactHtmlParser from "react-html-parser";
 import translate from "../../Translator";
 import PathService from '../../PathService';
+import Logger from '../../Logger';
+import Error, {ErrorType} from "../../Error";
+import NoInternetError from "./Error/NoInternetError";
+import SubscriptionExpiredError from "./Error/SubscriptionExpiredError";
+import UnknownError from "./Error/UnknownError";
 
 const pathService = new PathService();
+const logger = new Logger();
 
 const TRELLO = 'trello';
 
@@ -62,6 +69,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [dontShowAdSettingValue, setDontShowAdSettingValue] = useState<number>(1);
     const [embedOnPopup, setEmbedOnPopup] = useState<boolean>(props.embedOnPopup !== undefined);
     const [trelloPowerUpAdVisible, setTrelloPowerUpAdVisible] = useState<boolean>(props.trelloPowerUpAdVisible ?? false);
+    const [errorUnknownVisible, setErrorUnknownVisible] = useState<boolean>(false);
+    const [errorUnknownMessage, setErrorUnknownMessage] = useState<string>('');
+    const [errorMaintenanceModeVisible, setErrorMaintenanceModeVisible] = useState<boolean>(false);
+    const [errorNoInternetVisible, setErrorNoInternetVisible] = useState<boolean>(false);
+    const [errorSubscriptionExpiredVisible, setSubscriptionExpiredVisible] = useState<boolean>(false);
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
@@ -113,7 +125,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             setUserId(parseInt(data.user_id));
             setIsAdmin(data.permissions.role_administrator);
             getBackendIntegrationAdData(data.user_id);
-
         });
 
         if (billableInputVisibility === null) {
@@ -125,6 +136,44 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             }).catch(() => {
             });
         }
+
+        browser.runtime.onMessage.addListener((request) => {
+            switch (request.type) {
+                case 'requestOk':
+                    setErrorMaintenanceModeVisible(false);
+                    setErrorNoInternetVisible(false);
+                    setSubscriptionExpiredVisible(false);
+                    break;
+
+                case 'requestError':
+                    let error: Error = request.error;
+                    switch (error.type) {
+                        case ErrorType.MAINTENANCE_MODE:
+                            setErrorMaintenanceModeVisible(true);
+                            break;
+                        case ErrorType.NO_INTERNET:
+                            setErrorNoInternetVisible(true);
+                            break;
+                        case ErrorType.SUBSCRIPTION_EXPIRED:
+                            setSubscriptionExpiredVisible(true);
+                            break;
+                        case ErrorType.UNKNOWN:
+                            setErrorUnknownVisible(true);
+                            setErrorUnknownMessage(error.message);
+                            break;
+                        default:
+                            logger.log('Missing error type: ' + error.type)
+                    }
+
+                    if (error.type !== ErrorType.MAINTENANCE_MODE) {
+                        setErrorMaintenanceModeVisible(false);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        });
     }, []);
 
     const getBackendIntegrationAdData = (userId: number) => {
@@ -284,80 +333,99 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             style={props.position}
             data-elevation={open ? "2" : ""}
         >
-            <Header />
-            <ContextMenuMessage
-                visible={isBackendIntegration && noTaskFoundDisplayAlert}
-                onClose={(e) => {
-                    e.stopPropagation();
-                    setNoTaskFoundDisplayAlert(false);
-                }}
-                message={taskNotFoundInBackendIntegrationInfo}
-                style={'info'}
-                bottomCloseSectionVisible={false}
-                topCloseSectionVisible={true}
-                iconVisible={false}
-            />
+            <div className={'context-menu-overflow-wrapper'}>
+                <NoInternetError visible={errorNoInternetVisible}/>
 
-            <ContextMenuMessage
-                visible={props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0}
-                onClose={(e) => {
-                    e.stopPropagation();
-                    browser.runtime.sendMessage({
-                        type: 'saveUserSetting',
-                        name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
-                        userId: userId,
-                        value: (dontShowAdSettingValue + 1)
-                    }).then(() => {
-                    });
-                    setDontShowAdSettingValue(dontShowAdSettingValue + 1);
-                }}
-                message={getIntegrationAdMessage()}
-            />
+                <MaintenanceModeError visible={errorMaintenanceModeVisible}/>
 
-            <ContextMenuMessage
-                visible={trelloPowerUpAdVisible}
-                onClose={(e) => {
-                    e.stopPropagation();
+                <SubscriptionExpiredError visible={errorSubscriptionExpiredVisible}/>
 
-                    browser.runtime.sendMessage({
-                        type: 'saveSettingToStorage',
-                        name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE,
-                        value: false
-                    }).then(() => {
-                    }).catch(() => {
-                    });
-                    setTrelloPowerUpAdVisible(false);
-                }}
-                message={translate('trello_powerup_ad')}
-            />
+                <Header />
 
-            <TaskPicker
-                browser={browser}
-                onTaskClick={
-                    (task) => {
-                        setBillable(task.billable);
-                        setTaskId(task.id);
-                    }
-                }
-                onNotFoundTaskForActiveBackendIntegration={onNotFoundTaskForActiveBackendIntegration}
-                onAutoDetectTaskForActiveBackendIntegration={onAutoDetectTaskForActiveBackendIntegration}
-                userId={userId}
-                clearTrigger={clearTrigger}
-                presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
-                presetTaskByTaskId={taskIdToPreset}
-            />
-            {isTagModuleEnabled && renderTagPicker()}
-            <Note
-                note={note}
-                onNoteChange={(newNote) => {setNote(newNote)}}
-            />
-            {
-                billableInputVisibility &&
-                <Billable
-                    billable={billable}
-                    onBillableChange={(newBillable) => {setBillable(newBillable)}}
+                <UnknownError
+                    visible={errorUnknownVisible}
+                    message={errorUnknownMessage}
+                    onCloseCallback={(e) => {
+                        e.stopPropagation();
+                        setErrorUnknownVisible(false);
+                    }}
                 />
-            }
+
+                <ContextMenuMessage
+                    visible={isBackendIntegration && noTaskFoundDisplayAlert}
+                    onClose={(e) => {
+                        e.stopPropagation();
+                        setNoTaskFoundDisplayAlert(false);
+                    }}
+                    message={taskNotFoundInBackendIntegrationInfo}
+                    style={MessageType.MESSAGE_TYPE_INFO}
+                    bottomCloseSectionVisible={false}
+                    topCloseSectionVisible={true}
+                    iconVisible={false}
+                />
+
+                <ContextMenuMessage
+                    visible={props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0}
+                    onClose={(e) => {
+                        e.stopPropagation();
+                        browser.runtime.sendMessage({
+                            type: 'saveUserSetting',
+                            name: GroupSetting.DONT_SHOW_BE_INTEGRATION_AD,
+                            userId: userId,
+                            value: (dontShowAdSettingValue + 1)
+                        }).then(() => {
+                        });
+                        setDontShowAdSettingValue(dontShowAdSettingValue + 1);
+                    }}
+                    message={getIntegrationAdMessage()}
+                />
+
+                <ContextMenuMessage
+                    visible={trelloPowerUpAdVisible}
+                    onClose={(e) => {
+                        e.stopPropagation();
+
+                        browser.runtime.sendMessage({
+                            type: 'saveSettingToStorage',
+                            name: StorageManager.TRELLO_POWER_UP_AD_VISIBLE,
+                            value: false
+                        }).then(() => {
+                        }).catch(() => {
+                        });
+                        setTrelloPowerUpAdVisible(false);
+                    }}
+                    message={translate('trello_powerup_ad')}
+                />
+
+                <TaskPicker
+                    browser={browser}
+                    onTaskClick={
+                        (task) => {
+                            setBillable(task.billable);
+                            setTaskId(task.id);
+                        }
+                    }
+                    onNotFoundTaskForActiveBackendIntegration={onNotFoundTaskForActiveBackendIntegration}
+                    onAutoDetectTaskForActiveBackendIntegration={onAutoDetectTaskForActiveBackendIntegration}
+                    userId={userId}
+                    clearTrigger={clearTrigger}
+                    presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
+                    presetTaskByTaskId={taskIdToPreset}
+                />
+                {isTagModuleEnabled && renderTagPicker()}
+                <Note
+                    note={note}
+                    onNoteChange={(newNote) => {setNote(newNote)}}
+                />
+                {
+                    billableInputVisibility &&
+                    <Billable
+                        billable={billable}
+                        onBillableChange={(newBillable) => {setBillable(newBillable)}}
+                    />
+                }
+            </div>
+
             <Footer
                 idDisabled={!isSelectedTagsValid}
                 onClickSave={onClickSave}
