@@ -224,5 +224,32 @@
 	},
 	"go_to_timesheet": {
 		"message": "Go to Timesheet"
+	},
+	"go_to_subscriton_page": {
+		"message": "Go to subscription page"
+	},
+	"oh_no_something_went_wrong": {
+		"message": "Oh no! Something went wrong"
+	},
+	"refresh_page": {
+		"message": "Refresh page"
+	},
+	"no_internet_error_title": {
+		"message": "No internet connection"
+	},
+	"no_internet_error_message": {
+		"message": "See now, this might mean a couple of things: <br>1. Either there’s something wrong with your router <br>2. Or… you haven’t paid your internet bills… <br><br> Regardless of the reason, we hope to see you back once you’re reconnected!"
+	},
+	"maintenance_mode_error_title": {
+		"message": "Sorry, we’re down for maintenance"
+	},
+	"maintenance_mode_error_message": {
+		"message": "Our Chrome Plugin is currently undergoing scheduled maintenance. We should back shortly"
+	},
+	"subscription_expired_error_title": {
+		"message": "Subscription has expired"
+	},
+	"subscription_expired_error_message": {
+		"message": "Your subscription has expired.  Renew your subscription or downgrade your account to Freemium"
 	}
 }
