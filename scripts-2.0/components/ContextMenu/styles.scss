@@ -8,7 +8,6 @@
     color: $primaryTextColor;
     width: 440px;
     height: 563px;
-    padding: 20px;
     box-sizing: border-box;
     border: #aea6ab 1px solid;
     display: block;
@@ -22,13 +21,20 @@
       display: none;
     }
 
-  &-extended-height {
-    height: 666px;
-  }
+    .context-menu-overflow-wrapper {
+      overflow: auto;
+      height: calc(100% - 81px);
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-  .TaskPicker, .TagPicker, .note, .duration {
-    margin-top: 15px;
-  }
+    &-extended-height {
+      height: 666px;
+    }
+
+    .TaskPicker, .TagPicker, .note, .duration {
+      margin-top: 15px;
+    }
 
     .billable {
       margin-top: 15px;
