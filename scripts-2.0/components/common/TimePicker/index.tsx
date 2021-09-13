@@ -77,7 +77,7 @@ const TimePicker: React.FC<TimePickerInterface> = (props) => {
             hour12 = dateTime.getHours(dateTimeValue, false);
             hour24 = dateTime.getHours(dateTimeValue);
             minutes = dateTime.getMinutes(dateTimeValue);
-            meridian = dateTime.getmeridianValue(dateTimeValue);
+            meridian = dateTime.getMeridianValue(dateTimeValue);
         }
         setHour12Value(hour12);
         setHour24Value(hour24);

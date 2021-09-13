@@ -67,7 +67,7 @@ export default class DateTime {
         return this.padLeft(hours);
     }
 
-    getMeridiemValue = (date) => {
+    getMeridianValue = (date) => {
         let hours = date.getHours();
         if (hours > 12) {
             return PM;

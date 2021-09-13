@@ -280,7 +280,7 @@ window.tcbutton = {
             tcbutton.deactivateAllTimerLinks();
 
             browser.runtime.sendMessage({
-                type: 'timeEntry',
+                type: 'startTimer',
                 startTime: startTime,
                 externalTaskId: externalTaskId,
                 taskId: taskId,

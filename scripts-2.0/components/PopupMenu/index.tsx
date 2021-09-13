@@ -51,6 +51,7 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
     const [user, setUser] = useState<User>(emptyUser);
     const [entry, setEntry] = useState<Entry>(emptyEntry);
     const [isTimerWorking, setIsTimerWorking] = useState(false);
+    const [durationFormat, setDurationFormat] = useState<number>(2);
 
     const setCurrentEntry = (currentEntry) => {
         if (currentEntry === null) {
@@ -118,19 +119,19 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         taskId,
         note,
         service,
-        externalTaskId
+        externalTaskId,
+        buttonHash,
+        startTime,
     ) => {
         return new Promise((resolve, reject) => {
-            let startTime = dateTime.now();
-
             browser.runtime.sendMessage({
-                type: 'timeEntry',
+                type: 'startTimer',
                 startTime: startTime,
                 externalTaskId: externalTaskId,
                 taskId: taskId,
                 description: note,
                 service: service,
-                buttonHash: ''
+                buttonHash: buttonHash
             }).then((response) => {
                 setIsTimerWorking(true);
                 setIsContextMenuOpen(false);
@@ -150,6 +151,40 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         });
     };
 
+    const addTimeEntry = (
+        taskId,
+        note,
+        service,
+        externalTaskId,
+        buttonHash,
+        billable,
+        startTime,
+        stopTime,
+    ) => {
+        return new Promise((resolve, reject) => {
+            let dateFormatted  = dateTime.formatToYmd(startTime);
+            let startTimeFormatted = dateTime.formatToHis(startTime);
+            let endTimeFormatted  = dateTime.formatToHis(stopTime);
+
+            browser.runtime.sendMessage({
+                type: 'addTimeEntry',
+                date: dateFormatted,
+                startTime: startTimeFormatted,
+                endTime: endTimeFormatted,
+                billable: billable,
+                externalTaskId: externalTaskId,
+                taskId: taskId,
+                description: note,
+                service: service,
+                buttonHash: buttonHash
+            }).then((response) => {
+                resolve(response);
+            }).catch((response) => {
+                reject(response);
+            });
+        });
+    };
+
     useEffect(() => {
     }, [props]);
 
@@ -161,6 +196,14 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         });
 
         updateUser();
+
+        browser.runtime.sendMessage({
+            type: 'getDurationFormatFromStorage'
+        }).then((valueOfDurationFormat) => {
+
+            setDurationFormat(valueOfDurationFormat);
+        }).catch(() => {
+        });
 
         browser.runtime.sendMessage({
             type: "currentEntry"
@@ -210,6 +253,7 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
                     note={''}
                     billable={true}
                     startTimerCallback={startTimer}
+                    addTimeEntryCallback={addTimeEntry}
                     billableInputVisibility={null}
                     externalTaskId={''}
                     buttonHash={null}
@@ -217,6 +261,7 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
                     taskNotFoundInBackendIntegrationInfo={''}
                     onCloseCallback={() => {setIsContextMenuOpen(false)}}
                     embedOnPopup={true}
+                    durationFormat={durationFormat}
                 />
             </div>}
         </div>

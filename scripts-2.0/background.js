@@ -20,7 +20,7 @@ window.TcButton = {
         return new Promise((resolve, reject) => {
             try {
                 switch (request.type) {
-                    case 'timeEntry':
+                    case 'startTimer':
                         TcButton.startTimeEntry(request)
                             .then((response) => {
                                 let currentEntry = TcButton.createCurrentEntryObject(
@@ -633,7 +633,12 @@ browser.runtime.onInstalled.addListener((details) => {
 });
 
 browser.runtime.setUninstallURL('https://forms.gle/R7kQXZbC2vVS4rGD8');
-browser.tabs.onUpdated.addListener(TcButton.updateIcon);
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.hasOwnProperty('title')) {
+        return;
+    }
+    TcButton.updateIcon();
+});
 browser.runtime.onMessage.addListener(TcButton.newMessage);
 setInterval(() => {
     const promise = TcButton.updateCurrentEntry();
