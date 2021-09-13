@@ -20,9 +20,14 @@ import Error, {ErrorType} from "../../Error";
 import NoInternetError from "./Error/NoInternetError";
 import SubscriptionExpiredError from "./Error/SubscriptionExpiredError";
 import UnknownError from "./Error/UnknownError";
+import TimeSelectors from "../TimeSelectors";
+import DateTime from "../../helpers/DateTime";
+import TimeFormatter from "../../TimeFormatter";
 
 const pathService = new PathService();
 const logger = new Logger();
+const dateTime = new DateTime();
+const timeFormatter = new TimeFormatter();
 
 const TRELLO = 'trello';
 
@@ -32,6 +37,7 @@ export interface ContextMenuInterface {
     note: string,
     billable: boolean,
     startTimerCallback: Function,
+    addTimeEntryCallback: Function,
     onCloseCallback: Function,
     billableInputVisibility: boolean|null,
     externalTaskId: string,
@@ -40,6 +46,7 @@ export interface ContextMenuInterface {
     taskNotFoundInBackendIntegrationInfo: string,
     embedOnPopup?: boolean|null,
     trelloPowerUpAdVisible?: boolean|null,
+    durationFormat: number;
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -55,10 +62,12 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [canCreateTags, setCanCreateTags] = useState<boolean>(false);
     const [isTagModuleEnabled, setIsTagModuleEnabled] = useState<boolean>(true);
     const startTimerCallback = props.startTimerCallback;
+    const addTimeEntryCallback = props.addTimeEntryCallback;
     const onCloseCallback = props.onCloseCallback;
     const [userId, setUserId] = useState<number>(0);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTrigger, setClearTrigger] = useState<boolean>(false);
+    const [clearTriggerForTimePicker, setClearTriggerForTimePicker] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
     const [buttonHash, setButtonHash] = useState(props.buttonHash);
     const [isBackendIntegration, setIsBackendIntegration] = useState(props.isBackendIntegration);
@@ -74,6 +83,9 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [errorMaintenanceModeVisible, setErrorMaintenanceModeVisible] = useState<boolean>(false);
     const [errorNoInternetVisible, setErrorNoInternetVisible] = useState<boolean>(false);
     const [errorSubscriptionExpiredVisible, setSubscriptionExpiredVisible] = useState<boolean>(false);
+    const [durationFormat, setDurationFormat] = useState<number>(timeFormatter.DEFAULT_FORMAT);
+    const [startTime, setStartTime] = useState<Date|null>(dateTime.getNowDateForDuration());
+    const [stopTime, setStopTime] = useState<Date|null>(null);
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
@@ -88,7 +100,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setTaskIdToPreset(null);
         setIsBackendIntegrationAndUserHasIntegration(props.isBackendIntegration);
         setTaskNotFoundInBackendIntegrationInfo(props.taskNotFoundInBackendIntegrationInfo);
-        setEmbedOnPopup(props.embedOnPopup !== undefined)
+        setEmbedOnPopup(props.embedOnPopup !== undefined);
         setOpen(true);
         document.addEventListener("click", onClickOutside);
 
@@ -174,6 +186,13 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     break;
             }
         });
+
+        browser.runtime.sendMessage({
+            type: 'getDurationFormatFromStorage'
+        }).then((valueOfDurationFormat) => {
+            setDurationFormat(valueOfDurationFormat);
+        }).catch(() => {
+        });
     }, []);
 
     const getBackendIntegrationAdData = (userId: number) => {
@@ -233,12 +252,24 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const onClickSave = (e) => {
         e.stopPropagation();
 
+        if (stopTime === null) {
+            let startTimeFormatted = dateTime.formatToYmdHis(startTime);
+            startTimer(startTimeFormatted);
+        } else {
+            addTimeEntry(startTime, stopTime);
+        }
+
+        clearAndClose();
+    };
+
+    const startTimer = (startTimeFormatted) => {
         startTimerCallback(
             taskId,
             note,
             service,
             externalTaskId,
-            buttonHash
+            buttonHash,
+            startTimeFormatted
         ).then((response) => {
             //todo change backend to do startTimer and editEntry in one request
             browser.runtime.sendMessage({
@@ -253,16 +284,35 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             });
 
             if(selectedTags.length) {
-                browser.runtime.sendMessage({
-                    type: "assignTagsToEntry",
-                    entryId: response.entry_id,
-                    tags: selectedTags
-                }).then(() => {
-                })
+                assignTagsToEntry(response.entry_id, selectedTags);
             }
         });
+    };
 
-        clearAndClose();
+    const addTimeEntry = (startTime, stopTime) => {
+        addTimeEntryCallback(
+            taskId,
+            note,
+            service,
+            externalTaskId,
+            buttonHash,
+            billable,
+            startTime,
+            stopTime,
+        ).then((response) => {
+            if(selectedTags.length) {
+                assignTagsToEntry(response.entry_id, selectedTags);
+            }
+        });
+    };
+
+    const assignTagsToEntry = (entry_id, selectedTags) => {
+        browser.runtime.sendMessage({
+            type: "assignTagsToEntry",
+            entryId: entry_id,
+            tags: selectedTags
+        }).then(() => {
+        })
     };
 
     const onClickCancel = (e) => {
@@ -275,6 +325,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     };
 
     const clearAndClose = () => {
+        setClearTriggerForTimePicker(!clearTriggerForTimePicker);
         setClearTrigger(!clearTrigger);
         setOpen(false);
         setTaskId(0);
@@ -417,6 +468,19 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     note={note}
                     onNoteChange={(newNote) => {setNote(newNote)}}
                 />
+                <TimeSelectors
+                    is12hFormat={true}
+                    startTime={startTime}
+                    stopTime={stopTime}
+                    clearFormTrigger={clearTriggerForTimePicker}
+                    durationFormat={durationFormat}
+                    onStartTimeValueChange={(value) => {
+                        setStartTime(value);
+                    }}
+                    onStopTimeValueChange={(value) => {
+                        setStopTime(value);
+                    }}
+                />
                 {
                     billableInputVisibility &&
                     <Billable
@@ -430,6 +494,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                 idDisabled={!isSelectedTagsValid}
                 onClickSave={onClickSave}
                 onClickCancel={onClickCancel}
+                showAddEntryButton={stopTime !== null}
             />
         </div>
     );

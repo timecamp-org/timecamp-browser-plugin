@@ -224,6 +224,7 @@ window.tcbutton = {
                 externalTaskId={externalTaskId}
                 buttonHash={buttonHash}
                 startTimerCallback={tcbutton.startTimerCallback}
+                addTimeEntryCallback={tcbutton.addTimeEntryCallback}
                 onCloseCallback={() => {}}
                 taskNotFoundInBackendIntegrationInfo={taskNotFoundInBackendIntegrationInfo}
             />,
@@ -263,9 +264,15 @@ window.tcbutton = {
         );
     },
 
-    startTimerCallback: (taskId, note, service, externalTaskId, buttonHash) => {
+    startTimerCallback: (
+        taskId,
+        note,
+        service,
+        externalTaskId,
+        buttonHash,
+        startTime,
+    ) => {
         return new Promise((resolve, reject) => {
-            let startTime = dateTime.now();
             tcbutton.currentTimerStartedAt = startTime;
 
             tcbutton.lastButtonClicked.dataset.externalTaskId = externalTaskId;
@@ -282,6 +289,44 @@ window.tcbutton = {
                 buttonHash: buttonHash
             }).then((response) => {
                 tcbutton.activateTimerLink(tcbutton.lastButtonClicked);
+                tcbutton.queryAndUpdateTimerLink();
+
+                resolve(response);
+            }).catch((response) => {
+                reject(response);
+            });
+        });
+    },
+
+    addTimeEntryCallback: (
+        taskId,
+        note,
+        service,
+        externalTaskId,
+        buttonHash,
+        billable,
+        startTime,
+        stopTime,
+    ) => {
+        return new Promise((resolve, reject) => {
+            tcbutton.deactivateAllTimerLinks();
+
+            let dateFormatted  = dateTime.formatToYmd(startTime);
+            let startTimeFormatted = dateTime.formatToHis(startTime);
+            let endTimeFormatted  = dateTime.formatToHis(stopTime);
+
+            browser.runtime.sendMessage({
+                type: 'addTimeEntry',
+                date: dateFormatted,
+                startTime: startTimeFormatted,
+                endTime: endTimeFormatted,
+                billable: billable,
+                externalTaskId: externalTaskId,
+                taskId: taskId,
+                description: note,
+                service: service,
+                buttonHash: buttonHash
+            }).then((response) => {
                 tcbutton.queryAndUpdateTimerLink();
 
                 resolve(response);

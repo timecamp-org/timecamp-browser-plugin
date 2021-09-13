@@ -7,11 +7,13 @@ export const DURATION_FORMATS = {
     DECIMAL_DOT: 3,
 }
 
+export const DEFAULT_FORMAT = DURATION_FORMATS.CLASSIC
+
 export default class TimeFormatter {
     constructor() {
     }
 
-    format(dateString, format = DURATION_FORMATS.CLASSIC) {
+    format(dateString, format = DEFAULT_FORMAT) {
         let seconds = this.getDiffInSeconds(dateString);
 
         return this.formatToDuration(seconds, format);
@@ -27,7 +29,7 @@ export default class TimeFormatter {
         return diff;
     }
 
-    formatToDuration = function (baseSeconds, format = DURATION_FORMATS.CLASSIC) {
+    formatToDuration = function (baseSeconds, format = DEFAULT_FORMAT) {
         baseSeconds = parseInt(baseSeconds, 10);
         let hours   = Math.floor(baseSeconds / 3600);
         let minutes = Math.floor((baseSeconds - (hours * 3600)) / 60);

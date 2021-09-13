@@ -61,6 +61,10 @@ export default class PathService {
         return this.serverUrl + 'chrome_plugin/api' + '/entries';
     }
 
+    getAddEntryUrl() {
+        return this.serverUrl + 'chrome_plugin/api' + '/entries';
+    }
+
     getMeUrl() {
         return this.serverUrl + 'chrome_plugin/api' + '/me/service/chrome-plugin';
     }

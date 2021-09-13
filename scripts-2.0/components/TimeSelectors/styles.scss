@@ -1,0 +1,47 @@
+@import '../../style/common';
+
+.timecamp {
+
+  .time-selectors {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    .time-selector {
+      flex: 1;
+
+      &__input {
+        display: block;
+        height: 39px;
+        width: 100%;
+        padding: 0 0 0 15px;
+        border-radius: 8px;
+        border: solid 1px $primaryBorderColor;
+        outline: none;
+        text-transform: capitalize;
+
+        &:hover {
+          border-color: $hoverBorderColor;
+        }
+
+        &:active, &:focus {
+          border-color: $primaryColor;
+        }
+      }
+
+      label {
+        text-transform: capitalize;
+      }
+    }
+
+    &__stop {
+      margin: 0 10px 0 10px;
+
+      label {
+        margin-left: 0;
+      }
+    }
+
+  }
+}
