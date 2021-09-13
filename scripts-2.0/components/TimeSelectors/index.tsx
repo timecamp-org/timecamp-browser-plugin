@@ -5,9 +5,11 @@ import TimePicker from "../common/TimePicker";
 import translate from "../../Translator";
 import DateTime from "../../helpers/DateTime";
 import TimeFormatter from "../../TimeFormatter";
+import Logger from "../../Logger";
 
 const dateTime = new DateTime();
 const timeFormatter = new TimeFormatter();
+const logger = new Logger();
 
 export interface TimeSelectorsInterface {
     is12hFormat: boolean,
@@ -101,10 +103,16 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
         }
 
         // @ts-ignore
-        let durationInSeconds = startTime.getTime() - stopTimeToCalculate.getTime();
-        durationInSeconds = durationInSeconds / 1000;
-        durationInSeconds = Math.abs(durationInSeconds);
-        durationInSeconds = Math.round(durationInSeconds);
+        let durationInMilliseconds = startTime.getTime() - stopTimeToCalculate.getTime();
+        let durationInSeconds = Math.abs(durationInMilliseconds / 1000);
+
+        logger.log({
+            'function': 'calculateDuration',
+            'durationInMilliseconds': durationInMilliseconds,
+            'durationInSeconds': durationInSeconds,
+            'startTime': startTime,
+            'stopTimeToCalculate': stopTimeToCalculate,
+        });
 
         let secondsFormatted = timeFormatter.formatToDuration(durationInSeconds, durationFormat);
         setDuration(secondsFormatted);

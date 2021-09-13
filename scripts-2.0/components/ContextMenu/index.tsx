@@ -468,7 +468,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     onNoteChange={(newNote) => {setNote(newNote)}}
                 />
                 <TimeSelectors
-                    is12hFormat={true}
+                    is12hFormat={false}
                     startTime={startTime}
                     stopTime={stopTime}
                     clearFormTrigger={clearTriggerForTimePicker}

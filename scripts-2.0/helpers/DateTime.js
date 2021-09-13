@@ -51,6 +51,7 @@ export default class DateTime {
     getNowDateForDuration = () => {
         let now = new Date;
         now.setSeconds(0);
+        now.setMilliseconds(0);
         return now;
     }
 

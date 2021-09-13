@@ -51,7 +51,6 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
     const [user, setUser] = useState<User>(emptyUser);
     const [entry, setEntry] = useState<Entry>(emptyEntry);
     const [isTimerWorking, setIsTimerWorking] = useState(false);
-    const [durationFormat, setDurationFormat] = useState<number>(2);
 
     const setCurrentEntry = (currentEntry) => {
         if (currentEntry === null) {
@@ -198,14 +197,6 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         updateUser();
 
         browser.runtime.sendMessage({
-            type: 'getDurationFormatFromStorage'
-        }).then((valueOfDurationFormat) => {
-
-            setDurationFormat(valueOfDurationFormat);
-        }).catch(() => {
-        });
-
-        browser.runtime.sendMessage({
             type: "currentEntry"
         }).then((data) => {
             setCurrentEntry(data.currentEntry);
@@ -261,7 +252,6 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
                     taskNotFoundInBackendIntegrationInfo={''}
                     onCloseCallback={() => {setIsContextMenuOpen(false)}}
                     embedOnPopup={true}
-                    durationFormat={durationFormat}
                 />
             </div>}
         </div>
