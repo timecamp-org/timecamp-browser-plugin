@@ -34,9 +34,6 @@ export default class DateTime {
     }
 
     formatToYmd = (d) => {
-        console.log('formatToYmd');
-        console.log(d);
-        console.log(d.getFullYear());
         return [
                 d.getFullYear(),
                 this.padLeft(d.getMonth() + 1),

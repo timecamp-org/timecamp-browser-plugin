@@ -271,8 +271,6 @@ export default class ApiService {
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
-                    console.log('responseData:');
-                    console.log(responseData);
                     resolve(responseData);
                 })
                 .catch((response) => {
