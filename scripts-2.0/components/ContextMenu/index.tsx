@@ -46,7 +46,6 @@ export interface ContextMenuInterface {
     taskNotFoundInBackendIntegrationInfo: string,
     embedOnPopup?: boolean|null,
     trelloPowerUpAdVisible?: boolean|null,
-    durationFormat: number;
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
