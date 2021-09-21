@@ -1,0 +1,29 @@
+.tc-button.salesforce {
+  &__case-list-view, &__opportunity-list-view,
+  &__account-list-view {
+    position: absolute;
+    right: 32px;
+    top: 3px;
+    z-index: 10000;
+    opacity: 0;
+  }
+
+  &__task-list-view {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10000;
+    opacity: 0;
+  }
+
+  &__case-view, &__opportunity-view,
+  &__task-view, &__account-view{
+    margin: 10px 0 0 0;
+  }
+}
+
+.slds-split-view__list-item:hover, .slds-cell-edit:hover {
+  .tc-button.salesforce {
+    opacity: 1;
+  }
+}
