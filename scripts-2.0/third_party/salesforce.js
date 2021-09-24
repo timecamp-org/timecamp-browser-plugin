@@ -192,7 +192,7 @@ tcbutton.render(
 
 //Case view
 tcbutton.render(
-    '.slds-page-header__title:not(.tc)',
+    '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
     {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
     elem => {
         if (window.location.href.indexOf("/o/") !== -1) {
@@ -232,7 +232,7 @@ tcbutton.render(
 
 //Opportunity view
 tcbutton.render(
-    '.slds-page-header__title:not(.tc)',
+    '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
     {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
     elem => {
         if (window.location.href.indexOf("/o/") !== -1) {
@@ -272,7 +272,7 @@ tcbutton.render(
 
 //Tasks view
 tcbutton.render(
-    '.slds-page-header__title:not(.tc)',
+    '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
     {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
     elem => {
         if (window.location.href.indexOf("/o/") !== -1) {
@@ -310,10 +310,9 @@ tcbutton.render(
     }
 );
 
-
-//Tasks view
+//Account view
 tcbutton.render(
-    '.slds-page-header__title:not(.tc)',
+    '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
     {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
     elem => {
         if (window.location.href.indexOf("/o/") !== -1) {
