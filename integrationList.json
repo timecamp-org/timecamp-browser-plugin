@@ -400,6 +400,11 @@
     "isActiveInProd": false
   },
   {
+    "matches": ["*://*.force.com/*"],
+    "script": ["salesforce.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://scrapbox.io/*"],
     "script": ["scrapbox.js"],
     "isActiveInProd": false
