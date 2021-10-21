@@ -311,15 +311,11 @@ window.tcbutton = {
         return new Promise((resolve, reject) => {
             tcbutton.deactivateAllTimerLinks();
 
-            let dateFormatted  = dateTime.formatToYmd(startTime);
-            let startTimeFormatted = dateTime.formatToHis(startTime);
-            let endTimeFormatted  = dateTime.formatToHis(stopTime);
-
             browser.runtime.sendMessage({
                 type: 'addTimeEntry',
-                date: dateFormatted,
-                startTime: startTimeFormatted,
-                endTime: endTimeFormatted,
+                date: dateTime.formatToYmd(startTime),
+                startTime: dateTime.formatToHis(startTime),
+                endTime: dateTime.formatToHis(stopTime),
                 billable: billable,
                 externalTaskId: externalTaskId,
                 taskId: taskId,
