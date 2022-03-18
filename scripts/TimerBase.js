@@ -536,9 +536,9 @@ function TimerBase() {
             var params = {
                 url: restUrl+'/can_track/format/json',
                 data: {
-                    api_token: token,
-                    service: Service
+                    service: Service,
                 },
+                headers: {"Authorization": "Bearer " + token},
                 type: 'GET'
             };
 

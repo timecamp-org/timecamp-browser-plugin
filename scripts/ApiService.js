@@ -40,10 +40,6 @@ function ApiService() {
         else
             method = method.toUpperCase();
 
-        if (typeof data.api_token === 'undefined') {
-            data.api_token = this.ApiToken;
-        }
-
         data.service = Service;
 
         apiAddress = restUrl;
