@@ -274,7 +274,6 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
   const fillPath = (node: Task): Task => {
     let path = node.path?.map((x) => x);
     path?.push(node.name);
-    console.log(path);
     for (var i = 0; i < node.children.length; i++) {
       node.children[i].path = path;
       fillPath(node.children[i]);
