@@ -3,6 +3,12 @@
     "version": "0",
     "manifest_version": 2,
     "description": "__MSG_DESCRIPTION__",
+    "externally_connectable": {
+        "ids": [
+            "*"
+        ],
+        "matches": []
+    },
     "icons": {
         "14": "images/icon-14.png",
         "16": "images/icon-16.png",

@@ -1,4 +1,5 @@
 const CUSTOM_DOMAINS = process.env.CUSTOM_DOMAINS;
+const LOGIN_GET_KEY = 'loginToBrowserPlugin';
 
 export default class PathService {
     serverUrl = process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/';
@@ -22,7 +23,11 @@ export default class PathService {
     }
 
     getLoginUrl() {
-        return this.serverUrl + 'auth/token';
+        return this.serverUrl + 'auth/login?' + LOGIN_GET_KEY + '=true';
+    }
+
+    getRegisterUrl() {
+        return this.serverUrl + 'auth/register';
     }
 
     getTokenUrl() {
