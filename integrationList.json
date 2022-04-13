@@ -614,5 +614,17 @@
     "matches": ["*://zenkit.com/*"],
     "script": ["zenkit.js"],
     "isActiveInProd": false
+  },
+  {
+    "matches": [
+      "*://*.podio.com/*"
+    ],
+    "exclude_matches" : [
+      "*://*.podio.com/",
+      "*://podio.com/site/*",
+      "*://podio.com/login*"
+    ],
+    "script": ["podio.js"],
+    "isActiveInProd": true
   }
 ]
