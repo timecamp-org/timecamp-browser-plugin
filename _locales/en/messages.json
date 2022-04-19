@@ -258,7 +258,7 @@
 	"add_time_entry": {
 		"message": "Add Time Entry"
 	},
-    "time_greater_than_now": {
+	"time_greater_than_now": {
         "message": "Start time cannot be greater than now"
     }
 }
