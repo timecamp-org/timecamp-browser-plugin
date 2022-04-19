@@ -166,7 +166,7 @@
 		"message": "There are no tags yet"
 	},
 	"no_tags_added_message_administrator": {
-		"message": "<a target='_blank' href='https://app.timecamp.local/app#/settings/addons/tags'>Create your first tag</a> to improve your time tracking experience"
+		"message": "<a target='_blank' href='https://app.timecamp.com/app#/settings/addons/tags'>Create your first tag</a> to improve your time tracking experience"
 	},
 	"no_tags_added_message_user": {
 		"message": "Ask your administrator to create first tag list"
