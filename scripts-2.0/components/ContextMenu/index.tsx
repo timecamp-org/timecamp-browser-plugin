@@ -1,3 +1,5 @@
+import WrongDatesError from "./Error/WrongDatesError";
+
 const browser = require('webextension-polyfill');
 import * as React from "react";
 import Header from "../Header";
@@ -85,6 +87,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [durationFormat, setDurationFormat] = useState<number>(timeFormatter.DEFAULT_FORMAT);
     const [startTime, setStartTime] = useState<Date|null>(dateTime.getNowDateForDuration());
     const [stopTime, setStopTime] = useState<Date|null>(null);
+
+    const [wrongDatesErrorMessage, setWrongDatesErrorMessage] = useState<string>('');
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
@@ -474,11 +478,14 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     durationFormat={durationFormat}
                     onStartTimeValueChange={(value) => {
                         setStartTime(value);
+                        const now = new Date();
+                        setWrongDatesErrorMessage(now < value ? translate('Start time cannot be greater than now') : '');
                     }}
                     onStopTimeValueChange={(value) => {
                         setStopTime(value);
                     }}
                 />
+                <WrongDatesError message={wrongDatesErrorMessage} visible={wrongDatesErrorMessage !== ''}/>
                 {
                     billableInputVisibility &&
                     <Billable
@@ -489,7 +496,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             </div>
 
             <Footer
-                idDisabled={!isSelectedTagsValid}
+                idDisabled={!isSelectedTagsValid || wrongDatesErrorMessage !== ''}
                 onClickSave={onClickSave}
                 onClickCancel={onClickCancel}
                 showAddEntryButton={stopTime !== null}
