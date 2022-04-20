@@ -250,28 +250,6 @@ window.TcButton = {
                         });
                         break;
 
-                    case 'logIn':
-                        let login = request.login;
-                        let password = request.password;
-                        if (login !== '' && password !== '') {
-                            apiService.logIn(
-                                login,
-                                password
-                            ).then((response) => {
-                                if (response.status === 200) {
-                                    TcButton.doAfterLogin();
-                                    resolve(true);
-                                }
-
-                                reject();
-                            }).catch(() => {
-                                reject(false);
-                            });
-                        } else {
-                            reject(false);
-                        }
-                        break;
-
                     case 'getUserData':
                         apiService.me().then((response) => {
                             resolve(response);
@@ -331,6 +309,22 @@ window.TcButton = {
                         }).catch((error) => {
                             reject(error);
                         });
+                        break;
+                }
+            } catch (e) {
+                logger.error(e);
+                resolve(undefined);
+            }
+        });
+    },
+
+    newMessageExternal: (request, sender, sendResponse) => {
+        return new Promise((resolve, reject) => {
+            try {
+                switch (request.type) {
+                    case 'tokenUpdate':
+                        apiService.storeToken(request.token);
+                        TcButton.doAfterLogin();
                         break;
                 }
             } catch (e) {
@@ -640,6 +634,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     TcButton.updateIcon();
 });
 browser.runtime.onMessage.addListener(TcButton.newMessage);
+browser.runtime.onMessageExternal.addListener(TcButton.newMessageExternal);
 setInterval(() => {
     const promise = TcButton.updateCurrentEntry();
 

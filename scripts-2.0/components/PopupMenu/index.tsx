@@ -99,11 +99,6 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         });
     };
 
-    const doAfterLogin = () => {
-        setIsUserLogged(true);
-        updateUser();
-    };
-
     const stopTimer = () => {
         browser.runtime.sendMessage({
             type: 'stop'
@@ -229,7 +224,6 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
             {!isUserLogged && <div className='timecamp login-window-wrapper'>
                 <LoginWindow
                     position={{ left: 0, top: 0 }}
-                    onCorrectLoginCallback={() => {doAfterLogin()}}
                 />
             </div>}
 

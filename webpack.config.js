@@ -205,6 +205,11 @@ function transformManifest(isDebug = false) {
       ENV.SERVER_PROTOCOL + '://*.' + ENV.SERVER_DOMAIN + '/*'
     ];
 
+    manifest.externally_connectable.matches = [
+      ...manifest.externally_connectable.matches,
+      ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/*'
+    ];
+
     manifest.content_scripts = [
       ...manifest.content_scripts,
       ...ManifestBuilder.build(isDebug)

@@ -232,15 +232,7 @@ window.tcbutton = {
         );
     },
 
-    showLoginWindow: (
-        callback,
-        note,
-        externalTaskId,
-        buttonHash,
-        serviceName,
-        isBackendIntegration,
-        taskNotFoundInBackendIntegrationInfo
-    ) => {
+    showLoginWindow: () => {
         const position = tcbutton.getPosition(312, 361)
         if (tcbutton.loginFormContainer === null) {
             tcbutton.loginFormContainer = tcbutton.createContainer('timecamp');
@@ -249,16 +241,6 @@ window.tcbutton = {
         ReactDOM.render(
             <LoginWindow
                 position={position}
-                onCorrectLoginCallback={() => {
-                    callback(
-                        note,
-                        externalTaskId,
-                        buttonHash,
-                        serviceName,
-                        isBackendIntegration,
-                        taskNotFoundInBackendIntegrationInfo
-                    )
-                }}
             />,
             tcbutton.loginFormContainer
         );
@@ -359,15 +341,7 @@ window.tcbutton = {
                         taskNotFoundInBackendIntegrationInfo
                     );
                 } else {
-                    tcbutton.showLoginWindow(
-                        tcbutton.showContextMenuWindow,
-                        note,
-                        externalTaskId,
-                        buttonHash,
-                        tcbutton.serviceName,
-                        isBackendIntegration,
-                        taskNotFoundInBackendIntegrationInfo
-                    );
+                    tcbutton.showLoginWindow();
                 }
             }).catch((error) => {
             });
@@ -521,7 +495,6 @@ window.tcbutton = {
             tcbutton.contextMenuContainer = null;
         }
 
-        tcbutton.loginFormContainer = null;
         tcbutton.durationFormat = null;
         tcbutton.billableInputVisibility = null;
     },
@@ -560,15 +533,30 @@ window.tcbutton = {
                 activeTimer.textContent = duration;
             }
         }
-    }
+    },
+
+    closeAndRemoveLoginFormContainerIfExists: () => {
+        if (tcbutton.loginFormContainer !== null) {
+            tcbutton.loginFormContainer.parentNode.removeChild(tcbutton.loginFormContainer);
+            tcbutton.loginFormContainer = null;
+        }
+    },
+
+    closeAndRemoveContextMenuContainer: () => {
+        if (tcbutton.contextMenuContainer !== null) {
+            tcbutton.contextMenuContainer.parentNode.removeChild(tcbutton.contextMenuContainer);
+            tcbutton.contextMenuContainer = null;
+        }
+    },
 };
 
 browser.runtime.onMessage.addListener(tcbutton.newMessage);
 window.addEventListener('focus', function (e) {
     tcbutton.isUserLogged().then((isUserLogged) => {
-        if (isUserLogged === false) {
-            tcbutton.doAfterLogout();
+        if (isUserLogged) {
+            tcbutton.closeAndRemoveLoginFormContainerIfExists();
         } else {
+            tcbutton.closeAndRemoveContextMenuContainer();
             tcbutton.updateDurationFormat();
             tcbutton.updateBillableInputVisibility();
         }

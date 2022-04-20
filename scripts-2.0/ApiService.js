@@ -682,45 +682,6 @@ export default class ApiService {
         );
     }
 
-
-    logIn(login, password) {
-        return new Promise((resolve, reject) => {
-            this.call({
-                url: pathService.getLoginUrl(),
-                method: METHOD_POST,
-                payload: {
-                    email: login,
-                    pass_hash: password,
-                    dont_log_out: true,
-                },
-                bodyAsQueryString: true,
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            }, false).then((response) => {
-                let status = response.status;
-                let responseData = response.response;
-
-                if (status !== 200 || responseData.toUpperCase() === 'NO_SESSION' || responseData.length > 50) {
-                    reject();
-                } else {
-                    this.storeToken(responseData).then(() => {
-                        resolve({
-                            'status': status,
-                            'response': responseData
-                        });
-                    });
-                }
-            }).catch((response) => {
-                let status = response.status;
-                let responseData = response.response;
-
-                reject({
-                    'status': status,
-                    'response': responseData
-                });
-            });
-        });
-    }
-
     obtainNewToken() {
         return new Promise((resolve, reject) => {
             this.call(
