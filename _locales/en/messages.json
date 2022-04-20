@@ -254,5 +254,11 @@
 	},
 	"subscription_expired_error_message": {
 		"message": "Your subscription has expired.  Renew your subscription or downgrade your account to Freemium"
+	},
+	"you_re_almost_there": {
+		"message": "You're almost there!"
+	},
+	"click_the_button_below_to_login_to_your_timecamp_account": {
+		"message": "Click the button below to login to your TimeCamp account"
 	}
 }
