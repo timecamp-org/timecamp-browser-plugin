@@ -113,19 +113,19 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         taskId,
         note,
         service,
-        externalTaskId
+        externalTaskId,
+        buttonHash,
+        startTime,
     ) => {
         return new Promise((resolve, reject) => {
-            let startTime = dateTime.now();
-
             browser.runtime.sendMessage({
-                type: 'timeEntry',
+                type: 'startTimer',
                 startTime: startTime,
                 externalTaskId: externalTaskId,
                 taskId: taskId,
                 description: note,
                 service: service,
-                buttonHash: ''
+                buttonHash: buttonHash
             }).then((response) => {
                 setIsTimerWorking(true);
                 setIsContextMenuOpen(false);
@@ -141,6 +141,36 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
                 resolve(response);
             }).catch((e) => {
                 reject(e);
+            });
+        });
+    };
+
+    const addTimeEntry = (
+        taskId,
+        note,
+        service,
+        externalTaskId,
+        buttonHash,
+        billable,
+        startTime,
+        stopTime,
+    ) => {
+        return new Promise((resolve, reject) => {
+            browser.runtime.sendMessage({
+                type: 'addTimeEntry',
+                date: dateTime.formatToYmd(startTime),
+                startTime: dateTime.formatToHis(startTime),
+                endTime: dateTime.formatToHis(stopTime),
+                billable: billable,
+                externalTaskId: externalTaskId,
+                taskId: taskId,
+                description: note,
+                service: service,
+                buttonHash: buttonHash
+            }).then((response) => {
+                resolve(response);
+            }).catch((response) => {
+                reject(response);
             });
         });
     };
@@ -204,6 +234,7 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
                     note={''}
                     billable={true}
                     startTimerCallback={startTimer}
+                    addTimeEntryCallback={addTimeEntry}
                     billableInputVisibility={null}
                     externalTaskId={''}
                     buttonHash={null}

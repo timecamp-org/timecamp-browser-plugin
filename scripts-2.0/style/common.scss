@@ -7,6 +7,7 @@ $primaryTextColor: #3d3d3d;
 $secondaryTextColor: #8a8a8a;
 $tertiaryTextColor: #6b6b6b;
 $quaternaryTextColor: #393939;
+$quinaryTextColor: #797979;
 
 $buttonTextColor: $primaryTextColor;
 $buttonColor: #ffffff;
@@ -49,6 +50,8 @@ $popupGray: #8a8a8a;
 $popupGraySecond: #3d3d3d;
 $popupGrayThird: #f8f8f8;
 $popupLinkColor: #4990e2;
+
+$errorTextColor: #3c763d;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 $defaultFontFamily: 'Poppins', sans-serif;

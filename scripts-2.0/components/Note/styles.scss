@@ -2,12 +2,14 @@
 
 .timecamp {
   .note {
+    height: 128px;
+
     &__label {
       margin-top: 0;
       display: inline-block;
     }
     &__textarea {
-      width: 368px;
+      width: calc(100% - 30px);
       height: 81px;
       margin: 5px 0 0;
       padding: 10px 15px 10px 15px;

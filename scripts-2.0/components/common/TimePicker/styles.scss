@@ -1,0 +1,95 @@
+@import '../../../style/common';
+
+.timecamp {
+  .time-picker {
+    height: 39px;
+    width: 120px;
+    border-radius: $defaultBorderRadius;
+    border: solid 1px $primaryBorderColor;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: $primaryBackgroundColor;
+    box-sizing: border-box;
+    padding-left: 15px;
+
+    &:hover {
+      border-color: $hoverBorderColor;
+    }
+
+    &:active, &:focus, &:focus-within {
+      border-color: $primaryColor;
+
+      .time-picker__arrows {
+        visibility: visible;
+      }
+    }
+
+    &__input-picker::-webkit-outer-spin-button,
+    &__input-picker::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &__input-picker[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    &__input-picker {
+      border: none;
+      outline: none;
+      //flex: 1;
+      text-align: center;
+      background-color: inherit;
+      caret-color: transparent;
+      padding: 0;
+    }
+
+
+    &__arrows {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      font-size: 10px;
+      height: 100%;
+      color: $quinaryTextColor;
+      visibility: hidden;
+
+      .arrow {
+        background-color: $defaultFieldBackgroundColor;
+        align-self: flex-end;
+        height: 50%;
+        width: 17px;
+        cursor: pointer;
+        font-size: 9px;
+        display: flex;
+        justify-content: center;
+
+        svg {
+          align-self: center;
+        }
+      }
+
+      &--up {
+        border-top-right-radius: $defaultBorderRadius;
+      }
+
+      &--down {
+        border-bottom-right-radius: $defaultBorderRadius;
+      }
+    }
+
+    &__placeholder {
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      color: $secondaryTextColor;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  }
+}

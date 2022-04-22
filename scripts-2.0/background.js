@@ -20,8 +20,8 @@ window.TcButton = {
         return new Promise((resolve, reject) => {
             try {
                 switch (request.type) {
-                    case 'timeEntry':
-                        TcButton.createTimeEntry(request)
+                    case 'startTimer':
+                        TcButton.startTimeEntry(request)
                             .then((response) => {
                                 let currentEntry = TcButton.createCurrentEntryObject(
                                     request.startTime,
@@ -38,6 +38,15 @@ window.TcButton = {
                                 TcButton.setCurrentEntry(currentEntry);
                                 TcButton.updateIcon();
 
+                                resolve(response);
+                            })
+                            .catch((e) => {
+                            });
+                        break;
+
+                    case 'addTimeEntry':
+                        TcButton.addTimeEntry(request)
+                            .then((response) => {
                                 resolve(response);
                             })
                             .catch((e) => {
@@ -325,7 +334,35 @@ window.TcButton = {
         });
     },
 
-    createTimeEntry: function (timeEntry) {
+    addTimeEntry: function (timeEntry) {
+        if (!timeEntry) {
+            return new Promise((resolve) => {
+                resolve({
+                    success: false
+                });
+            });
+        }
+
+        return new Promise((resolve, reject) => {
+            apiService.addEntry(
+                timeEntry.description,
+                timeEntry.externalTaskId,
+                timeEntry.buttonHash,
+                timeEntry.billable,
+                timeEntry.date,
+                timeEntry.startTime,
+                timeEntry.endTime,
+                timeEntry.taskId,
+                timeEntry.service
+            ).then((data) => {
+                resolve(data);
+            }).catch((data) => {
+                reject(data);
+            });
+        });
+    },
+
+    startTimeEntry: function (timeEntry) {
         if (!timeEntry) {
             return new Promise((resolve) => {
                 resolve({
@@ -590,7 +627,12 @@ browser.runtime.onInstalled.addListener((details) => {
 });
 
 browser.runtime.setUninstallURL('https://forms.gle/R7kQXZbC2vVS4rGD8');
-browser.tabs.onUpdated.addListener(TcButton.updateIcon);
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.hasOwnProperty('title')) {
+        return;
+    }
+    TcButton.updateIcon();
+});
 browser.runtime.onMessage.addListener(TcButton.newMessage);
 browser.runtime.onMessageExternal.addListener(TcButton.newMessageExternal);
 setInterval(() => {

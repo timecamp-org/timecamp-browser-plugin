@@ -247,7 +247,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
 
       if(Array.isArray(orphans[node.id])) {
           for (var k = 0; k < orphans[node.id].length; k++) {
-              list[i].children.push(list[orphans[node.id][k]]);
+              list[i].children.push(list[map[orphans[node.id][k]]]);
           }
           delete orphans[node.id];
       }
@@ -258,12 +258,11 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
       }  else if (map[node.parentId] !== undefined) {
           list[map[node.parentId]].children.push(node);
       } else if (Array.isArray(orphans[node.parentId])) {
-          orphans[map[node.parentId]].push(node.id);
+          orphans[node.parentId].push(node.id);
       } else {
-          orphans[map[node.parentId]] = [node.id];
+          orphans[node.parentId] = [node.id];
       }
     }
-
     for (var x = 0; x < roots.length; x++) {
       roots[x].path = [];
       fillPath(roots[x]);

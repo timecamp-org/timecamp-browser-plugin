@@ -255,6 +255,12 @@
 	"subscription_expired_error_message": {
 		"message": "Your subscription has expired.  Renew your subscription or downgrade your account to Freemium"
 	},
+	"add_time_entry": {
+		"message": "Add Time Entry"
+	},
+	"time_greater_than_now": {
+		"message": "Start time cannot be greater than now"
+	},
 	"you_re_almost_there": {
 		"message": "You're almost there!"
 	},

@@ -235,6 +235,52 @@ export default class ApiService {
         );
     }
 
+    addEntry(
+        title,
+        externalTaskId,
+        buttonHash,
+        billable,
+        date,
+        startTime,
+        endTime,
+        taskId = null,
+        service = this.defaultServiceName
+    ) {
+
+        return this.authorizeAndCall((token, resolve, reject) => {
+            let data = {
+                date: date,
+                start_time: startTime,
+                end_time: endTime,
+                description: title,
+                task_id: taskId,
+                external_task_id: externalTaskId,
+                browser_plugin_button_hash: buttonHash,
+                service: service
+            };
+
+            if (taskId !== null) {
+                data.task_id = taskId;
+            }
+
+            this.call({
+                url: pathService.getAddEntryUrl(),
+                method: METHOD_POST,
+                apiToken: token,
+                payload: data,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        );
+    }
+
     stop(service = this.defaultServiceName) {
         return this.authorizeAndCall((token, resolve, reject) => {
             let data = {
