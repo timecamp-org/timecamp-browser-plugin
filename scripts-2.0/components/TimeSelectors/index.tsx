@@ -33,7 +33,7 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
 
         const interval = setInterval(() => {
             if (stopTime == undefined) {
-                calculateDuration();
+                setStartTime(dateTime.getNowDateFromDuration());
             }
         }, 1000);
         return () => clearInterval(interval);
