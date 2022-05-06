@@ -1,5 +1,3 @@
-import WrongDatesError from "./Error/WrongDatesError";
-
 const browser = require('webextension-polyfill');
 import * as React from "react";
 import Header from "../Header";
@@ -25,6 +23,7 @@ import UnknownError from "./Error/UnknownError";
 import TimeSelectors from "../TimeSelectors";
 import DateTime from "../../helpers/DateTime";
 import TimeFormatter from "../../TimeFormatter";
+import WrongDatesError from "./Error/WrongDatesError";
 
 const pathService = new PathService();
 const logger = new Logger();
@@ -478,10 +477,13 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     durationFormat={durationFormat}
                     onStartTimeValueChange={(value) => {
                         setStartTime(value);
-                        const now = new Date();
-                        setWrongDatesErrorMessage(now < value ? translate('Start time cannot be greater than now') : '');
+                        const now = dateTime.getNow();
+                        setWrongDatesErrorMessage((now < value && stopTime === null) ? translate('Start time cannot be greater than now') : '');
                     }}
                     onStopTimeValueChange={(value) => {
+                        if (value !== null) {
+                            setWrongDatesErrorMessage('');
+                        }
                         setStopTime(value);
                     }}
                 />

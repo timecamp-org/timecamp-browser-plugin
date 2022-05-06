@@ -1,15 +1,13 @@
 import * as React from "react";
-import './styles.scss';
 import {useEffect, useState} from "react";
+import './styles.scss';
 import TimePicker from "../common/TimePicker";
 import translate from "../../Translator";
 import DateTime from "../../helpers/DateTime";
 import TimeFormatter from "../../TimeFormatter";
-import Logger from "../../Logger";
 
 const dateTime = new DateTime();
 const timeFormatter = new TimeFormatter();
-const logger = new Logger();
 
 export interface TimeSelectorsInterface {
     is12hFormat: boolean,
@@ -27,13 +25,14 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
     const [duration, setDuration] = useState<string>();
     const [durationFormat, setDurationFormat] = useState<number>(timeFormatter.DEFAULT_FORMAT);
     const [is12hFormat, setIs12hFormat] = useState<boolean>(false);
+    const [startTimeModifiedManually, setStartTimeModifiedManually] = useState<boolean>(false);
 
     useEffect(() => {
         setIs12hFormat(props.is12hFormat);
 
         const interval = setInterval(() => {
-            if (stopTime == undefined) {
-                setStartTime(dateTime.getNowDateFromDuration());
+            if (stopTime === null && !startTimeModifiedManually) {
+                setStartTime(dateTime.getNowDateForDuration());
             }
         }, 1000);
         return () => clearInterval(interval);
@@ -47,7 +46,7 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
 
     useEffect(() => {
         if (durationFormat != null) {
-            calculateDuration();
+            calculateAndSetDuration();
         }
     }, [durationFormat]);
 
@@ -58,19 +57,20 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
     useEffect(() => {
         props.onStartTimeValueChange(startTime);
         validateBoth();
-        calculateDuration();
+        calculateAndSetDuration();
     }, [startTime]);
 
     useEffect(() => {
         props.onStopTimeValueChange(stopTime);
         validateBoth();
         validateStartTime();
-        calculateDuration();
+        calculateAndSetDuration();
     }, [stopTime]);
 
     const clearForm = () => {
         setStopTime(null);
         setStartTime(dateTime.getNowDateForDuration());
+        setStartTimeModifiedManually(false);
     }
 
     const validateBoth = () => {
@@ -92,11 +92,7 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
         }
     }
 
-    const calculateDuration = () => {
-        if (startTime === null) {
-            return;
-        }
-
+    const calculateDurationInSeconds = () => {
         let stopTimeToCalculate = stopTime;
         if (stopTimeToCalculate == undefined) {
             stopTimeToCalculate = dateTime.getNowDateForDuration();
@@ -104,16 +100,16 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
 
         // @ts-ignore
         let durationInMilliseconds = startTime.getTime() - stopTimeToCalculate.getTime();
-        let durationInSeconds = Math.abs(durationInMilliseconds / 1000);
 
-        logger.log({
-            'function': 'calculateDuration',
-            'durationInMilliseconds': durationInMilliseconds,
-            'durationInSeconds': durationInSeconds,
-            'startTime': startTime,
-            'stopTimeToCalculate': stopTimeToCalculate,
-        });
+        return Math.abs(durationInMilliseconds / 1000);
+    }
 
+    const calculateAndSetDuration = () => {
+        if (startTime === null) {
+            return;
+        }
+
+        let durationInSeconds = calculateDurationInSeconds();
         let secondsFormatted = timeFormatter.formatToDuration(durationInSeconds, durationFormat);
         setDuration(secondsFormatted);
     }
@@ -131,6 +127,13 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
                             value = new Date(value.getTime());
                         }
                         setStartTime(value);
+
+                        let durationInSeconds = calculateDurationInSeconds();
+                        let isModifiedManually = false;
+                        if (durationInSeconds !== 0) {
+                            isModifiedManually = true;
+                        }
+                        setStartTimeModifiedManually(isModifiedManually);
                     }}
                 />
 
