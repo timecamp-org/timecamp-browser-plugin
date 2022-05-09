@@ -83,7 +83,7 @@ export default class PathService {
     }
 
     getTagListsUrl(tags, archived, useRestrictions, taskId, sortedArray) {
-        return this.serverUrl + "third_party/api/tag_list?tags=" + tags + "&archived=" + archived + "&use_restrictions=" + useRestrictions + "&task_id=" + taskId + "&alphabetically_sorted_array=" + sortedArray;
+        return this.serverUrl + "chrome_plugin/api/tag_list?tags=" + tags + "&archived=" + archived + "&use_restrictions=" + useRestrictions + "&task_id=" + taskId + "&alphabetically_sorted_array=" + sortedArray;
     }
 
     getRecentlyUsedUrl() {
@@ -99,11 +99,11 @@ export default class PathService {
     }
 
     getAssignTagsToEntryUrl(entryId) {
-        return this.serverUrl + "third_party/api/entries/" + entryId + "/tags";
+        return this.serverUrl + "chrome_plugin/api/entries/" + entryId + "/tags";
     }
 
     getFeatureFlagUrl() {
-        return this.serverUrl + 'third_party/api/feature_flag';
+        return this.serverUrl + 'chrome_plugin/api/feature_flag';
     }
 
     hasIntegration() {
