@@ -4,9 +4,8 @@ export default class DateTime {
     constructor() {
     }
 
-    now = () => {
-        const d = new Date;
-        return this.formatToYmdHis(d);
+    getNow = () => {
+        return new Date;
     }
 
     formatToYmdHis = (d) => {
@@ -49,6 +48,7 @@ export default class DateTime {
         let now = new Date;
         now.setSeconds(0);
         now.setMilliseconds(0);
+
         return now;
     }
 
