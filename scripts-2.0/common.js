@@ -448,8 +448,11 @@ window.tcbutton = {
 
         let matchingButtons = [];
         for (const button of buttons) {
-            if (button.dataset.externalTaskId === externalTaskId) {
-                matchingButtons.push(button);
+            if (externalTaskId) {
+                if (button.dataset.externalTaskId === externalTaskId) {
+                    matchingButtons.push(button);
+                }
+                continue;
             }
 
             if (button.dataset.buttonHash === buttonHash) {
