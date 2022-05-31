@@ -15,7 +15,7 @@ function WrikeTimer() {
         var url = document.URL;
 
         var taskOpenPattern = /&t=([0-9]+)/ig;
-        var taskFromKanbanPattern = /&ot=([0-9]+)/ig;
+        var taskFromKanbanPattern = /task\/([0-9]+)/ig;
 
         var MatchRes;
         MatchRes = taskOpenPattern.exec(url);
@@ -24,18 +24,20 @@ function WrikeTimer() {
 
         if (!MatchRes) {
             MatchRes = taskFromKanbanPattern.exec(url);
-            console.log("timecamp", MatchRes, url, "match1");
+            console.log("timecamp", MatchRes, url, "match2");
         }
         if (MatchRes) {
             var params = {
-                v2_task_id: MatchRes[1]
+                v2_task_id: MatchRes[1],
             };
             isTranslatePending = true;
-            $.when(ApiService.getWrikeId.get(params)).then(function (data) {
-                var taskId = data;
-                $this.insertButtonIntoPage(taskId);
+            $.when(ApiService.getWrikeId.get(params)).then(function () {
+                var currentTaskId = params.v2_task_id;
+                setTimeout(() =>  {
+                    $this.insertButtonIntoPage(currentTaskId);
+                }, 3000);
                 isTranslatePending = false;
-                return taskId;
+                return currentTaskId;
             });
         }
 
