@@ -9,7 +9,7 @@ const buildExternalIdForMonday = (taskId) => {
 
 //Table view
 tcbutton.render(
-    '.pulse-component:not(.tc)',
+    '.pulse-component',
     {observe: true, debounceInterval: 500},
     elem => {
         const pulseId = elem.id.replace('pulse-', '');
