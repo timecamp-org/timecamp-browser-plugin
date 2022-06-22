@@ -12,18 +12,28 @@ tcbutton.render(
     '.pulse-component:not(.tc)',
     {observe: true, debounceInterval: 500},
     elem => {
-        if ($('.tc-button', elem)) {
-            return false;
-        }
-
         const pulseId = elem.id.replace('pulse-', '');
         const externalTaskId = buildExternalIdForMonday(pulseId);
         if (!externalTaskId) {
             return false;
         }
 
+        const alreadyCreatedButton = $('.tc-button', elem);
+        if (alreadyCreatedButton) {
+            if (externalTaskId !== alreadyCreatedButton.dataset.externalTaskId) {
+                alreadyCreatedButton.remove();
+            } else {
+                return false;
+            }
+        }
+
         const description = () => {
-            return $('.name-cell .ds-text-component', elem).textContent.trim();
+            const descField = $('.name-cell .ds-text-component', elem);
+
+            if (!descField) {
+                return '';
+            }
+            return descField.textContent.trim();
         };
 
         const link = tcbutton.createTimerLink({
