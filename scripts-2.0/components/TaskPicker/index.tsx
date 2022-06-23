@@ -10,6 +10,7 @@ import { FixedSizeTree as Tree } from "react-vtree";
 import translate from "../../Translator";
 const browser = require('webextension-polyfill');
 const loaderGifUrl = browser.extension.getURL('images/loader.gif');
+import decodeHtmlEntities from "../../helpers/HtmlEntities";
 
 export interface Task {
   id: number;
@@ -297,7 +298,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
 
                       let t = {
                           id: task.task_id,
-                          name: task.name,
+                          name: decodeHtmlEntities(task.name),
                           parentId: task.parent_id,
                           billable: !!task.billable,
                           externalTaskId: task.external_task_id,
@@ -333,6 +334,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
       .then(function (data: any) {
         taskPickerHook.setRecentlyUsedTaskList(
           Object.values(data).map((task: any) => {
+            task.name = decodeHtmlEntities(task.name);
             try {
               Object.values(task["ancestors"])
                 .reverse()
@@ -346,7 +348,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                       ancestorTask.name.substring(0, 17) + " ...";
                   }
 
-                  task.name += " - " + ancestorTask.name;
+                  task.name += " - " + decodeHtmlEntities(ancestorTask.name);
 
                   throw {}; //so we take only 1 parent
                 });
