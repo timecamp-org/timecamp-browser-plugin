@@ -334,6 +334,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
       .then(function (data: any) {
         taskPickerHook.setRecentlyUsedTaskList(
           Object.values(data).map((task: any) => {
+            task.name = decodeHtmlEntities(task.name);
             try {
               Object.values(task["ancestors"])
                 .reverse()
@@ -347,7 +348,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                       ancestorTask.name.substring(0, 17) + " ...";
                   }
 
-                  task.name += " - " + ancestorTask.name;
+                  task.name += " - " + decodeHtmlEntities(ancestorTask.name);
 
                   throw {}; //so we take only 1 parent
                 });
