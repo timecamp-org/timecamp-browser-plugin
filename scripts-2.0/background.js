@@ -190,6 +190,22 @@ window.TcButton = {
                             });
                         break;
 
+                    case 'getTimeFormatFromStorage':
+                        TcButton.getCurrentRootGroup()
+                            .then((rootGroupId) => {
+                                storageManager.get(
+                                    storageManager.buildKey([rootGroupId, GroupSetting.TIME_FORMAT])
+                                ).then((data) => {
+                                    resolve(data);
+                                }).catch((e) => {
+                                    reject(e);
+                                })
+                            })
+                            .catch((e) => {
+                                reject(e);
+                            });
+                        break;
+
                     case 'getBillableInputVisibilityFromStorage':
                         TcButton.getCurrentRootGroup()
                             .then((rootGroupId) => {
@@ -405,7 +421,8 @@ window.TcButton = {
                 .then((rootGroupId) => {
                     Promise.all([
                         TcButton.loadAndSaveBillingSetting(rootGroupId),
-                        TcButton.loadAndSaveHoursAndMinutesFormatSetting(rootGroupId)
+                        TcButton.loadAndSaveHoursAndMinutesFormatSetting(rootGroupId),
+                        TcButton.loadAndSaveTimeFormatSetting(rootGroupId),
                     ]).then((response) => {
                         browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
                             if (tabs.length > 0) {
@@ -498,6 +515,23 @@ window.TcButton = {
         });
     },
 
+    loadAndSaveTimeFormatSetting: (rootGroupId) => {
+        return new Promise((resolve, reject) => {
+            TcButton.loadGroupSetting(GroupSetting.TIME_FORMAT, rootGroupId)
+                .then((data) => {
+                    storageManager.set(
+                        storageManager.buildKey([rootGroupId, GroupSetting.TIME_FORMAT]),
+                        data
+                    ).then(() => {
+                        resolve(data);
+                    });
+                })
+                .catch((e) => {
+                    reject(e);
+                });
+        });
+    },
+
     loadGroupSetting: (settingName, rootGroupId) => {
         return new Promise((resolve, reject) => {
             apiService.getGroupSetting(settingName, rootGroupId)
@@ -511,6 +545,10 @@ window.TcButton = {
                                 break;
 
                             case GroupSetting.HOURS_AND_MINUTES_FORMAT:
+                                data = parseInt(response.value);
+                                break;
+
+                            case GroupSetting.TIME_FORMAT:
                                 data = parseInt(response.value);
                                 break;
 
