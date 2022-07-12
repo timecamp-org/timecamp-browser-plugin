@@ -5,7 +5,6 @@ var serverUrl = 'https://app.timecamp.com/';
 
 var customDomain = {
     73065: 'https://enterprise.timecamp.com/',
-    1208: 'https://app.timecamp.com/',
 }
 
 //var serverUrl = 'https:/c3666ee3.ngrok.io/';

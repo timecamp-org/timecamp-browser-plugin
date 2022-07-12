@@ -17,7 +17,6 @@ const ENV = {
 
 const CUSTOM_DOMAINS = {
   73065: 'https://enterprise.timecamp.com/',
-  1208: 'https://app.timecamp.com/'
 };
 
 module.exports = (env, argv) => {
