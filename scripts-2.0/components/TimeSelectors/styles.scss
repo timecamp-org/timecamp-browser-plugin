@@ -17,17 +17,10 @@
         width: 109px;
         padding: 0 0 0 15px;
         border-radius: 8px;
-        border: solid 1px $primaryBorderColor;
+        border: 1px solid $primaryBorderColor;
+        caret-color: transparent;
         outline: none;
         text-transform: capitalize;
-
-        &:hover {
-          border-color: $hoverBorderColor;
-        }
-
-        &:active, &:focus {
-          border-color: $primaryColor;
-        }
       }
 
       label {
