@@ -113,9 +113,6 @@ function TimerBase() {
         if (!ButtonList[taskId])
         {
             button = new TimerButton(taskId);
-            if (Service == "podio" && timer) {
-                timer.timerButton = button;
-            }
             button.enabled = true;
             button.insertInProgress = false;
         }
@@ -129,9 +126,7 @@ function TimerBase() {
 
         var always = function() {
             $this.updateButtonState();
-            if (Service != "podio") {
-                $this.getEntries(taskId, true);
-            }
+            $this.getEntries(taskId, true);
         };
 
         var now = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -267,25 +262,18 @@ function TimerBase() {
                 if (!ButtonList[$this.trackedTaskId])
                 {
                     var button = new TimerButton($this.trackedTaskId);
-                    if (Service == "podio" && timer) {
-                        timer.timerButton = button;
-                    }
                     button.enabled = true;
                     button.insertInProgress = false;
                     button.taskName = response.name;
                     ButtonList[$this.trackedTaskId] = button;
-                    if (Service != "podio") {
-                        $this.getEntries($this.trackedTaskId, false, false);
-                    }
+                    $this.getEntries($this.trackedTaskId, false, false);
                 }
 
                 for (var i in ButtonList)
                 {
                     if ($this.trackedTaskId != i) {
                         ButtonList[i].setButtonText(Messages.buttonTimerStopTrackingAnotherTask);
-                        if (Service != "podio") {
-                            ButtonList[i].stop();
-                        }
+                        ButtonList[i].stop();
                     }
                     else
                         ButtonList[i].start($this.startDate, response.entry_id);
