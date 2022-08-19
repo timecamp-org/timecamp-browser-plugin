@@ -121,7 +121,7 @@ tcbutton.render(
                 taskNotFoundInfo: TASK_NOT_FOUND_INFO
             });
 
-            $('.item-board-subset-tabs-component .add-board-subset-picker-wrapper', elem).insertAdjacentElement('beforeend', link);
+            $('.item-board-subset-tabs-component .add-board-subset-picker-wrapper-v2', elem).insertAdjacentElement('beforeend', link);
 
             return true;
         } catch (e) {
