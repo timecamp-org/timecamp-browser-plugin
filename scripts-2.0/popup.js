@@ -1,6 +1,7 @@
 import * as React from "react";
 import ReactDOM from 'react-dom';
 import PopupMenu from "./components/PopupMenu";
+import './StringExtensions';
 
 window.$ = (s, elem) => {
     elem = elem || document;

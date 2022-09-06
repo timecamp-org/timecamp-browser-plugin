@@ -386,11 +386,11 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                 let children = searchChildrenForSearchText(task.children);
                 task.children = children;
 
-                if(children.length === 0 && task.name.toLowerCase().indexOf(taskPickerHook.searchText.toLowerCase()) === -1) {
+                if(children.length === 0 && task.name.normalizeForSearch().indexOf(taskPickerHook.searchText.normalizeForSearch()) === -1) {
                     continue;
                 }
                 filteredTasks.push(task);
-            } else if(task.name.toLowerCase().indexOf(taskPickerHook.searchText.toLowerCase()) !== -1) {
+            } else if (task.name.normalizeForSearch().indexOf(taskPickerHook.searchText.normalizeForSearch()) !== -1) {
                 filteredTasks.push(task);
             }
         }
