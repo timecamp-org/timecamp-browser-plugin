@@ -6,6 +6,7 @@ import TimeFormatter from "./TimeFormatter";
 import Logger from "./Logger";
 import translate from "./Translator";
 import DateTime from "./helpers/DateTime";
+import './StringExtensions';
 
 import * as React from "react";
 import ReactDOM from 'react-dom';

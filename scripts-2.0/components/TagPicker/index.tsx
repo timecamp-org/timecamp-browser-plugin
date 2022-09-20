@@ -190,7 +190,6 @@ const TagPicker: React.FC<TagPicker> = (props) => {
         if(tagPickerHook.searchText.length < 2) {
             return tagPickerHook.tagLists;
         }
-
         return tagPickerHook.tagLists.filter((tagList: TagList) => {
             return tagList.tagListName.toLowerCase().includes(tagPickerHook.searchText.toLowerCase())
                 || tagList.tags.filter((tag: Tag) => tag.tagName.toLowerCase().includes(tagPickerHook.searchText.toLowerCase())).length > 0;

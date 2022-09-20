@@ -61,6 +61,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [isSelectedTagsValid, setIsSelectedTagsValid] = useState<boolean>(true);
     const [canCreateTags, setCanCreateTags] = useState<boolean>(false);
     const [isTagModuleEnabled, setIsTagModuleEnabled] = useState<boolean>(true);
+    const [isTimeFormat12h, setIsTimeFormat12h] = useState<boolean>(false);
     const startTimerCallback = props.startTimerCallback;
     const addTimeEntryCallback = props.addTimeEntryCallback;
     const onCloseCallback = props.onCloseCallback;
@@ -193,6 +194,13 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             type: 'getDurationFormatFromStorage'
         }).then((valueOfDurationFormat) => {
             setDurationFormat(valueOfDurationFormat);
+        }).catch(() => {
+        });
+
+        browser.runtime.sendMessage({
+            type: 'getTimeFormatFromStorage'
+        }).then((value) => {
+            setIsTimeFormat12h(value === 1);
         }).catch(() => {
         });
     }, []);
@@ -470,7 +478,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     onNoteChange={(newNote) => {setNote(newNote)}}
                 />
                 <TimeSelectors
-                    is12hFormat={false}
+                    is12hFormat={isTimeFormat12h}
                     startTime={startTime}
                     stopTime={stopTime}
                     clearFormTrigger={clearTriggerForTimePicker}

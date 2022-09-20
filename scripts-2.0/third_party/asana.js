@@ -80,10 +80,10 @@ tcbutton.render(
 
 //Task details
 tcbutton.render(
-    '.SingleTaskPaneSpreadsheet:not(.tc)',
+    '.TaskPane:not(.tc)',
     { observe: true },
     (elem) => {
-        const description = $('.SingleTaskPaneSpreadsheet-titleRowInput textarea', elem).textContent.trim();
+        const description = $('.TaskPane-titleRowInput textarea', elem).textContent.trim();
         const externalTaskId = buildExternalIdForAsana(
             elem.dataset.taskId
         );
@@ -100,8 +100,8 @@ tcbutton.render(
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
-        const firstButton = elem.querySelector('.SingleTaskPaneToolbar-button');
-        firstButton.parentNode.insertBefore(link, firstButton);
+        const field = elem.querySelector('.TaskPaneToolbarAnimation');
+        field.insertAdjacentElement('afterend', link);
 
         return true;
     }
