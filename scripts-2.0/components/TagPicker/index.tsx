@@ -192,8 +192,8 @@ const TagPicker: React.FC<TagPicker> = (props) => {
         }
         return filterTagListsByTagCondition(
             (tag: Tag, tagList: TagList) =>
-              tag.tagName.toLowerCase().indexOf(tagPickerHook.searchText.toLowerCase()) !== -1 ||
-              tagList.tagListName.toLowerCase().indexOf(tagPickerHook.searchText.toLowerCase()) !== -1
+              tag.tagName.normalizeForSearch().indexOf(tagPickerHook.searchText.normalizeForSearch()) !== -1 ||
+              tagList.tagListName.normalizeForSearch().indexOf(tagPickerHook.searchText.normalizeForSearch()) !== -1
         );
     };
 
