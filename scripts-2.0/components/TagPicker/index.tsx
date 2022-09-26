@@ -190,26 +190,27 @@ const TagPicker: React.FC<TagPicker> = (props) => {
         if(tagPickerHook.searchText.length < 2) {
             return tagPickerHook.tagLists;
         }
-
-      return filterTagListsByTagCondition(
-        (tag:Tag) => tag.tagName.normalizeForSearch().indexOf(tagPickerHook.searchText.normalizeForSearch()) !== -1
-      );
+        return filterTagListsByTagCondition(
+            (tag: Tag, tagList: TagList) =>
+              tag.tagName.normalizeForSearch().indexOf(tagPickerHook.searchText.normalizeForSearch()) !== -1 ||
+              tagList.tagListName.normalizeForSearch().indexOf(tagPickerHook.searchText.normalizeForSearch()) !== -1
+        );
     };
 
-    const filterTagListsByTagCondition = (conditionCallback: (tag:Tag) => boolean) => {
+    const filterTagListsByTagCondition = (conditionCallback: (tag:Tag, tagList: TagList) => boolean) => {
         return tagPickerHook.tagLists.map((tagList: TagList) => {
             return {
                 tagListId: tagList.tagListId,
                 tagListName: tagList.tagListName,
                 mandatory: tagList.mandatory,
-                tags: tagList.tags.filter((tag) => conditionCallback(tag))
+                tags: tagList.tags.filter((tag) => conditionCallback(tag, tagList))
             } as TagList
         })
             .filter((tagList: TagList) => tagList.tags.length > 0);
     };
 
     const renderTagPickerContent = () => {
-        let filteredTagList = renderTagListFilteredBySearchText();
+        const filteredTagList = renderTagListFilteredBySearchText();
         return <React.Fragment>
             <div className="TagPicker__content">
                 <div className="TagPicker__search_container">
