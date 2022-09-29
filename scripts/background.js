@@ -81,4 +81,11 @@ chrome.runtime.onMessage.addListener(
         }
     });
 
-chrome.runtime.setUninstallURL(SURVEY_URL)
+chrome.runtime.setUninstallURL(SURVEY_URL, function () {
+    var lastError = chrome.runtime.lastError;
+    if (lastError && lastError.message) {
+        console.warn(
+            "Unable to set uninstall URL: " + lastError.message
+        );
+    }
+});
