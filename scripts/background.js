@@ -1,3 +1,5 @@
+const SURVEY_URL = "https://forms.gle/dfhvjtahyjf9w8bWA"
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.id === "apiService") {
@@ -78,3 +80,12 @@ chrome.runtime.onMessage.addListener(
             });
         }
     });
+    
+chrome.runtime.setUninstallURL(SURVEY_URL, function () {
+    var lastError = chrome.runtime.lastError;
+    if (lastError && lastError.message) {
+        console.warn(
+            "Unable to set uninstall URL: " + lastError.message
+        );
+    }
+});
