@@ -8,7 +8,7 @@ const buildExternalIdForAsana = (taskId) => {
 
 //Board view
 tcbutton.render(
-    '.BaseCard .BoardCardLayout:not(.tc)',
+    '.BoardCardLayout:not(.tc)',
     {observe: true,},
     elem => {
         if ($('.tc-button', elem)) {
