@@ -5,6 +5,11 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://*.todoist.com/app*"],
+    "script": ["todoist.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://docs.google.com/*"],
     "script": ["google-docs.js"],
     "isActiveInProd": true
