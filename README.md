@@ -2,7 +2,7 @@ TimeCamp Browser Plugin Extension
 ===============
 
 ## Configuration
-1. Install Node `v12.22.11`
+1. Install Node `v16.17.1`
 2. Copy `.npmrc.dist` to `.npmrc` or use:
 ```bash
   cp ./.npmrc.dist ./.npmrc
