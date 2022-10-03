@@ -664,7 +664,7 @@ browser.runtime.onInstalled.addListener((details) => {
     }
 });
 
-browser.runtime.setUninstallURL('https://forms.gle/R7kQXZbC2vVS4rGD8');
+browser.runtime.setUninstallURL('https://forms.gle/dfhvjtahyjf9w8bWA');
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.hasOwnProperty('title')) {
         return;

@@ -8,8 +8,8 @@ const buildExternalIdForAsana = (taskId) => {
 
 //Board view
 tcbutton.render(
-    '.BoardCardLayout:not(.tc)',
-    {observe: true,},
+    '.BaseCard .BoardCardLayout:not(.tc)',
+    { observe: true, },
     elem => {
         if ($('.tc-button', elem)) {
             return false;
@@ -52,11 +52,13 @@ tcbutton.render(
         if ($('.tc-button', elem.parentNode)) {
             return false;
         }
+        // checking whether the task is readonly
+        const isReadOnly = elem.classList.contains('SpreadsheetTaskName--notEditable')
 
         //child textaread id split
-        const description = elem.querySelector('textarea').textContent.trim();
+        const description = (isReadOnly ? elem : elem.querySelector('textarea')).textContent.trim();
         const externalTaskId = buildExternalIdForAsana(
-            $('textarea.SpreadsheetTaskName-input', elem).id.split('_').pop()
+            (isReadOnly ? elem : $('textarea.SpreadsheetTaskName-input', elem)).id.split('_').pop()
         );
         if (!externalTaskId) {
             return false;
@@ -110,7 +112,7 @@ tcbutton.render(
 //Subtasks
 tcbutton.render(
     '.ItemRowTwoColumnStructure-left:not(.tc)',
-    {observe: true},
+    { observe: true },
     (elem) => {
         let description = $('.simpleTextarea.AutogrowTextarea-input', elem).textContent.trim();
 
