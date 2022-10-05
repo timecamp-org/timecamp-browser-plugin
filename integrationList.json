@@ -15,6 +15,11 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://*.zendesk.com/*"],
+    "script": ["zendesk.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://*.gitlab.com/*"],
     "script": ["gitlab.js"],
     "isActiveInProd": true
