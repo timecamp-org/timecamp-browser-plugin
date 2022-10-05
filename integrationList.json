@@ -10,6 +10,11 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://*.azure.com/*"],
+    "script": ["azure.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://*.gitlab.com/*"],
     "script": ["gitlab.js"],
     "isActiveInProd": true
