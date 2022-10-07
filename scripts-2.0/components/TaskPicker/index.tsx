@@ -9,7 +9,7 @@ import { IconName } from "../../icons/types";
 import { FixedSizeTree as Tree } from "react-vtree";
 import translate from "../../Translator";
 const browser = require('webextension-polyfill');
-const loaderGifUrl = browser.extension.getURL('images/loader.gif');
+const loaderGifUrl = browser.runtime.getURL('images/loader.gif');
 import decodeHtmlEntities from "../../helpers/HtmlEntities";
 
 export interface Task {

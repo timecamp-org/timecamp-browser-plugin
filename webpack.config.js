@@ -201,7 +201,6 @@ function transformManifest(isDebug = false) {
     manifest.homepage_url = ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/';
     manifest.permissions = [
       ...manifest.permissions,
-      ENV.SERVER_PROTOCOL + '://*.' + ENV.SERVER_DOMAIN + '/*'
     ];
 
     manifest.externally_connectable.matches = [

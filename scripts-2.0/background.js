@@ -8,11 +8,11 @@ import StorageManager from './StorageManager';
 import GroupSetting from "./GroupSetting";
 import FeatureFlag from "./FeatureFlag";
 
-window.apiService = new ApiService();
-window.logger = new Logger();
-window.storageManager = new StorageManager();
-
-window.TcButton = {
+const apiService = new ApiService();
+const logger = new Logger();
+const storageManager = new StorageManager();
+apiService.storeToken('c815cd7f1e0ed3fee438f38de8')
+const TcButton = {
     currentEntry: undefined,
     isUserLogged: false,
     user: null,
@@ -638,11 +638,11 @@ window.TcButton = {
 
     updateIcon: function () {
         let imagePath = {
-            '19': TcButton.currentEntry ? 'images/icon-19.png' : 'images/icon-19-gray.png',
-            '38': TcButton.currentEntry ? 'images/icon-38.png' : 'images/icon-38-gray.png'
+            '19': TcButton.currentEntry ? '/images/icon-19.png' : '/images/icon-19-gray.png',
+            '38': TcButton.currentEntry ? '/images/icon-38.png' : '/images/icon-38-gray.png'
         };
 
-        browser.browserAction.setIcon({ path: imagePath });
+        browser.action.setIcon({ path: imagePath });
     },
 }
 
