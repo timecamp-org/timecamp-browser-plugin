@@ -14,11 +14,18 @@ function WrikeTimer() {
         }
         var url = document.URL;
 
-        var taskOpenPattern = /&sidePanelItemId=([0-9]+)/ig;
+        var taskOpenPattern = /&t=([0-9]+)/ig;
+        var taskFromKanbanPattern = /task\/([0-9]+)/ig;
 
         var MatchRes;
         MatchRes = taskOpenPattern.exec(url);
 
+        console.log("timecamp", MatchRes, url, "match1");
+
+        if (!MatchRes) {
+            MatchRes = taskFromKanbanPattern.exec(url);
+            console.log("timecamp", MatchRes, url, "match2");
+        }
         if (MatchRes) {
             var params = {
                 v2_task_id: MatchRes[1],
@@ -39,9 +46,9 @@ function WrikeTimer() {
 
     this.currentTaskName = function () {
 
-        var el = $("task-title textarea");
+        var el = $("#entityname");
         if (el.length)
-            return el.val();
+            return el.html();
 
         return false;
     };

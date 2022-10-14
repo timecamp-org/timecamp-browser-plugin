@@ -2,7 +2,7 @@
     margin-left: 2px;
 }
 
-#timecamp-track-button {
+#timecamp-track-button  {
     padding: 4px 18px 0 0 !important;
     font-size: 12px;
     cursor: pointer;
@@ -24,12 +24,6 @@
     margin-left: 5px;
 }
 
-#timecamp-track-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #tc-badge {
     padding: 1px 4px;
     height: 14px;
@@ -46,10 +40,8 @@
 
 .button-link {
     border: 1px solid #f0f0f0;
-    -webkit-border-radius: 5px;
-    ;
-    -moz-border-radius: 5px;
-    ;
+    -webkit-border-radius: 5px;;
+    -moz-border-radius: 5px;;
     border-radius: 5px;
     cursor: pointer;
     vertical-align: middle;
