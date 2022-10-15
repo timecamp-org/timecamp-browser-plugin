@@ -20,7 +20,7 @@ const WorkingTimerSection: React.FC<WorkingTimerSectionInterface> = (props) => {
     const [isTimerWorking, setIsTimerWorking] = useState(false);
     const [entry, setEntry] = useState<Entry>(props.entry);
     const [currentTimer, setCurrentTimer] = useState(timeFormatter.formatToDuration(0));
-    const [durationFormat, setDurationFormat] = useState(DURATION_FORMATS.CLASSIC_WITH_SECONDS);
+    const [durationFormat, setDurationFormat] = useState(DURATION_FORMATS.HHMMSS);
     const stopTimerCallback = props.stopTimerCallback;
 
     useEffect(() => {
