@@ -9,6 +9,8 @@ const logger = new Logger();
 const METHOD_GET = 'GET';
 const METHOD_POST = 'POST';
 const METHOD_PUT = 'PUT';
+const SUFFIX = '_timecamp_plugin'
+const GOOGLE_ANALYTICS_ID = 'UA-244842172-1'
 
 export default class ApiService {
     defaultServiceName = 'ChromePlugin';
@@ -914,4 +916,12 @@ export default class ApiService {
             });
         });
     };
+    logEvent(cid,eventCategory, eventAction){
+        eventCategory = eventCategory + SUFFIX;
+        const endpoint = `${pathService.getAnalyticsUrl()}?v=1&t=event&ec=${eventCategory}&ea=${eventAction}&cid=${cid}&tid=${GOOGLE_ANALYTICS_ID}`;
+
+        fetch(endpoint, {
+            method: "POST"
+        });
+    }
 }

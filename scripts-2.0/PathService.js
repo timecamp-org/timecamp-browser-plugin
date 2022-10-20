@@ -155,4 +155,7 @@ export default class PathService {
                 return service;
         }
     }
+    getAnalyticsUrl(){
+        return `https://www.google-analytics.com/j/collect`
+    }
 }

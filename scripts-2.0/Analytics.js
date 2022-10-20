@@ -1,3 +1,4 @@
+import ApiService from "./ApiService";
 import StorageManager from "./StorageManager";
 
 //change this in production
@@ -9,16 +10,12 @@ export default class AnalyticsService {
 
     constructor() {
         this.storageManager = new StorageManager();
+        this.apiService = new ApiService();
     }
     trackEvent(eventCategory, eventAction) {
         return this.storageManager.get(TRACKING_ID_KEY).then(id => {
             if (!id) return
-            eventCategory = eventCategory + SUFFIX
-            const endpoint = `https://www.google-analytics.com/j/collect?v=1&t=event&ec=${eventCategory}&ea=${eventAction}&cid=${id}&tid=${GOOGLE_ANALYTICS_ID}`
-
-            fetch(endpoint, {
-                method: "POST"
-            })
+            this.apiService.logEvent(id, eventCategory, eventAction)
         })
     }
     logEvent(request, sender, sendResponse) {
