@@ -20,10 +20,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: Use .npmrc
-      uses: bduff9/use-npmrc@v1.1
-      with:
-        dot-npmrc: ${{ secrets.NPM_RC }}
+    - name: Authenticate with private NPM package
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_RC }}" > ~/.npmrc
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
