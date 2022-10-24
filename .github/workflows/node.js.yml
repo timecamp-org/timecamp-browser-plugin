@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - name: Authenticate with private NPM package
-      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_RC }}" > ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_RC_FONT_AWESOME_AUTH_TOKEN }}" > ~/.npmrc
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
