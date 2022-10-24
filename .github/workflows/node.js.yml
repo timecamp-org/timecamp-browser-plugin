@@ -23,12 +23,10 @@ jobs:
     - name: Authenticate with private NPM package
       run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_RC }}" > ~/.npmrc
     - uses: actions/checkout@v3
+    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install --legacy-peer-deps && echo 'test'
-    - name: Build
-    - run: npm run build
-
+    - run: npm install --legacy-peer-deps && echo 'test' && npm run build
