@@ -14,7 +14,9 @@ export default class AnalyticsService {
     }
     trackEvent(eventCategory, eventAction) {
         return this.storageManager.get(TRACKING_ID_KEY).then(id => {
-            if (!id) return
+            if (!id) {
+                return;
+            }
             this.apiService.logEvent(id, eventCategory, eventAction)
         })
     }
