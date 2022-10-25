@@ -21,11 +21,11 @@ jobs:
 
     steps:
     - name: Authenticate with private NPM package
-      run: echo "${{ secrets.NPM_RC_FONT_AWESOME_AUTH_TOKEN }}" > ~/.npmrc
+      run: echo "${{ secrets.NPM_RC_CONTENT }}" > ~/.npmrc
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install --legacy-peer-deps && echo 'test' && npm run build
+    - run: npm install --legacy-peer-deps && npm run build
