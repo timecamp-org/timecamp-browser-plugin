@@ -29,3 +29,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install --legacy-peer-deps && npm run build
+    - uses: harupy/comment-on-pr@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: dist/timecamp-browser-extension-*.zip
