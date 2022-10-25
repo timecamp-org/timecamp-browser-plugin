@@ -35,9 +35,4 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: timecamp-browser-extension-${{ steps.package-version.outputs.current-version}}.zip
-        path: dist
-    - uses: machine-learning-apps/pr-comment@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
         path: dist/timecamp-browser-extension-${{ steps.package-version.outputs.current-version}}.zip
