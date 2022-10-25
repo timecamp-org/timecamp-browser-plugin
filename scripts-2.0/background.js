@@ -677,8 +677,9 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     TcButton.updateIcon();
 });
 browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (!request.action)
-        return TcButton.newMessage(request, sender, sendResponse)
+    if (!request.action) {
+        return TcButton.newMessage(request, sender, sendResponse);
+    }
     //tracking
     return analyticsService.logEvent(request, sender, sendResponse)
 });
