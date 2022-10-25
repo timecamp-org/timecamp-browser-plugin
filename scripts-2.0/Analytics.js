@@ -37,7 +37,9 @@ export default class AnalyticsService {
     }
     generateTrackingId() {
         return this.storageManager.get(TRACKING_ID_KEY).then(id => {
-            if (id) return
+            if (id) {
+                return;
+            }
             let uid = `1743699829.${Date.now() / 1000 | 0}`
             return this.storageManager.set(TRACKING_ID_KEY, uid)
         })
