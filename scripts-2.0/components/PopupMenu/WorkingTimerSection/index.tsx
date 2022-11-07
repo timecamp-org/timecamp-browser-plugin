@@ -6,7 +6,6 @@ import tcStopButton from "../../../icons/stop-button-small.svg";
 import {Entry} from "../index";
 import translate from "../../../Translator";
 import TimeFormatter, {DURATION_FORMATS} from "../../../TimeFormatter";
-const browser = require('webextension-polyfill');
 
 const timeFormatter = new TimeFormatter();
 
@@ -20,13 +19,12 @@ const WorkingTimerSection: React.FC<WorkingTimerSectionInterface> = (props) => {
     const [isTimerWorking, setIsTimerWorking] = useState(false);
     const [entry, setEntry] = useState<Entry>(props.entry);
     const [currentTimer, setCurrentTimer] = useState(timeFormatter.formatToDuration(0));
-    const [durationFormat, setDurationFormat] = useState(DURATION_FORMATS.CLASSIC);
     const stopTimerCallback = props.stopTimerCallback;
+    const durationFormat = DURATION_FORMATS.HHMMSS;
 
     useEffect(() => {
         setIsTimerWorking(props.isTimerWorking);
         setEntry(props.entry);
-        updateDurationFormat();
 
         const interval = setInterval(() => {
             if (isTimerWorking) {
@@ -40,15 +38,6 @@ const WorkingTimerSection: React.FC<WorkingTimerSectionInterface> = (props) => {
 
     const stopTimer = () => {
         stopTimerCallback();
-    }
-    const updateDurationFormat = () => {
-        browser.runtime.sendMessage({
-            type: "getDurationFormatFromStorage"
-        }).then((durationFormat) => {
-            if (durationFormat !== null) {
-                setDurationFormat(durationFormat);
-            }
-        });
     }
 
     return (
