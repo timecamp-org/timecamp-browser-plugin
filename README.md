@@ -24,9 +24,7 @@ TimeCamp Browser Plugin Extension
    `export SERVER_DOMAIN=app.timecamp.local`
 
    or change `ENV.SERVER_DOMAIN` directly in `webpack.config.js`
-2. Set your backend url in `scripts/config.js` (This step will be removed soon)
-   `var serverUrl = 'https://app.timecamp.local/';`
-3. Run: `yarn run build-dev` it creates `dist/plugin` directory
+2. Run: `npm run build-dev` it creates `dist/plugin` directory
 
 ## Instalation in browser
 1. Open `chrome://extensions/`
