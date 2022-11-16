@@ -656,9 +656,7 @@ const showInstructionsPage = () => {
 browser.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
         showInstructionsPage();
-        analyticsService.generateTrackingId().then(() => {
-            analyticsService.trackEvent('installed', 'install')
-        })
+        analyticsService.trackEvent('installed', 'install');
 
     } else if (details.reason === 'update') {
         const thisVersion = browser.runtime.getManifest().version;

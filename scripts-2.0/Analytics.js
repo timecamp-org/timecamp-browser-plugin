@@ -1,9 +1,6 @@
 import ApiService from "./ApiService";
 import StorageManager from "./StorageManager";
 
-//change this in production
-const GOOGLE_ANALYTICS_ID = 'UA-244842172-1'
-const SUFFIX = '_timecamp_plugin'
 const TRACKING_ID_KEY = 'analyticsId'
 
 export default class AnalyticsService {
@@ -13,12 +10,9 @@ export default class AnalyticsService {
         this.apiService = new ApiService();
     }
     trackEvent(eventCategory, eventAction) {
-        return this.storageManager.get(TRACKING_ID_KEY).then(id => {
-            if (!id) {
-                return;
-            }
-            this.apiService.logEvent(id, eventCategory, eventAction)
-        })
+        this.getOrGenerateTrackingId().then((trackingId) => {
+            this.apiService.logEvent(trackingId, eventCategory, eventAction)
+        });
     }
     logEvent(request, sender, sendResponse) {
         try {
@@ -35,13 +29,18 @@ export default class AnalyticsService {
 
         }
     }
-    generateTrackingId() {
-        return this.storageManager.get(TRACKING_ID_KEY).then(id => {
-            if (id) {
-                return;
-            }
-            let uid = `1743699829.${Date.now() / 1000 | 0}`
-            return this.storageManager.set(TRACKING_ID_KEY, uid)
-        })
+    getOrGenerateTrackingId() {
+        return new Promise((resolve) => {
+            this.storageManager.get(TRACKING_ID_KEY).then(trackingId => {
+                if (trackingId) {
+                    resolve(trackingId);
+                    return;
+                }
+
+                let newTrackingId = `1743699829.${Date.now() / 1000 | 0}`
+                this.storageManager.set(TRACKING_ID_KEY, newTrackingId);
+                resolve(newTrackingId);
+            })
+        });
     }
 }
