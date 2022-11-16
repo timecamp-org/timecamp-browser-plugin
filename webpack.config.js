@@ -199,9 +199,6 @@ function copy (o) {
 function transformOldConfig() {
     return function (content, filePath) {
         if (filePath.split('/').pop() === 'config.js') {
-            console.log(CUSTOM_DOMAINS);
-            console.log(JSON.stringify(CUSTOM_DOMAINS));
-
             let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
             let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
 
