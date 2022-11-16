@@ -10,7 +10,7 @@ TimeCamp Browser Plugin Extension
 3. Set `authToken` in `.npmrc`. You can find it [here](https://fontawesome.com/how-to-use/on-the-web/setup/using-package-managers)
 4. Run
 ```bash
-  npm install
+  npm install  --legacy-peer-deps
 ```
 
 ## Build for production
