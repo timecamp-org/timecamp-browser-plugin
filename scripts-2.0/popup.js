@@ -2,6 +2,7 @@ import * as React from "react";
 import ReactDOM from 'react-dom';
 import PopupMenu from "./components/PopupMenu";
 import './StringExtensions';
+const browser = require('webextension-polyfill');
 
 window.$ = (s, elem) => {
     elem = elem || document;
@@ -14,6 +15,10 @@ window.$$ = (s, elem) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    browser.runtime.sendMessage({
+        action: 'track',
+        type: "view"
+    })
     Popup.render();
 });
 
@@ -21,7 +26,7 @@ const Popup = {
     render: () => {
         const element = $('#popup-wrapper');
         ReactDOM.render(
-            <PopupMenu/>
-        , element);
+            <PopupMenu />
+            , element);
     }
 }

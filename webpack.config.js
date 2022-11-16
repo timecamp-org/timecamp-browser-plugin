@@ -12,7 +12,8 @@ const ENV = {
   SERVER_PROTOCOL: process.env.SERVER_PROTOCOL || 'https',
   SERVER_DOMAIN: process.env.SERVER_DOMAIN || 'app.timecamp.com',
   NEXT_SERVER_DOMAIN: "v4.api.timecamp.com",
-  MARKETING_PAGE_DOMAIN: 'www.timecamp.com'
+  MARKETING_PAGE_DOMAIN: 'www.timecamp.com', 
+  GOOGLE_ANALYTICS_ID: 'UA-4525089-16'
 };
 
 const CUSTOM_DOMAINS = {
@@ -118,7 +119,8 @@ module.exports = (env, argv) => {
         NEXT_SERVER_DOMAIN: ENV.NEXT_SERVER_DOMAIN,
         DEBUG: development,
         CUSTOM_DOMAINS: CUSTOM_DOMAINS,
-        MARKETING_PAGE_DOMAIN: ENV.MARKETING_PAGE_DOMAIN
+        MARKETING_PAGE_DOMAIN: ENV.MARKETING_PAGE_DOMAIN,
+        GOOGLE_ANALYTICS_ID: development ? '' : ENV.GOOGLE_ANALYTICS_ID
       }),
       new CleanPlugin(),
       new CopyPlugin({'patterns': [
