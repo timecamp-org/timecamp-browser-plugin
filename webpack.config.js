@@ -140,7 +140,8 @@ module.exports = (env, argv) => {
           }),
           ...copy({
             from: 'scripts/',
-            to: '../plugin/scripts/'
+            to: '../plugin/scripts/',
+            transform: transformOldConfig()
           }),
           ...copy({
             from: 'popup.html',
@@ -193,6 +194,22 @@ function copy (o) {
       to: `plugin/${o.to}`
     }
   ];
+}
+
+function transformOldConfig() {
+    return function (content, filePath) {
+        if (filePath.split('/').pop() === 'config.js') {
+            console.log(CUSTOM_DOMAINS);
+            console.log(JSON.stringify(CUSTOM_DOMAINS));
+
+            let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
+            let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
+
+            return Buffer.from(serverUrl + customDomain + content.toString());
+        }
+
+        return Buffer.from(content.toString());
+    }
 }
 
 function transformManifest(isDebug = false) {
