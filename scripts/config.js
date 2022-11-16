@@ -1,15 +1,4 @@
-/**
- * Created by mdybizbanski on 15.09.15.
- */
-var serverUrl = 'https://app.timecamp.com/';
-
-var customDomain = {
-    73065: 'https://enterprise.timecamp.com/',
-}
-
-//var serverUrl = 'https:/c3666ee3.ngrok.io/';
-// używając adres lokalny, dodaj go do wzorca w manifest.json, sekcja "permissions"  (https://*.ngrok.io/*")
-
+//variables serverUrl and customDomain are added here by webpack
 var restUrl = serverUrl + 'chrome_plugin/api';
 var tokenUrl = serverUrl + 'auth/token';
 var signInUrl = serverUrl + 'auth/login';

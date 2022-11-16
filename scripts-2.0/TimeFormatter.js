@@ -7,7 +7,7 @@ export const DURATION_FORMATS = {
     DECIMAL_DOT: 3,
 }
 
-export const DEFAULT_FORMAT = DURATION_FORMATS.CLASSIC
+export const DEFAULT_FORMAT = DURATION_FORMATS.HHMMSS
 
 export default class TimeFormatter {
     constructor() {

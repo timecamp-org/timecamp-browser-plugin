@@ -23,7 +23,16 @@
   }
 }
 
-.BaseCard:hover {
+//board view
+.BoardCard--hover{
+  .tc-button.asana {
+    &__board-view {
+      opacity: 1;
+    }
+  }
+}
+
+.BoardCardLayout.tc:hover{
   .tc-button.asana {
     &__board-view {
       opacity: 1;
