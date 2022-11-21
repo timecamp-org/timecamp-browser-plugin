@@ -200,7 +200,9 @@ function copy (o) {
 
 function transformOldConfig() {
     return function (content, filePath) {
-        if (filePath.split('/').pop() === 'config.js') {
+        let PATH_SEPARATOR = process.platform === 'win32' ? '\\' : '/';
+
+        if (filePath.split(PATH_SEPARATOR).pop() === 'config.js') {
             let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
             let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
 
