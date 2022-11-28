@@ -472,7 +472,14 @@ function TimerBase() {
             }
         }
     };
-
+    this.addEventListenerToElement = function (event, selector, callback) {
+        const timerId = setInterval(() => {
+          const element = document.querySelector(selector);
+          if (!element) return;
+          clearInterval(timerId);
+          element.addEventListener(event, callback);
+        });
+      };
     this.bindEvents = function ($that) {
         $this = $that;
         setInterval($this.updateButtonState, $this.pushInterval);
@@ -483,9 +490,9 @@ function TimerBase() {
         $(document).on('tcParentChangeDetected',$this.onParentChangeDetected);
         $(document).on('tcTimerStarted', $this.onTimerStarted);
         $(document).on('tcTimerStopped', $this.onTimerStopped);
-        $(document).on('click', '.timecamp-track-button', $this.buttonClick);
-        $(document).on('click', '#timecamp-track-button', $this.buttonClick);
-        $(document).on('click', '#timecamp-track-button-new', $this.buttonClick);
+        $this.addEventListenerToElement('click','.timecamp-track-button',$this.buttonClick)
+        $this.addEventListenerToElement('click','#timecamp-track-button',$this.buttonClick)
+        $this.addEventListenerToElement('click','#timecamp-track-button-new',$this.buttonClick)
         $(document).on('showTimer', $this.handleShowTimer);
         $(document).on('hideTimer', $this.handleHideTimer);
 
