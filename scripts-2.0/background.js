@@ -11,7 +11,6 @@ import FeatureFlag from "./FeatureFlag";
 const apiService = new ApiService();
 const logger = new Logger();
 const storageManager = new StorageManager();
-apiService.storeToken('c815cd7f1e0ed3fee438f38de8')
 const TcButton = {
     currentEntry: undefined,
     isUserLogged: false,
