@@ -850,11 +850,9 @@ export default class ApiService {
                     return;
                 }
                 var removed = items['removed'];
-                if (removed || Object.keys(items).length === 0) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
+                var hasRemoved = removed && Object.keys(items).length > 0;
+            
+                resolve(hasRemoved);
             });
         });
     };
@@ -868,7 +866,7 @@ export default class ApiService {
                     if (!loggedOut || forceApiCall) {
                         this.obtainNewToken()
                             .then((response) => {
-                                resolve(response);
+                                resolve(response.response);
                             })
                             .catch((response) => {
                                 logger.error(response);
