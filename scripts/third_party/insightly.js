@@ -217,7 +217,7 @@ function InsightlyTimer() {
 
         var containter = $('<div/>',{class:'btn-group'});
         var button = $('<button/>', { class:'btn btn-default', 'id': 'timecamp-track-button', 'data-taskId': currentTaskId });
-        button.append($('<img id="tc-logo" src="' + chrome.extension.getURL('images/icon-14.png') + '"/>'));
+        button.append($('<img id="tc-logo" src="' + chrome.runtime.getURL('images/icon-14.png') + '"/>'));
         button.append($('<span/>', { 'class': 'text' }).text(Messages.synchronizing));
         button.append($('<span/>', { 'class': 'time' }).text("00:00").css({}).hide());
 
@@ -284,7 +284,7 @@ function InsightlyTimer() {
                         {
                             id:         "tc-badge",
                             style:      "margin-top: -2px;",
-                            src:        chrome.extension.getURL('images/icon-14.png'),
+                            src:        chrome.runtime.getURL('images/icon-14.png'),
                             title:      Messages.badgeTimerRunning
                         });
                 badges.parent().append(badge);

@@ -106,7 +106,7 @@ function WrikeTimer() {
         buttonObj.insertInProgress = true;
 
         var button = $('<span/>', { class:'wspace-task-tb-icon-timeTracker', 'id': 'timecamp-track-button', 'data-taskId': currentTaskId , style: 'background:none; padding: 0px 7px;'});
-        button.append($('<img id="tc-logo" src="' + chrome.extension.getURL('images/icon-30.png') + '" style="margin-bottom: -2px; width: 14px;"/>'));
+        button.append($('<img id="tc-logo" src="' + chrome.runtime.getURL('images/icon-30.png') + '" style="margin-bottom: -2px; width: 14px;"/>'));
         button.append($('<span/>', { 'class': 'text' }).text(Messages.synchronizing));
         button.append($('<span/>', { 'class': 'time' , 'style':'text-shadow: none;'}).text("00:00").css({}).hide());
 
@@ -172,7 +172,7 @@ function WrikeTimer() {
                         {
                             id:         "tc-badge",
                             style:      "margin-top: -2px;",
-                            src:        chrome.extension.getURL('images/icon-14.png'),
+                            src:        chrome.runtime.getURL('images/icon-14.png'),
                             title:      Messages.badgeTimerRunning
                         });
                 badges.parent().append(badge);
