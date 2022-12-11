@@ -473,11 +473,23 @@ function TimerBase() {
         }
     };
     this.addEventListenerToElement = function (event, selector, callback) {
-        const timerId = setInterval(() => {
+        // Create a new MutationObserver instance
+        const observer = new MutationObserver(function (mutations) {
+          // Check if the element exists
           const element = document.querySelector(selector);
           if (!element) return;
-          clearInterval(timerId);
+      
+          // If the element exists, attach the event listener
           element.addEventListener(event, callback);
+      
+          // Disconnect the observer to prevent it from continuing to monitor the page
+          observer.disconnect();
+        });
+      
+        // Start observing the page for changes
+        observer.observe(document, {
+          childList: true, // Observe changes to the page's children (e.g. new elements being added)
+          subtree: true, // Observe changes to the entire page, including descendants of the root element
         });
       };
     this.bindEvents = function ($that) {
