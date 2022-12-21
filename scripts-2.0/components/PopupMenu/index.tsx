@@ -101,6 +101,10 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
 
     const stopTimer = () => {
         browser.runtime.sendMessage({
+            action: 'track',
+            type: "timerStop"
+        })
+        browser.runtime.sendMessage({
             type: 'stop'
         }).then(() => {
             setIsTimerWorking(false);
@@ -118,6 +122,10 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         startTime,
     ) => {
         return new Promise((resolve, reject) => {
+            browser.runtime.sendMessage({
+                action: 'track',
+                type: "timerStart"
+            })
             browser.runtime.sendMessage({
                 type: 'startTimer',
                 startTime: startTime,

@@ -2,7 +2,7 @@ TimeCamp Browser Plugin Extension
 ===============
 
 ## Configuration
-1. Install Node `v12.22.11`
+1. Install Node `v16.17.1`
 2. Copy `.npmrc.dist` to `.npmrc` or use:
 ```bash
   cp ./.npmrc.dist ./.npmrc
@@ -10,7 +10,7 @@ TimeCamp Browser Plugin Extension
 3. Set `authToken` in `.npmrc`. You can find it [here](https://fontawesome.com/how-to-use/on-the-web/setup/using-package-managers)
 4. Run
 ```bash
-  npm install
+  npm install  --legacy-peer-deps
 ```
 
 ## Build for production
@@ -24,9 +24,7 @@ TimeCamp Browser Plugin Extension
    `export SERVER_DOMAIN=app.timecamp.local`
 
    or change `ENV.SERVER_DOMAIN` directly in `webpack.config.js`
-2. Set your backend url in `scripts/config.js` (This step will be removed soon)
-   `var serverUrl = 'https://app.timecamp.local/';`
-3. Run: `yarn run build-dev` it creates `dist/plugin` directory
+2. Run: `npm run build-dev` it creates `dist/plugin` directory
 
 ## Instalation in browser
 1. Open `chrome://extensions/`
