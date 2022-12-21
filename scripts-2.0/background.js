@@ -7,11 +7,12 @@ import Logger from './Logger';
 import StorageManager from './StorageManager';
 import GroupSetting from "./GroupSetting";
 import FeatureFlag from "./FeatureFlag";
+import AnalyticsService from './Analytics';
 
 window.apiService = new ApiService();
 window.logger = new Logger();
 window.storageManager = new StorageManager();
-
+window.analyticsService = new AnalyticsService();
 window.TcButton = {
     currentEntry: undefined,
     isUserLogged: false,
@@ -68,10 +69,10 @@ window.TcButton = {
                         }
                         if (TcButton.currentEntry === undefined) {
                             TcButton.updateCurrentEntry().then(() => {
-                                resolve({currentEntry: TcButton.currentEntry});
+                                resolve({ currentEntry: TcButton.currentEntry });
                             });
                         } else {
-                            resolve({currentEntry: TcButton.currentEntry});
+                            resolve({ currentEntry: TcButton.currentEntry });
                         }
                         break;
 
@@ -425,10 +426,10 @@ window.TcButton = {
                         TcButton.loadAndSaveHoursAndMinutesFormatSetting(rootGroupId),
                         TcButton.loadAndSaveTimeFormatSetting(rootGroupId),
                     ]).then((response) => {
-                        browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+                        browser.tabs.query({ currentWindow: true, active: true }).then((tabs) => {
                             if (tabs.length > 0) {
                                 let activeTab = tabs[0];
-                                browser.tabs.sendMessage(activeTab.id, {"type": "doAfterLogin"});
+                                browser.tabs.sendMessage(activeTab.id, { "type": "doAfterLogin" });
                             }
                         });
                         resolve(response);
@@ -439,7 +440,7 @@ window.TcButton = {
                 .catch((e) => {
                     reject(e);
                 })
-            ;
+                ;
 
             resolve([])
         });
@@ -452,10 +453,10 @@ window.TcButton = {
         apiService.userId = null;
 
         TcButton.updateIcon();
-        browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+        browser.tabs.query({ currentWindow: true, active: true }).then((tabs) => {
             if (tabs.length > 0) {
                 let activeTab = tabs[0];
-                browser.tabs.sendMessage(activeTab.id, {"type": "doAfterLogout"});
+                browser.tabs.sendMessage(activeTab.id, { "type": "doAfterLogout" });
             }
         });
     },
@@ -565,7 +566,7 @@ window.TcButton = {
         });
     },
 
-    createCurrentEntryObject: function(start, name, note, externalTaskId, buttonHash, color, breadcrumb) {
+    createCurrentEntryObject: function (start, name, note, externalTaskId, buttonHash, color, breadcrumb) {
         return {
             start: start,
             description: name,
@@ -603,7 +604,7 @@ window.TcButton = {
                     resolve(TcButton.currentEntry);
                 }).catch((e) => {
                     logger.log(e);
-            });
+                });
         });
     },
 
@@ -656,6 +657,8 @@ const showInstructionsPage = () => {
 browser.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
         showInstructionsPage();
+        analyticsService.trackEvent('installed', 'install');
+
     } else if (details.reason === 'update') {
         const thisVersion = browser.runtime.getManifest().version;
         const versionWhenActionIsPerformed = '2.21.1';
@@ -672,7 +675,13 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
     TcButton.updateIcon();
 });
-browser.runtime.onMessage.addListener(TcButton.newMessage);
+browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (!request.action) {
+        return TcButton.newMessage(request, sender, sendResponse);
+    }
+    //tracking
+    return analyticsService.logEvent(request, sender, sendResponse)
+});
 browser.runtime.onMessageExternal.addListener(TcButton.newMessageExternal);
 setInterval(() => {
     const promise = TcButton.updateCurrentEntry();
@@ -681,7 +690,7 @@ setInterval(() => {
         return;
     }
 
-    promise.then(()=>{
+    promise.then(() => {
     }).catch((e) => {
     })
 }, 30000);

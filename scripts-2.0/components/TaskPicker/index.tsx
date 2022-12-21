@@ -46,7 +46,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
   function* treeWalker(refresh) {
     const stack = [] as any;
 
-    let tasks = taskPickerHook.taskList;
+    let tasks = sortTasksAlphabetically(taskPickerHook.taskList);
 
     for (var taskId in tasks) {
       stack.push({
@@ -441,6 +441,15 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
             props.onNotFoundTaskForActiveBackendIntegration();
         }
     }
+    //recursively sorting an array of tasks based on their name
+    const sortTasksAlphabetically = (taskTree) => {
+      taskTree.sort((a, b) => a.name.localeCompare(b.name));
+      taskTree.forEach(a => {
+        if (a?.children?.length > 0)
+          sortTasksAlphabetically(a.children)
+      })
+      return taskTree;
+    }  
 
   React.useEffect(() => {
       if(props.userId !== 0) {
