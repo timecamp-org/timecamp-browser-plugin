@@ -33,8 +33,8 @@ window.$$ = (s, elem) => {
 
 window.createTag = (name, className) => {
     const tag = document.createElement(name);
-    tag.className = className;
-
+    if (className) tag.className = className;
+  
     return tag;
 };
 
@@ -176,6 +176,16 @@ window.tcbutton = {
         });
 
         return button;
+    },
+    createUserDropdown({ users }) {
+        let select = createTag("select", "tc-select");
+        for (const user of users) {
+          let option = createTag("option");
+          option.value = user.user_id;
+          option.innerText = user.email;
+          select.appendChild(option);
+        }
+        return select;
     },
 
     isUserLogged: () => {

@@ -158,4 +158,13 @@ export default class PathService {
     getAnalyticsUrl(){
         return `https://www.google-analytics.com/j/collect`
     }
+    getUsersUrl(){
+        return this.serverUrl + "third_party/api/users";
+    }
+    getTimeEntriesUrl(){
+        return this.serverUrl + "internal/api/v3/time-entries";
+    }
+    getUsersEntriesUrl(userIdsCombined){
+        return this.serverUrl + "/third_party/api/entries?from=2022-12-01&to=2022-12-21&user_ids=" + userIdsCombined;
+    }
 }

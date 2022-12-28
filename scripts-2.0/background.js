@@ -89,7 +89,19 @@ window.TcButton = {
                             reject(error);
                         });
                         break;
-
+                    case 'getUsers':
+                        apiService.getUsers().then((response) => {
+                            resolve(response);
+                        }).catch((error) => {
+                            reject(error);
+                        });
+                        break;
+                    case 'getUsersTimeEntries':
+                        apiService.getUsersTimeEntries(request.userIds).then((response) => {
+                            resolve(response);
+                        }).catch((error) => {
+                            reject(error);
+                        });
                     case 'getTagLists':
                         apiService.getTagLists(
                             request.tags,

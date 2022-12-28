@@ -492,7 +492,44 @@ export default class ApiService {
             }
         );
     }
-
+    getUsers() {
+        return this.authorizeAndCall((token, resolve, reject) => {
+          
+            this.call({
+                url: pathService.getUsersUrl(),
+                method: METHOD_GET,
+                apiToken: token,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        );
+    }
+    getUsersTimeEntries(userIds){
+        const userIdsCombined = userIds.join(',')
+        return this.authorizeAndCall((token, resolve, reject) => {          
+            this.call({
+                url: pathService.getUsersEntriesUrl(userIdsCombined),
+                method: METHOD_GET,
+                apiToken: token,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        )
+    }
     getRecentlyUsed(
         service = this.defaultServiceName
     ) {
