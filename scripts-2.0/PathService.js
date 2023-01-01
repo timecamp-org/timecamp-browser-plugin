@@ -1,3 +1,5 @@
+import DateTime from "./helpers/DateTime";
+
 const CUSTOM_DOMAINS = process.env.CUSTOM_DOMAINS;
 const LOGIN_GET_KEY = 'loginToBrowserPlugin';
 
@@ -165,6 +167,7 @@ export default class PathService {
         return this.serverUrl + "internal/api/v3/time-entries";
     }
     getUsersEntriesUrl(userIdsCombined){
-        return this.serverUrl + "/third_party/api/entries?from=2022-12-01&to=2022-12-21&user_ids=" + userIdsCombined;
+        const dateTime = new DateTime();
+        return this.serverUrl + "/third_party/api/entries?from=1970-01-01&to=" + dateTime.getCurrentDate() + "&user_ids=" + userIdsCombined;
     }
 }

@@ -12,6 +12,7 @@ import * as React from "react";
 import ReactDOM from 'react-dom';
 import ContextMenu from './components/ContextMenu/index';
 import LoginWindow from './components/LoginWindow/index';
+import PeoplePicker from './components/PeoplePicker/index';
 
 const EXTERNAL_ID_LENGTH_LIMIT = 512;
 const DEFAULT_BILLABLE = true;
@@ -177,7 +178,7 @@ window.tcbutton = {
 
         return button;
     },
-    createUserDropdown({ users }) {
+    createUserDropdown({ users, taskId, onUserChanged }) {
         let select = createTag("select", "tc-select");
         for (const user of users) {
           let option = createTag("option");
@@ -185,9 +186,16 @@ window.tcbutton = {
           option.innerText = user.email;
           select.appendChild(option);
         }
+        select.onchange = onUserChanged;
+        select.dataset.taskId = taskId;
         return select;
     },
-
+    createTotalDuration(className) {
+        let span = createTag("span");
+        span.className = className;
+        span.innerText = '0 sec'
+        return span
+    },
     isUserLogged: () => {
         return browser.runtime.sendMessage({
             type: 'isUserLogged',
@@ -242,7 +250,14 @@ window.tcbutton = {
             tcbutton.contextMenuContainer
         );
     },
-
+    renderPeoplePicker:(elem, users, callback)=> {
+        ReactDOM.render(<PeoplePicker
+            isMulti
+            placeHolder="People:"
+            options={users}
+            onChange={callback}
+          />, elem)
+    },
     showLoginWindow: () => {
         const position = tcbutton.getPosition(312, 361)
         if (tcbutton.loginFormContainer === null) {

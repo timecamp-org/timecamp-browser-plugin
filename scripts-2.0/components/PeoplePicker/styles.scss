@@ -1,0 +1,97 @@
+@import "../../style/common";
+.timecamp-total-duration {
+  font-size: 12px;
+  font-family: $defaultFontFamily;
+}
+.timecamp {
+  flex-grow: 55;
+  color: inherit;
+  fill: inherit;
+  .dropdown-stats-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+    span {
+      font-size: 12px;
+      font-family: $defaultFontFamily;
+    }
+  }
+  .dropdown-container {
+    text-align: left;
+    min-width: 135px;
+    border: 1px solid #ccc;
+    position: relative;
+    border-radius: 5px;
+  }
+
+  .dropdown-input {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    transform: translateY(4px);
+    width: 100%;
+    top: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    max-height: 150px;
+    background-color: #fff;
+    z-index: 999999999999999999;
+  }
+
+  .dropdown-item {
+    padding: 5px;
+    cursor: pointer;
+    color: $primaryTextColor;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+  }
+
+  .dropdown-item:hover {
+    background-color: #d8efde;
+  }
+
+  .dropdown-item.selected {
+    background-color: $primaryColor;
+    color: #fff;
+  }
+
+  .dropdown-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .dropdown-tag-item {
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+    background-color: $primaryColor;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdown-tag-close {
+    display: flex;
+    align-items: center;
+    fill: #fff;
+    cursor: pointer;
+  }
+  .dropdown-tool {
+    fill: inherit;
+    cursor: pointer;
+  }
+  .dropdown-selected-value {
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+  }
+}

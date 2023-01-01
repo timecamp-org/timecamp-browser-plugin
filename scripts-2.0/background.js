@@ -102,6 +102,7 @@ window.TcButton = {
                         }).catch((error) => {
                             reject(error);
                         });
+                        break;
                     case 'getTagLists':
                         apiService.getTagLists(
                             request.tags,
