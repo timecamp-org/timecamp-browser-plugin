@@ -37,7 +37,7 @@ const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
       return (
         <div className="dropdown-tags">
           <div className="dropdown-tag-item">
-            {selectedValue.length} People
+            {selectedValue.length} User{selectedValue.length > 1 && "s"}
             <span
               onClick={(e) => onTagRemove(e)}
               className="dropdown-tag-close"
@@ -114,7 +114,7 @@ const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
   };
 
   const getOptions = () => {
-    const ALL_OPTION = { label: "All people", value: "all" };
+    const ALL_OPTION = { label: "All Users", value: "all" };
     return [ALL_OPTION, ...options];
   };
 

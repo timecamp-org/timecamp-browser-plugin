@@ -253,7 +253,7 @@ window.tcbutton = {
     renderPeoplePicker:(elem, users, callback)=> {
         ReactDOM.render(<PeoplePicker
             isMulti
-            placeHolder="People:"
+            placeHolder="Users:"
             options={users}
             onChange={callback}
           />, elem)
