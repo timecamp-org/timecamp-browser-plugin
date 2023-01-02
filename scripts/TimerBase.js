@@ -472,7 +472,26 @@ function TimerBase() {
             }
         }
     };
-
+    this.addEventListenerToElement = function (event, selector, callback) {
+        // Create a new MutationObserver instance
+        const observer = new MutationObserver(function (mutations) {
+          // Check if the element exists
+          const element = document.querySelector(selector);
+          if (!element) return;
+      
+          // If the element exists, attach the event listener
+          element.addEventListener(event, callback);
+      
+          // Disconnect the observer to prevent it from continuing to monitor the page
+          observer.disconnect();
+        });
+      
+        // Start observing the page for changes
+        observer.observe(document, {
+          childList: true, // Observe changes to the page's children (e.g. new elements being added)
+          subtree: true, // Observe changes to the entire page, including descendants of the root element
+        });
+      };
     this.bindEvents = function ($that) {
         $this = $that;
         setInterval($this.updateButtonState, $this.pushInterval);
@@ -483,9 +502,9 @@ function TimerBase() {
         $(document).on('tcParentChangeDetected',$this.onParentChangeDetected);
         $(document).on('tcTimerStarted', $this.onTimerStarted);
         $(document).on('tcTimerStopped', $this.onTimerStopped);
-        $(document).on('click', '.timecamp-track-button', $this.buttonClick);
-        $(document).on('click', '#timecamp-track-button', $this.buttonClick);
-        $(document).on('click', '#timecamp-track-button-new', $this.buttonClick);
+        $this.addEventListenerToElement('click','.timecamp-track-button',$this.buttonClick)
+        $this.addEventListenerToElement('click','#timecamp-track-button',$this.buttonClick)
+        $this.addEventListenerToElement('click','#timecamp-track-button-new',$this.buttonClick)
         $(document).on('showTimer', $this.handleShowTimer);
         $(document).on('hideTimer', $this.handleHideTimer);
 
