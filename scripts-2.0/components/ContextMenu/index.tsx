@@ -85,7 +85,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [errorNoInternetVisible, setErrorNoInternetVisible] = useState<boolean>(false);
     const [errorSubscriptionExpiredVisible, setSubscriptionExpiredVisible] = useState<boolean>(false);
     const [durationFormat, setDurationFormat] = useState<number>(timeFormatter.DEFAULT_FORMAT);
-    const [startTime, setStartTime] = useState<Date|null>(dateTime.getNowDateForDuration());
+    const [startTime, setStartTime] = useState<Date|null>(null);
     const [stopTime, setStopTime] = useState<Date|null>(null);
 
     const [wrongDatesErrorMessage, setWrongDatesErrorMessage] = useState<string>('');
@@ -261,11 +261,11 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const onClickSave = (e) => {
         e.stopPropagation();
-
+        let currentDate = new Date()
         if (stopTime === null) {
-            startTimer(dateTime.formatToYmdHis(startTime));
+            startTimer(dateTime.formatToYmdHis(currentDate));
         } else {
-            addTimeEntry(startTime, stopTime);
+            addTimeEntry(currentDate, stopTime);
         }
 
         clearAndClose();
