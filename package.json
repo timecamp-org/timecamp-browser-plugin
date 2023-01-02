@@ -1,6 +1,6 @@
 {
   "name": "timecamp-chrome-extension",
-  "version": "2.56.49",
+  "version": "2.54.48",
   "description": "TimeCamp Google Chrome Time Tracking Extension",
   "main": "index.js",
   "scripts": {

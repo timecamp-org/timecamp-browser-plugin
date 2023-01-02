@@ -269,6 +269,7 @@ window.TcButton = {
 
                     case 'getUserData':
                         apiService.me().then((response) => {
+                            TcButton.doAfterLogin();
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
