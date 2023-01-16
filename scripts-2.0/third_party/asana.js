@@ -146,24 +146,14 @@ const initializeTCWidgets = () => {
         headingRow.appendChild(span);
       }
 
-      // const userDropdown = tcbutton.createUserDropdown({
-      //   users,
-      //   taskId: externalTaskId,
-      //   onUserChanged,
-      // });
-
-      // const firstUserDurationInSeconds = getTaskDurationByUserId({
-      //   taskId: externalTaskId,
-      //   userId: users[0].user_id,
-      // });
-
       let div = document.createElement("div");
       div.className = "timecamp";
       elem.insertAdjacentElement("afterend", div);
       const usersWithTaskDuration = users
         .map((el) => {
+          const label = !el.display_name ? el.email.split("@")[0] : el.display_name
           return {
-            label: el.display_name,
+            label,
             value: el.user_id,
             duration: getTaskDurationByUserId({
               taskId: externalTaskId,
@@ -171,12 +161,10 @@ const initializeTCWidgets = () => {
             }),
           };
         })
-        .filter((x) => x.duration !== 0);
+        
       if (usersWithTaskDuration.length > 0)
         tcbutton.renderPeoplePicker(div, usersWithTaskDuration, onUserChanged);
       elem.insertAdjacentElement("afterend", link);
-      // elem.insertAdjacentElement("afterend", userDropdown);
-      // elem.insertAdjacentElement("afterend", taskDuration);
 
       return true;
     }

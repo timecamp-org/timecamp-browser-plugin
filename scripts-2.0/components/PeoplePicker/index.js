@@ -95,7 +95,6 @@ const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
       newValue = option;
     }
     setSelectedValue(newValue);
-    // setShowMenu(false);
   };
   useEffect(onChange, [selectedValue]);
 
