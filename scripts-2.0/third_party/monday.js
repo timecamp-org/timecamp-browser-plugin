@@ -13,7 +13,7 @@ tcbutton.render(
     {observe: true, debounceInterval: 500},
     elem => {
         
-        const pulseId = elem.id.match(/\d+/gm);
+        const pulseId = elem.id.match(/\d+/g);
         if(!pulseId){
             return false;
         }
