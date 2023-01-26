@@ -12,9 +12,8 @@ tcbutton.render(
     '.pulse-component',
     {observe: true, debounceInterval: 500},
     elem => {
-        
         const pulseId = elem.id.match(/\d+/g);
-        if(!pulseId){
+        if (!pulseId){
             return false;
         }
         const externalTaskId = buildExternalIdForMonday(pulseId[0]);
