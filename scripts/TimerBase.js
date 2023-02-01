@@ -482,14 +482,11 @@ function TimerBase() {
           // Check if the elements exists
           const elements = document.querySelectorAll(selector);
           if (elements.length === 0) return;
-      
           // If elements exists, attach the event listener
           elements.forEach(element=>{
             element.addEventListener(event, callback);
         });
-      
-          // Disconnect the observer to prevent it from continuing to monitor the page
-          observer.disconnect();
+    
         });
       
         // Start observing the page for changes
