@@ -68,13 +68,16 @@ const TimePicker: React.FC<TimePickerInterface> = (props) => {
     }, [isPlaceholderVisible]);
 
     const updateTimeOnPicker = () => {
-        let hour12 = '00';
+        let hour12 = '12';
         let hour24 = '00';
         let minutes = '00';
         let meridian = AM;
 
         if (dateTimeValue != undefined) {
             hour12 = dateTime.getHours(dateTimeValue, false);
+            if (parseInt(hour12) === 0) {
+                hour12 = '12';
+            }
             hour24 = dateTime.getHours(dateTimeValue);
             minutes = dateTime.getMinutes(dateTimeValue);
             meridian = dateTime.getMeridianValue(dateTimeValue);
@@ -106,7 +109,10 @@ const TimePicker: React.FC<TimePickerInterface> = (props) => {
             let hours;
             if (is12hFormat) {
                 hours = hour12Value;
-                if (meridianValue === PM) {
+                if ((meridianValue === AM && parseInt(hours) === 12)) {
+                    hours = 0;
+                }
+                if ((meridianValue === PM && parseInt(hours) !== 12)) {
                     hours = parseInt(hours) + 12;
                 }
             } else {
@@ -345,7 +351,7 @@ const TimePicker: React.FC<TimePickerInterface> = (props) => {
                 type='number'
                 step='1'
                 autoComplete='off'
-                min={0}
+                min={1}
                 max={12}
                 size={2}
                 name={INPUT_TYPE_HOUR_12}
