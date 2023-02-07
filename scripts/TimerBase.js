@@ -473,17 +473,20 @@ function TimerBase() {
         }
     };
     this.addEventListenerToElement = function (event, selector, callback) {
+        //For the elements that might be already in the dom
+        document.querySelectorAll(selector).forEach(element=>{
+            element.addEventListener(event, callback);
+        });
         // Create a new MutationObserver instance
         const observer = new MutationObserver(function (mutations) {
-          // Check if the element exists
-          const element = document.querySelector(selector);
-          if (!element) return;
-      
-          // If the element exists, attach the event listener
-          element.addEventListener(event, callback);
-      
-          // Disconnect the observer to prevent it from continuing to monitor the page
-          observer.disconnect();
+          // Check if the elements exists
+          const elements = document.querySelectorAll(selector);
+          if (elements.length === 0) return;
+          // If elements exists, attach the event listener
+          elements.forEach(element=>{
+            element.addEventListener(event, callback);
+        });
+    
         });
       
         // Start observing the page for changes
