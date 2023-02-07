@@ -109,10 +109,10 @@ const TimePicker: React.FC<TimePickerInterface> = (props) => {
             let hours;
             if (is12hFormat) {
                 hours = hour12Value;
-                if ((meridianValue === AM && parseInt(hours) === 12)) {
+                if (meridianValue === AM && parseInt(hours) === 12) {
                     hours = 0;
                 }
-                if ((meridianValue === PM && parseInt(hours) !== 12)) {
+                if (meridianValue === PM && parseInt(hours) !== 12) {
                     hours = parseInt(hours) + 12;
                 }
             } else {
