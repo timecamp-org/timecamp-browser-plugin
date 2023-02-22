@@ -67,7 +67,7 @@ export default class DateTime {
 
     getMeridianValue = (date) => {
         const hours = date.getHours();
-        if (hours > 12) {
+        if (hours >= 12) {
             return PM;
         }
 
