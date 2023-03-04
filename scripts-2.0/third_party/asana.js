@@ -13,47 +13,17 @@ const SELECTORS = {
   TASK_DURATION: "timecamp-task-duration",
 };
 const timeFormatter = new TimeFormatter();
-let users = [];
-let tasksDurations = {};
-
-function calculateTotalDurationsByUser(timeEntries) {
-  for (const { addons_external_id, user_id, duration } of timeEntries) {
-    if (!tasksDurations[addons_external_id])
-      tasksDurations[addons_external_id] = {};
-
-    if (tasksDurations[addons_external_id][user_id])
-      tasksDurations[addons_external_id][user_id] += parseInt(duration);
-    else tasksDurations[addons_external_id][user_id] = parseInt(duration);
-  }
-}
-
-function getTimeEntries() {
-  return new Promise((resolve) => {
-    if (users.length === 0) {
-      resolve();
-      return;
-    }
-
-    const userIds = users.map(({ user_id }) => user_id);
-    chrome.runtime.sendMessage(
-      { type: "getUsersTimeEntries", userIds },
-      (response) => {
-        calculateTotalDurationsByUser(response);
-        resolve();
-      }
-    );
-  });
-}
 
 function initializeUserList() {
   return new Promise((resolve) => {
-    chrome.runtime.sendMessage({ type: "getUsers" }, (response) => {
-      users = response;
-      resolve();
+    chrome.runtime.sendMessage({ type: "getUsers" }, (users) => {
+      resolve(users);
     });
   });
 }
+
 const onUserChanged = () => {
+  //refreshing the total duration all selected users
   let totalDuration = 0;
   document.querySelectorAll("." + SELECTORS.TASK_DURATION).forEach((row) => {
     const { duration } = row.dataset;
@@ -66,10 +36,7 @@ const onUserChanged = () => {
     );
 };
 
-const getTaskDurationByUserId = ({ taskId, userId }) =>
-  tasksDurations?.[taskId]?.[userId] ?? 0;
-
-const initializeTCWidgets = () => {
+const initializeTCWidgets = (users = []) => {
   //Board view
   tcbutton.render(".BoardCardLayout:not(.tc)", { observe: true }, (elem) => {
     if ($(".tc-button", elem)) {
@@ -149,21 +116,14 @@ const initializeTCWidgets = () => {
       let div = document.createElement("div");
       div.className = "timecamp";
       elem.insertAdjacentElement("afterend", div);
-      const usersWithTaskDuration = users
-        .map((el) => {
-          const label = !el.display_name ? el.email.split("@")[0] : el.display_name
-          return {
-            label,
-            value: el.user_id,
-            duration: getTaskDurationByUserId({
-              taskId: externalTaskId,
-              userId: el.user_id,
-            }),
-          };
-        })
-        
-      if (usersWithTaskDuration.length > 0)
-        tcbutton.renderPeoplePicker(div, usersWithTaskDuration, onUserChanged);
+      const allUsers = users.map((el) => {
+        return {
+          label: !el.display_name ? el.email.split("@")[0] : el.display_name,
+          value: el.user_id,
+        };
+      });
+
+      tcbutton.renderPeoplePicker(div, allUsers, onUserChanged, externalTaskId);
       elem.insertAdjacentElement("afterend", link);
 
       return true;
@@ -230,10 +190,6 @@ const initializeTCWidgets = () => {
   );
 };
 
-initializeUserList()
-  .then(() => {
-    return getTimeEntries();
-  })
-  .then(() => {
-    return initializeTCWidgets();
-  });
+initializeUserList().then((users) => {
+  return initializeTCWidgets(users);
+});

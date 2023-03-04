@@ -250,10 +250,11 @@ window.tcbutton = {
             tcbutton.contextMenuContainer
         );
     },
-    renderPeoplePicker:(elem, users, callback)=> {
+    renderPeoplePicker:(elem, users, callback, externalTaskId)=> {
         ReactDOM.render(<PeoplePicker
             isMulti
             placeHolder="Users:"
+            taskId={externalTaskId}
             options={users}
             onChange={callback}
           />, elem)

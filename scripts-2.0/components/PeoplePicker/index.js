@@ -21,9 +21,10 @@ const CloseIcon = () => {
   );
 };
 
-const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
+const PeoplePicker = ({ placeHolder, options, taskId, isMulti, onChange }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(isMulti ? [] : null);
+  const [totalDuration, setTotalDuration] = useState(0);
 
   const handleInputClick = (e) => {
     setShowMenu(!showMenu);
@@ -50,30 +51,32 @@ const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
     }
     return selectedValue.label;
   };
-  const getTaskDuration = (isFormatted = false) => {
-    if (!selectedValue || selectedValue.length === 0) {
-      return isFormatted
-        ? timeFormatter.formatToDuration(
-            0,
-            DURATION_FORMATS.CLASSIC_WITH_SECONDS
-          )
-        : 0;
-    }
-    const totalDuration = selectedValue.reduce(
-      (partialSum, user) => partialSum + user.duration,
-      0
-    );
-    return isFormatted
-      ? timeFormatter.formatToDuration(
-          totalDuration,
-          DURATION_FORMATS.CLASSIC_WITH_SECONDS
-        )
-      : totalDuration;
-  };
+
   const removeOption = (option) => {
     return selectedValue.filter((o) => o.value !== option.value);
   };
+  const updateDuration = () => {
+    return new Promise((resolve) => {
+      if (!selectedValue || selectedValue.length === 0) {
+        setTotalDuration(0);
+        return resolve();
+      }
+      chrome.runtime.sendMessage(
+        {
+          type: "getUsersTimeEntries",
+          userIds: selectedValue.map((el) => el.value),
+        },
+        (timeEntries) => {
+          const totalDuration = timeEntries
+            .filter((x) => x.addons_external_id == taskId)
+            .reduce((partialSum, user) => partialSum + user.duration * 1, 0);
 
+          setTotalDuration(totalDuration);
+          return resolve();
+        }
+      );
+    });
+  };
   const onTagRemove = (e) => {
     e.stopPropagation();
     setSelectedValue([]);
@@ -84,7 +87,8 @@ const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
       setSelectedValue(selectedValue.length == options.length ? [] : options);
       return;
     }
-    let newValue;
+    let newValue = [];
+
     if (isMulti) {
       if (selectedValue.findIndex((o) => o.value === option.value) >= 0) {
         newValue = removeOption(option);
@@ -96,7 +100,9 @@ const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
     }
     setSelectedValue(newValue);
   };
-  useEffect(onChange, [selectedValue]);
+  useEffect(() => {
+    updateDuration().then(onChange);
+  }, [selectedValue]);
 
   const isSelected = (option) => {
     if (option.value === "all" && options.length === selectedValue.length)
@@ -147,11 +153,11 @@ const PeoplePicker = ({ placeHolder, options, isMulti, onChange }) => {
         )}
       </div>
       <div>
-        <span
-          className="timecamp-task-duration"
-          data-duration={getTaskDuration()}
-        >
-          {getTaskDuration(true)}
+        <span className="timecamp-task-duration" data-duration={totalDuration}>
+          {timeFormatter.formatToDuration(
+            totalDuration,
+            DURATION_FORMATS.CLASSIC_WITH_SECONDS
+          )}
         </span>
       </div>
     </div>
