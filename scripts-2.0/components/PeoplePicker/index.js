@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useOutsideAlerter } from "./onClickOutside";
 import "./styles.scss";
 import TimeFormatter, { DURATION_FORMATS } from "../../TimeFormatter";
+import browser from "webextension-polyfill";
 
 const timeFormatter = new TimeFormatter();
 
@@ -21,7 +22,13 @@ const CloseIcon = () => {
   );
 };
 
-const PeoplePicker = ({ placeHolder, options, taskId, isMulti, onChange }) => {
+const PeoplePicker = ({
+  placeHolder,
+  options,
+  externalTaskId,
+  isMulti,
+  onChange,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(isMulti ? [] : null);
   const [totalDuration, setTotalDuration] = useState(0);
@@ -56,26 +63,22 @@ const PeoplePicker = ({ placeHolder, options, taskId, isMulti, onChange }) => {
     return selectedValue.filter((o) => o.value !== option.value);
   };
   const updateDuration = () => {
-    return new Promise((resolve) => {
-      if (!selectedValue || selectedValue.length === 0) {
-        setTotalDuration(0);
-        return resolve();
-      }
-      chrome.runtime.sendMessage(
-        {
-          type: "getUsersTimeEntries",
-          userIds: selectedValue.map((el) => el.value),
-        },
-        (timeEntries) => {
-          const totalDuration = timeEntries
-            .filter((x) => x.addons_external_id == taskId)
-            .reduce((partialSum, user) => partialSum + user.duration * 1, 0);
+    if (!selectedValue || selectedValue.length === 0) {
+      setTotalDuration(0);
+      return Promise.resolve();
+    }
+    return browser.runtime
+      .sendMessage({
+        type: "getUsersTimeEntries",
+        userIds: selectedValue.map((el) => el.value),
+      })
+      .then((timeEntries) => {
+        const totalDuration = timeEntries
+          .filter((x) => x.addons_external_id == externalTaskId)
+          .reduce((partialSum, user) => partialSum + user.duration * 1, 0);
 
-          setTotalDuration(totalDuration);
-          return resolve();
-        }
-      );
-    });
+        setTotalDuration(totalDuration);
+      });
   };
   const onTagRemove = (e) => {
     e.stopPropagation();

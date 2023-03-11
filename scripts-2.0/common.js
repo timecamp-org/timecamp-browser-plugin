@@ -254,7 +254,7 @@ window.tcbutton = {
         ReactDOM.render(<PeoplePicker
             isMulti
             placeHolder="Users:"
-            taskId={externalTaskId}
+            externalTaskId={externalTaskId}
             options={users}
             onChange={callback}
           />, elem)

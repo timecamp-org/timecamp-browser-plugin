@@ -1,4 +1,5 @@
 "use strict";
+import browser from "webextension-polyfill";
 import TimeFormatter, { DURATION_FORMATS } from "../TimeFormatter";
 const ASANA = "asana";
 const TASK_NOT_FOUND_INFO = "asana_task_not_found_in_backend_integration_info";
@@ -15,11 +16,9 @@ const SELECTORS = {
 const timeFormatter = new TimeFormatter();
 
 function initializeUserList() {
-  return new Promise((resolve) => {
-    chrome.runtime.sendMessage({ type: "getUsers" }, (users) => {
-      resolve(users);
-    });
-  });
+  return browser.runtime
+    .sendMessage({ type: "getUsers" })
+    .then((users) => users);
 }
 
 const onUserChanged = () => {
