@@ -85,9 +85,8 @@ window.tcbutton = {
                 });
                 const observeTarget = opts.observeTarget || document;
                 observer.observe(observeTarget, { childList: true, subtree: true });
-            } else {
-                tcbutton.renderTo(selector, renderer);
             }
+            tcbutton.renderTo(selector, renderer);
         } catch (e) {
             logger.error(e);
         }
@@ -249,15 +248,6 @@ window.tcbutton = {
             />,
             tcbutton.contextMenuContainer
         );
-    },
-    renderPeoplePicker:(elem, users, callback, externalTaskId)=> {
-        ReactDOM.render(<PeoplePicker
-            isMulti
-            placeHolder="Users:"
-            externalTaskId={externalTaskId}
-            options={users}
-            onChange={callback}
-          />, elem)
     },
     showLoginWindow: () => {
         const position = tcbutton.getPosition(312, 361)

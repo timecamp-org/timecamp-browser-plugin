@@ -9,6 +9,7 @@ import GroupSetting from "./GroupSetting";
 import FeatureFlag from "./FeatureFlag";
 import AnalyticsService from './Analytics';
 
+let CACHE = {};
 window.apiService = new ApiService();
 window.logger = new Logger();
 window.storageManager = new StorageManager();
@@ -90,14 +91,25 @@ window.TcButton = {
                         });
                         break;
                     case 'getUsers':
+                        if (CACHE.hasOwnProperty(request.type) && !!request.ignoreCache === false) {
+                            resolve(CACHE[request.type]);
+                            break;
+                        }
+
                         apiService.getUsers().then((response) => {
+                            CACHE[request.type] = response;
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
                         });
                         break;
                     case 'getUsersTimeEntries':
+                        if (CACHE.hasOwnProperty(request.type) && !!request.ignoreCache === false) {
+                            resolve(CACHE[request.type]);
+                            break;
+                        }
                         apiService.getUsersTimeEntries(request.userIds).then((response) => {
+                            CACHE[request.type] = response;
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
@@ -463,6 +475,7 @@ window.TcButton = {
         TcButton.currentEntry = null;
         apiService.rootGroupId = null;
         apiService.userId = null;
+        CACHE = {};
 
         TcButton.updateIcon();
         browser.tabs.query({ currentWindow: true, active: true }).then((tabs) => {
@@ -706,3 +719,7 @@ setInterval(() => {
     }).catch((e) => {
     })
 }, 30000);
+
+setInterval(() => {
+    CACHE = {};
+}, 30*60*1000);

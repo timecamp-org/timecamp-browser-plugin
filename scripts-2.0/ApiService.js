@@ -494,7 +494,6 @@ export default class ApiService {
     }
     getUsers() {
         return this.authorizeAndCall((token, resolve, reject) => {
-          
             this.call({
                 url: pathService.getUsersUrl(),
                 method: METHOD_GET,
