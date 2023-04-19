@@ -34,7 +34,9 @@ window.$$ = (s, elem) => {
 
 window.createTag = (name, className) => {
     const tag = document.createElement(name);
-    if (className) tag.className = className;
+    if (className) {
+        tag.className = className;
+    }
   
     return tag;
 };
