@@ -1,4 +1,4 @@
-﻿function HeySpaceTimer() {
+﻿function PlannerTimer() {
 
     var $this = this;
 
@@ -160,7 +160,7 @@
         var link = $('<a/>', {
             class:'quiet-button',
             text:'Integration settings',
-            href:'https://www.timecamp.com/addons/heyspace/index/'+this.lastParentId,
+            href:'https://www.timecamp.com/addons/planner/index/'+this.lastParentId,
             title:'Synchronize tasks to start tracking time.',
             target:'_blank'}
         );
@@ -181,9 +181,9 @@
     this.bindEvents(this);
 }
 $(document).ready(function () {
-    HeySpaceTimer.prototype = new TimerBase();
-    timer = new HeySpaceTimer();
+    PlannerTimer.prototype = new TimerBase();
+    timer = new PlannerTimer();
 });
 
 
-Service = "heyspace";
+Service = "planner";
