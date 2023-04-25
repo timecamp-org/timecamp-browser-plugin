@@ -9,7 +9,7 @@
   height: 20px;
   font-size: 14px;
   text-decoration: none !important;
-  cursor:pointer;
+  cursor: pointer;
 
   svg {
     width: 100px;
@@ -18,18 +18,19 @@
     vertical-align: middle;
 
     text {
-      font-family: $defaultFontFamily!important;
+      font-family: $defaultFontFamily !important;
     }
   }
 
   .tc-stop-button .timer {
-    font-family: $defaultFontFamily!important;
+    font-family: $defaultFontFamily !important;
   }
 }
 
-.tc-button.min  {
+.tc-button.min {
   overflow: hidden;
-  svg  {
+
+  svg {
     width: 17px;
   }
 }

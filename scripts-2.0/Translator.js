@@ -5,8 +5,6 @@ const logger = new Logger();
 const translate = function (message) {
     let translatedMessage = browser.i18n.getMessage(message);
     if (translatedMessage === '') {
-        logger.warn('Missing translation for \"' + message + '\"', true);
-            
         return message;
     }
         

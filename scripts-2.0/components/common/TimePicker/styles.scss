@@ -40,13 +40,12 @@
     &__input-picker {
       border: none;
       outline: none;
-      //flex: 1;
       text-align: center;
       background-color: inherit;
       caret-color: transparent;
       padding: 0;
+      min-width: 0;
     }
-
 
     &__arrows {
       display: flex;
