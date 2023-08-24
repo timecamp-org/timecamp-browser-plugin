@@ -282,45 +282,8 @@ tcbutton.render(
     }
 );
 
-// //Tasks view - disabled due to missing external id
-// tcbutton.render(
-//     '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
-//     {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
-//     elem => {
-//         if (window.location.href.indexOf("/o/") !== -1) {
-//             return false;
-//         }
-//         if (!window.location.href.includes('/Task/')) {
-//             return false;
-//         }
-//         const taskId = findIdInUrl();
-//         if (taskId === false) {
-//             return false;
-//         }
-//
-//         const description = $('.uiOutputText', elem).textContent.trim();
-//         const externalTaskId = buildExternalIdForSalesforce(
-//             taskId,
-//             PREFIX_TASK
-//         );
-//         if (!externalTaskId) {
-//             return false;
-//         }
-//
-//         const link = tcbutton.createTimerLink({
-//             className: SALESFORCE,
-//             additionalClasses: [SALESFORCE + '__task-view'],
-//             description: description,
-//             externalTaskId: externalTaskId,
-//             isBackendIntegration: true,
-//             taskNotFoundInfo: TASK_NOT_FOUND_INFO
-//         });
-//
-//         elem.insertAdjacentElement('afterend', link);
-//
-//         return true;
-//     }
-// );
+//Tasks view - disabled due to missing external id
+//To see code for this view, check out history of this file
 
 //Accounts view
 tcbutton.render(
