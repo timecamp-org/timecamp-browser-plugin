@@ -77,7 +77,6 @@ export default class ApiService {
                 method: '',
                 headers: {},
             }
-            // const xhr = new XMLHttpRequest();
             const method = opts.method || METHOD_GET;
             const apiToken = opts.apiToken;
             let url = opts.url;
@@ -90,7 +89,7 @@ export default class ApiService {
             logger.log('Request:')
             logger.table(opts);
 
-            requestOptions.method = method
+            requestOptions.method = method;
 
             if (opts.contentType) {
                 requestOptions['headers']['Content-Type'] = opts.contentType
@@ -117,23 +116,24 @@ export default class ApiService {
                 body = JSON.stringify(opts.payload);
             }
 
-            if (body && method != METHOD_GET)
+            if (body && method != METHOD_GET) {
                 requestOptions.body = body
+            }
 
             fetch(url, requestOptions)
-                .then(function (response) {                      // first then()`
+                .then(function (response) {
                     if (response.ok) {
                         return response.text();
                     }
 
                     throw response.text();
                 })
-                .then(function (text) {                         // second then()
-                    resolve({ status: 200, response: text })
+                .then(function (text) {
+                    resolve({ status: 200, response: text });
                 })
                 .catch(function (error) {
-                    console.log({ status: 500, response: error })       // catch
-                    resolve({ status: 500, response: error })
+                    console.log({ status: 500, response: error });
+                    resolve({ status: 500, response: error });
                 });
         });
     }
@@ -852,9 +852,11 @@ export default class ApiService {
                     return;
                 }
                 var removed = items['removed'];
-                var hasRemoved = removed && Object.keys(items).length > 0;
-            
-                resolve(hasRemoved);
+                if (removed || Object.keys(items).length === 0) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
             });
         });
     };
