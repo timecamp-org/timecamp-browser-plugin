@@ -485,16 +485,15 @@ function TimerBase() {
           // If elements exists, attach the event listener
           elements.forEach(element=>{
             element.addEventListener(event, callback);
+          });
         });
-    
-        });
-      
+
         // Start observing the page for changes
         observer.observe(document, {
           childList: true, // Observe changes to the page's children (e.g. new elements being added)
           subtree: true, // Observe changes to the entire page, including descendants of the root element
         });
-      };
+    };
     this.bindEvents = function ($that) {
         $this = $that;
         setInterval($this.updateButtonState, $this.pushInterval);

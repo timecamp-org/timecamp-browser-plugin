@@ -217,8 +217,8 @@ function transformManifest(isDebug = false) {
   return function (content) {
     const manifest = JSON.parse(content.toString());
     manifest.homepage_url = ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/';
-    manifest.permissions = [
-      ...manifest.permissions,
+    manifest.host_permissions = [
+      ...manifest.host_permissions,
       ENV.SERVER_PROTOCOL + '://*.' + ENV.SERVER_DOMAIN + '/*'
     ];
 
