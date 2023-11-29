@@ -140,7 +140,7 @@ function PodioTimer() {
                         id:         "tc-badge",
                         "class":    "badge",
                         style:      "padding: 1px 4px; height: 14px; vertical-align: text-bottom",
-                        src:        chrome.extension.getURL('images/icon-14.png'),
+                        src:        chrome.runtime.getURL('images/icon-14.png'),
                         title:      Messages.badgeTimerRunning
                     });
                 badges.append(badge);
@@ -284,7 +284,7 @@ function PodioTimer() {
 
         this.button = a;
         button.append(a);
-        a.append($('<img src="' + chrome.extension.getURL('images/icon-16.png') + '" id="tc-logo" style="vertical-align:text-bottom;"/>'));
+        a.append($('<img src="' + chrome.runtime.getURL('images/icon-16.png') + '" id="tc-logo" style="vertical-align:text-bottom;"/>'));
         a.append($('<span/>', { 'class': 'text', 'style':'float: right; margin-left: 5px;' }).text(Messages.synchronizing));
         a.append($('<span/>', { 'class': 'time' }).text("00:00").css({ padding: "0px 2px 2px", 'margin-left': '5px'}).hide());
 

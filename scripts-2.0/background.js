@@ -10,11 +10,11 @@ import FeatureFlag from "./FeatureFlag";
 import AnalyticsService from './Analytics';
 
 let CACHE = {};
-window.apiService = new ApiService();
-window.logger = new Logger();
-window.storageManager = new StorageManager();
-window.analyticsService = new AnalyticsService();
-window.TcButton = {
+const apiService = new ApiService();
+const logger = new Logger();
+const storageManager = new StorageManager();
+const analyticsService = new AnalyticsService();
+const TcButton = {
     currentEntry: undefined,
     isUserLogged: false,
     user: null,
@@ -294,6 +294,7 @@ window.TcButton = {
 
                     case 'getUserData':
                         apiService.me().then((response) => {
+                            TcButton.doAfterLogin();
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
@@ -665,11 +666,11 @@ window.TcButton = {
 
     updateIcon: function () {
         let imagePath = {
-            '19': TcButton.currentEntry ? 'images/icon-19.png' : 'images/icon-19-gray.png',
-            '38': TcButton.currentEntry ? 'images/icon-38.png' : 'images/icon-38-gray.png'
+            '19': TcButton.currentEntry ? '/images/icon-19.png' : '/images/icon-19-gray.png',
+            '38': TcButton.currentEntry ? '/images/icon-38.png' : '/images/icon-38-gray.png'
         };
 
-        browser.browserAction.setIcon({ path: imagePath });
+        browser.action.setIcon({ path: imagePath });
     },
 }
 
@@ -683,7 +684,6 @@ browser.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
         showInstructionsPage();
         analyticsService.trackEvent('installed', 'install');
-
     } else if (details.reason === 'update') {
         const thisVersion = browser.runtime.getManifest().version;
         const versionWhenActionIsPerformed = '2.21.1';
