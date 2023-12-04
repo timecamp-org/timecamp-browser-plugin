@@ -179,24 +179,6 @@ window.tcbutton = {
 
         return button;
     },
-    createUserDropdown({ users, taskId, onUserChanged }) {
-        let select = createTag("select", "tc-select");
-        for (const user of users) {
-          let option = createTag("option");
-          option.value = user.user_id;
-          option.innerText = user.email;
-          select.appendChild(option);
-        }
-        select.onchange = onUserChanged;
-        select.dataset.taskId = taskId;
-        return select;
-    },
-    createTotalDuration(className) {
-        let span = createTag("span");
-        span.className = className;
-        span.innerText = '0 sec'
-        return span
-    },
     isUserLogged: () => {
         return browser.runtime.sendMessage({
             type: 'isUserLogged',
