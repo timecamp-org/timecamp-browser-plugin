@@ -504,11 +504,53 @@ export default class ApiService {
             }
         );
     }
-    getUsersTimeEntries(userIds){
-        const userIdsCombined = userIds.join(',')
-        return this.authorizeAndCall((token, resolve, reject) => {          
+    initDetailedReport(dateFrom, dateTo){
+        const DETAILED_REPORT_TYPE = 'DETAILED';
+        return this.authorizeAndCall((token, resolve, reject) => {
             this.call({
-                url: pathService.getUsersEntriesUrl(userIdsCombined),
+                url: pathService.getReportDetailedUrl(),
+                method: METHOD_POST,
+                apiToken: token,
+                payload: {
+                    "type": DETAILED_REPORT_TYPE,
+                    "timeFrameStart": dateFrom,
+                    "timeFrameEnd": dateTo,
+                    "archived": null
+                }
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        )
+    }
+    getReportStatus(id){
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getReportsStatusUrl(id),
+                method: METHOD_GET,
+                apiToken: token,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        )
+    }
+    getReportResult(id){
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getReportsResultUrl(id),
                 method: METHOD_GET,
                 apiToken: token,
             })

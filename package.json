@@ -79,6 +79,7 @@
     "react-html-parser": "^2.0.2",
     "react-vtree": "^2.0.4",
     "react-window": "^1.8.6",
+    "regenerator-runtime": "^0.14.0",
     "sass-loader": "^11.0.1",
     "svg-url-loader": "^7.1.1",
     "webpack-log": "^3.0.1"

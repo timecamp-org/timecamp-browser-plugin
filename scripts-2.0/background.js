@@ -1,6 +1,4 @@
-const DEBUG = process.env.DEBUG;
-const EMPTY_NAME = '(No title)';
-
+import 'regenerator-runtime/runtime'
 import browser from 'webextension-polyfill';
 import ApiService from './ApiService';
 import Logger from './Logger';
@@ -8,6 +6,10 @@ import StorageManager from './StorageManager';
 import GroupSetting from "./GroupSetting";
 import FeatureFlag from "./FeatureFlag";
 import AnalyticsService from './Analytics';
+import { fetchDetailedReport } from "./background/reports/detailed";
+
+const DEBUG = process.env.DEBUG;
+const EMPTY_NAME = '(No title)';
 
 let CACHE = {};
 const apiService = new ApiService();
@@ -91,27 +93,33 @@ const TcButton = {
                         });
                         break;
                     case 'getUsers':
-                        if (CACHE.hasOwnProperty(request.type) && !!request.ignoreCache === false) {
+                        if (CACHE.hasOwnProperty(request.type)) {
+                            console.log(request.type + ' - using cache');
                             resolve(CACHE[request.type]);
                             break;
                         }
 
                         apiService.getUsers().then((response) => {
                             CACHE[request.type] = response;
+                            console.log(request.type + ' - setting cache');
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
                         });
                         break;
-                    case 'getUsersTimeEntries':
-                        if (CACHE.hasOwnProperty(request.type) && !!request.ignoreCache === false) {
+
+                    case 'fetchDetailedReport':
+                        if (CACHE.hasOwnProperty(request.type)) {
+                            console.log(request.type + ' - using cache');
                             resolve(CACHE[request.type]);
                             break;
                         }
-                        apiService.getUsersTimeEntries(request.userIds).then((response) => {
+                        fetchDetailedReport().then((response) => {
                             CACHE[request.type] = response;
+                            console.log(request.type + ' - setting cache');
                             resolve(response);
                         }).catch((error) => {
+                            console.error(error);
                             reject(error);
                         });
                         break;
@@ -285,7 +293,15 @@ const TcButton = {
                         break;
 
                     case 'getFullTaskTree':
+                        if (CACHE.hasOwnProperty(request.type) && !!request.useCache) {
+                            console.log(request.type + ' - using cache');
+                            resolve(CACHE[request.type]);
+                            break;
+                        }
+
                         apiService.getFullTaskTree().then((response) => {
+                            CACHE[request.type] = response;
+                            console.log(request.type + ' - setting cache');
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
@@ -723,3 +739,8 @@ setInterval(() => {
 setInterval(() => {
     CACHE = {};
 }, 30*60*1000);
+setInterval(() => {
+    delete CACHE['fetchDetailedReport'];
+
+    console.log('clear report data');
+}, 1*60*1000);

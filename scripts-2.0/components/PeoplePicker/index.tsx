@@ -10,6 +10,8 @@ import browser from "webextension-polyfill";
 const PeoplePicker = (
     {
         onChange,
+        onClose,
+        onClear,
         placeHolder = translate("Users"),
     }) => {
     const [showMenu, setShowMenu] = useState(false);
@@ -18,7 +20,7 @@ const PeoplePicker = (
 
     useEffect(() => {
         browser.runtime
-            .sendMessage({type: 'getUsers', cacheKey: 'users'})
+            .sendMessage({type: 'getUsers'})
             .then((users) => {
                 let usersOptions = users.map((el) => {
                     return {
@@ -73,6 +75,7 @@ const PeoplePicker = (
 
     const clearSelection = (e) => {
         setSelectedValue([]);
+        onClear();
         e.stopPropagation();
     };
 
@@ -114,9 +117,10 @@ const PeoplePicker = (
     };
 
     const wrapperRef = useRef(null);
-    useOutsideAlerter(wrapperRef, () => {
+    useOutsideAlerter(wrapperRef, (selectedValue) => {
         setShowMenu(false);
-    });
+        onClose(selectedValue);
+    }, selectedValue);
 
     return (
         <div

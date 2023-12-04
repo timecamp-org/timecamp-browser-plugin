@@ -7,73 +7,51 @@ import browser from "webextension-polyfill";
 
 const timeFormatter = new TimeFormatter();
 
-const TotalUsersTimeInTaskComponent = (
-    {
-        externalTaskId,
-    }) => {
-    
+const TotalUsersTimeInTaskComponent = ({
+   taskId,
+}) => {
     const [totalDuration, setTotalDuration] = useState(0);
-    const [timeEntries, setTimeEntries] = useState([]);
     const [durationFormat, setDurationFormat] = useState<number>(timeFormatter.DEFAULT_FORMAT);
 
     useEffect(() => {
-        browser.runtime
-            .sendMessage({ type: "getUsers", cacheKey: 'users' })
-            .then((users) => {
-                let usersIds = users.map((el) => {
-                    return el.user_id;
-                });
-
-                browser.runtime
-                    .sendMessage({
-                        type: "getUsersTimeEntries",
-                        userIds: usersIds,
-                        cacheKey: ['usersTimeEntries', usersIds].join('_'),
-                    })
-                    .then((response) => {
-                        setTimeEntries(response);
-                    });
-            });
-
-        browser.runtime.sendMessage({
-            type: 'getDurationFormatFromStorage'
-        }).then((valueOfDurationFormat) => {
-            setDurationFormat(valueOfDurationFormat);
-        }).catch(() => {
-        });
+        // this is set to default format because of business requirement
+        setDurationFormat(timeFormatter.DEFAULT_FORMAT);
     }, []);
     
-    const updateDuration = (selectedValues) => {
+    const updateDuration = async (selectedValues) => {
         if (!selectedValues || selectedValues.length === 0) {
             setTotalDuration(0);
-            return Promise.resolve();
+            return;
         }
 
-        let selectedUsersIds = selectedValues.map((el) => el.value);
-        const timeEntriesForSelectedUsers = timeEntries.filter((timeEntry) => {
-            // @ts-ignore
-            return selectedUsersIds.includes(timeEntry.user_id);
+        const selectedValuesAsArray = selectedValues.map((e) => parseInt(e.value));
+        const { data } = await browser.runtime.sendMessage({
+            type: "fetchDetailedReport",
+            useCache: true,
         });
 
-        const totalDuration = timeEntriesForSelectedUsers
-            .filter(
-                // @ts-ignore
-                (x) => x.addons_external_id == externalTaskId
-            )
-            .reduce(
-                (partialSum, user) => {
-                    // @ts-ignore
-                    return partialSum + user.duration * 1
-                }, 0
-            );
+        const sumWithInitial = data.reduce(
+            (acc, currentValue) => {
+                if (currentValue.taskId !== taskId) {
+                    return acc;
+                }
+                if (!selectedValuesAsArray.includes(parseInt(currentValue.userId))) {
+                    return acc;
+                }
+                return acc + currentValue.duration;
+            },
+            0
+        );
 
-        setTotalDuration(totalDuration);
+        setTotalDuration(sumWithInitial);
     };
 
     return (
         <div className="tcUserStats">
             <PeoplePicker
-                onChange={(selectedUsers) => updateDuration(selectedUsers)}
+                onChange={() => null}
+                onClose={(selectedUsers) => updateDuration(selectedUsers)}
+                onClear={() => updateDuration(null)}
             />
             <span className="tcUserStats__duration">
                 {timeFormatter.formatToDuration(

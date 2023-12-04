@@ -1,4 +1,5 @@
 "use strict";
+import 'regenerator-runtime/runtime'
 import browser from "webextension-polyfill";
 import ReactDOM from 'react-dom';
 import * as React from "react";
@@ -15,26 +16,6 @@ const SELECTORS = {
     TASK_ROW: "SpreadsheetGridTaskNameAndDetailsCellGroup",
     TABLE_HEADING_ROW: "SpreadsheetHeaderColumn-heading",
 };
-
-function initializeUserList() {
-    return new Promise((resolve, reject) => {
-        browser.runtime
-            .sendMessage({type: 'getUsers', cacheKey: 'users'})
-            .then((users) => {
-                let usersIds = users.map((el) => {
-                    return el.user_id;
-                });
-
-                browser.runtime.sendMessage({
-                    type: "getUsersTimeEntries",
-                    userIds: usersIds,
-                    cacheKey: ['usersTimeEntries', usersIds].join('_'),
-                }).then(() => {
-                    resolve(true);
-                });
-            })
-    });
-}
 
 const initializeTCWidgets = (isLoggedIn) => {
     //Board view
@@ -81,7 +62,7 @@ const initializeTCWidgets = (isLoggedIn) => {
     tcbutton.render(
         ".SpreadsheetRow .SpreadsheetTaskName:not(.tc)",
         { observe: true },
-        (elem) => {
+        async (elem) => {
             if ($(".timecamp", elem.parentNode)) {
                 return false;
             }
@@ -111,8 +92,15 @@ const initializeTCWidgets = (isLoggedIn) => {
             elem.insertAdjacentElement("afterend", link);
             elem.insertAdjacentElement("afterend", containerForUserStats);
             if (isLoggedIn) {
+                const elem = Object.values(tasks).filter(
+                    (task) => task.external_task_id === externalTaskId
+                );
+                if (elem.length === 0) {
+                    return true;
+                }
+                const taskId = elem[0].task_id ?? null;
                 ReactDOM.render(
-                    <TotalUsersTimeInTaskComponent externalTaskId={externalTaskId}/>,
+                    <TotalUsersTimeInTaskComponent taskId={taskId}/>,
                     containerForUserStats
                 );
             }
@@ -181,11 +169,17 @@ const initializeTCWidgets = (isLoggedIn) => {
     );
 };
 
-tcbutton.isUserLogged().then((isUserLogged) => {
+let tasks = {};
+tcbutton.isUserLogged().then(async (isUserLogged) => {
     if (isUserLogged) {
-        initializeUserList().then(() => {
-            return initializeTCWidgets(true);
-        });
+        try {
+            await browser.runtime.sendMessage({type: 'fetchDetailedReport'});
+            await browser.runtime.sendMessage({type: 'getUsers'});
+            tasks = await browser.runtime.sendMessage({type: 'getFullTaskTree', useCache: true})
+        } catch (e) {
+            console.error(e);
+        }
+        initializeTCWidgets(true);
     } else {
         initializeTCWidgets(false);
     }

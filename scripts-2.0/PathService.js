@@ -160,14 +160,16 @@ export default class PathService {
     getAnalyticsUrl(){
         return `https://www.google-analytics.com/j/collect`
     }
+    getReportDetailedUrl(){
+        return this.serverUrl + 'api/v2/reports';
+    }
+    getReportsStatusUrl(id){
+        return `${this.serverUrl}api/v2/reports/${id}/status`;
+    }
+    getReportsResultUrl(id){
+        return `${this.serverUrl}api/v2/reports/${id}/raw`;
+    }
     getUsersUrl(){
         return this.serverUrl + "third_party/api/users?active_only=true";
-    }
-    getTimeEntriesUrl(){
-        return this.serverUrl + "internal/api/v3/time-entries";
-    }
-    getUsersEntriesUrl(userIdsCombined){
-        const dateTime = new DateTime();
-        return this.serverUrl + "third_party/api/entries?from=1970-01-01&to=" + dateTime.getCurrentDate() + "&user_ids=" + userIdsCombined;
     }
 }
