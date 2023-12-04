@@ -743,4 +743,4 @@ setInterval(() => {
     delete CACHE['fetchDetailedReport'];
 
     console.log('clear report data');
-}, 1*60*1000);
+}, 5*60*1000);
