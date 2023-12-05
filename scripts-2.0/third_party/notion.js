@@ -30,22 +30,41 @@ tcbutton.render(
 );
 
 tcbutton.render(
-    '.notion-page-controls + div:not(.tc)',
+    '.notion-topbar-action-buttons:not(.tc)',
     { observe: true },
     function (elem) {
         elem.style.position = 'relative';
 
         function getDescription () {
-            const descriptionElem = elem ? elem.querySelector('div[data-root="true"]') : '';
-
-            return descriptionElem ? descriptionElem.textContent.trim() : '';
+            const controls = document.querySelector('.notion-page-controls');
+            const topBar = document.querySelector('.notion-topbar');
+            let title = '';
+      
+            if (controls) {
+              if (controls.nextElementSibling) {
+                title = controls.nextElementSibling;
+              } else {
+                const parent = controls.parentElement;
+      
+                if (!parent) return '';
+      
+                title = parent ? parent.nextElementSibling : '';
+              }
+            } else if (topBar) {
+              const breadcrumbs = topBar.querySelector('div > .notranslate')
+              if (breadcrumbs) {
+                title = breadcrumbs.childNodes[breadcrumbs.childNodes.length - 1].querySelector('.notranslate:last-child')
+              }
+            }
+      
+            return title ? title.textContent.trim() : '';
         }
 
         const link = tcbutton.createTimerLink({
             className: 'notion',
-            buttonType: 'minimal',
             description: getDescription
         });
+        link.style.marginRight = '10px'
 
         elem.prepend(link);
 
