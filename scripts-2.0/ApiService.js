@@ -494,7 +494,7 @@ export default class ApiService {
                 apiToken: token,
             })
                 .then((response) => {
-                    let responseData = JSON.parse(response.response);
+                    const responseData = JSON.parse(response.response);
                     resolve(responseData);
                 })
                 .catch((response) => {
@@ -519,7 +519,7 @@ export default class ApiService {
                 }
             })
                 .then((response) => {
-                    let responseData = JSON.parse(response.response);
+                    const responseData = JSON.parse(response.response);
                     resolve(responseData);
                 })
                 .catch((response) => {
@@ -537,7 +537,7 @@ export default class ApiService {
                 apiToken: token,
             })
                 .then((response) => {
-                    let responseData = JSON.parse(response.response);
+                    const responseData = JSON.parse(response.response);
                     resolve(responseData);
                 })
                 .catch((response) => {
@@ -555,7 +555,7 @@ export default class ApiService {
                 apiToken: token,
             })
                 .then((response) => {
-                    let responseData = JSON.parse(response.response);
+                    const responseData = JSON.parse(response.response);
                     resolve(responseData);
                 })
                 .catch((response) => {

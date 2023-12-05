@@ -86,7 +86,7 @@ const initializeTCWidgets = (isLoggedIn) => {
                 taskNotFoundInfo: TASK_NOT_FOUND_INFO,
             });
 
-            let isAsanaInDarkMode = document.body.classList.value.toLowerCase().includes('darkmode');
+            const isAsanaInDarkMode = document.body.classList.value.toLowerCase().includes('darkmode');
             let containerForUserStats = document.createElement("div");
             containerForUserStats.className = `timecamp ${isAsanaInDarkMode ? 'dark' : ''}`;
             elem.insertAdjacentElement("afterend", link);
