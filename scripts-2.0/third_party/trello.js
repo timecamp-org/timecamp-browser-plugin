@@ -65,23 +65,27 @@ tcbutton.render(
 
 //Board view
 tcbutton.render(
-    '.list-card:not(.tc)',
-    {observe: true, debounceInterval: 2000},
+    '[data-testid="list-card"]:not(.tc)',
+    {observe: true, debounceInterval: 500},
     elem => {
         const isTimecampPowerUpOn = checkForTimecampPowerUp();
         if (isTimecampPowerUpOn) {
             return false;
         }
+        let aElem = $('a', elem);
 
-        let cardId = getCardIdFromUrl(elem.href);
+        let cardId = getCardIdFromUrl(aElem.href);
 
         const externalTaskId = buildExternalIdForTrello(cardId);
-        if (!externalTaskId) {
+
+        const badges = $('[data-testid="card-front-badges"]', elem)
+        
+        if (!externalTaskId || !badges) {
             return false;
         }
 
         const description = () => {
-            return $('.list-card-title', elem).innerText.trim();
+            return aElem.innerText.trim();
         };
 
         const link = tcbutton.createTimerLink({
@@ -93,8 +97,8 @@ tcbutton.render(
             isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
-
-        $('.badges', elem).insertAdjacentElement('beforeend', link);
+        
+        badges.insertAdjacentElement('beforeend', link);
 
         return true;
     }
