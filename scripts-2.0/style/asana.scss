@@ -10,7 +10,9 @@
   }
   &__board-view {
     margin: 0 1px 2px 3px;
-    opacity: 0;
+  }
+  &__list-view {
+    margin-top: -3px;
   }
 }
 

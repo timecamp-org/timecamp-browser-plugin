@@ -56,7 +56,10 @@ import {
   faExclamationTriangle as falExclamationTriangle,
   faCheckCircle as falCheckCircle,
   faChevronLeft as falChevronLeft,
-  faLightbulb as falLightbulb
+  faLightbulb as falLightbulb,
+  faUserClock as falUserClock,
+  faChevronDown as falChevronDown,
+  faChevronUp as falChevronUp,
 } from '@fortawesome/pro-light-svg-icons';
 
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
@@ -115,4 +118,7 @@ library.add(
   farSignOutAlt,
   farChartPie,
   farClock,
+  falUserClock,
+  falChevronDown,
+  falChevronUp,
 );

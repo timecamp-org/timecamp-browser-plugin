@@ -12,6 +12,7 @@ import * as React from "react";
 import ReactDOM from 'react-dom';
 import ContextMenu from './components/ContextMenu/index';
 import LoginWindow from './components/LoginWindow/index';
+import PeoplePicker from './components/PeoplePicker/index';
 
 const EXTERNAL_ID_LENGTH_LIMIT = 512;
 const DEFAULT_BILLABLE = true;
@@ -33,8 +34,10 @@ window.$$ = (s, elem) => {
 
 window.createTag = (name, className) => {
     const tag = document.createElement(name);
-    tag.className = className;
-
+    if (className) {
+        tag.className = className;
+    }
+  
     return tag;
 };
 
@@ -84,9 +87,8 @@ window.tcbutton = {
                 });
                 const observeTarget = opts.observeTarget || document;
                 observer.observe(observeTarget, { childList: true, subtree: true });
-            } else {
-                tcbutton.renderTo(selector, renderer);
             }
+            tcbutton.renderTo(selector, renderer);
         } catch (e) {
             logger.error(e);
         }
@@ -177,7 +179,6 @@ window.tcbutton = {
 
         return button;
     },
-
     isUserLogged: () => {
         return browser.runtime.sendMessage({
             type: 'isUserLogged',
@@ -232,7 +233,6 @@ window.tcbutton = {
             tcbutton.contextMenuContainer
         );
     },
-
     showLoginWindow: () => {
         const position = tcbutton.getPosition(312, 361)
         if (tcbutton.loginFormContainer === null) {

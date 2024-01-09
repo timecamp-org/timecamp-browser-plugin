@@ -1,3 +1,5 @@
+import DateTime from "./helpers/DateTime";
+
 const CUSTOM_DOMAINS = process.env.CUSTOM_DOMAINS;
 const LOGIN_GET_KEY = 'loginToBrowserPlugin';
 
@@ -157,5 +159,17 @@ export default class PathService {
     }
     getAnalyticsUrl(){
         return `https://www.google-analytics.com/j/collect`
+    }
+    getReportDetailedUrl(){
+        return this.serverUrl + 'api/v2/reports';
+    }
+    getReportsStatusUrl(id){
+        return `${this.serverUrl}api/v2/reports/${id}/status`;
+    }
+    getReportsResultUrl(id){
+        return `${this.serverUrl}api/v2/reports/${id}/raw`;
+    }
+    getUsersUrl(){
+        return this.serverUrl + "third_party/api/users?active_only=true";
     }
 }
