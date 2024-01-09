@@ -50,4 +50,5 @@ export enum IconName {
   SIGN_OUT_ALT = 'sign-out-alt',
   CHART_PIE = 'chart-pie',
   CLOCK = 'clock',
+  USER_CLOCK = 'user-clock',
 }

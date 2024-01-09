@@ -200,16 +200,16 @@ function copy (o) {
 
 function transformOldConfig() {
     return function (content, filePath) {
-        let PATH_SEPARATOR = process.platform === 'win32' ? '\\' : '/';
+      let PATH_SEPARATOR = process.platform === 'win32' ? '\\' : '/';
 
-        if (filePath.split(PATH_SEPARATOR).pop() === 'config.js') {
-            let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
-            let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
+      if (filePath.split(PATH_SEPARATOR).pop() === 'config.js') {
+          let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
+          let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
 
-            return Buffer.from(serverUrl + customDomain + content.toString());
-        }
+          return Buffer.from(serverUrl + customDomain + content.toString());
+      }
 
-        return Buffer.from(content.toString());
+      return Buffer.from(content.toString());
     }
 }
 

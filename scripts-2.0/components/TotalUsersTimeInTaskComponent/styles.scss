@@ -1,0 +1,33 @@
+@import "../../style/common";
+
+.tcAsanaTaskRowHelperClass {
+  overflow: unset!important;
+  &:hover {
+    .timecamp {
+      .tcUserStats {
+        .tcDropdown {
+            background-color: rgba(75, 176, 99, 0.2);
+            color: #347944;
+            display: block;
+        }
+      }
+    }
+  }
+}
+
+.timecamp {
+  flex-grow: 55;
+  color: inherit;
+  fill: inherit;
+  font-size: $defaultFontSize;
+  font-family: $defaultFontFamily;
+
+  .tcUserStats {
+    display: flex;
+    height: 24px;
+    justify-content: end;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+}
