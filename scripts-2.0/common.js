@@ -383,8 +383,6 @@ window.tcbutton = {
     queryAndUpdateTimerLink: function () {
         browser.runtime.sendMessage({ type: 'currentEntry' })
             .then((currentEntry) => {
-                logger.log(currentEntry);
-                logger.log(tcbutton);
                 if (!currentEntry) {
                     return;
                 }

@@ -1,17 +1,32 @@
 'use strict';
 
+const TASK_NOT_FOUND_INFO = 'notion_task_not_found_in_backend_integration_info';
+
+const NOTION = 'notion';
+const ENTITY_TYPE_PAGE = 'page';
+const ENTITY_TYPE_DB = 'db';
+
+const buildExternalIdForNotion = (taskId, entity) => {
+    return `${NOTION}_${entity}_${taskId}`;
+};
+
+//Item view
 tcbutton.render(
     '.notion-peek-renderer:not(.tc)',
-    { observe: true },
+    { observe: true, debounceInterval: 500 },
     function (elem) {
+        const titleElement = elem.querySelectorAll('.notion-scroller .notion-page-block')[0] ?? null;
         function getDescription () {
-            const descriptionElem = elem.querySelector('.notion-scroller .notion-selectable div[contenteditable="true"]');
-            return descriptionElem ? descriptionElem.textContent.trim() : '';
+            return titleElement ? titleElement.textContent.trim() : '';
         }
 
+        const externalTaskId = buildExternalIdForNotion(titleElement?.dataset?.blockId ?? null, ENTITY_TYPE_PAGE);
         const link = tcbutton.createTimerLink({
             className: 'notion',
-            description: getDescription
+            description: getDescription,
+            externalTaskId: externalTaskId,
+            isBackendIntegration: true,
+            taskNotFoundInfo: TASK_NOT_FOUND_INFO,
         });
 
         const wrapper = document.createElement('div');
@@ -29,42 +44,25 @@ tcbutton.render(
     }
 );
 
+//List view 2
 tcbutton.render(
-    '.notion-topbar-action-buttons:not(.tc)',
-    { observe: true },
+    '.notion-frame .notion-page-controls:not(.tc)',
+    { observe: true, debounceInterval: 500  },
     function (elem) {
-        elem.style.position = 'relative';
+        const titleElement = elem.parentElement.parentElement.parentElement.querySelectorAll('.notion-selectable')[0] ?? null;
+        const externalTaskId = buildExternalIdForNotion(titleElement?.dataset?.blockId ?? null, ENTITY_TYPE_DB);
 
         function getDescription () {
-            const controls = document.querySelector('.notion-page-controls');
-            const topBar = document.querySelector('.notion-topbar');
-            let title = '';
-      
-            if (controls) {
-              if (controls.nextElementSibling) {
-                title = controls.nextElementSibling;
-              } else {
-                const parent = controls.parentElement;
-      
-                if (!parent) return '';
-      
-                title = parent ? parent.nextElementSibling : '';
-              }
-            } else if (topBar) {
-              const breadcrumbs = topBar.querySelector('div > .notranslate')
-              if (breadcrumbs) {
-                title = breadcrumbs.childNodes[breadcrumbs.childNodes.length - 1].querySelector('.notranslate:last-child')
-              }
-            }
-      
-            return title ? title.textContent.trim() : '';
+            return titleElement ? titleElement.textContent.trim() : '';
         }
 
         const link = tcbutton.createTimerLink({
             className: 'notion',
-            description: getDescription
+            description: getDescription,
+            externalTaskId: externalTaskId,
+            isBackendIntegration: true,
+            taskNotFoundInfo: TASK_NOT_FOUND_INFO,
         });
-        link.style.marginRight = '10px'
 
         elem.prepend(link);
 
