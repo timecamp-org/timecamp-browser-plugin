@@ -15,7 +15,7 @@ tcbutton.render(
     '.notion-peek-renderer:not(.tc)',
     { observe: true, debounceInterval: 500 },
     function (elem) {
-        const titleElement = elem.querySelectorAll('.notion-scroller .notion-page-block')[0] ?? null;
+        const titleElement = elem.querySelector('.notion-scroller .notion-page-block')
         function getDescription () {
             return titleElement ? titleElement.textContent.trim() : '';
         }
@@ -49,7 +49,7 @@ tcbutton.render(
     '.notion-frame .notion-page-controls:not(.tc)',
     { observe: true, debounceInterval: 500  },
     function (elem) {
-        const titleElement = elem.parentElement.parentElement.parentElement.querySelectorAll('.notion-selectable')[0] ?? null;
+        const titleElement = elem.parentElement.parentElement.parentElement.querySelector('.notion-selectable');
         const externalTaskId = buildExternalIdForNotion(titleElement?.dataset?.blockId ?? null, ENTITY_TYPE_DB);
 
         function getDescription () {
