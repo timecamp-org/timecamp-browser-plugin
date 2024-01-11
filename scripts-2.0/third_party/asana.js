@@ -112,7 +112,7 @@ const initializeTCWidgets = (isLoggedIn) => {
     //Task details
     tcbutton.render(".TaskPane:not(.tc)", { observe: true }, (elem) => {
         const description = $(
-            ".TaskPane-titleRowInput textarea",
+            ".TitleInput textarea",
             elem
         ).textContent.trim();
         const externalTaskId = buildExternalIdForAsana(elem.dataset.taskId);
