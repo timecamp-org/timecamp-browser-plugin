@@ -24,9 +24,9 @@ const initializeTCWidgets = (isLoggedIn) => {
             return false;
         }
 
-        const description = elem
-            .querySelector(".BoardCard-taskName")
-            .textContent.trim();
+        const getDescription = () => {
+            return elem.querySelector(".BoardCard-taskName")?.textContent.trim() ?? '';
+        };
         const externalTaskId = buildExternalIdForAsana(elem.dataset.taskId);
         if (!externalTaskId) {
             return false;
@@ -35,7 +35,7 @@ const initializeTCWidgets = (isLoggedIn) => {
         const link = tcbutton.createTimerLink({
             className: ASANA,
             additionalClasses: [ASANA + "__board-view"],
-            description: description,
+            description: getDescription,
             buttonType: "minimal",
             externalTaskId: externalTaskId,
             isBackendIntegration: true,
@@ -68,7 +68,9 @@ const initializeTCWidgets = (isLoggedIn) => {
             }
 
             //child textarea id split
-            const description = elem.querySelector("textarea").textContent.trim();
+            const getDescription = () => {
+                return elem.querySelector("textarea")?.textContent.trim() ?? '';
+            };
             const externalTaskId = buildExternalIdForAsana(
                 $("textarea.SpreadsheetTaskName-input", elem).id.split("_").pop()
             );
@@ -79,7 +81,7 @@ const initializeTCWidgets = (isLoggedIn) => {
             const link = tcbutton.createTimerLink({
                 className: ASANA,
                 additionalClasses: [ASANA + "__list-view"],
-                description: description,
+                description: getDescription,
                 buttonType: "minimal",
                 externalTaskId: externalTaskId,
                 isBackendIntegration: true,
@@ -111,10 +113,9 @@ const initializeTCWidgets = (isLoggedIn) => {
 
     //Task details
     tcbutton.render(".TaskPane:not(.tc)", { observe: true }, (elem) => {
-        const description = $(
-            ".TitleInput textarea",
-            elem
-        ).textContent.trim();
+        const getDescription = () => {
+            return elem.querySelector(".TitleInput textarea")?.textContent.trim() ?? '';
+        };
         const externalTaskId = buildExternalIdForAsana(elem.dataset.taskId);
         if (!externalTaskId) {
             return false;
@@ -123,7 +124,7 @@ const initializeTCWidgets = (isLoggedIn) => {
         const link = tcbutton.createTimerLink({
             className: ASANA,
             additionalClasses: [ASANA + "__task-details"],
-            description: description,
+            description: getDescription,
             externalTaskId: externalTaskId,
             isBackendIntegration: true,
             taskNotFoundInfo: TASK_NOT_FOUND_INFO,
@@ -140,10 +141,9 @@ const initializeTCWidgets = (isLoggedIn) => {
         ".ItemRowTwoColumnStructure-left:not(.tc)",
         { observe: true },
         (elem) => {
-            let description = $(
-                ".simpleTextarea.AutogrowTextarea-input",
-                elem
-            ).textContent.trim();
+            const getDescription = () => {
+                return elem.querySelector(".simpleTextarea.AutogrowTextarea-input")?.textContent.trim() ?? '';
+            };
 
             const externalTaskId = buildExternalIdForAsana(
                 elem.parentNode.dataset.taskId
@@ -155,7 +155,7 @@ const initializeTCWidgets = (isLoggedIn) => {
             const link = tcbutton.createTimerLink({
                 className: ASANA,
                 additionalClasses: [ASANA + "__subtasks"],
-                description: description,
+                description: getDescription,
                 buttonType: "minimal",
                 externalTaskId: externalTaskId,
                 isBackendIntegration: true,
