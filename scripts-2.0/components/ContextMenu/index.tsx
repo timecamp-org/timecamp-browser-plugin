@@ -67,7 +67,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const onCloseCallback = props.onCloseCallback;
     const [userId, setUserId] = useState<number>(0);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
-    const [clearTrigger, setClearTrigger] = useState<boolean>(false);
     const [clearTriggerForTimePicker, setClearTriggerForTimePicker] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
     const [buttonHash, setButtonHash] = useState(props.buttonHash);
@@ -335,7 +334,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const clearAndClose = () => {
         setClearTriggerForTimePicker(!clearTriggerForTimePicker);
-        setClearTrigger(!clearTrigger);
         setOpen(false);
         setTaskId(0);
     };
@@ -360,7 +358,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             setNoTaskFoundDisplayAlert(true);
         }
         setTaskId(0);
-        setClearTrigger(!clearTrigger);
     };
 
     const onAutoDetectTaskForActiveBackendIntegration = () => {
@@ -468,7 +465,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     onNotFoundTaskForActiveBackendIntegration={onNotFoundTaskForActiveBackendIntegration}
                     onAutoDetectTaskForActiveBackendIntegration={onAutoDetectTaskForActiveBackendIntegration}
                     userId={userId}
-                    clearTrigger={clearTrigger}
                     presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
                     presetTaskByTaskId={taskIdToPreset}
                 />
