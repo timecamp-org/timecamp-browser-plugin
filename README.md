@@ -15,7 +15,7 @@ TimeCamp Browser Plugin Extension
 
 ## Build for production
 1. `unset SERVER_DOMAIN` or revert domain changes - just in case if you changed for development
-2. `npm run-script build` - it creates archive `dist/timecamp-browser-extension-2.x.x.zip` and directory `dist/plugin` with same unzipped files
+2. `npm run-script build-prod` - it creates archive `dist/timecamp-browser-extension-2.x.x.zip` and directory `dist/plugin` with same unzipped files
 3. [Install plugin in browser](#instalation-in-browser)
 
 ## Build for development

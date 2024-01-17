@@ -1,6 +1,5 @@
 .tc-button.notion:not(.min) {
-  margin: 0 0 10px 0;
-
+  margin: 0 0 18px 0;
   svg {
     width: 120px;
   }
@@ -23,6 +22,7 @@
 .tc-button.notion {
   color: rgb(55, 53, 47);
   text-decoration: none;
+  cursor: pointer !important;
 }
 
 body.notion-body.dark .tc-button.notion {
