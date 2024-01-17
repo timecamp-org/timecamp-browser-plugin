@@ -99,7 +99,9 @@ function ClickupTimer () {
         var clickupUserTaskHeaderSection = $(".task__toolbar").find( ".cu-task-header__section" )[0];
         
         if (!clickupUserTaskHeaderSection) {
-          clickupUserTaskHeaderSection = $('[data-test="task-hero-section__row"]').find(".cu-task-hero-section__row-item")[0];
+          clickupUserTaskHeaderSection = document
+              .querySelector('[data-test="task-hero-section__row"]')
+              ?.querySelector(".cu-task-hero-section__row-item");
         }
         
         $(button).insertAfter(clickupUserTaskHeaderSection);
