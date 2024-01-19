@@ -351,7 +351,7 @@ const TimePicker: React.FC<TimePickerInterface> = (props) => {
                 type='number'
                 step='1'
                 autoComplete='off'
-                min={1}
+                min={0}
                 max={12}
                 size={2}
                 name={INPUT_TYPE_HOUR_12}
