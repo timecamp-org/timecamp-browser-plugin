@@ -1,29 +1,39 @@
-'use strict';
+"use strict";
 
-const GOOGLE_CALENDAR = 'googlecalendar';
+const GOOGLE_CALENDAR = "googlecalendar";
 
 //Table view
-tcbutton.render(
-    '.i5a7ie:not(.tc)',
-    {observe: true},
-    elem => {
-        if ($('.tc-button', elem)) {
-            return false;
-        }
+tcbutton.render(".i5a7ie:not(.tc)", { observe: true }, (elem) => {
+  function createTimecampElements() {
+    const getDescription = () => {
+      const descriptionSelector = $('[role="heading"]', elem);
+      if (descriptionSelector) return descriptionSelector.textContent;
+      else return "";
+    };
 
-        const description = () => {
-            return $('.JAPzS', elem.parentElement.parentElement).dataset.text;
-        };
-
+    let cardHeader = $(".wv9rPe");
+    
+    if (cardHeader) {
         const link = tcbutton.createTimerLink({
             className: GOOGLE_CALENDAR,
             additionalClasses: [GOOGLE_CALENDAR + '__entry'],
-            description: description,
+            description: getDescription(),
             isBackendIntegration: true
         });
+      
+    
+      const timecampContainer = createTag("div", "tc-widget-container");
 
-        $('.pPTZAe', elem).prepend( link);
-
-        return true;
+      timecampContainer.appendChild(link);
+      cardHeader.appendChild(timecampContainer);
     }
-);
+  }
+  if (!$(".tc-widget-container")) {
+    createTimecampElements();
+  }
+  $$('[role="button"][data-opens-details="true"]').forEach((item) => {
+    item.addEventListener("click", (event) => {
+        createTimecampElements();
+    });
+  });
+});
