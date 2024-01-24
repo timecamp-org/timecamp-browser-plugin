@@ -614,5 +614,10 @@
     "matches": ["*://zenkit.com/*"],
     "script": ["zenkit.js"],
     "isActiveInProd": false
+  },
+  {
+    "matches": ["*://app.smartsheet.com/*"],
+    "script": ["smartsheet.js"],
+    "isActiveInProd": true
   }
 ]

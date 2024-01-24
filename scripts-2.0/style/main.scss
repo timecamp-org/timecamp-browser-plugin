@@ -1,5 +1,5 @@
-@import 'common';
-@import 'reset-styles';
+@import "common";
+@import "reset-styles";
 
 .tc-button {
   display: inline-block !important;
@@ -34,7 +34,6 @@
     width: 17px;
   }
 }
-
 
 //Overriding main styles for integrations
 @import "asana";
@@ -135,6 +134,7 @@
 @import "sherpadesk";
 @import "sifterapp";
 @import "smartboard";
+@import "smartsheet";
 @import "sourcelair";
 @import "spidergap";
 @import "sprintly";
