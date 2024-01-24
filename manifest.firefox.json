@@ -1,0 +1,5 @@
+{
+  "background": {
+    "scripts": ["scripts/background.firefox.js"]
+  }
+}

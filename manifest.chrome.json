@@ -1,0 +1,6 @@
+{
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "offline_enabled": false
+}
