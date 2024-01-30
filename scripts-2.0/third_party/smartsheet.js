@@ -14,11 +14,10 @@ tcbutton.render(
 
     const alreadyCreatedButton = $(".tc-button", elem);
     if (alreadyCreatedButton) {
-      if (taskName !== alreadyCreatedButton.title) {
-        alreadyCreatedButton.remove();
-      } else {
+      if (taskName === alreadyCreatedButton.title) {
         return false;
       }
+      alreadyCreatedButton.remove();
     }
 
     const link = tcbutton.createTimerLink({
@@ -46,9 +45,9 @@ tcbutton.render(
       const title = `${projectName} - ${projectName}`;
       if (title === alreadyCreatedButton.title) {
         return false;
-      } else {
-        alreadyCreatedButton.remove();
       }
+
+      alreadyCreatedButton.remove();
     }
 
     const link = tcbutton.createTimerLink({
