@@ -6,7 +6,8 @@ import tcStopButton from "../../../icons/stop-button-small.svg";
 import {Entry} from "../index";
 import translate from "../../../Translator";
 import TimeFormatter, {DURATION_FORMATS} from "../../../TimeFormatter";
-
+import Icon from '../../Icon'
+import {IconName} from '../../../icons/types'
 const timeFormatter = new TimeFormatter();
 
 export interface WorkingTimerSectionInterface {
@@ -56,7 +57,10 @@ const WorkingTimerSection: React.FC<WorkingTimerSectionInterface> = (props) => {
                             <div className='name'>{entry.taskName}</div>
                         </div>
                         {entry.breadcrumb && <div className='entry__breadcrumb'>{entry.breadcrumb}</div>}
-                        <div className='entry__note'>{entry.note}</div>
+                        {entry.note && <div className='entry__note'>
+                            <Icon name={IconName.STICKY_NOTE} iconPrefix={"far"} />&nbsp;&nbsp;&nbsp;
+                            {entry.note}
+                        </div>}
                     </div>
 
                     <div className='right'>

@@ -1,4 +1,4 @@
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faSync,
   faCaretUp,
@@ -18,7 +18,6 @@ import {
   faUndo,
   faTimes,
   faAsterisk,
-  faUserCircle,
   faSpinner,
   faBriefcase,
   faFileInvoiceDollar,
@@ -31,8 +30,8 @@ import {
   faTimesCircle,
   faPlus,
   faHeartBroken,
-  faDollarSign,
-} from '@fortawesome/pro-solid-svg-icons';
+  faDollarSign
+} from "@fortawesome/pro-solid-svg-icons";
 
 import {
   faTimesCircle as farTimesCircle,
@@ -41,8 +40,9 @@ import {
   faCalendarAlt as farCalendarAlt,
   faSignOutAlt as farSignOutAlt,
   faChartPie as farChartPie,
-  faClock as farClock
-} from '@fortawesome/pro-regular-svg-icons';
+  faClock as farClock,
+  faStickyNote as farStickyNote
+} from "@fortawesome/pro-regular-svg-icons";
 
 import {
   faGrinBeamSweat as falGrinBeamSweat,
@@ -60,9 +60,10 @@ import {
   faUserClock as falUserClock,
   faChevronDown as falChevronDown,
   faChevronUp as falChevronUp,
-} from '@fortawesome/pro-light-svg-icons';
+  faExternalLink as falExternalLink,
+} from "@fortawesome/pro-light-svg-icons";
 
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 /* Add icons to library */
 library.add(
@@ -85,7 +86,7 @@ library.add(
   faTimes,
   faAsterisk,
   faSpinner,
-  faUserCircle,
+
   faBriefcase,
   faFileInvoiceDollar,
   faCalendarCheck,
@@ -121,4 +122,6 @@ library.add(
   falUserClock,
   falChevronDown,
   falChevronUp,
+  falExternalLink,
+  farStickyNote 
 );

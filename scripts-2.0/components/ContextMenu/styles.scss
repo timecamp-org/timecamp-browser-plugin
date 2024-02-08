@@ -9,7 +9,6 @@
     font-weight: normal;
     color: $primaryTextColor;
     width: 440px;
-    height: 563px;
     box-sizing: border-box;
     border: #aea6ab 1px var(--theme-border-color);
     display: block;
@@ -27,9 +26,12 @@
 
     .context-menu-overflow-wrapper {
       overflow: auto;
-      height: calc(100% - 72px);
       padding: 20px;
       box-sizing: border-box;
+
+      .billable-wrapper {
+        margin-top:20px;        
+      }      
     }
 
     &-extended-height {
@@ -37,10 +39,6 @@
     }
 
     .TaskPicker, .TagPicker, .note, .duration {
-      margin-top: 15px;
-    }
-
-    .billable {
       margin-top: 15px;
     }
 
