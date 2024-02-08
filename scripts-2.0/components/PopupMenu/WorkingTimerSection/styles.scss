@@ -5,10 +5,12 @@
   font-size: 14px;
   font-weight: normal;
   padding-top: 15px;
+  color: var(--theme-color);
 
   &__title {
     margin: 0 0 10px 7px;
     font-weight: bold;
+    color: var(--theme-label-color);
   }
 
   &__entry {

@@ -18,12 +18,12 @@ $fontColor: #8a8a8a;
   .SearchInput__input {
     border: 1px solid;
     border-color: $backgroundColor;
-    background: $backgroundColor;
+    background: var(--theme-background-color-secondary);
     border-radius: $defaultBorderRadius;
     outline: none;
     font-size: 14px;
     width: calc(100% - 30px);
-    color: $primaryTextColor;
+    color: var(--theme-color);
     padding: 10px 15px;
 
     &:hover, &:focus {

@@ -24,7 +24,9 @@ import TimeSelectors from "../TimeSelectors";
 import DateTime from "../../helpers/DateTime";
 import TimeFormatter from "../../TimeFormatter";
 import WrongDatesError from "./Error/WrongDatesError";
-
+import { TCTheme } from "../../types/theme";
+import { getTheme, retrieveThemeFromStorage } from "../../helpers/theme";
+ 
 const pathService = new PathService();
 const logger = new Logger();
 const dateTime = new DateTime();
@@ -66,6 +68,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const addTimeEntryCallback = props.addTimeEntryCallback;
     const onCloseCallback = props.onCloseCallback;
     const [userId, setUserId] = useState<number>(0);
+    const [theme, setTheme] = useState<TCTheme>("default");
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTriggerForTimePicker, setClearTriggerForTimePicker] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
@@ -111,6 +114,10 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         };
     }, [props]);
 
+    useEffect(()=>{
+        retrieveThemeFromStorage(setTheme)
+    },[])
+
 
     useMemo(() => {
         if (service === TRELLO) {
@@ -139,6 +146,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             setUserId(parseInt(data.user_id));
             setIsAdmin(data.permissions.role_administrator);
             getBackendIntegrationAdData(data.user_id);
+            getTheme(data.user_id, setTheme);            
         });
 
         if (billableInputVisibility === null) {
@@ -203,6 +211,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         }).catch(() => {
         });
     }, []);
+
 
     const getBackendIntegrationAdData = (userId: number) => {
         browser.runtime.sendMessage({
@@ -385,6 +394,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     //data-elevation is fix for trello card modal (it close when click on context menu)
     return (
         <div
+            data-theme={theme}
             ref={node}
             className={`context-menu  ${!open ? "context-menu--hidden" : ""} ${props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0 ? "context-menu-extended-height" : ""}`}
             style={props.position}
@@ -397,7 +407,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
                 <SubscriptionExpiredError visible={errorSubscriptionExpiredVisible}/>
 
-                <Header />
+                <Header theme={theme}/>
 
                 <UnknownError
                     visible={errorUnknownVisible}

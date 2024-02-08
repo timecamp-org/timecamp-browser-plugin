@@ -10,6 +10,7 @@
   border-top: solid 1px $popupBorderGray;
   padding-top: 20px;
   margin-top: 28px;
+  color: var(--theme-color);
 
   .user-img {
     height: 39px;
@@ -68,11 +69,12 @@
   }
 
   &__user-slide-window {
-    box-shadow: 0 6px 32px 0 $popupShadowGray;
+    box-shadow: var(--theme-box-shadow);
     padding: 10px;
     height: 114px;
     width: 265px;
-    background: $popupBackground;
+    background-color: var(--theme-background-color);
+    color: var(--theme-color);
     position: absolute;
     top: 25%;
     right: -1px;
@@ -84,7 +86,7 @@
       padding: 10px;
 
       &:hover {
-        background-color: $popupGrayThird;
+        background-color: var(--theme-background-hover);
         border-radius: 8px;
       }
 
@@ -122,13 +124,13 @@
         text-align: left;
         width: 100%;
         height: 35px;
-        background-color: white;
-        color: $popupGraySecond;
+        background-color: var(--theme-background-color);
+        color: var(--theme-color);
         font-family: $defaultFontFamily;
         padding: 9px;
 
         &:hover {
-          background-color: $popupGrayThird;
+          background-color: var(--theme-background-hover);
           border-radius: 8px;
         }
 

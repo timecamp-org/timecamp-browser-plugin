@@ -7,7 +7,7 @@
     margin: 0;
     padding: 20px 0 20px 0;
     width: 100%;
-    border-top: $primaryBorderColor 1px solid;
+    border-top: var(--theme-border-display-color) 1px solid;
     background-color: inherit;
 
     &__buttons {
@@ -28,10 +28,12 @@
       border: solid 1px $primaryBorderColor;
       font-family: $defaultFontFamily;
       font-size: $defaultFontSize;
+      background-color: var(--theme-background-color);
+      color: var(--theme-color);
     }
 
     &__button-disabled {
-      background-color: $buttonDisabledColor;
+      background-color: var(--theme-background-color-secondary);
       color: $disabledFontColor;
       cursor: not-allowed;
     }
