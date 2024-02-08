@@ -1,4 +1,4 @@
-@import '../../../style/common';
+@import "../../../style/common";
 
 .tc-popup-footer {
   font-family: $defaultFontFamily;
@@ -7,36 +7,65 @@
 
   display: flex;
   justify-content: space-between;
-  border-top: solid 1px $popupBorderGray;
   padding-top: 20px;
-  margin-top: 28px;
+  margin-top: 10px;
 
-  .user-img {
-    height: 39px;
-    border-radius: 50%;
+  &__button-anchor {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 
-    &:hover {
-      border: solid 1px $popupGreen;
-      padding: 5px;
-      margin: -6px;
+    &__href {
+      color: #2380e3;
+      font-size: 12px;
+    }
+    & svg {
+      margin-right: 0.3rem;
     }
   }
-
-  &__button-add {
+  &__button-cancel {
+    border: solid 1px $primaryBorderColor;
+    font-family: $defaultFontFamily;
+    font-size: $defaultFontSize;
     width: 39px;
+    height: 39px;
+    background-color: transparent;
+    color: #4f4f4f;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 15px;
+  }
+  &__button-add {
+    width: 133px;
     height: 39px;
     border-radius: 8px;
     background-color: $popupGreen;
     border: none;
     color: white;
     cursor: pointer;
-
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0 0 0.5rem;
+    
     &:hover {
       opacity: 0.8;
     }
 
     svg {
       font-size: 17px;
+    }
+
+    &__icon {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    & span {
+      text-transform: uppercase;
     }
   }
 
@@ -64,85 +93,6 @@
       color: $popupGray;
       margin: 0 10px 0 0;
       font-size: 16px;
-    }
-  }
-
-  &__user-slide-window {
-    box-shadow: 0 6px 32px 0 $popupShadowGray;
-    padding: 10px;
-    height: 114px;
-    width: 265px;
-    background: $popupBackground;
-    position: absolute;
-    top: 25%;
-    right: -1px;
-    display: none;
-
-    .section-top {
-      display: flex;
-      flex-direction: row;
-      padding: 10px;
-
-      &:hover {
-        background-color: $popupGrayThird;
-        border-radius: 8px;
-      }
-
-      a {
-        display: flex;
-        text-decoration: none;
-        &:visited {
-          color: inherit;
-        }
-      }
-
-      .user {
-        &__display-name {
-          margin-left: 9px;
-          font-weight: bold;
-        }
-
-        &__email {
-          margin-left: 9px;
-          color: $popupGray;
-          font-size: 12px;
-        }
-      }
-    }
-
-    .section-bottom {
-      border-top: solid 1px $popupBorderGray;
-      margin-top: 9px;
-      padding-top: 10px;
-
-      &__button-sign-out {
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        text-align: left;
-        width: 100%;
-        height: 35px;
-        background-color: white;
-        color: $popupGraySecond;
-        font-family: $defaultFontFamily;
-        padding: 9px;
-
-        &:hover {
-          background-color: $popupGrayThird;
-          border-radius: 8px;
-        }
-
-        svg {
-          color: $popupGray;
-          font-size: 16px;
-          margin-left: 10px;
-          margin-right: 10px;
-        }
-      }
-    }
-
-    &--visible {
-      display: block;
     }
   }
 }

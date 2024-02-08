@@ -231,6 +231,9 @@
 	"go_to_timesheet": {
 		"message": "Go to Timesheet"
 	},
+	"see_full_timesheet": {
+		"message": "See full Timesheet"
+	},  
 	"go_to_subscriton_page": {
 		"message": "Go to subscription page"
 	},
