@@ -1,0 +1,37 @@
+.infobox {
+  display: flex;
+  gap: 0.5rem;
+  color: #17b54e;
+  background-color: #f1f9f3;
+  border-radius: 8px;
+  padding: 10px;
+  align-items: center;
+  margin-top: 7px;
+
+  & a {
+    color: #17b54e;
+    font-weight: 900;
+  }
+
+  & span {
+    color: #17b54e;
+    text-decoration-color: #17b54e;
+  }
+
+  &__cross {
+    font-size: 16px;
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  &[data-status="ERROR"] {
+    color: #8c0517;
+    background-color: #e375bb;
+    & a {
+      color: #8c0517;
+    }
+    & span {
+      color: #8c0517;
+    }
+  }
+}

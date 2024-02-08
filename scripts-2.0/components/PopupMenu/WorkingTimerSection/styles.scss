@@ -1,4 +1,4 @@
-@import '../../../style/common';
+@import "../../../style/common";
 
 .working-timer {
   font-family: $defaultFontFamily;
@@ -12,7 +12,7 @@
   }
 
   &__entry {
-    border: solid 1px $popupBorderGray;
+    border: dashed 2px $popupBorderGray;
     border-radius: 8px;
     width: 360px;
     height: 52px;
@@ -20,6 +20,10 @@
     justify-content: center;
     align-items: center;
     padding: 15px;
+
+    &--active {
+      border-style: solid;
+    }
 
     .entry-empty-info {
       color: $popupDisabledFontColor;
@@ -80,7 +84,13 @@
 
       .right {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+        white-space: nowrap;
+
+        & .entry__timer{
+          margin-right:10px;
+        }
       }
     }
 

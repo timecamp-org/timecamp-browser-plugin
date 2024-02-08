@@ -51,4 +51,7 @@ export enum IconName {
   CHART_PIE = 'chart-pie',
   CLOCK = 'clock',
   USER_CLOCK = 'user-clock',
+  EXTERNAL_LINK='external-link',
+  POWER_OFF='power-off',
+  STICKY_NOTE='sticky-note'
 }

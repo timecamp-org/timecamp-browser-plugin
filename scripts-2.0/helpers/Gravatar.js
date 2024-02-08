@@ -1,5 +1,8 @@
 import md5 from 'crypto-js/md5';
 
+//@ts-ignore
+import AvatarIconSVG from "../icons/user-circle-fas.svg";
+
 const AVATAR_URL = 'https://www.gravatar.com/avatar/';
 
 export default class Gravatar {
@@ -15,6 +18,6 @@ export default class Gravatar {
     }
 
     getDefaultImageUrl = () => {
-        return AVATAR_URL + 'aaa?s=120&d=mm';
+        return AvatarIconSVG;
     }
 }

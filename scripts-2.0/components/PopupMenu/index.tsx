@@ -1,14 +1,18 @@
-const browser = require('webextension-polyfill');
+const browser = require("webextension-polyfill");
 import * as React from "react";
-import Header from "../Header";
-import {useEffect, useState, useMemo} from "react";
-import WorkingTimerSection from "./WorkingTimerSection";
-import Footer from "./Footer";
-import './styles.scss';
-import LoginWindow from "../LoginWindow";
+import { useEffect, useMemo, useState } from "react";
 import ContextMenu from "../ContextMenu";
-import Gravatar from "../../helpers/Gravatar";
+import LoginWindow from "../LoginWindow";
+import Footer from "./Footer";
+import Header from "./Header";
+import WorkingTimerSection from "./WorkingTimerSection";
+import "./styles.scss";
+
 import DateTime from "../../helpers/DateTime";
+import Gravatar from "../../helpers/Gravatar";
+import InfoBox from "../InfoBox";
+import { InfoBoxStatus } from "../InfoBox/types";
+import { ContextMenuType } from "../ContextMenu/types";
 
 const gravatar = new Gravatar();
 const dateTime = new DateTime();
@@ -45,18 +49,22 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         color: '#aaa',
     }
 
-    const [isUserWindowOpen, setIsUserWindowOpen] = useState(false);
-    const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
-    const [isUserLogged, setIsUserLogged] = useState(false);
-    const [user, setUser] = useState<User>(emptyUser);
-    const [entry, setEntry] = useState<Entry>(emptyEntry);
-    const [isTimerWorking, setIsTimerWorking] = useState(false);
+  const [isUserWindowOpen, setIsUserWindowOpen] = useState(false);
+  const [contextMenuType, setContextMenuType] = useState<
+    ContextMenuType | undefined
+  >(undefined);
+  const [isUserLogged, setIsUserLogged] = useState(false);
+  const [user, setUser] = useState<User>(emptyUser);
+  const [entry, setEntry] = useState<Entry>(emptyEntry);
+  const [isTimerWorking, setIsTimerWorking] = useState(false);
+  const [timeEntryAddedInfoBoxStatus, settimeEntryAddedInfoBoxStatus] =
+    useState<InfoBoxStatus | undefined>(undefined);
 
-    const setCurrentEntry = (currentEntry) => {
-        if (currentEntry === null) {
-            setIsTimerWorking(false);
-            return;
-        }
+  const setCurrentEntry = (currentEntry) => {
+    if (currentEntry === null) {
+      setIsTimerWorking(false);
+      return;
+    }
 
         let entry = {
             taskName: currentEntry.description !== undefined ? currentEntry.description : emptyEntry.taskName,
@@ -93,6 +101,7 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
             type: 'logOut'
         }).then(() => {
             setIsUserWindowOpen(false);
+            setContextMenuType(undefined);
             setIsUserLogged(false);
             setUser(emptyUser);
         }).catch(() => {
@@ -136,7 +145,8 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
                 buttonHash: buttonHash
             }).then((response) => {
                 setIsTimerWorking(true);
-                setIsContextMenuOpen(false);
+                setContextMenuType(undefined);
+                
 
                 let entry = {
                     taskName: response.name === null ? emptyEntry.taskName : response.name,
@@ -176,8 +186,10 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
                 service: service,
                 buttonHash: buttonHash
             }).then((response) => {
+                settimeEntryAddedInfoBoxStatus(InfoBoxStatus.SUCCESS);
                 resolve(response);
             }).catch((response) => {
+                settimeEntryAddedInfoBoxStatus(InfoBoxStatus.ERROR);
                 reject(response);
             });
         });
@@ -212,48 +224,67 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
         });
     }, []);
 
-    return (
-        <div className='popup-container'>
-            <div className={`tc-popup ${!isUserLogged || isContextMenuOpen ? 'tc-popup--hidden' : ''}`}>
-                <Header />
-                <WorkingTimerSection
-                    isTimerWorking={isTimerWorking}
-                    entry={entry}
-                    stopTimerCallback={stopTimer}
-                />
-                <Footer
-                    isUserWindowOpen={isUserWindowOpen}
-                    user={user}
-                    logoutCallback={logOut}
-                    onPlusButtonClickCallback={()=>{setIsContextMenuOpen(true);}}
-                />
-            </div>
+  return (
+    <div className="popup-container">
+      <div
+        className={`tc-popup ${!isUserLogged || contextMenuType ? "tc-popup--hidden" : ""}`}
+      >
+        <Header
+          user={user}
+          logoutCallback={logOut}
+          isUserWindowOpen={isUserWindowOpen}
+          setIsUserWindowOpen={setIsUserWindowOpen}
+        />
+        <InfoBox
+          status={timeEntryAddedInfoBoxStatus}
+          onClose={() => settimeEntryAddedInfoBoxStatus(undefined)}
+        />
+        <WorkingTimerSection
+          isTimerWorking={isTimerWorking}
+          entry={entry}
+          stopTimerCallback={stopTimer}
+        />
+        <Footer
+          user={user}
+          logoutCallback={logOut}
+          onPlusButtonClickCallback={() => {}}
+          onSetContextMenuType={setContextMenuType}
+        />
+      </div>
 
-            {!isUserLogged && <div className='timecamp login-window-wrapper'>
-                <LoginWindow
-                    position={{ left: 0, top: 0 }}
-                />
-            </div>}
-
-            {isContextMenuOpen && <div className='timecamp'>
-                <ContextMenu
-                    service={'chrome_plugin'}
-                    position={{ left: 0, top: 0 }}
-                    note={''}
-                    billable={true}
-                    startTimerCallback={startTimer}
-                    addTimeEntryCallback={addTimeEntry}
-                    billableInputVisibility={null}
-                    externalTaskId={''}
-                    buttonHash={null}
-                    isBackendIntegration={false}
-                    taskNotFoundInBackendIntegrationInfo={''}
-                    onCloseCallback={() => {setIsContextMenuOpen(false)}}
-                    embedOnPopup={true}
-                />
-            </div>}
+      {!isUserLogged && (
+        <div className="timecamp login-window-wrapper">
+          <LoginWindow position={{ left: 0, top: 0 }} />
         </div>
-    );
+      )}
+
+      {contextMenuType && (
+        <div className="timecamp">
+          <ContextMenu
+            service={"chrome_plugin"}
+            position={{ left: 0, top: 0 }}
+            note={""}
+            billable={true}
+            startTimerCallback={startTimer}
+            addTimeEntryCallback={
+              contextMenuType === ContextMenuType.ENTRY
+                ? addTimeEntry
+                : undefined
+            }
+            billableInputVisibility={null}
+            externalTaskId={""}
+            buttonHash={null}
+            isBackendIntegration={false}
+            taskNotFoundInBackendIntegrationInfo={""}
+            onCloseCallback={() => {
+              setContextMenuType(undefined);
+            }}
+            embedOnPopup={true}
+          />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default PopupMenu;

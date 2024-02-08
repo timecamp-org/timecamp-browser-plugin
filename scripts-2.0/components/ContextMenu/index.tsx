@@ -38,7 +38,7 @@ export interface ContextMenuInterface {
     note: string,
     billable: boolean,
     startTimerCallback: Function,
-    addTimeEntryCallback: Function,
+    addTimeEntryCallback?: Function,
     onCloseCallback: Function,
     billableInputVisibility: boolean|null,
     externalTaskId: string,
@@ -90,6 +90,19 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const [wrongDatesErrorMessage, setWrongDatesErrorMessage] = useState<string>('');
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
+
+    const isTimeEntryInValid =
+    props.service === "chrome_plugin" &&
+    props.addTimeEntryCallback &&
+    !stopTime;
+
+    const shouldShowAddEntryButton =
+      props.service !== "chrome_plugin"
+        ? false
+        : props.addTimeEntryCallback
+          ? true
+          : false;
+
 
 
     useEffect(() => {
@@ -298,7 +311,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     };
 
     const addTimeEntry = (startTime, stopTime) => {
-        addTimeEntryCallback(
+        addTimeEntryCallback?.(
             taskId,
             note,
             service,
@@ -336,6 +349,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setClearTriggerForTimePicker(!clearTriggerForTimePicker);
         setOpen(false);
         setTaskId(0);
+        onCloseCallback()
     };
 
     const renderTagPicker = () => {
@@ -381,6 +395,13 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             .replace('*linkStart*', "<a style='text-transform: capitalize; text-decoration: none; color: #2380e3;' target='_blank' href='" + pathService.getIntegrationMarketingWebsiteUrl(service) + "'>")
             .replace('*linkClose*', '</a>')));
     };
+
+    const onStopTimeValueChange = (value) => {
+        if (value !== null) {
+            setWrongDatesErrorMessage('');
+        }
+        setStopTime(value);
+    } 
 
     //data-elevation is fix for trello card modal (it close when click on context menu)
     return (
@@ -484,28 +505,29 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                         const now = dateTime.getNow();
                         setWrongDatesErrorMessage((now < value && stopTime === null) ? translate('Start time cannot be greater than now') : '');
                     }}
-                    onStopTimeValueChange={(value) => {
-                        if (value !== null) {
-                            setWrongDatesErrorMessage('');
-                        }
-                        setStopTime(value);
-                    }}
+                    onStopTimeValueChange={ props.addTimeEntryCallback? onStopTimeValueChange : undefined}
                 />
                 <WrongDatesError message={wrongDatesErrorMessage} visible={wrongDatesErrorMessage !== ''}/>
                 {
                     billableInputVisibility &&
-                    <Billable
-                        billable={billable}
-                        onBillableChange={(newBillable) => {setBillable(newBillable)}}
-                    />
+                    <div className="billable-wrapper">
+                        <Billable
+                            billable={billable}
+                            onBillableChange={(newBillable) => {setBillable(newBillable)}}
+                        />
+                    </div>
                 }
             </div>
 
             <Footer
-                idDisabled={!isSelectedTagsValid || wrongDatesErrorMessage !== ''}
-                onClickSave={onClickSave}
-                onClickCancel={onClickCancel}
-                showAddEntryButton={stopTime !== null}
+              idDisabled={
+                !isSelectedTagsValid ||
+                wrongDatesErrorMessage !== "" ||
+                isTimeEntryInValid
+              }
+              onClickSave={onClickSave}
+              onClickCancel={onClickCancel}
+              showAddEntryButton={shouldShowAddEntryButton}
             />
         </div>
     );
