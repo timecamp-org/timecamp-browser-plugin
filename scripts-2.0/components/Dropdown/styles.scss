@@ -10,11 +10,12 @@ $disabledFontColor: #8a8a8a;
   .Dropdown__button {
     font-family: Poppins;
     border: 1px solid;
-    border-color: $borderColor;
+    border-color: var(--theme-border-color-secondary);
     border-radius: $defaultBorderRadius;
     padding: 10px 15px;
     display: flex;
     cursor: pointer;
+    background-color: var(--theme-background-color);
 
     &:hover {
       border-color: $hoverBorderColor;
@@ -26,13 +27,12 @@ $disabledFontColor: #8a8a8a;
     }
 
     &--disabled {
-      background-color: $disabledBackgroundColor;
-      border-color: $disabledBackgroundColor;
+      background-color: var(--theme-background-color-secondary);
       color: $disabledFontColor;
       pointer-events: none;
 
       &:hover {
-        border-color: $disabledBackgroundColor;
+        border-color: var(--theme-border-disabled-color);
         color: $disabledFontColor;
       }
     }
@@ -44,6 +44,7 @@ $disabledFontColor: #8a8a8a;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: var(--theme-color);
   }
 
   .Dropdown__icon {
@@ -62,7 +63,7 @@ $disabledFontColor: #8a8a8a;
     position: fixed;
     top: 0;
     left: 0;
-    box-shadow: 0 6px 32px 0 #dcdcdc;
+    box-shadow: var(--theme-box-shadow);
     border-radius: $defaultBorderRadius;
     overflow-y: hidden;
     z-index: 999999;

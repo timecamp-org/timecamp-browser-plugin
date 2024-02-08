@@ -5,13 +5,12 @@
     height: 39px;
     width: 120px;
     border-radius: $defaultBorderRadius;
-    border: solid 1px $primaryBorderColor;
+    border: solid 1px var(--theme-border-color-secondary);
     font-size: $defaultFontSize;
     font-family: $defaultFontFamily;
     display: flex;
     align-items: center;
     text-align: center;
-    background-color: $primaryBackgroundColor;
     box-sizing: border-box;
     padding-left: 15px;
 
@@ -41,10 +40,14 @@
       border: none;
       outline: none;
       text-align: center;
-      background-color: inherit;
       caret-color: transparent;
       padding: 0;
       min-width: 0;
+      background-color: var(--theme-background-color);
+      color: var(--theme-color);
+    }
+    &__separator{
+      color: var(--theme-color);
     }
 
     &__arrows {

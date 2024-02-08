@@ -172,4 +172,7 @@ export default class PathService {
     getUsersUrl(){
         return this.serverUrl + "third_party/api/users?active_only=true";
     }
+    getThemeUrl(userId) {
+      return this.serverUrl + `third_party/api/user/${userId}/setting?name=theme`;
+    }    
 }

@@ -1,14 +1,15 @@
 const browser = require('webextension-polyfill');
 import * as React from "react";
-import Header from "../Header";
-import {useEffect, useState, useMemo} from "react";
-import WorkingTimerSection from "./WorkingTimerSection";
-import Footer from "./Footer";
-import './styles.scss';
-import LoginWindow from "../LoginWindow";
-import ContextMenu from "../ContextMenu";
-import Gravatar from "../../helpers/Gravatar";
+import { useEffect, useMemo, useState } from "react";
 import DateTime from "../../helpers/DateTime";
+import Gravatar from "../../helpers/Gravatar";
+import { getTheme, retrieveThemeFromStorage } from "../../helpers/theme";
+import ContextMenu from "../ContextMenu";
+import Header from "../Header";
+import LoginWindow from "../LoginWindow";
+import Footer from "./Footer";
+import WorkingTimerSection from "./WorkingTimerSection";
+import './styles.scss';
 
 const gravatar = new Gravatar();
 const dateTime = new DateTime();
@@ -51,6 +52,17 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
     const [user, setUser] = useState<User>(emptyUser);
     const [entry, setEntry] = useState<Entry>(emptyEntry);
     const [isTimerWorking, setIsTimerWorking] = useState(false);
+    const [theme, setTheme] = useState<'default' | 'darkmode'>('default')
+
+    useEffect(()=>{
+        retrieveThemeFromStorage(setTheme)
+        browser.runtime.sendMessage({
+            type:'getUserData'
+        }).then(data=>{
+            getTheme(data.user_id, setTheme)
+            
+        })
+    },[])
 
     const setCurrentEntry = (currentEntry) => {
         if (currentEntry === null) {
@@ -214,8 +226,8 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
 
     return (
         <div className='popup-container'>
-            <div className={`tc-popup ${!isUserLogged || isContextMenuOpen ? 'tc-popup--hidden' : ''}`}>
-                <Header />
+            <div className={`tc-popup ${!isUserLogged || isContextMenuOpen ? 'tc-popup--hidden' : ''}`}  data-theme={theme}>
+                <Header theme={theme} />
                 <WorkingTimerSection
                     isTimerWorking={isTimerWorking}
                     entry={entry}

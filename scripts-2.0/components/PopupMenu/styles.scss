@@ -2,6 +2,8 @@
 
 .popup-container {
     .tc-popup {
+        @include theme-variables;
+
         width: 399px;
         font-family: $defaultFontFamily;
         font-size: 14px;
@@ -9,7 +11,7 @@
         color: $popupPrimaryTextColor;
         padding: 20px;
         position: relative;
-        background-color: $popupBackground;
+        background-color: var(--theme-background-color);
         display: flex;
         flex-direction: column;
         box-shadow: 0 6px 32px 0 $popupShadowGray;
@@ -17,6 +19,9 @@
         &--hidden {
             display: none;
         }
+
+      
+
     }
 
     .login-window-wrapper {

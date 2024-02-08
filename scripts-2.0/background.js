@@ -369,6 +369,13 @@ const TcButton = {
                             reject(error);
                         });
                         break;
+                    case "getTheme":
+                      apiService.getTheme(request.userId).then((response) => {
+                            resolve(response);
+                        }).catch((error) => {
+                            reject(error);
+                        });
+                        break;                        
                 }
             } catch (e) {
                 logger.error(e);

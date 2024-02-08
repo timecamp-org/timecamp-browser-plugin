@@ -2,6 +2,8 @@
 
 .timecamp {
   .context-menu {
+    @include theme-variables;
+
     font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: normal;
@@ -9,13 +11,15 @@
     width: 440px;
     height: 563px;
     box-sizing: border-box;
-    border: #aea6ab 1px solid;
+    border: #aea6ab 1px var(--theme-border-color);
     display: block;
     position: fixed;
-    background-color: $primaryBackgroundColor;
+    background-color: var(--theme-background-color);
     line-height: initial;
     z-index: 99999;
     overflow: hidden;
+    
+
 
     &--hidden {
       display: none;

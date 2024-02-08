@@ -17,14 +17,17 @@
         width: 109px;
         padding: 0 0 0 15px;
         border-radius: 8px;
-        border: 1px solid $primaryBorderColor;
+        border: 1px solid var(--theme-border-color-secondary);
         caret-color: transparent;
         outline: none;
         text-transform: capitalize;
+        background-color: var(--theme-background-color);
+        color: var(--theme-color);
       }
 
       label {
         text-transform: capitalize;
+        color: var(--theme-label-color);
       }
     }
 
