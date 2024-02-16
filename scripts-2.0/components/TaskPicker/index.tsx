@@ -9,7 +9,7 @@ import { IconName } from "../../icons/types";
 import { FixedSizeTree as Tree } from "react-vtree";
 import translate from "../../Translator";
 const browser = require('webextension-polyfill');
-const loaderGifUrl = browser.extension.getURL('images/loader.gif');
+const loaderGifUrl = browser.runtime.getURL('images/loader.gif');
 import decodeHtmlEntities from "../../helpers/HtmlEntities";
 
 export interface Task {
@@ -26,7 +26,6 @@ export interface TaskPicker {
     browser: any;
     onTaskClick(taskId: Task): any,
     userId: number,
-    clearTrigger: boolean,
     presetTaskByTaskId: number|null,
     presetTaskByExternalId: string|null,
     onNotFoundTaskForActiveBackendIntegration(): any,
@@ -449,9 +448,11 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
           sortTasksAlphabetically(a.children)
       })
       return taskTree;
-    }  
+    }
 
   React.useEffect(() => {
+      taskPickerHook.selectTask(taskPickerHook.emptyTask)
+
       if(props.userId !== 0) {
           if(taskPickerHook.taskList.length === 0) {
               fetchAndPrepareRecentlyUsedTasks();
@@ -461,10 +462,6 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
           }
       }
   }, [props.userId, props.presetTaskByExternalId, props.presetTaskByTaskId]);
-
-  React.useEffect(() => {
-      taskPickerHook.selectTask(taskPickerHook.emptyTask);
-  }, [props.clearTrigger]);
 
   React.useEffect(() => {
     if (taskPickerHook.searchText.length >= MIN_SEARCH_TEXT_LENGTH) {

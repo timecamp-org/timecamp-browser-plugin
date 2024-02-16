@@ -49,7 +49,7 @@
                         {
                             id:         "tc-badge",
                             class:    "badge",
-                            src:        chrome.extension.getURL('images/icon-14.png'),
+                            src:        chrome.runtime.getURL('images/icon-14.png'),
                             title:      Messages.badgeTimerRunning
                         });
                 badges.append(badge);
@@ -138,7 +138,7 @@
 
         buttonObj.uiElement = button;
         this.button = button;
-        button.append($('<img id="tc-logo" src="' + chrome.extension.getURL('images/icon-16.png') + '" />'));
+        button.append($('<img id="tc-logo" src="' + chrome.runtime.getURL('images/icon-16.png') + '" />'));
         button.append($('<span/>', { 'class': 'text' }).text(Messages.synchronizing));
         button.append($('<span/>', { 'class': 'time' }).text("00:00").hide());
 

@@ -166,7 +166,7 @@ function TeamworkTimer() {
                             id:         "tc-badge",
                             "class":    "badge",
                             style:      "vertical-align: top;",
-                            src:        chrome.extension.getURL('images/icon-14.png'),
+                            src:        chrome.runtime.getURL('images/icon-14.png'),
                             title:      Messages.badgeTimerRunning
                         });
                 badges.prepend(badge);

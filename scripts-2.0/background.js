@@ -1,6 +1,4 @@
-const DEBUG = process.env.DEBUG;
-const EMPTY_NAME = '(No title)';
-
+import 'regenerator-runtime/runtime'
 import browser from 'webextension-polyfill';
 import ApiService from './ApiService';
 import Logger from './Logger';
@@ -8,12 +6,17 @@ import StorageManager from './StorageManager';
 import GroupSetting from "./GroupSetting";
 import FeatureFlag from "./FeatureFlag";
 import AnalyticsService from './Analytics';
+import { fetchDetailedReport } from "./background/reports/detailed";
 
-window.apiService = new ApiService();
-window.logger = new Logger();
-window.storageManager = new StorageManager();
-window.analyticsService = new AnalyticsService();
-window.TcButton = {
+const DEBUG = process.env.DEBUG;
+const EMPTY_NAME = '(No title)';
+
+let CACHE = {};
+const apiService = new ApiService();
+const logger = new Logger();
+const storageManager = new StorageManager();
+const analyticsService = new AnalyticsService();
+const TcButton = {
     currentEntry: undefined,
     isUserLogged: false,
     user: null,
@@ -89,7 +92,37 @@ window.TcButton = {
                             reject(error);
                         });
                         break;
+                    case 'getUsers':
+                        if (CACHE.hasOwnProperty(request.type)) {
+                            console.log(request.type + ' - using cache');
+                            resolve(CACHE[request.type]);
+                            break;
+                        }
 
+                        apiService.getUsers().then((response) => {
+                            CACHE[request.type] = response;
+                            console.log(request.type + ' - setting cache');
+                            resolve(response);
+                        }).catch((error) => {
+                            reject(error);
+                        });
+                        break;
+
+                    case 'fetchDetailedReport':
+                        if (CACHE.hasOwnProperty(request.type)) {
+                            console.log(request.type + ' - using cache');
+                            resolve(CACHE[request.type]);
+                            break;
+                        }
+                        fetchDetailedReport().then((response) => {
+                            CACHE[request.type] = response;
+                            console.log(request.type + ' - setting cache');
+                            resolve(response);
+                        }).catch((error) => {
+                            console.error(error);
+                            reject(error);
+                        });
+                        break;
                     case 'getTagLists':
                         apiService.getTagLists(
                             request.tags,
@@ -260,7 +293,15 @@ window.TcButton = {
                         break;
 
                     case 'getFullTaskTree':
+                        if (CACHE.hasOwnProperty(request.type) && !!request.useCache) {
+                            console.log(request.type + ' - using cache');
+                            resolve(CACHE[request.type]);
+                            break;
+                        }
+
                         apiService.getFullTaskTree().then((response) => {
+                            CACHE[request.type] = response;
+                            console.log(request.type + ' - setting cache');
                             resolve(response);
                         }).catch((error) => {
                             reject(error);
@@ -451,6 +492,7 @@ window.TcButton = {
         TcButton.currentEntry = null;
         apiService.rootGroupId = null;
         apiService.userId = null;
+        CACHE = {};
 
         TcButton.updateIcon();
         browser.tabs.query({ currentWindow: true, active: true }).then((tabs) => {
@@ -640,11 +682,11 @@ window.TcButton = {
 
     updateIcon: function () {
         let imagePath = {
-            '19': TcButton.currentEntry ? 'images/icon-19.png' : 'images/icon-19-gray.png',
-            '38': TcButton.currentEntry ? 'images/icon-38.png' : 'images/icon-38-gray.png'
+            '19': TcButton.currentEntry ? '/images/icon-19.png' : '/images/icon-19-gray.png',
+            '38': TcButton.currentEntry ? '/images/icon-38.png' : '/images/icon-38-gray.png'
         };
 
-        browser.browserAction.setIcon({ path: imagePath });
+        browser.action.setIcon({ path: imagePath });
     },
 }
 
@@ -658,7 +700,6 @@ browser.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
         showInstructionsPage();
         analyticsService.trackEvent('installed', 'install');
-
     } else if (details.reason === 'update') {
         const thisVersion = browser.runtime.getManifest().version;
         const versionWhenActionIsPerformed = '2.21.1';
@@ -694,3 +735,12 @@ setInterval(() => {
     }).catch((e) => {
     })
 }, 30000);
+
+setInterval(() => {
+    CACHE = {};
+}, 30*60*1000);
+
+setInterval(() => {
+    delete CACHE['fetchDetailedReport'];
+    console.log('clear report data');
+}, 5*60*1000);

@@ -1,14 +1,15 @@
 {
   "name": "timecamp-chrome-extension",
-  "version": "2.63.0",
+  "version": "2.85.2",
   "description": "TimeCamp Google Chrome Time Tracking Extension",
   "main": "index.js",
   "scripts": {
     "cosmos": "cosmos",
     "cosmos:export": "cosmos-export",
     "start": "webpack-cli --mode development --watch",
-    "build": "webpack-cli --mode production && npm run merge-background-files && npm run zip",
+    "build-prod": "bash -c \"if [ ! -z \"$SERVER_DOMAIN\" ]; then echo 'Server domain must be empty in production build'; else npm run build-prod-unsafe; fi\"",
     "build-dev": "webpack-cli --mode development && npm run merge-background-files",
+    "build-prod-unsafe": "webpack-cli --mode production && npm run merge-background-files && npm run zip",
     "merge-background-files": "cat 'dist/plugin/scripts-2.0/background-2.0.js' >> 'dist/plugin/scripts/background.js'",
     "zip": "bash -c \"pushd dist/plugin && zip -rq ../timecamp-browser-extension-`node -p \"require('./package.json').version\"`.zip * && popd\""
   },
@@ -79,6 +80,7 @@
     "react-html-parser": "^2.0.2",
     "react-vtree": "^2.0.4",
     "react-window": "^1.8.6",
+    "regenerator-runtime": "^0.14.0",
     "sass-loader": "^11.0.1",
     "svg-url-loader": "^7.1.1",
     "webpack-log": "^3.0.1"

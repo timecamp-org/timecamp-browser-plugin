@@ -46,7 +46,7 @@ function ClickupTimer () {
                     {
                         id: "tc-badge",
                         class: "badge",
-                        src: chrome.extension.getURL('images/icon-14.png'),
+                        src: chrome.runtime.getURL('images/icon-14.png'),
                         title: Messages.badgeTimerRunning
                     });
             }
@@ -96,7 +96,14 @@ function ClickupTimer () {
                 $this.buttonInsertionInProgress = false;
             });
 
-        var clickupUserTaskHeaderSection = $('.task__toolbar').find('.cu-task-header__section')[0];
+        var clickupUserTaskHeaderSection = $(".task__toolbar").find( ".cu-task-header__section" )[0];
+        
+        if (!clickupUserTaskHeaderSection) {
+          clickupUserTaskHeaderSection = document
+              .querySelector('[data-test="task-hero-section__row"]')
+              ?.querySelector(".cu-task-hero-section__row-item");
+        }
+        
         $(button).insertAfter(clickupUserTaskHeaderSection);
         buttonObj.insertInProgress = false;
 

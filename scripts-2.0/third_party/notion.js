@@ -1,17 +1,32 @@
 'use strict';
 
+const TASK_NOT_FOUND_INFO = 'notion_task_not_found_in_backend_integration_info';
+
+const NOTION = 'notion';
+const ENTITY_TYPE_PAGE = 'page';
+const ENTITY_TYPE_DB = 'db';
+
+const buildExternalIdForNotion = (taskId, entity) => {
+    return `${NOTION}_${entity}_${taskId}`;
+};
+
+//Item view
 tcbutton.render(
     '.notion-peek-renderer:not(.tc)',
-    { observe: true },
+    { observe: true, debounceInterval: 500 },
     function (elem) {
+        const titleElement = elem.querySelector('.notion-scroller .notion-page-block')
         function getDescription () {
-            const descriptionElem = elem.querySelector('.notion-scroller .notion-selectable div[contenteditable="true"]');
-            return descriptionElem ? descriptionElem.textContent.trim() : '';
+            return titleElement ? titleElement.textContent.trim() : '';
         }
 
+        const externalTaskId = buildExternalIdForNotion(titleElement?.dataset?.blockId ?? null, ENTITY_TYPE_PAGE);
         const link = tcbutton.createTimerLink({
             className: 'notion',
-            description: getDescription
+            description: getDescription,
+            externalTaskId: externalTaskId,
+            isBackendIntegration: true,
+            taskNotFoundInfo: TASK_NOT_FOUND_INFO,
         });
 
         const wrapper = document.createElement('div');
@@ -29,22 +44,24 @@ tcbutton.render(
     }
 );
 
+//List view 2
 tcbutton.render(
-    '.notion-page-controls + div:not(.tc)',
-    { observe: true },
+    '.notion-frame .notion-page-controls:not(.tc)',
+    { observe: true, debounceInterval: 500  },
     function (elem) {
-        elem.style.position = 'relative';
+        const titleElement = elem.parentElement.parentElement.parentElement.querySelector('.notion-selectable');
+        const externalTaskId = buildExternalIdForNotion(titleElement?.dataset?.blockId ?? null, ENTITY_TYPE_DB);
 
         function getDescription () {
-            const descriptionElem = elem ? elem.querySelector('div[data-root="true"]') : '';
-
-            return descriptionElem ? descriptionElem.textContent.trim() : '';
+            return titleElement ? titleElement.textContent.trim() : '';
         }
 
         const link = tcbutton.createTimerLink({
             className: 'notion',
-            buttonType: 'minimal',
-            description: getDescription
+            description: getDescription,
+            externalTaskId: externalTaskId,
+            isBackendIntegration: true,
+            taskNotFoundInfo: TASK_NOT_FOUND_INFO,
         });
 
         elem.prepend(link);

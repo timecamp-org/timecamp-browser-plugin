@@ -9,6 +9,8 @@ const PREFIX_ACCOUNT = 'account';
 
 const DEBOUNCE_INTERVAL = 2000;
 
+const browser = require('webextension-polyfill');
+
 const buildExternalIdForSalesforce = (taskId, prefix) => {
     let externalTaskId = '';
     return externalTaskId.concat(
@@ -18,6 +20,16 @@ const buildExternalIdForSalesforce = (taskId, prefix) => {
         '_',
         taskId,
     );
+}
+
+const determinePrefix = (partOfExternalId, tasks) => {
+    for (const [key, value] of Object.entries(tasks)) {
+        if (value.external_task_id !== null && value.external_task_id.includes(partOfExternalId)) {
+            return value.external_task_id;
+        }
+    }
+
+    return null;
 }
 
 const findIdInUrl = () => {
@@ -232,7 +244,7 @@ tcbutton.render(
 
 //Opportunity view
 tcbutton.render(
-    '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
+    '.primaryFieldRow .slds-col.slds-has-flexi-truncate:not(.tc)',
     {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
     elem => {
         if (window.location.href.indexOf("/o/") !== -1) {
@@ -246,7 +258,7 @@ tcbutton.render(
             return false;
         }
 
-        const description = $('slot', elem).textContent.trim();
+        const description = elem.querySelector('.slds-page-header__title').textContent.trim();
         const externalTaskId = buildExternalIdForSalesforce(
             taskId,
             PREFIX_OPPORTUNITY
@@ -264,73 +276,35 @@ tcbutton.render(
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
-        elem.insertAdjacentElement('afterend', link);
+        elem.insertAdjacentElement('beforeend', link);
 
         return true;
     }
 );
 
-//Tasks view
+//Tasks view - disabled due to missing external id
+//To see code for this view, check out history of this file
+
+//Accounts view
 tcbutton.render(
-    '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
+    '.primaryFieldRow .slds-col.slds-has-flexi-truncate:not(.tc)',
     {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
     elem => {
-        if (window.location.href.indexOf("/o/") !== -1) {
-            return false;
-        }
-        if (!window.location.href.includes('/Task/')) {
-            return false;
-        }
-        const taskId = findIdInUrl();
-        if (taskId === false) {
-            return false;
-        }
-
-        const description = $('.uiOutputText', elem).textContent.trim();
-        const externalTaskId = buildExternalIdForSalesforce(
-            taskId,
-            PREFIX_TASK
-        );
-        if (!externalTaskId) {
-            return false;
-        }
-
-        const link = tcbutton.createTimerLink({
-            className: SALESFORCE,
-            additionalClasses: [SALESFORCE + '__task-view'],
-            description: description,
-            externalTaskId: externalTaskId,
-            isBackendIntegration: true,
-            taskNotFoundInfo: TASK_NOT_FOUND_INFO
-        });
-
-        elem.insertAdjacentElement('afterend', link);
-
-        return true;
-    }
-);
-
-//Account view
-tcbutton.render(
-    '.slds-page-header__title:not(.tc):not(.triggerLinkText):not(.triggerLink)',
-    {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
-    elem => {
-        if (window.location.href.indexOf("/o/") !== -1) {
-            return false;
-        }
         if (!window.location.href.includes('/Account/')) {
             return false;
         }
+
+        const description = elem.querySelector('.entityNameTitle').textContent.trim();
         const taskId = findIdInUrl();
         if (taskId === false) {
             return false;
         }
 
-        const description = $('.uiOutputText', elem).textContent.trim();
         const externalTaskId = buildExternalIdForSalesforce(
             taskId,
             PREFIX_ACCOUNT
         );
+
         if (!externalTaskId) {
             return false;
         }
@@ -344,8 +318,49 @@ tcbutton.render(
             taskNotFoundInfo: TASK_NOT_FOUND_INFO
         });
 
-        elem.insertAdjacentElement('afterend', link);
+        elem.insertAdjacentElement('beforeend', link);
 
         return true;
     }
 );
+
+browser.runtime.sendMessage({
+    type: 'getFullTaskTree',
+}).then((tasks) => {
+    renderChatterView(tasks);
+}).catch(() => {
+    renderChatterView();
+});
+
+//Chatter view
+const renderChatterView = (tasks = null) => {
+    tcbutton.render(
+        '.slds-media__body.forceChatterFeedItemHeader:not(.tc)',
+        {observe: true, debounceInterval: DEBOUNCE_INTERVAL},
+        elem => {
+            const taskId = elem.querySelectorAll('.forceChatterEntityLink')[0].dataset.id;
+            if (taskId === undefined) {
+                return false;
+            }
+
+            const description = '';//not exist in this view
+            const externalTaskId = determinePrefix(taskId, tasks);
+            if (!externalTaskId) {
+                return false;
+            }
+
+            const link = tcbutton.createTimerLink({
+                className: SALESFORCE,
+                additionalClasses: [SALESFORCE + '__chatter-view'],
+                description: description,
+                externalTaskId: externalTaskId,
+                isBackendIntegration: true,
+                taskNotFoundInfo: TASK_NOT_FOUND_INFO
+            });
+
+            elem.querySelector('p').insertAdjacentElement('afterend', link);
+
+            return true;
+        }
+    );
+}

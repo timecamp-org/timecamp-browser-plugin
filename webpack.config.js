@@ -200,16 +200,16 @@ function copy (o) {
 
 function transformOldConfig() {
     return function (content, filePath) {
-        let PATH_SEPARATOR = process.platform === 'win32' ? '\\' : '/';
+      let PATH_SEPARATOR = process.platform === 'win32' ? '\\' : '/';
 
-        if (filePath.split(PATH_SEPARATOR).pop() === 'config.js') {
-            let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
-            let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
+      if (filePath.split(PATH_SEPARATOR).pop() === 'config.js') {
+          let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
+          let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
 
-            return Buffer.from(serverUrl + customDomain + content.toString());
-        }
+          return Buffer.from(serverUrl + customDomain + content.toString());
+      }
 
-        return Buffer.from(content.toString());
+      return Buffer.from(content.toString());
     }
 }
 
@@ -217,8 +217,8 @@ function transformManifest(isDebug = false) {
   return function (content) {
     const manifest = JSON.parse(content.toString());
     manifest.homepage_url = ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/';
-    manifest.permissions = [
-      ...manifest.permissions,
+    manifest.host_permissions = [
+      ...manifest.host_permissions,
       ENV.SERVER_PROTOCOL + '://*.' + ENV.SERVER_DOMAIN + '/*'
     ];
 

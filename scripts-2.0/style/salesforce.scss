@@ -16,11 +16,20 @@
     opacity: 0;
   }
 
-  &__case-view, &__opportunity-view,
-  &__task-view, &__account-view{
+  &__case-view, &__task-view {
     position: absolute;
     top: 5px;
     right: 5px;
+  }
+
+  &__account-view, &__opportunity-view {
+    position: relative;
+    top: 5px;
+    right: 5px;
+  }
+
+  &__chatter-view {
+    margin-right: 6px;
   }
 
   &.min {

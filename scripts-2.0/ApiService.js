@@ -17,7 +17,7 @@ export default class ApiService {
     rootGroupId = null;
     userId = null;
 
-    constructor () {
+    constructor() {
     }
 
     setSuitableDomain() {
@@ -31,7 +31,7 @@ export default class ApiService {
     handleErrors(xhr) {
         const response = new Response(xhr);
         if (!response.hasError) {
-            browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+            browser.tabs.query({ currentWindow: true, active: true }).then((tabs) => {
                 if (tabs.length > 0) {
                     let activeTab = tabs[0];
                     browser.tabs.sendMessage(activeTab.id, {
@@ -49,7 +49,7 @@ export default class ApiService {
             return;
         }
 
-        browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
+        browser.tabs.query({ currentWindow: true, active: true }).then((tabs) => {
             if (tabs.length > 0) {
                 let activeTab = tabs[0];
                 browser.tabs.sendMessage(activeTab.id, {
@@ -68,12 +68,15 @@ export default class ApiService {
     }
 
     call(opts, checkForCustomDomain = true) {
-        if ((this.rootGroupId === null || this.userId === null ) && checkForCustomDomain) {
+        if ((this.rootGroupId === null || this.userId === null) && checkForCustomDomain) {
             this.setSuitableDomain();
         }
 
         return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
+            const requestOptions = {
+                method: '',
+                headers: {},
+            }
             const method = opts.method || METHOD_GET;
             const apiToken = opts.apiToken;
             let url = opts.url;
@@ -86,51 +89,24 @@ export default class ApiService {
             logger.log('Request:')
             logger.table(opts);
 
-            xhr.open(method, url, true);
+            requestOptions.method = method;
 
             if (opts.contentType) {
-                xhr.setRequestHeader('content-type', opts.contentType);
+                requestOptions['headers']['Content-Type'] = opts.contentType
             } else {
-                xhr.setRequestHeader('content-type', 'application/json');
+                requestOptions['headers']['Content-Type'] = 'application/json'
             }
 
             if (opts.accept) {
-                xhr.setRequestHeader('accept', opts.accept);
+                requestOptions['headers']['Accept'] = opts.accept
             } else {
-                xhr.setRequestHeader('accept', 'application/json');
+                requestOptions['headers']['Accept'] = 'Application/json'
             }
 
             if (apiToken) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
+                requestOptions['headers']['Authorization'] = 'Bearer ' + apiToken
             }
 
-            xhr.onload = () => {
-                logger.log('Response (onload):')
-                logger.table({
-                    status: xhr.status,
-                    response: xhr.response,
-                });
-                this.handleErrors(xhr);
-
-                resolve({
-                    status: xhr.status,
-                    response: xhr.response
-                });
-            };
-
-            xhr.onerror = () => {
-                logger.log('Response (onerror):')
-                logger.table({
-                    status: xhr.status,
-                    response: xhr.response,
-                });
-                this.handleErrors(xhr);
-
-                reject({
-                    status: xhr.status,
-                    response: xhr.response
-                });
-            };
 
             let body;
             if (opts.bodyAsQueryString === true) {
@@ -140,14 +116,32 @@ export default class ApiService {
                 body = JSON.stringify(opts.payload);
             }
 
-            xhr.send(body);
+            if (body && method != METHOD_GET) {
+                requestOptions.body = body
+            }
+
+            fetch(url, requestOptions)
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.text();
+                    }
+
+                    throw response.text();
+                })
+                .then(function (text) {
+                    resolve({ status: 200, response: text });
+                })
+                .catch(function (error) {
+                    console.log({ status: 500, response: error });
+                    resolve({ status: 500, response: error });
+                });
         });
     }
 
     authorizeAndCall(callback) {
         return new Promise((resolve, reject) => {
             this.getToken()
-                .then((token)=>{
+                .then((token) => {
                     callback(token, resolve, reject)
                 })
                 .catch(() => {
@@ -160,7 +154,7 @@ export default class ApiService {
     authorizeNextAndCall(callback) {
         return new Promise((resolve, reject) => {
             this.getNextToken()
-                .then((token)=>{
+                .then((token) => {
                     callback(token, resolve, reject)
                 })
                 .catch((e) => {
@@ -191,7 +185,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response);
                 });
-            }
+        }
         );
     }
 
@@ -233,7 +227,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -279,7 +273,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -304,7 +298,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response);
                 });
-            }
+        }
         );
     }
 
@@ -346,7 +340,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -365,7 +359,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response);
                 });
-            }
+        }
         );
     }
 
@@ -393,7 +387,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -404,25 +398,25 @@ export default class ApiService {
         service = this.defaultServiceName
     ) {
         return this.authorizeAndCall((token, resolve, reject) => {
-                let data = {
-                    service: service,
-                };
-                const path = pathService.getUserSettingUrl(userId) + '?name=' + name + "&timestamp=" + (timestamp ? "true" : "false");
-                this.call({
-                    url: path,
-                    method: METHOD_GET,
-                    apiToken: token,
-                    payload: data,
+            let data = {
+                service: service,
+            };
+            const path = pathService.getUserSettingUrl(userId) + '?name=' + name + "&timestamp=" + (timestamp ? "true" : "false");
+            this.call({
+                url: path,
+                method: METHOD_GET,
+                apiToken: token,
+                payload: data,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
                 })
-                    .then((response) => {
-                        let responseData = JSON.parse(response.response);
-                        resolve(responseData);
-                    })
-                    .catch((response) => {
-                        logger.error(response);
-                        reject(response)
-                    });
-            }
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+        }
         );
     }
 
@@ -433,27 +427,27 @@ export default class ApiService {
         service = this.defaultServiceName
     ) {
         return this.authorizeAndCall((token, resolve, reject) => {
-                let data = {
-                    service: service,
-                    name: name,
-                    value: value
-                };
-                let path = pathService.getUserSettingUrl(userId);
-                this.call({
-                    url: path,
-                    method: METHOD_PUT,
-                    apiToken: token,
-                    payload: data,
+            let data = {
+                service: service,
+                name: name,
+                value: value
+            };
+            let path = pathService.getUserSettingUrl(userId);
+            this.call({
+                url: path,
+                method: METHOD_PUT,
+                apiToken: token,
+                payload: data,
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
                 })
-                    .then((response) => {
-                        let responseData = JSON.parse(response.response);
-                        resolve(responseData);
-                    })
-                    .catch((response) => {
-                        logger.error(response);
-                        reject(response)
-                    });
-            }
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+        }
         );
     }
 
@@ -489,10 +483,88 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
+        }
+        );
+    }
+    getUsers() {
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getUsersUrl(),
+                method: METHOD_GET,
+                apiToken: token,
+            })
+                .then((response) => {
+                    const responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
             }
         );
     }
-
+    initDetailedReport(dateFrom, dateTo){
+        const DETAILED_REPORT_TYPE = 'DETAILED';
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getReportDetailedUrl(),
+                method: METHOD_POST,
+                apiToken: token,
+                payload: {
+                    "type": DETAILED_REPORT_TYPE,
+                    "timeFrameStart": dateFrom,
+                    "timeFrameEnd": dateTo,
+                    "archived": null
+                }
+            })
+                .then((response) => {
+                    const responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        )
+    }
+    getReportStatus(id){
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getReportsStatusUrl(id),
+                method: METHOD_GET,
+                apiToken: token,
+            })
+                .then((response) => {
+                    const responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        )
+    }
+    getReportResult(id){
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getReportsResultUrl(id),
+                method: METHOD_GET,
+                apiToken: token,
+            })
+                .then((response) => {
+                    const responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+            }
+        )
+    }
     getRecentlyUsed(
         service = this.defaultServiceName
     ) {
@@ -514,7 +586,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -542,7 +614,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -568,7 +640,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -610,7 +682,7 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
@@ -622,34 +694,34 @@ export default class ApiService {
             if (token.next_token) {
                 token = token.next_token;
             }
-                this.call({
-                    url: pathService.getGraphQlUrl(),
-                    method: METHOD_POST,
-                    apiToken: token,
-                    payload: {
-                        "query":"query " +
-                            "SearchTasks($phrase:String!, $input: PaginatedTaskInput!, $order: OrderFieldSpecification) { " +
-                                "search { " +
-                                    "getTasksByTaskPath(phrase: $phrase, input: $input, order: $order) { " +
-                                    "nextPage itemIdsContainingPhrase " +
-                                    "items {id\n name\n parentId\n}\n}\n}\n}\n",
-                                "variables": {
-                                    "phrase":"" + searchText + "",
-                                    "input":{"workspaceId":rootGroupId},
-                                    "order":{"field":"name"}
-                                },
-                                "operationName":"SearchTasks"
-                    }
+            this.call({
+                url: pathService.getGraphQlUrl(),
+                method: METHOD_POST,
+                apiToken: token,
+                payload: {
+                    "query": "query " +
+                        "SearchTasks($phrase:String!, $input: PaginatedTaskInput!, $order: OrderFieldSpecification) { " +
+                        "search { " +
+                        "getTasksByTaskPath(phrase: $phrase, input: $input, order: $order) { " +
+                        "nextPage itemIdsContainingPhrase " +
+                        "items {id\n name\n parentId\n}\n}\n}\n}\n",
+                    "variables": {
+                        "phrase": "" + searchText + "",
+                        "input": { "workspaceId": rootGroupId },
+                        "order": { "field": "name" }
+                    },
+                    "operationName": "SearchTasks"
+                }
+            })
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
                 })
-                    .then((response) => {
-                        let responseData = JSON.parse(response.response);
-                        resolve(responseData);
-                    })
-                    .catch((response) => {
-                        logger.error(response);
-                        reject(response)
-                    });
-            }
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response)
+                });
+        }
         );
     }
 
@@ -680,11 +752,12 @@ export default class ApiService {
                     logger.error(response);
                     reject(response)
                 });
-            }
+        }
         );
     }
 
     obtainNewToken() {
+        console.log('executing obtainNewToken')
         return new Promise((resolve, reject) => {
             this.call(
                 {
@@ -768,7 +841,7 @@ export default class ApiService {
                     this.call({
                         url: pathService.getNextOpenIdTokenAuthUrl(),
                         method: METHOD_POST,
-                        payload: {"type":"token", "idToken": JSON.parse(response.response).idToken }
+                        payload: { "type": "token", "idToken": JSON.parse(response.response).idToken }
                     }).then((response) => {
                         this.storeNextToken(JSON.parse(response.response).response.token).then(() => {
                             resolve({
@@ -803,7 +876,7 @@ export default class ApiService {
 
     storeToken(token) {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.set({ 'token': token , 'removed' : false}, function () {
+            chrome.storage.sync.set({ 'token': token, 'removed': false }, function () {
                 resolve();
                 if (chrome.runtime.lastError) {
                     logger.error(chrome.runtime.lastError.message);
@@ -814,7 +887,7 @@ export default class ApiService {
 
     storeNextToken(token) {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.set({ 'next_token': token , 'removed' : false}, function () {
+            chrome.storage.sync.set({ 'next_token': token, 'removed': false }, function () {
                 resolve();
                 if (chrome.runtime.lastError) {
                     logger.error(chrome.runtime.lastError.message);
@@ -875,7 +948,7 @@ export default class ApiService {
                     if (!loggedOut || forceApiCall) {
                         this.obtainNewToken()
                             .then((response) => {
-                                resolve(response);
+                                resolve(response.response);
                             })
                             .catch((response) => {
                                 logger.error(response);

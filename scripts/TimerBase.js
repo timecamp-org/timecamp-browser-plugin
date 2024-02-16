@@ -485,16 +485,15 @@ function TimerBase() {
           // If elements exists, attach the event listener
           elements.forEach(element=>{
             element.addEventListener(event, callback);
+          });
         });
-    
-        });
-      
+
         // Start observing the page for changes
         observer.observe(document, {
           childList: true, // Observe changes to the page's children (e.g. new elements being added)
           subtree: true, // Observe changes to the entire page, including descendants of the root element
         });
-      };
+    };
     this.bindEvents = function ($that) {
         $this = $that;
         setInterval($this.updateButtonState, $this.pushInterval);
@@ -541,44 +540,62 @@ function TimerBase() {
 
         $.when(TokenManager.getToken()).then(function (token)
         {
-            $.when(ApiService.me.get()).then(function (data) {
-                $this.me = data;
+            const tokenHeader = {"Authorization": "Bearer " + token};
 
-                if(customDomain[data.root_group_id]) {
-                    restUrl = restUrl.replace(serverUrl, customDomain[data.root_group_id]);
-                    tokenUrl = tokenUrl.replace(serverUrl, customDomain[data.root_group_id]);
-                    signInUrl = signInUrl.replace(serverUrl, customDomain[data.root_group_id]);
-                    accessUrl = accessUrl.replace(serverUrl, customDomain[data.root_group_id]);
-                    serverUrl = customDomain[data.root_group_id];
+            fetch(restUrl + '/discovery', {
+                headers: {
+                    'Accept': 'application/json',
+                    ...tokenHeader
                 }
+            }).then(response => {
+                response.json().then(domain => {
+                    restUrl = restUrl.replace(serverUrl, domain);
+                    tokenUrl = tokenUrl.replace(serverUrl, domain);
+                    signInUrl = signInUrl.replace(serverUrl, domain);
+                    accessUrl = accessUrl.replace(serverUrl, domain);
+                    serverUrl = domain;
 
-                $(document).trigger('tcMeLoaded', {params: {}, data: data});
-            });
+                    try {
+                        $.when(ApiService.me.get()).then(function (data) {
+                            $this.me = data;
 
-            var params = {
-                url: restUrl+'/can_track/format/json',
-                data: {
-                    service: Service,
-                },
-                headers: {"Authorization": "Bearer " + token},
-                type: 'GET'
-            };
+                            $(document).trigger('tcMeLoaded', {params: {}, data: data});
+                        }).done((d) => {
+                            console.log({d});
 
-            chrome.runtime.sendMessage(
-                {
-                    id: "canTrack",
-                    params: params
-                },
-                function(response) {
-                    if (typeof response !== "undefined" && typeof response.resolve !== "undefined"
-                        && response.resolve === true
-                    ) {
-                        $this.trackableParents = response.data['trackable_parents'];
-                    } else {
-                        $this.trackableParents = false;
+                        });
+                    } catch (error) {
+                        console.error({error});
                     }
-                }
-            );
+
+                    var params = {
+                        url: restUrl+'/can_track/format/json',
+                        data: {
+                            service: Service,
+                        },
+                        headers: tokenHeader,
+                        type: 'GET'
+                    };
+
+                    chrome.runtime.sendMessage(
+                        {
+                            id: "canTrack",
+                            params: params
+                        },
+                        function(response) {
+                            if (typeof response !== "undefined" && typeof response.resolve !== "undefined"
+                                && response.resolve === true
+                            ) {
+                                $this.trackableParents = response.data['trackable_parents'];
+                            } else {
+                                $this.trackableParents = false;
+                            }
+                        }
+                    );
+                });
+            }).catch(error => {
+                console.error('Fetch error:', error);
+            });
         });
     };
 

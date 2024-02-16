@@ -1,13 +1,10 @@
 {
     "name": "__MSG_NAME__",
     "version": "0",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "description": "__MSG_DESCRIPTION__",
     "externally_connectable": {
-        "ids": [
-            "*"
-        ],
-        "matches": []
+        "matches": ["*://*.timecamp.com/*"]
     },
     "icons": {
         "14": "images/icon-14.png",
@@ -16,7 +13,7 @@
         "128": "images/icon-128.png"
     },
     "default_locale": "en",
-    "browser_action": {
+    "action": {
         "default_icon": {
             "19": "images/icon-19-gray.png",
             "38": "images/icon-38-gray.png"
@@ -129,20 +126,20 @@
     "offline_enabled": false,
     "permissions": [
         "tabs",
-        "storage",
-        "https://*.timecamp.com/*"
+        "storage"
     ],
+    "host_permissions": ["https://*.timecamp.com/*"],
     "background": {
-        "scripts": ["scripts/lib/jquery-2.1.1.min.js", "scripts/lib/jquery-ui.min.js", "scripts/lib/moment.min.js", "scripts/lib/moment-range.min.js",
-          "scripts/config.js", "scripts/TokenManager.js", "scripts/ApiService.js", "scripts/common.js", "scripts/TimerBase.js","scripts/TimerButton.js",
-          "scripts/background.js"],
-        "persistent": false
+        "service_worker": "scripts/background.js"
     },
-    "web_accessible_resources": [
-        "images/*.gif",
-        "images/*.png",
-        "scripts/interceptHistoryChanges.js",
-        "templates/*",
-        "fonts/*"
-    ]
+    "web_accessible_resources": [{
+        "resources":[
+            "images/*.gif",
+            "images/*.png",
+            "scripts/interceptHistoryChanges.js",
+            "templates/*",
+            "fonts/*"
+        ],
+        "matches": ["<all_urls>"]
+      }]
 }
