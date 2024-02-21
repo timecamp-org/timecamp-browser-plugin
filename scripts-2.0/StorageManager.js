@@ -4,7 +4,11 @@ import Logger from './Logger';
 const logger = new Logger();
 
 const TRELLO_POWER_UP_AD_VISIBLE = 'trello_power_up_ad_visible';
-const TC_THEME = 'tc_theme'
+const TC_THEME = 'tc_theme';
+const POMODORO_IS_ENABLED = 'pomodoro_is_enabled'
+const POMODORO_TYPE = 'pomodoro_type'
+const POMODORO_DURATION_VALUES = 'pomodoro_duration_values'
+const POMODORO_IS_OPTIONS_OPEN = 'pomodoro_is_options_open'
 
 export default class StorageManager {
     static get TRELLO_POWER_UP_AD_VISIBLE() {
@@ -13,6 +17,22 @@ export default class StorageManager {
 
     static get TC_THEME() {
         return TC_THEME;
+    }
+    
+    static get POMODORO_IS_ENABLED(){
+        return POMODORO_IS_ENABLED;
+    }
+
+    static get POMODORO_TYPE(){
+        return POMODORO_TYPE;
+    }
+
+    static get POMODORO_DURATION_VALUES(){
+        return POMODORO_DURATION_VALUES;
+    }
+
+    static get POMODORO_IS_OPTIONS_OPEN(){
+        return POMODORO_IS_OPTIONS_OPEN;
     }
 
     buildKey(params) {

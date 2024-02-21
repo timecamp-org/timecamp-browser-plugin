@@ -11,20 +11,17 @@
   margin-top: 28px;
   color: var(--theme-color);
   margin-top: 10px;
-
-  &__button-anchor {
+  &__button-focus {
+    margin-left:auto;
+    position:relative;
+    
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    margin-right:15px;
+ 
 
-    &__href {
-      color: #2380e3;
-      font-size: 12px;
-    }
-    & svg {
-      margin-right: 0.3rem;
-    }
   }
+  
   &__button-cancel {
     border: solid 1px $primaryBorderColor;
     font-family: $defaultFontFamily;
@@ -33,6 +30,7 @@
     height: 39px;
     background-color: transparent;
     color: #4f4f4f;
+    color: var(--theme-icon-color);
     border-radius: 8px;
     cursor: pointer;
     margin-left: auto;
@@ -148,7 +146,7 @@
       padding-top: 10px;
 
       &__button-sign-out {
-        border: none;
+        border: none; 
         cursor: pointer;
         font-size: 14px;
         text-align: left;

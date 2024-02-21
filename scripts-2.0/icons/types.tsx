@@ -53,5 +53,6 @@ export enum IconName {
   USER_CLOCK = 'user-clock',
   EXTERNAL_LINK='external-link',
   POWER_OFF='power-off',
-  STICKY_NOTE='sticky-note'
+  STICKY_NOTE='sticky-note',
+  GEAR='gear'
 }

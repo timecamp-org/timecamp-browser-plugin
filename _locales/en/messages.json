@@ -272,5 +272,14 @@
 	},
 	"click_the_button_below_to_login_to_your_timecamp_account": {
 		"message": "Click the button below to login to your TimeCamp account"
+	},
+	"focus_phase":{
+		"message":"Focus phase"
+	},
+	"short_break":{
+		"message":"Short break"
+	},
+	"long_break":{
+		"message":"Long break"
 	}
 }

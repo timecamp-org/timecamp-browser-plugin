@@ -3,17 +3,22 @@ import * as React from "react";
 import tcLogo from "../../../../images/logoTC-with-name.svg";
 
 // @ts-ignore
+import tcLogoDark from "../../../images/logoTC-with-name-dark.svg";
+
+// @ts-ignore
 import AvatarIconSVG from "../../../icons/user-circle-fas.svg";
 import { User } from "..";
 import "./styles.scss";
 
 import UserPopup from "./UserPopup";
+import { getLogoByTheme } from "../../../helpers/theme";
 
 export interface HeaderInterface {
   user: User;
   setIsUserWindowOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isUserWindowOpen: boolean;
   logoutCallback: () => void;
+  theme?: string;
 }
 
 const Header: React.FC<HeaderInterface> = ({
@@ -21,6 +26,7 @@ const Header: React.FC<HeaderInterface> = ({
   isUserWindowOpen,
   setIsUserWindowOpen,
   logoutCallback,
+  theme='default'
 }) => {
   const handleClickUserAvatar = (e) => {
     if (isUserWindowOpen) return;
@@ -33,7 +39,7 @@ const Header: React.FC<HeaderInterface> = ({
     <div className="tc-popup-header">
       <img
         className={"tc-popup-header__logo-svg"}
-        src={tcLogo}
+        src={getLogoByTheme(theme)}
         alt="TimeCamp logo"
       />
       <div className="tc-popup-header__user-logo">

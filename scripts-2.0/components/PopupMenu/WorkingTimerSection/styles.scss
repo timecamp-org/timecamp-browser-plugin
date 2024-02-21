@@ -11,10 +11,29 @@
     margin: 0 0 10px 7px;
     font-weight: bold;
     color: var(--theme-label-color);
+    display: flex;
+    &__timesheet{
+      margin-left: auto;
+      margin-right: 7px;
+    }
+  }
+
+  &__button-anchor {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    &__href {
+      color: #2380e3;
+      font-size: 12px;
+    }
+    & svg {
+      margin-right: 0.3rem;
+    }
   }
 
   &__entry {
-    border: dashed 2px $popupBorderGray;
+    border: dashed 2px var(--theme-border-color-secondary);
     border-radius: 8px;
     width: 360px;
     height: 52px;

@@ -1,7 +1,17 @@
 import { TCTheme } from "../types/theme";
 import StorageManager from "../StorageManager";
+// @ts-ignore
+import tcLogo from "../../images/logoTC-with-name.svg";
+
+// @ts-ignore
+import tcLogoDark from "../../images/logoTC-with-name-dark.svg";
 
 const browser = require('webextension-polyfill');
+
+const LOGOS_BY_THEME = {
+    default: tcLogo,
+    darkmode: tcLogoDark,
+  };
 
 export const getTheme = (userId: number, callback) => {
     browser.runtime.sendMessage({
@@ -34,3 +44,9 @@ export const getTheme = (userId: number, callback) => {
 
       })
   }
+
+  
+
+export const getLogoByTheme = (theme) =>{
+    return LOGOS_BY_THEME[theme]
+}

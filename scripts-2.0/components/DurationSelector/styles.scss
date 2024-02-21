@@ -1,0 +1,42 @@
+.duration-selector {
+  small {
+    margin-left: 3px;
+
+    color: var(--theme-label-color);
+  }
+
+  &__input-wrapper {
+    position: relative;
+
+    &::after {
+      content: "min";
+      right: 5px;
+      top: 50%;
+      color: #8a8a8a;
+      position: absolute;
+
+      transform: translateY(-50%);
+    }
+    &__input {
+      display: flex;
+      justify-content: center;
+      height: 37px;
+
+      width: 77px;
+      border-radius: 8px;
+      border: 1px solid var(--theme-border-color-secondary);
+
+      outline: none;
+      text-transform: capitalize;
+      background-color: var(--theme-background-color);
+      color: var(--theme-color);
+      margin-top: 3px;
+      padding-left: 7px;
+    }
+  }
+
+  p {
+    text-transform: capitalize;
+    color: var(--theme-label-color);
+  }
+}

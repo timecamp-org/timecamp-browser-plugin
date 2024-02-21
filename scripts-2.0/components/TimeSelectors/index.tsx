@@ -17,6 +17,7 @@ export interface TimeSelectorsInterface {
     durationFormat?: number|null,
     onStartTimeValueChange(newValue: any): any
     onStopTimeValueChange?(newValue: any): any
+    isPomodoroEnabled?: boolean;
 }
 
 const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
@@ -116,7 +117,8 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
 
     return (
         <div className='time-selectors'>
-            <div className='time-selector time-selectors__start'>
+            {
+                !props.isPomodoroEnabled &&<div className='time-selector time-selectors__start'>
                 <label>{translate('start')}</label>
                 <TimePicker
                     is12hFormat={is12hFormat}
@@ -138,8 +140,9 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
                 />
 
             </div>
+            }
             {
-                props.onStopTimeValueChange ?  <React.Fragment>
+                props.onStopTimeValueChange && !props.isPomodoroEnabled?  <React.Fragment>
                     <div className='time-selector time-selectors__stop'>
                         <label>{translate('stop')}</label>
                         <TimePicker

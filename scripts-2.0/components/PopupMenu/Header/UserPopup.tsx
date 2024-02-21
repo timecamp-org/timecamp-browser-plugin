@@ -4,8 +4,8 @@ import Button from "../../common/Button/";
 import "./styles.scss";
 import PathService from "../../../PathService.js";
 
-// @ts-ignore
-import ShutdownIconSVG from "../../../icons/shutdown-icon.svg";
+
+import SVGShutdownIcon from "./SVGShutDownIcon";
 
 const serverUrl = new PathService().getBaseUrl();
 
@@ -66,7 +66,7 @@ const UserPopup = ({
         </a>
 
         <Button class={"section-bottom"} onClick={logoutCallback}>
-          <img src={ShutdownIconSVG} alt="shutdown svg" />
+          <SVGShutdownIcon/>
           {translate("log_out")}
         </Button>
       </div>

@@ -49,6 +49,7 @@ export interface ContextMenuInterface {
     taskNotFoundInBackendIntegrationInfo: string,
     embedOnPopup?: boolean|null,
     trelloPowerUpAdVisible?: boolean|null,
+    isPomodoroEnabled?: boolean
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -67,6 +68,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const startTimerCallback = props.startTimerCallback;
     const addTimeEntryCallback = props.addTimeEntryCallback;
     const onCloseCallback = props.onCloseCallback;
+    const isPomodoroEnabled = props.isPomodoroEnabled || false
     const [userId, setUserId] = useState<number>(0);
     const [theme, setTheme] = useState<TCTheme>("default");
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -510,6 +512,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     stopTime={stopTime}
                     clearFormTrigger={clearTriggerForTimePicker}
                     durationFormat={durationFormat}
+                    isPomodoroEnabled={isPomodoroEnabled}
                     onStartTimeValueChange={(value) => {
                         setStartTime(value);
                         const now = dateTime.getNow();

@@ -1,12 +1,14 @@
 import * as React from "react";
-import "./styles.scss";
-import Button from "../../common/Button";
-import Icon from "../../Icon";
 import { IconName } from "../../../icons/types";
+import Icon from "../../Icon";
+import Button from "../../common/Button";
 import { User } from "../index";
-import translate from "../../../Translator";
-import PathService from "../../../PathService";
+import "./styles.scss";
+
 import { ContextMenuType } from "../../ContextMenu/types";
+
+import { PomodoroContext } from "../Pomodoro/PomodoroContext";
+import PomodoroTypeSelector from "../Pomodoro/PomodoroTypeSelector";
 
 export interface FooterInterface {
   logoutCallback: Function;
@@ -17,30 +19,26 @@ export interface FooterInterface {
   >;
 }
 
-const serverUrl = new PathService().getBaseUrl();
-
 const Footer: React.FC<FooterInterface> = (props) => {
   const { onSetContextMenuType } = props;
+  const {
+    isPomodoroEnabled: [isPomodoroEnabled]
+  } = React.useContext(PomodoroContext)
+
   return (
     <div className="tc-popup-footer">
-      <div className="tc-popup-footer__button-anchor">
-        <a
-          className="tc-popup-footer__button-anchor__href"
-          href={serverUrl + "app#/timesheets/graphical"}
-          target="_blank"
+      {isPomodoroEnabled ? (
+        <div className="tc-popup-footer__button-focus">
+          <PomodoroTypeSelector/>
+        </div>
+      ) : (
+        <Button
+          class={"tc-popup-footer__button-cancel"}
+          onClick={() => onSetContextMenuType?.(ContextMenuType.ENTRY)}
         >
-          <Icon name={IconName.EXTERNAL_LINK} iconPrefix={"fal"} />
-
-          {translate("see_full_timesheet")}
-        </a>
-      </div>
-
-      <Button
-        class={"tc-popup-footer__button-cancel"}
-        onClick={() => onSetContextMenuType?.(ContextMenuType.ENTRY)}
-      >
-        <Icon name={IconName.PLUS} />
-      </Button>
+          <Icon name={IconName.PLUS} />
+        </Button>
+      )}
 
       <button
         className={"tc-popup-footer__button-add"}
