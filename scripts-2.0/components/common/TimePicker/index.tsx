@@ -388,7 +388,7 @@ const TimePicker: React.FC<TimePickerInterface> = (props) => {
                 }}
             />}
 
-            {SEPARATOR}
+            <span className="time-picker__separator">{SEPARATOR}</span>
 
             <input
                 ref={minutesInput}

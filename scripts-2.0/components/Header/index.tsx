@@ -1,19 +1,23 @@
 import * as React from "react";
-// @ts-ignore
-import tcLogo from "../../../images/logoTC-with-name.svg";
 
-import './styles.scss';
+import "./styles.scss";
+import { getLogoByTheme } from "../../helpers/theme";
 
 export interface HeaderInterface {
+  theme?: string;
 }
 
-const Header: React.FC<HeaderInterface> = () => {
-    // @ts-ignore
-    return (
-        <div className={'header'}>
-            <img className={'header__logo-svg'} src={tcLogo} alt="TimeCamp logo" />
-        </div>
-    );
-}
+const Header: React.FC<HeaderInterface> = ({ theme = "default" }) => {
+  
+  return (
+    <div className={"header"}>
+      <img
+        className={"header__logo-svg"}
+        src={getLogoByTheme(theme)}
+        alt="TimeCamp logo"
+      />
+    </div>
+  );
+};
 
 export default Header;

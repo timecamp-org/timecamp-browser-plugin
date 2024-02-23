@@ -24,7 +24,9 @@ import TimeSelectors from "../TimeSelectors";
 import DateTime from "../../helpers/DateTime";
 import TimeFormatter from "../../TimeFormatter";
 import WrongDatesError from "./Error/WrongDatesError";
-
+import { TCTheme } from "../../types/theme";
+import { getTheme, retrieveThemeFromStorage } from "../../helpers/theme";
+ 
 const pathService = new PathService();
 const logger = new Logger();
 const dateTime = new DateTime();
@@ -38,7 +40,7 @@ export interface ContextMenuInterface {
     note: string,
     billable: boolean,
     startTimerCallback: Function,
-    addTimeEntryCallback: Function,
+    addTimeEntryCallback?: Function,
     onCloseCallback: Function,
     billableInputVisibility: boolean|null,
     externalTaskId: string,
@@ -47,6 +49,7 @@ export interface ContextMenuInterface {
     taskNotFoundInBackendIntegrationInfo: string,
     embedOnPopup?: boolean|null,
     trelloPowerUpAdVisible?: boolean|null,
+    isPomodoroEnabled?: boolean
 }
 
 const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
@@ -65,7 +68,9 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const startTimerCallback = props.startTimerCallback;
     const addTimeEntryCallback = props.addTimeEntryCallback;
     const onCloseCallback = props.onCloseCallback;
+    const isPomodoroEnabled = props.isPomodoroEnabled || false
     const [userId, setUserId] = useState<number>(0);
+    const [theme, setTheme] = useState<TCTheme>("default");
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTriggerForTimePicker, setClearTriggerForTimePicker] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
@@ -91,6 +96,19 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
+    const isTimeEntryInValid =
+    props.service === "chrome_plugin" &&
+    props.addTimeEntryCallback &&
+    !stopTime;
+
+    const shouldShowAddEntryButton =
+      props.service !== "chrome_plugin"
+        ? false
+        : props.addTimeEntryCallback
+          ? true
+          : false;
+
+
 
     useEffect(() => {
         setNote(props.note);
@@ -110,6 +128,10 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             document.removeEventListener("click", onClickOutside);
         };
     }, [props]);
+
+    useEffect(()=>{
+        retrieveThemeFromStorage(setTheme)
+    },[])
 
 
     useMemo(() => {
@@ -139,6 +161,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             setUserId(parseInt(data.user_id));
             setIsAdmin(data.permissions.role_administrator);
             getBackendIntegrationAdData(data.user_id);
+            getTheme(data.user_id, setTheme);            
         });
 
         if (billableInputVisibility === null) {
@@ -203,6 +226,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         }).catch(() => {
         });
     }, []);
+
 
     const getBackendIntegrationAdData = (userId: number) => {
         browser.runtime.sendMessage({
@@ -298,7 +322,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     };
 
     const addTimeEntry = (startTime, stopTime) => {
-        addTimeEntryCallback(
+        addTimeEntryCallback?.(
             taskId,
             note,
             service,
@@ -336,6 +360,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setClearTriggerForTimePicker(!clearTriggerForTimePicker);
         setOpen(false);
         setTaskId(0);
+        onCloseCallback()
     };
 
     const renderTagPicker = () => {
@@ -382,9 +407,17 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             .replace('*linkClose*', '</a>')));
     };
 
+    const onStopTimeValueChange = (value) => {
+        if (value !== null) {
+            setWrongDatesErrorMessage('');
+        }
+        setStopTime(value);
+    } 
+
     //data-elevation is fix for trello card modal (it close when click on context menu)
     return (
         <div
+            data-theme={theme}
             ref={node}
             className={`context-menu  ${!open ? "context-menu--hidden" : ""} ${props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0 ? "context-menu-extended-height" : ""}`}
             style={props.position}
@@ -397,7 +430,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
                 <SubscriptionExpiredError visible={errorSubscriptionExpiredVisible}/>
 
-                <Header />
+                <Header theme={theme}/>
 
                 <UnknownError
                     visible={errorUnknownVisible}
@@ -479,33 +512,35 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     stopTime={stopTime}
                     clearFormTrigger={clearTriggerForTimePicker}
                     durationFormat={durationFormat}
+                    isPomodoroEnabled={isPomodoroEnabled}
                     onStartTimeValueChange={(value) => {
                         setStartTime(value);
                         const now = dateTime.getNow();
                         setWrongDatesErrorMessage((now < value && stopTime === null) ? translate('Start time cannot be greater than now') : '');
                     }}
-                    onStopTimeValueChange={(value) => {
-                        if (value !== null) {
-                            setWrongDatesErrorMessage('');
-                        }
-                        setStopTime(value);
-                    }}
+                    onStopTimeValueChange={ props.addTimeEntryCallback? onStopTimeValueChange : undefined}
                 />
                 <WrongDatesError message={wrongDatesErrorMessage} visible={wrongDatesErrorMessage !== ''}/>
                 {
                     billableInputVisibility &&
-                    <Billable
-                        billable={billable}
-                        onBillableChange={(newBillable) => {setBillable(newBillable)}}
-                    />
+                    <div className="billable-wrapper">
+                        <Billable
+                            billable={billable}
+                            onBillableChange={(newBillable) => {setBillable(newBillable)}}
+                        />
+                    </div>
                 }
             </div>
 
             <Footer
-                idDisabled={!isSelectedTagsValid || wrongDatesErrorMessage !== ''}
-                onClickSave={onClickSave}
-                onClickCancel={onClickCancel}
-                showAddEntryButton={stopTime !== null}
+              idDisabled={
+                !isSelectedTagsValid ||
+                wrongDatesErrorMessage !== "" ||
+                isTimeEntryInValid
+              }
+              onClickSave={onClickSave}
+              onClickCancel={onClickCancel}
+              showAddEntryButton={shouldShowAddEntryButton}
             />
         </div>
     );

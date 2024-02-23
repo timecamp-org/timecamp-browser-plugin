@@ -56,3 +56,63 @@ $errorTextColor: #3c763d;
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 $defaultFontFamily: 'Poppins', sans-serif;
 $defaultFontSize: 14px;
+
+// theme 
+$themeDefaultBackgroundColor: #ffffff;
+$themeDarkBackgroundColor: #222324;
+
+$themeDarkBackgroundColorSecondary: #323333;
+ 
+$themeDefaultBorderColor:#aea6ab;
+$themeDefaultBorderColorSecondary: #dbdbdb;
+
+$themeDarkBorderColor: #646565;
+
+$themeDefaultBackgroundHover: #f8f8f8;
+$themeDarkBackgroundHover: #565757;
+
+$themeDarkLabelColor: #BBBEBB;
+
+$themeDefaultBorderDisabledColor:#f2f2f2;
+$themeDarkBorderDisabledColor: $themeDarkBorderColor;
+
+$themeDefaultColorDisabled: $disabledFontColor;
+$themeDarkColorDisabled: rgb(111,111,111);
+
+@mixin theme-variables {
+    --theme-background-color: #{$themeDefaultBackgroundColor};
+    --theme-background-color-secondary: #{$themeDefaultBackgroundColor};
+    --theme-background-hover: #{$themeDefaultBackgroundHover};
+    --theme-background-hover-modern: #F1F9F3;
+    --theme-color: #{$primaryTextColor};
+    --theme-color-secondary: #{$secondaryTextColor};
+    --theme-task-picker-color: #{$taskPickerFontColor};
+    --theme-color-disabled: #{$disabledFontColor};
+    --theme-box-shadow: 0 6px 32px 0 rgba(0,0,0,0.17);
+    --theme-border-color: #{$themeDefaultBorderColor};
+    --theme-border-color-secondary: #{$themeDefaultBorderColorSecondary};
+    --theme-label-color: #{$primaryTextColor};
+    --theme-border-display-color: #{$primaryBorderColor};
+    --theme-border-disabled-color: #{$themeDefaultBorderDisabledColor};
+    --theme-icon-color: #{$popupGray};
+    --theme-popup-section-separator-color: #{$popupBorderGray};
+
+    &[data-theme='darkmode']{    
+    --theme-background-color: #{$themeDarkBackgroundColor};
+    --theme-background-color-secondary:#{$themeDarkBackgroundColorSecondary};
+    --theme-color-disabled: #{$themeDarkColorDisabled};
+    --theme-color: white;
+    --theme-color-secondary: white;
+    --theme-task-picker-color: white;
+    --theme-box-shadow: 0 6px 32px 0 black;
+    --theme-background-hover: #{$themeDarkBackgroundHover};
+    --theme-background-hover-modern: #{$themeDarkBackgroundHover};
+    --theme-border-color: #{$themeDarkBorderColor};
+    --theme-border-color-secondary: #{$themeDarkBorderColor};
+    --theme-label-color: #{$themeDarkLabelColor};
+    --theme-border-display-color: transparent;
+    --theme-border-disabled-color: #{$themeDarkBorderDisabledColor};   
+    --theme-icon-color: white;
+    --theme-popup-section-separator-color: hsla(0,0%,100%,.3);
+    }  
+}

@@ -1,0 +1,17 @@
+.pomodoro-checkbox{
+    &__svg{
+        border: 1px solid lightgray;
+        padding: 3px;
+        cursor: pointer;
+        background-color: white
+    }
+
+    &[data-ischecked='true'] svg{  
+        background-color:#4BB064;
+    }
+ 
+    input{
+        display: none;
+    }
+}
+
