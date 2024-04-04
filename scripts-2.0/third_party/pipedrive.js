@@ -2,14 +2,14 @@
 
 const SERVICE = 'pipedrive';
 
-tcbutton.render('.actionsContent:not(.tc)', {observe: true}, function (elem) {
-    let description = $('.descriptionHead h1 a', elem).textContent;
+tcbutton.render('[data-testid="header-title"]:not(.tc)', {observe: true}, function (elem) {
+    let description = $('textarea', elem).innerText;
     
     const link = tcbutton.createTimerLink({
         className: SERVICE,
-        description: description,
+        description,
     });
-    
+    elem.style.display = "flex"
     link.style.display = "block";
     link.style.paddingTop = "0";
     link.style.paddingBottom = "0";
