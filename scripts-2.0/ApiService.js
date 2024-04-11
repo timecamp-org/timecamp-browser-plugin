@@ -999,21 +999,4 @@ export default class ApiService {
             method: "POST"
         });
     }
-    getTheme(userId) {
-      return this.authorizeAndCall((token, resolve, reject) => {
-        this.call({
-          url: pathService.getThemeUrl(userId),
-          method: METHOD_GET,
-          apiToken: token,
-        })
-          .then((response) => {
-            let responseData = JSON.parse(response.response);
-            resolve(responseData);
-          })
-          .catch((response) => {
-            logger.error(response);
-            reject(response);
-          });
-      });
-  }
 }

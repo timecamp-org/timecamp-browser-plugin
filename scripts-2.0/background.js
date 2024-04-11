@@ -369,12 +369,26 @@ const TcButton = {
                             reject(error);
                         });
                         break;
-                    case "getTheme":
-                      apiService.getTheme(request.userId).then((response) => {
-                            resolve(response);
-                        }).catch((error) => {
-                            reject(error);
+
+                    case 'getTheme':
+                        if (CACHE.hasOwnProperty(request.type)) {
+                            resolve(CACHE[request.type]);
+                            break;
+                        }
+
+                        TcButton.getCurrentUserId().then((userId) => {
+                            apiService.getUserSetting(
+                                'theme',//todo: refactor using types
+                                userId,
+                                new Date().getTime()
+                            ).then((response) => {
+                                CACHE[request.type] = response.value;
+                                resolve(response.value);
+                            }).catch((error) => {
+                                reject(error);
+                            });
                         });
+
                         break;                        
                 }
             } catch (e) {
@@ -684,6 +698,25 @@ const TcButton = {
                 resolve(rootGroupId);
             });
 
+        });
+    },
+
+    getCurrentUserId: function () {
+        return new Promise((resolve, reject) => {
+            if (TcButton.isUserLogged === false) {
+                resolve(null);
+                return;
+            }
+
+            if (apiService.userId) {
+                resolve(apiService.userId);
+                return;
+            }
+
+            apiService.me().then((meResponse) => {
+                let userId = parseInt(meResponse.user_id);
+                resolve(userId);
+            });
         });
     },
 

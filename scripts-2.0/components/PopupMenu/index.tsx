@@ -3,12 +3,12 @@ import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import DateTime from "../../helpers/DateTime";
 import Gravatar from "../../helpers/Gravatar";
-import { getTheme, retrieveThemeFromStorage } from "../../helpers/theme";
 import ContextMenu from "../ContextMenu";
 import Header from "../Header";
 import LoginWindow from "../LoginWindow";
 import Footer from "./Footer";
 import WorkingTimerSection from "./WorkingTimerSection";
+import { useTheme } from "../../hooks/useTheme/useTheme";
 import './styles.scss';
 
 const gravatar = new Gravatar();
@@ -52,17 +52,7 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
     const [user, setUser] = useState<User>(emptyUser);
     const [entry, setEntry] = useState<Entry>(emptyEntry);
     const [isTimerWorking, setIsTimerWorking] = useState(false);
-    const [theme, setTheme] = useState<'default' | 'darkmode'>('default')
-
-    useEffect(()=>{
-        retrieveThemeFromStorage(setTheme)
-        browser.runtime.sendMessage({
-            type:'getUserData'
-        }).then(data=>{
-            getTheme(data.user_id, setTheme)
-            
-        })
-    },[])
+    const theme = useTheme();
 
     const setCurrentEntry = (currentEntry) => {
         if (currentEntry === null) {

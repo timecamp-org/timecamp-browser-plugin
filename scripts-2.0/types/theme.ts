@@ -1,1 +1,1 @@
-export type TCTheme = "darkmode" | "default";
+export type Theme = 'darkmode' | 'default';
