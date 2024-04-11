@@ -14,7 +14,6 @@
       cursor: pointer;
       padding-left: 26px;
       user-select: none;
-      color: var(--theme-color);
     }
 
     &__checkbox {
@@ -32,9 +31,9 @@
         left: 0;
         height: 16px;
         width: 27px;
-        background-color: $primaryBorderColor;
+        background-color: var(--primaryBorderColor);
         border-radius: 8px;
-        border: 1px solid $primaryBorderColor;
+        border: 1px solid var(--primaryBorderColor);
       }
 
       .checkmark:after {
@@ -45,13 +44,13 @@
         width: 16px;
         height: 16px;
         border-radius: 100%;
-        background: #fff;
+        background: var(--primaryBackgroundColor);
         display: block;;
       }
 
       input:checked ~ .checkmark {
-        border: 1px solid $primaryColor;
-        background: $primaryColor;
+        border: 1px solid var(--primaryColor);
+        background: var(--primaryColor);
       }
 
       input:checked ~ .checkmark:after {
@@ -64,7 +63,7 @@
       display: block;
       margin: 2px 0 0;
       font-size: 14px;
-      color: #8a8a8a;
+      color: var(--labelFontColor);
       padding-right: 45px;
       padding-left: 25px;
     }

@@ -4,7 +4,7 @@
   .context-menu-message {
     font-size: $defaultFontSize;
     font-family: $defaultFontFamily;
-    background-color: $defaultFieldBackgroundColor;
+    background-color: var(--defaultFieldBackgroundColor);
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -14,15 +14,15 @@
 
     &.info {
       padding: 10px;
-      background-color: $infoFieldBackgroundColor;
-      border: solid 1px $infoFieldBorderColor;
-      color: $infoFieldTextColor;
+      background-color: var(--infoFieldBackgroundColor);
+      border: solid 1px var(--infoFieldBorderColor);
+      color: var(--infoFieldTextColor);
     }
 
     &.error {
-      background-color: $errorFieldBackgroundColor;
-      border: solid 1px $errorFieldBorderColor;
-      color: $errorFieldTextColor;
+      background-color: var(--errorFieldBackgroundColor);
+      border: solid 1px var(--errorFieldBorderColor);
+      color: var(--errorFieldTextColor);
       padding: 10px;
 
       .context-menu-message__close-section {
@@ -32,7 +32,7 @@
 
       .context-menu-message__icon {
         align-self: center;
-        color: $errorFieldTextColor;
+        color: var(--errorFieldTextColor);
         font-size: $defaultFontSize;
       }
     }
@@ -47,7 +47,7 @@
         font-family: $defaultFontFamily;
         display: inline-block;
         padding: 5px;
-        color: $infoFieldTextColor2;
+        color: var(--infoFieldTextColor2);
       }
 
       &--top {
@@ -60,7 +60,7 @@
     &__icon {
       font-size: 26px;
       font-family: $defaultFontFamily;
-      color: $secondaryTextColor;
+      color: var(--secondaryTextColor);
       float: left;
       margin: -2px 15px 0px 0;
     }

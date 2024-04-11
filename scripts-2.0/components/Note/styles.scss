@@ -9,9 +9,7 @@
     &__label {
       margin-top: 0;
       display: inline-block;
-      color: var(--theme-label-color);
     }
-    
     &__textarea {
       width: calc(100% - 30px);
       height: 81px;
@@ -19,9 +17,9 @@
       padding: 10px 15px 10px 15px;
       object-fit: contain;
       border-radius: 8px;
-      border: solid 1px var(--theme-border-color-secondary);
-      background-color: var(--theme-background-color);
-      color: var(--theme-color);
+      border: solid 1px var(--primaryBorderColor);
+      background-color: var(--primaryBackgroundColor);
+      color: var(--primaryTextColor);
       outline: none;
       resize: none;
       box-sizing: unset;
@@ -29,12 +27,12 @@
       font-size: $defaultFontSize;
 
       &::placeholder {
-        color: $secondaryTextColor;
+        color: var(--secondaryTextColor);
       }
 
       &:hover, &:focus {
         box-shadow: none;
-        border-color: $hoverBorderColor;
+        border-color: var(--hoverBorderColor);
       }
     }
 
@@ -42,7 +40,7 @@
       margin: 0;
       float: right;
       font-size: 12px;
-      color: $secondaryTextColor;
+      color: var(--secondaryTextColor);
     }
   }
 }

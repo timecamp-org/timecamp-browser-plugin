@@ -3,6 +3,7 @@ import * as React from "react";
 import tcLogo from "../../../images/logoTC-with-name.svg";
 // @ts-ignore
 import tcLogoDark from "../../../images/logoTC-with-name-dark.svg";
+import {useTheme} from "../../hooks/useTheme/useTheme";
 
 import "./styles.scss";
 
@@ -15,8 +16,10 @@ const LOGOS_BY_THEME = {
   darkmode: tcLogoDark,
 };
 
-const Header: React.FC<HeaderInterface> = ({ theme = "default" }) => {
-  
+const Header: React.FC<HeaderInterface> = () => {
+
+  const theme = useTheme();
+
   // @ts-ignore
   return (
     <div className={"header"}>

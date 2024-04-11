@@ -16,6 +16,9 @@ $buttonActiveTextColor: #ffffff;
 $durationInputBackgroundColor: #f2f2f2;
 $buttonDisabledColor: #f2f2f2;
 
+$primaryShadowColor: #dcdcdc;
+$secondaryShadowColor: hsla(0, 0%, 70%, .5);
+
 $disabledFontColor: #8a8a8a;
 
 $taskPickerFontColor: #3d3d3d;
@@ -23,9 +26,9 @@ $taskPickerPathFontColor: #4f4f4f;
 
 $labelFontColor: #8a8a8a;
 $redOrangeColor: #ff4c00;
-$algaeColor: #4bb063;
 
 $defaultBorderRadius: 8px;
+$defaultBorderColor: #aea6ab;
 
 $defaultFieldBackgroundColor: #f8f8f8;
 
@@ -57,54 +60,101 @@ $errorTextColor: #3c763d;
 $defaultFontFamily: 'Poppins', sans-serif;
 $defaultFontSize: 14px;
 
-// theme 
-$themeDefaultBackgroundColor: #ffffff;
-$themeDarkBackgroundColor: #222324;
-
-$themeDarkBackgroundColorSecondary: #323333;
- 
-$themeDefaultBorderColor:#aea6ab;
-$themeDefaultBorderColorSecondary: #dbdbdb;
-
-$themeDarkBorderColor: #646565;
-
-$themeDefaultBackgroundHover: #f8f8f8;
-$themeDarkBackgroundHover: #565757;
-
-$themeDarkLabelColor: #BBBEBB;
-
-$themeDefaultBorderDisabledColor:#f2f2f2;
-$themeDarkBorderDisabledColor: $themeDarkBorderColor;
-
-$themeDefaultColorDisabled: $disabledFontColor;
-$themeDarkColorDisabled: rgb(111,111,111);
-
 @mixin theme-variables {
-    --theme-background-color: #{$themeDefaultBackgroundColor};
-    --theme-background-color-secondary: #{$themeDefaultBackgroundColor};
-    --theme-background-hover: #{$themeDefaultBackgroundHover};
-    --theme-color: #{$primaryTextColor};
-    --theme-task-picker-color: #{$taskPickerFontColor};
-    --theme-color-disabled: #{$disabledFontColor};
-    --theme-box-shadow: 0 6px 32px 0 #{$popupShadowGray};
-    --theme-border-color: #{$themeDefaultBorderColor};
-    --theme-border-color-secondary: #{$themeDefaultBorderColorSecondary};
-    --theme-label-color: #{$primaryTextColor};
-    --theme-border-display-color: #{$primaryBorderColor};
-    --theme-border-disabled-color: #{$themeDefaultBorderDisabledColor};
+    --primaryTextColor: #{$primaryTextColor};
+    --primaryBackgroundColor: #{$primaryBackgroundColor};
+    --defaultBorderColor: #{$defaultBorderColor};
+    --infoFieldBackgroundColor: #{$infoFieldBackgroundColor};
+    --infoFieldBorderColor: #{$infoFieldBorderColor};
+    --primaryBorderColor: #{$primaryBorderColor};
+    --primaryColor: #{$primaryColor};
+    --labelFontColor: #{$labelFontColor};
+    --popupGreen: #{$popupGreen};
+    --popupGray: #{$popupGray};
+    --popupGraySecond: #{$popupGraySecond};
+    --popupGrayThird: #{$popupGrayThird};
+    --popupBorderGray: #{$popupBorderGray};
+    --popupBorderGraySecond: #{$popupBorderGraySecond};
+    --popupShadowGray: #{$popupShadowGray};
+    --popupBackground: #{$popupBackground};
+    --hoverBorderColor: #{$hoverBorderColor};
+    --quinaryTextColor: #{$quinaryTextColor};
+    --defaultFieldBackgroundColor: #{$defaultFieldBackgroundColor};
+    --secondaryTextColor: #{$secondaryTextColor};
+    --durationInputBackgroundColor: #{$durationInputBackgroundColor};
+    --disabledFontColor: #{$disabledFontColor};
+    --tertiaryTextColor: #{$tertiaryTextColor};
+    --primaryShadowColor: #{$primaryShadowColor};
+    --buttonActiveColor: #{$buttonActiveColor};
+    --buttonActiveTextColor: #{$buttonActiveTextColor};
+    --buttonDisabledColor: #{$buttonDisabledColor};
+    --popupDisabledFontColor: #{$popupDisabledFontColor};
+    --popupPrimaryTextColor: #{$popupPrimaryTextColor};
+    --taskPickerFontColor: #{$taskPickerFontColor};
+    --redOrangeColor: #{$redOrangeColor};
+    --taskPickerPathFontColor: #{$taskPickerPathFontColor};
+    --errorFieldBorderColor: #{$errorFieldBorderColor};
+    --secondaryShadowColor: #{$secondaryShadowColor};
+    --errorFieldBackgroundColor: #{$errorFieldBackgroundColor};
+    --errorFieldTextColor: #{$errorFieldTextColor};
+    --infoFieldTextColor2: #{$infoFieldTextColor2};
+    --infoFieldTextColor: #{$infoFieldTextColor};
+    --quaternaryTextColor: #{$quaternaryTextColor};
+    --popupLinkColor: #{$popupLinkColor};
+    --errorTextColor: #{$errorTextColor};
+    --buttonColor: #{$buttonColor};
+    --buttonTextColor: #{$buttonTextColor};
 
-    &[data-theme='darkmode']{    
-    --theme-background-color: #{$themeDarkBackgroundColor};
-    --theme-background-color-secondary:#{$themeDarkBackgroundColorSecondary};
-    --theme-color-disabled: #{$themeDarkColorDisabled};
-    --theme-color: white;
-    --theme-task-picker-color: white;
-    --theme-box-shadow: 0 6px 32px 0 black;
-    --theme-background-hover: #{$themeDarkBackgroundHover};
-    --theme-border-color: #{$themeDarkBorderColor};
-    --theme-border-color-secondary: #{$themeDarkBorderColor};
-    --theme-label-color: #{$themeDarkLabelColor};
-    --theme-border-display-color: transparent;
-    --theme-border-disabled-color: #{$themeDarkBorderDisabledColor};   
-    }  
+
+    $primaryBackgroundColor: #222324;
+    $primaryTextColor: #bbbbba;
+    $fieldBackgroundColor: #272829;
+    $fieldBorderColor: #272829;
+    &[data-theme='darkmode'] {
+        --primaryTextColor: #{$primaryTextColor};
+        --primaryBackgroundColor: #{$primaryBackgroundColor};
+        --infoFieldBackgroundColor: #{$primaryBackgroundColor};
+        --popupBackground: #{$primaryBackgroundColor};
+        --defaultFieldBackgroundColor: #{$fieldBackgroundColor};
+        --durationInputBackgroundColor: #{$fieldBackgroundColor};
+        --taskPickerFontColor: #{$primaryTextColor};
+        --taskPickerPathFontColor: #{$primaryTextColor};
+        --primaryBorderColor: #{$fieldBorderColor};
+        --popupShadowGray: #{$primaryBackgroundColor};
+        --primaryShadowColor: #{$primaryBackgroundColor};
+        --secondaryShadowColor: #{$primaryBackgroundColor};
+        --popupBorderGraySecond: #{$fieldBorderColor};
+        --popupGrayThird: #{$fieldBackgroundColor};
+        --popupPrimaryTextColor: #{$primaryTextColor};
+        --popupGraySecond: #{$primaryTextColor};
+        --popupGray: #{$primaryTextColor};
+        --popupBorderGray: #{$fieldBorderColor};
+
+        //defaults
+        --popupDisabledFontColor: #{$popupDisabledFontColor};
+        --popupGreen: #{$popupGreen};
+        --defaultBorderColor: #{$defaultBorderColor};
+        --buttonActiveTextColor: #{$buttonActiveTextColor};
+        --infoFieldBorderColor: #{$infoFieldBorderColor};
+        --primaryColor: #{$primaryColor};
+        --labelFontColor: #{$labelFontColor};
+        --hoverBorderColor: #{$hoverBorderColor};
+        --quinaryTextColor: #{$quinaryTextColor};
+        --secondaryTextColor: #{$secondaryTextColor};
+        --disabledFontColor: #{$disabledFontColor};
+        --tertiaryTextColor: #{$tertiaryTextColor};
+        --buttonActiveColor: #{$buttonActiveColor};
+        --buttonDisabledColor: #{$buttonDisabledColor};
+        --redOrangeColor: #{$redOrangeColor};
+        --errorFieldBorderColor: #{$errorFieldBorderColor};
+        --errorFieldBackgroundColor: #{$errorFieldBackgroundColor};
+        --errorFieldTextColor: #{$errorFieldTextColor};
+        --infoFieldTextColor2: #{$infoFieldTextColor2};
+        --infoFieldTextColor: #{$infoFieldTextColor};
+        --quaternaryTextColor: #{$quaternaryTextColor};
+        --popupLinkColor: #{$popupLinkColor};
+        --errorTextColor: #{$errorTextColor};
+        --buttonColor: #{$buttonColor};
+        --buttonTextColor: #{$buttonTextColor};
+    }
 }

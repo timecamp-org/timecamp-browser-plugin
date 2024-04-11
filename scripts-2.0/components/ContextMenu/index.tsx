@@ -399,7 +399,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
                 <SubscriptionExpiredError visible={errorSubscriptionExpiredVisible}/>
 
-                <Header theme={theme}/>
+                <Header/>
 
                 <UnknownError
                     visible={errorUnknownVisible}

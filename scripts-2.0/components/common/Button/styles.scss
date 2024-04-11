@@ -7,8 +7,8 @@
     margin: 0 10px 0 0;
     padding: 10px 8px 10px 9px;
     border-radius: 8px;
-    background-color: $buttonColor;
-    color: $buttonTextColor;
+    background-color: var(--buttonColor);
+    color: var(--buttonTextColor);
     outline: none;
     cursor: pointer;
   }

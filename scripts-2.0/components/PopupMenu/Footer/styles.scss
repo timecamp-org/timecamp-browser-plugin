@@ -7,17 +7,16 @@
 
   display: flex;
   justify-content: space-between;
-  border-top: solid 1px $popupBorderGray;
+  border-top: solid 1px var(--popupBorderGray);
   padding-top: 20px;
   margin-top: 28px;
-  color: var(--theme-color);
 
   .user-img {
     height: 39px;
     border-radius: 50%;
 
     &:hover {
-      border: solid 1px $popupGreen;
+      border: solid 1px var(--popupGreen);
       padding: 5px;
       margin: -6px;
     }
@@ -27,9 +26,9 @@
     width: 39px;
     height: 39px;
     border-radius: 8px;
-    background-color: $popupGreen;
+    background-color: var(--popupGreen);
     border: none;
-    color: white;
+    color: var(--popupBackground);
     cursor: pointer;
 
     &:hover {
@@ -50,31 +49,30 @@
     width: 149px;
     height: 39px;
     border-radius: 8px;
-    border: solid 1px $popupBorderGraySecond;
-    background-color: white;
-    color: $popupGraySecond;
+    border: solid 1px var(--popupBorderGraySecond);
+    background-color: var(--defaultFieldBackgroundColor);
+    color: var(--popupGraySecond);
     cursor: pointer;
     margin-left: 10px;
 
     &:hover {
-      background-color: $popupGrayThird;
-      border: $popupBorderGraySecond;
+      background-color: var(--popupGrayThird);
+      border: var(--popupBorderGraySecond);
     }
 
     svg {
-      color: $popupGray;
+      color: var(--popupGray);
       margin: 0 10px 0 0;
       font-size: 16px;
     }
   }
 
   &__user-slide-window {
-    box-shadow: var(--theme-box-shadow);
+    box-shadow: 0 6px 32px 0 var(--popupShadowGray);
     padding: 10px;
     height: 114px;
     width: 265px;
-    background-color: var(--theme-background-color);
-    color: var(--theme-color);
+    background: var(--popupBackground);
     position: absolute;
     top: 25%;
     right: -1px;
@@ -86,7 +84,7 @@
       padding: 10px;
 
       &:hover {
-        background-color: var(--theme-background-hover);
+        background-color: var(--popupGrayThird);
         border-radius: 8px;
       }
 
@@ -106,14 +104,14 @@
 
         &__email {
           margin-left: 9px;
-          color: $popupGray;
+          color: var(--popupGray);
           font-size: 12px;
         }
       }
     }
 
     .section-bottom {
-      border-top: solid 1px $popupBorderGray;
+      border-top: solid 1px var(--popupBorderGray);
       margin-top: 9px;
       padding-top: 10px;
 
@@ -124,18 +122,18 @@
         text-align: left;
         width: 100%;
         height: 35px;
-        background-color: var(--theme-background-color);
-        color: var(--theme-color);
+        background-color: var(--popupBackground);
+        color: var(--popupGraySecond);
         font-family: $defaultFontFamily;
         padding: 9px;
 
         &:hover {
-          background-color: var(--theme-background-hover);
+          background-color: var(--popupGrayThird);
           border-radius: 8px;
         }
 
         svg {
-          color: $popupGray;
+          color: var(--popupGray);
           font-size: 16px;
           margin-left: 10px;
           margin-right: 10px;

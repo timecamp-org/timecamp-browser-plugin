@@ -4,22 +4,22 @@
   .loginWindow {
     font-family: $defaultFontFamily;
     font-size: $defaultFontSize;
-    color: $primaryTextColor;
+    color: var(--primaryTextColor);
     width: 440px;
     height: 563px;
     padding: 27px;
     box-sizing: border-box;
-    border: #aea6ab 1px solid;
+    border: var(--defaultBorderColor) 1px solid;
     display: block;
     position: fixed;
-    background-color: $primaryBackgroundColor;
+    background-color: var(--primaryBackgroundColor);
     line-height: initial;
     z-index: 999999;
 
     input {
-      color: $primaryTextColor;
+      color: var(--primaryTextColor);
       &::placeholder {
-        color: $secondaryTextColor;
+        color: var(--secondaryTextColor);
       }
     }
 
@@ -46,8 +46,8 @@
     &__button-login {
       display: block;
       margin: auto auto 22px auto;
-      background-color: $buttonActiveColor;
-      color: $buttonActiveTextColor;
+      background-color: var(--buttonActiveColor);
+      color: var(--buttonActiveTextColor);
       border: none;
       border-radius: $defaultBorderRadius;
       width: 340px;
@@ -61,9 +61,9 @@
 
       &-link {
         text-decoration: none;
-        color: $popupLinkColor;
+        color: var(--popupLinkColor);
         &:visited {
-          color: $popupLinkColor;
+          color: var(--popupLinkColor);
         }
       }
     }

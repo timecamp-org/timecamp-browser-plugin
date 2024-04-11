@@ -5,43 +5,38 @@
     &__dropdown {
       &__invalid {
         .Dropdown__button {
-          border-color: $redOrangeColor;
+          border-color: var(--redOrangeColor);
 
           &-text span {
-            color: $redOrangeColor;
+            color: var(--redOrangeColor);
           }
         }
 
         .Dropdown__icon-box svg {
-          color: $redOrangeColor;
+          color: var(--redOrangeColor);
         }
       }
     }
   }
 
   .TagPicker__dropdown {
-    max-width: 410px;;
-  }
-  .TagPicker__title {
-    color: var(--theme-label-color);
+    max-width: 410px;
   }
 
   .TagPicker__content {
-    -webkit-box-shadow: 0 6px 32px hsla(0, 0%, 70%, .5) !important;
-    box-shadow: 0 6px 32px hsla(0, 0%, 70%, .5) !important;
+    -webkit-box-shadow: 0 6px 32px var(--secondaryShadowColor) !important;
+    box-shadow: 0 6px 32px var(--secondaryShadowColor) !important;
     border-radius: 8px;
-    box-shadow: 0 6px 32px 0 var(--white-five);
-    background-color: var(--white);
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     width: 100%;
-    background-color: #ffffff;
-    color: $primaryTextColor;
+    background-color: var(--primaryBackgroundColor);
+    color: var(--primaryTextColor);
   }
 
   .TagPicker__invalid {
-    color: $redOrangeColor;
+    color: var(--redOrangeColor);
     padding: 7px 3px;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
   }
 
@@ -60,7 +55,7 @@
   .TagPicker__label {
     font-size: 12px;
     font-weight: bold;
-    color: $labelFontColor;
+    color: var(--labelFontColor);
     text-transform: uppercase;
   }
 
@@ -70,7 +65,7 @@
   }
 
   .TagPicker__TagList__label {
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: bold;
     font-stretch: normal;
@@ -79,7 +74,7 @@
     letter-spacing: normal;
 
     &__disabled {
-      color: $disabledFontColor;
+      color: var(--disabledFontColor);
     }
   }
 
@@ -100,8 +95,8 @@
     margin-left: 8px;
     padding: 3px 5px 2px 5px;
     border-radius: 11px;
-    border: solid 1px $redOrangeColor;
-    color: $redOrangeColor;
+    border: solid 1px var(--redOrangeColor);
+    color: var(--redOrangeColor);
     display: inline-block;
     text-align: center;
     font-size: 12px;
@@ -111,18 +106,17 @@
   .TagPicker__button_container {
     width: calc(100% - 30px);
     padding: 15px;
-    border-top: 1px solid #d8d8d8;
+    border-top: 1px solid var(--primaryBorderColor);
   }
 
   .TagPicker__button {
-    background-color: $algaeColor;
-    color: white;
+    background-color: var(--primaryColor);
+    color: var(--buttonActiveTextColor);
     padding: 10px;
     font-size: 14px;
     text-align: center;
-    font-size: 14px;
     border-radius: 8px;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     cursor: pointer;
   }
 
@@ -144,7 +138,7 @@
 
   .TagPicker__not_found_text {
     height: 26px;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -152,6 +146,6 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: $primaryTextColor;
+    color: var(--primaryTextColor);
   }
 }

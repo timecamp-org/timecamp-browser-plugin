@@ -5,21 +5,22 @@
     height: 39px;
     width: 120px;
     border-radius: $defaultBorderRadius;
-    border: solid 1px var(--theme-border-color-secondary);
+    border: solid 1px var(--primaryBorderColor);
     font-size: $defaultFontSize;
     font-family: $defaultFontFamily;
     display: flex;
     align-items: center;
     text-align: center;
+    background-color: var(--primaryBackgroundColor);
     box-sizing: border-box;
     padding-left: 15px;
 
     &:hover {
-      border-color: $hoverBorderColor;
+      border-color: var(--hoverBorderColor);
     }
 
     &:active, &:focus, &:focus-within {
-      border-color: $primaryColor;
+      border-color: var(--primaryColor);
 
       .time-picker__arrows {
         visibility: visible;
@@ -40,14 +41,11 @@
       border: none;
       outline: none;
       text-align: center;
+      background-color: inherit;
       caret-color: transparent;
       padding: 0;
       min-width: 0;
-      background-color: var(--theme-background-color);
-      color: var(--theme-color);
-    }
-    &__separator{
-      color: var(--theme-color);
+      color: var(--primaryTextColor);
     }
 
     &__arrows {
@@ -57,11 +55,11 @@
       font-size: 10px;
       margin-right: 2px;
       height: 100%;
-      color: $quinaryTextColor;
+      color: var(--quinaryTextColor);
       visibility: hidden;
 
       .arrow {
-        background-color: $defaultFieldBackgroundColor;
+        background-color: var(--defaultFieldBackgroundColor);
         align-self: flex-end;
         height: 50%;
         width: 17px;
@@ -88,7 +86,7 @@
       width: 100%;
       text-align: left;
       cursor: pointer;
-      color: $secondaryTextColor;
+      color: var(--secondaryTextColor);
 
       &::first-letter {
         text-transform: uppercase;

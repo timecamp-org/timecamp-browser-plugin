@@ -5,16 +5,14 @@
   font-size: 14px;
   font-weight: normal;
   padding-top: 15px;
-  color: var(--theme-color);
 
   &__title {
     margin: 0 0 10px 7px;
     font-weight: bold;
-    color: var(--theme-label-color);
   }
 
   &__entry {
-    border: solid 1px $popupBorderGray;
+    border: solid 1px var(--popupBorderGray);
     border-radius: 8px;
     width: 360px;
     height: 52px;
@@ -24,7 +22,7 @@
     padding: 15px;
 
     .entry-empty-info {
-      color: $popupDisabledFontColor;
+      color: var(--popupDisabledFontColor);
     }
 
     .entry {

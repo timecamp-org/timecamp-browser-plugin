@@ -1,12 +1,9 @@
 @import '../../style/common';
 
-$backgroundColor: #f8f8f8;
-$fontColor: #8a8a8a;
-
 .timecamp {
   .SearchInput {
     position: relative;
-    color: $fontColor;
+    color: var(--secondaryTextColor);
   }
 
   .SearchInput__icon {
@@ -17,21 +14,21 @@ $fontColor: #8a8a8a;
 
   .SearchInput__input {
     border: 1px solid;
-    border-color: $backgroundColor;
-    background: var(--theme-background-color-secondary);
+    border-color: var(--defaultFieldBackgroundColor);
+    background: var(--defaultFieldBackgroundColor);
     border-radius: $defaultBorderRadius;
     outline: none;
     font-size: 14px;
     width: calc(100% - 30px);
-    color: var(--theme-color);
+    color: var(--primaryTextColor);
     padding: 10px 15px;
 
     &:hover, &:focus {
-      border-color: $hoverBorderColor;
+      border-color: var(--hoverBorderColor);
     }
 
     &:active, &:focus {
-      border-color: $primaryColor;
+      border-color: var(--primaryColor);
     }
 
     &--with-icon {

@@ -2,6 +2,6 @@
 
 .timecamp {
   .wrong-dates-error {
-    color: $errorTextColor;
+    color: var(--errorTextColor);
   }
 }

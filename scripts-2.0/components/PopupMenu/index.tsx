@@ -215,9 +215,12 @@ const PopupMenu: React.FC<PopupMenuInterface> = (props) => {
     }, []);
 
     return (
-        <div className='popup-container'>
+        <div
+            className='popup-container'
+            data-theme={theme}
+        >
             <div className={`tc-popup ${!isUserLogged || isContextMenuOpen ? 'tc-popup--hidden' : ''}`}  data-theme={theme}>
-                <Header theme={theme} />
+                <Header />
                 <WorkingTimerSection
                     isTimerWorking={isTimerWorking}
                     entry={entry}

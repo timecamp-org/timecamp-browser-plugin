@@ -1,39 +1,33 @@
 @import '../../style/common';
 
-$borderColor: #dbdbdb;
-$iconColor: #6b6b6b;
-
-$disabledBackgroundColor: #f2f2f2;
-$disabledFontColor: #8a8a8a;
-
 .timecamp {
   .Dropdown__button {
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     border: 1px solid;
-    border-color: var(--theme-border-color-secondary);
+    border-color: var(--primaryBorderColor);
     border-radius: $defaultBorderRadius;
     padding: 10px 15px;
     display: flex;
     cursor: pointer;
-    background-color: var(--theme-background-color);
 
     &:hover {
-      border-color: $hoverBorderColor;
+      border-color: var(--hoverBorderColor);
     }
 
     &--open {
-      border-color: $primaryColor;
-      color: $primaryColor;
+      border-color: var(--primaryColor);
+      color: var(--primaryColor);
     }
 
     &--disabled {
-      background-color: var(--theme-background-color-secondary);
-      color: $disabledFontColor;
+      background-color: var(--durationInputBackgroundColor);
+      border-color: var(--durationInputBackgroundColor);
+      color: var(--disabledFontColor);
       pointer-events: none;
 
       &:hover {
-        border-color: var(--theme-border-disabled-color);
-        color: $disabledFontColor;
+        border-color: var(--durationInputBackgroundColor);
+        color: var(--disabledFontColor);
       }
     }
   }
@@ -44,11 +38,10 @@ $disabledFontColor: #8a8a8a;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: var(--theme-color);
   }
 
   .Dropdown__icon {
-    color: $iconColor;
+    color: var(--tertiaryTextColor);
   }
 
   .Dropdown__backdrop {
@@ -63,7 +56,7 @@ $disabledFontColor: #8a8a8a;
     position: fixed;
     top: 0;
     left: 0;
-    box-shadow: var(--theme-box-shadow);
+    box-shadow: 0 6px 32px 0 var(--primaryShadowColor);
     border-radius: $defaultBorderRadius;
     overflow-y: hidden;
     z-index: 999999;
@@ -80,7 +73,7 @@ $disabledFontColor: #8a8a8a;
     width: 11px !important;
 
     &--open {
-      color: $primaryColor;
+      color: var(--primaryColor);
     }
   }
 }
