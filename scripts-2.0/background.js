@@ -377,6 +377,11 @@ const TcButton = {
                         }
 
                         TcButton.getCurrentUserId().then((userId) => {
+                            if (!userId) {
+                                reject('User not logged in');
+                                return;
+                            }
+
                             apiService.getUserSetting(
                                 'theme',//todo: refactor using types
                                 userId,
