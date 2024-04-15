@@ -1,0 +1,23 @@
+.tc-button.smartsheet {
+  padding-left: 8px;
+  padding-bottom: 5px;
+}
+
+.tc-button.smartsheet-task {
+  padding-left: 12px;
+  padding-top: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.timecamp .footer__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  & .footer__button-save {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
