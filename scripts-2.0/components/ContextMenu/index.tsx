@@ -271,7 +271,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         e.stopPropagation();
         let currentDate = new Date()
         if (stopTime === null) {
-            startTimer(dateTime.formatToYmdHis(currentDate));
+	    startTimer(dateTime.formatToYmdHis(startTime ? startTime : currentDate));
         } else {
             addTimeEntry(startTime ?? currentDate, stopTime);
         }

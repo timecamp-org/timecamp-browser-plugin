@@ -1,4 +1,4 @@
-@import '../../style/common';
+@import "../../style/common";
 
 .timecamp {
   .context-menu {
@@ -33,10 +33,13 @@
     }
 
     &-extended-height {
-      height: 666px;
+      overflow-y: auto;
     }
 
-    .TaskPicker, .TagPicker, .note, .duration {
+    .TaskPicker,
+    .TagPicker,
+    .note,
+    .duration {
       margin-top: 15px;
     }
 
