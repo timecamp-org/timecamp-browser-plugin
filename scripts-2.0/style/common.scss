@@ -1,5 +1,6 @@
 $primaryColor: #4bb063;
 $primaryBackgroundColor: #ffffff;
+$secondaryBackgroundColor: #ffffff;
 $primaryBorderColor: #dbdbdb;
 $hoverBorderColor: rgba($primaryColor, 0.5);
 
@@ -63,6 +64,7 @@ $defaultFontSize: 14px;
 @mixin theme-variables {
     --primaryTextColor: #{$primaryTextColor};
     --primaryBackgroundColor: #{$primaryBackgroundColor};
+    --secondaryBackgroundColor: #{$secondaryBackgroundColor};
     --defaultBorderColor: #{$defaultBorderColor};
     --infoFieldBackgroundColor: #{$infoFieldBackgroundColor};
     --infoFieldBorderColor: #{$infoFieldBorderColor};
@@ -107,12 +109,14 @@ $defaultFontSize: 14px;
 
 
     $primaryBackgroundColor: #222324;
+    $secondaryBackgroundColor: #323233;
     $primaryTextColor: #bbbbba;
     $fieldBackgroundColor: #272829;
     $fieldBorderColor: #272829;
     &[data-theme='darkmode'] {
         --primaryTextColor: #{$primaryTextColor};
         --primaryBackgroundColor: #{$primaryBackgroundColor};
+        --secondaryBackgroundColor: #{$secondaryBackgroundColor};
         --infoFieldBackgroundColor: #{$primaryBackgroundColor};
         --popupBackground: #{$primaryBackgroundColor};
         --defaultFieldBackgroundColor: #{$fieldBackgroundColor};
