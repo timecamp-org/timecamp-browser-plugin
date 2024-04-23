@@ -18,28 +18,27 @@
     -webkit-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-    width: 100%;
     cursor: pointer;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $taskPickerFontColor;
+    color: var(--taskPickerFontColor);
     display: inline-block;
     width: calc(100% - 50px);
 
     &__disabled {
-      color: $disabledFontColor;
+      color: var(--disabledFontColor);
       cursor: not-allowed;
     }
 
     &:hover {
-      color: #4bb063 !important;
+      color: var(--primaryColor) !important;
       text-decoration: none !important;
-      background: #f8f8f8;
+      background: var(--defaultFieldBackgroundColor);
       border-radius: 4px;
     }
 
@@ -58,7 +57,7 @@
   .TaskPicker__TcUiClearedUl {
     margin: 0;
     padding: 0;
-    color: $taskPickerFontColor;
+    color: var(--taskPickerFontColor);
     position: relative;
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
@@ -90,7 +89,7 @@
     width: 11px !important;
 
     &--open {
-      color: $primaryColor;
+      color: var(--primaryColor);
     }
   }
 
@@ -127,20 +126,17 @@
     max-width: 410px;
 
     .Dropdown__button-text {
-      color: $disabledFontColor;
+      color: var(--disabledFontColor);
     }
   }
 
   .TaskPicker__content {
-    -webkit-box-shadow: 0 6px 32px hsla(0,0%,70%,.5)!important;
-    box-shadow: 0 6px 32px hsla(0,0%,70%,.5)!important;
     border-radius: 8px;
-    box-shadow: 0 6px 32px 0 var(--white-five);
-    background-color: var(--white);
-    font-family: Poppins;
+    -webkit-box-shadow: 0 6px 32px var(--secondaryShadowColor) !important;
+    box-shadow: 0 6px 32px 0 var(--secondaryShadowColor);
+    font-family: $defaultFontFamily;
     width: 100%;
-    background-color: #ffffff;
-    width: 100%;
+    background-color: var(--secondaryBackgroundColor);
     overflow-y: auto;
   }
 
@@ -159,7 +155,7 @@
         background:initial;
       }
       &::-webkit-scrollbar-thumb {
-        background: $secondaryTextColor;
+        background: var(--secondaryTextColor);
         border-radius: 4px;
         opacity: 0.2;
       }
@@ -167,14 +163,14 @@
   }
 
   .TaskPicker__dropdown__invalid {
-    color: $redOrangeColor;
-    border-color: $redOrangeColor;
+    color: var(--redOrangeColor);
+    border-color: var(--redOrangeColor);
   }
 
   .TaskPicker__invalid {
-    color: $redOrangeColor;
+    color: var(--redOrangeColor);
     padding: 7px 3px;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
   }
 
@@ -186,7 +182,7 @@
   .TaskPicker__label {
     font-size: 12px;
     font-weight: bold;
-    color: $labelFontColor;
+    color: var(--labelFontColor);
     text-transform: uppercase;
     padding: 0px 0 10px 6px;
     font-stretch: normal;
@@ -201,7 +197,7 @@
   }
 
   .TaskPicker__TaskList__label {
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: bold;
     font-stretch: normal;
@@ -220,8 +216,8 @@
     margin-left: 8px;
     padding: 3px 5px 2px 5px;
     border-radius: 11px;
-    border: solid 1px $redOrangeColor;
-    color: $redOrangeColor;
+    border: solid 1px var(--redOrangeColor);
+    color: var(--redOrangeColor);
     display: inline-block;
     text-align: center;
     font-size: 12px;
@@ -231,18 +227,17 @@
   .TaskPicker__button_container {
     width: calc(100% - 30px);
     padding: 15px;
-    border-top: 1px solid #d8d8d8;
+    border-top: 1px solid var(--primaryBorderColor);
   }
 
   .TaskPicker__button {
-    background-color: $algaeColor;
-    color: white;
+    background-color: var(--primaryColor);
+    color: var(--buttonActiveTextColor);
     padding: 10px;
     font-size: 14px;
     text-align: center;
-    font-size: 14px;
     border-radius: 8px;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     cursor: pointer;
   }
 
@@ -265,14 +260,14 @@
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 11px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $taskPickerPathFontColor;
+    color: var(--taskPickerPathFontColor);
   }
 
   .TaskPicker__SelectedTask__label {
@@ -280,14 +275,14 @@
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: $taskPickerFontColor;
+    color: var(--taskPickerFontColor);
   }
 
 
@@ -303,7 +298,7 @@
 
   .TaskPicker__not_found_text {
     height: 26px;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -311,7 +306,7 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: $taskPickerFontColor;
+    color: var(--taskPickerFontColor);
   }
 
   .TaskPicker__tree_row {
@@ -323,7 +318,7 @@
 
   .TaskPicker__not_found_text {
     height: 26px;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -331,14 +326,14 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: $taskPickerFontColor;
+    color: var(--taskPickerFontColor);
   }
 
   .TagPicker__no_tags_text, .TagPicker__no_tags_label {
     text-align: center;
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 14px;
-    color: $taskPickerFontColor;
+    color: var(--taskPickerFontColor);
   }
 
   .TagPicker__no_tags_label {
@@ -347,13 +342,13 @@
 
   .tooltiptext {
     visibility: hidden;
-    background-color: #ff3c00;
-    color: #f8f8f8;
+    background-color: var(--errorFieldBorderColor);
+    color: var(--popupGrayThird);
     text-align: center;
     padding: 5px;
     border-radius: 6px;
 
-    font-family: Poppins;
+    font-family: $defaultFontFamily;
     font-size: 12px;
 
     top: 50px;

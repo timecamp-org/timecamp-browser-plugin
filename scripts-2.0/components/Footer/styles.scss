@@ -7,7 +7,7 @@
     margin: 0;
     padding: 20px 0 20px 0;
     width: 100%;
-    border-top: $primaryBorderColor 1px solid;
+    border-top: var(--primaryBorderColor) 1px solid;
     background-color: inherit;
 
     &__buttons {
@@ -16,8 +16,8 @@
     }
 
     &__button-save {
-      background-color: $buttonActiveColor;
-      color: $buttonActiveTextColor;
+      background-color: var(--buttonActiveColor);
+      color: var(--buttonActiveTextColor);
       border: none;
       font-family: $defaultFontFamily;
       font-size: $defaultFontSize;
@@ -25,14 +25,16 @@
     }
 
     &__button-cancel {
-      border: solid 1px $primaryBorderColor;
+      border: solid 1px var(--primaryBorderColor);
       font-family: $defaultFontFamily;
       font-size: $defaultFontSize;
+      background-color: var(--defaultFieldBackgroundColor);
+      color: var(--primaryTextColor);
     }
 
     &__button-disabled {
-      background-color: $buttonDisabledColor;
-      color: $disabledFontColor;
+      background-color: var(--buttonDisabledColor);
+      color: var(--disabledFontColor);
       cursor: not-allowed;
     }
   }

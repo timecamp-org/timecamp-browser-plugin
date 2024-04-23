@@ -1,6 +1,4 @@
-$redOrangeColor: #ff3c00;
-$algaeColor: #4bb063;
-$whiteThreeColor: #dbdbdb;
+@import '../../style/common';
 
 .timecamp {
   /* The Checkbox */
@@ -20,7 +18,7 @@ $whiteThreeColor: #dbdbdb;
 
     &--invalid {
       .Checkbox__checkmark {
-        border-color: $redOrangeColor;
+        border-color: var(--redOrangeColor);
       }
     }
   }
@@ -51,7 +49,7 @@ $whiteThreeColor: #dbdbdb;
     background-color: transparent;
     border: 1px solid;
     border-radius: 2px;
-    border-color: $whiteThreeColor;
+    border-color: var(--primaryBorderColor);
   }
 
   .Checkbox__middleCheckmark {
@@ -81,8 +79,8 @@ $whiteThreeColor: #dbdbdb;
   }
 
   .Checkbox input:checked ~ .Checkbox__checkmark {
-    background-color: $algaeColor;
-    border: 1px solid $algaeColor;
+    background-color: var(--primaryColor);
+    border: 1px solid var(--primaryColor);
   }
 
   /* Style the Checkbox__checkmark/indicator */

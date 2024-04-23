@@ -4,7 +4,7 @@
   .context-menu-overlay {
     font-size: $defaultFontSize;
     font-family: $defaultFontFamily;
-    background-color: $primaryBackgroundColor;
+    background-color: var(--primaryBackgroundColor);
     width: 100%;
     height: 100%;
     position: absolute;
@@ -21,26 +21,26 @@
       &__title {
         font-size: 16px;
         font-family: $defaultFontFamily;
-        color: $quaternaryTextColor;
+        color: var(--quaternaryTextColor);
       }
 
       &__message {
         font-size: $defaultFontSize;
         font-family: $defaultFontFamily;
-        color: $secondaryTextColor;
+        color: var(--secondaryTextColor);
       }
 
       &__button {
         margin-top: 10px;
 
         button {
-          border: solid 1px $primaryBorderColor;
+          border: solid 1px var(--primaryBorderColor);
           font-size: $defaultFontSize;
           font-family: $defaultFontFamily;
           width: auto;
           &:hover {
-            background-color: $popupGrayThird;
-            border-color: $popupBorderGraySecond;
+            background-color: var(--popupGrayThird);
+            border-color: var(--popupBorderGraySecond);
           }
 
           a {

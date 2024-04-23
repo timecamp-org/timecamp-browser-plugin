@@ -12,7 +12,7 @@
   }
 
   &__entry {
-    border: solid 1px $popupBorderGray;
+    border: solid 1px var(--popupBorderGray);
     border-radius: 8px;
     width: 360px;
     height: 52px;
@@ -22,7 +22,7 @@
     padding: 15px;
 
     .entry-empty-info {
-      color: $popupDisabledFontColor;
+      color: var(--popupDisabledFontColor);
     }
 
     .entry {

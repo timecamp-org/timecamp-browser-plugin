@@ -1,7 +1,6 @@
 @import '../../style/common';
 
 .timecamp {
-
   .time-selectors {
     display: flex;
     flex-direction: row;
@@ -17,10 +16,12 @@
         width: 109px;
         padding: 0 0 0 15px;
         border-radius: 8px;
-        border: 1px solid $primaryBorderColor;
+        border: 1px solid var(--primaryBorderColor);
         caret-color: transparent;
         outline: none;
         text-transform: capitalize;
+        background-color: var(--defaultFieldBackgroundColor);
+        color: var(--primaryTextColor);
       }
 
       label {

@@ -24,6 +24,7 @@ import TimeSelectors from "../TimeSelectors";
 import DateTime from "../../helpers/DateTime";
 import TimeFormatter from "../../TimeFormatter";
 import WrongDatesError from "./Error/WrongDatesError";
+import { useTheme } from "../../hooks/useTheme/useTheme";
 
 const pathService = new PathService();
 const logger = new Logger();
@@ -66,6 +67,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     const addTimeEntryCallback = props.addTimeEntryCallback;
     const onCloseCallback = props.onCloseCallback;
     const [userId, setUserId] = useState<number>(0);
+    const theme = useTheme();
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [clearTriggerForTimePicker, setClearTriggerForTimePicker] = useState<boolean>(false);
     const [externalTaskId, setExternalTaskId] = useState(props.externalTaskId);
@@ -91,7 +93,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
     const THIRTY_DAYS_IN_MILISEC = 2592000000;
 
-
     useEffect(() => {
         setNote(props.note);
         setBillable(props.billable);
@@ -110,7 +111,6 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             document.removeEventListener("click", onClickOutside);
         };
     }, [props]);
-
 
     useMemo(() => {
         if (service === TRELLO) {
@@ -203,6 +203,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         }).catch(() => {
         });
     }, []);
+
 
     const getBackendIntegrationAdData = (userId: number) => {
         browser.runtime.sendMessage({
@@ -385,6 +386,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
     //data-elevation is fix for trello card modal (it close when click on context menu)
     return (
         <div
+            data-theme={theme}
             ref={node}
             className={`context-menu  ${!open ? "context-menu--hidden" : ""} ${props.isBackendIntegration && !isBackendIntegration && dontShowAdSettingValue === 0 ? "context-menu-extended-height" : ""}`}
             style={props.position}
@@ -397,7 +399,7 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
 
                 <SubscriptionExpiredError visible={errorSubscriptionExpiredVisible}/>
 
-                <Header />
+                <Header/>
 
                 <UnknownError
                     visible={errorUnknownVisible}

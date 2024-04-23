@@ -1,18 +1,19 @@
-@import "../../style/common";
+@import '../../style/common';
 
 .timecamp {
   .context-menu {
+    @include theme-variables;
     font-family: $defaultFontFamily;
     font-size: 14px;
     font-weight: normal;
-    color: $primaryTextColor;
+    color: var(--primaryTextColor);
     width: 440px;
     height: 563px;
     box-sizing: border-box;
-    border: #aea6ab 1px solid;
+    border: var(--defaultBorderColor) 1px solid;
     display: block;
     position: fixed;
-    background-color: $primaryBackgroundColor;
+    background-color: var(--primaryBackgroundColor);
     line-height: initial;
     z-index: 99999;
     overflow: hidden;
@@ -46,9 +47,9 @@
     &__info-field {
       padding: 10px 14px 10px 16px;
       border-radius: 8px;
-      background-color: $infoFieldBackgroundColor;
-      border: solid 1px $infoFieldBorderColor;
-      color: $infoFieldTextColor;
+      background-color: var(--infoFieldBackgroundColor);
+      border: solid 1px var(--infoFieldBorderColor);
+      color: var(--infoFieldTextColor);
     }
   }
 }

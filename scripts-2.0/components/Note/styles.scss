@@ -17,9 +17,9 @@
       padding: 10px 15px 10px 15px;
       object-fit: contain;
       border-radius: 8px;
-      border: solid 1px $primaryBorderColor;
-      background-color: $primaryBackgroundColor;
-      color: $primaryTextColor;
+      border: solid 1px var(--primaryBorderColor);
+      background-color: var(--primaryBackgroundColor);
+      color: var(--primaryTextColor);
       outline: none;
       resize: none;
       box-sizing: unset;
@@ -27,12 +27,12 @@
       font-size: $defaultFontSize;
 
       &::placeholder {
-        color: $secondaryTextColor;
+        color: var(--secondaryTextColor);
       }
 
       &:hover, &:focus {
         box-shadow: none;
-        border-color: $hoverBorderColor;
+        border-color: var(--hoverBorderColor);
       }
     }
 
@@ -40,7 +40,7 @@
       margin: 0;
       float: right;
       font-size: 12px;
-      color: $secondaryTextColor;
+      color: var(--secondaryTextColor);
     }
   }
 }
