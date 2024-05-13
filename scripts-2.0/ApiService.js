@@ -69,8 +69,8 @@ export default class ApiService {
         });
     }
 
-    call(opts, checkForCustomDomain = true) {
-        if ((this.rootGroupId === null || this.userId === null) && checkForCustomDomain) {
+    call(opts) {
+        if (this.rootGroupId === null || this.userId === null) {
             this.setSuitableDomain();
         }
 
