@@ -21,10 +21,12 @@ export default class ApiService {
     }
 
     setSuitableDomain() {
-        this.me().then((response) => {
-            this.rootGroupId = parseInt(response.root_group_id);
-            this.userId = parseInt(response.user_id);
-            pathService.changeBaseUrlForRootGroup(this.rootGroupId);
+        this.discovery().then((response) => {
+            pathService.changeBaseUrl(response);
+            this.me().then((response) => {
+                this.rootGroupId = parseInt(response.root_group_id);
+                this.userId = parseInt(response.user_id);
+            });
         });
     }
 
@@ -344,13 +346,30 @@ export default class ApiService {
         );
     }
 
+    discovery() {
+        return this.authorizeAndCall((token, resolve, reject) => {
+            this.call({
+                url: pathService.getDiscoveryUrl(),
+                method: METHOD_GET,
+                apiToken: token,
+            }, false)
+                .then((response) => {
+                    let responseData = JSON.parse(response.response);
+                    resolve(responseData);
+                })
+                .catch((response) => {
+                    logger.error(response);
+                    reject(response);
+                });
+        });
+    }
     me() {
         return this.authorizeAndCall((token, resolve, reject) => {
             this.call({
                 url: pathService.getMeUrl(),
                 method: METHOD_GET,
                 apiToken: token,
-            }, false)
+            })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
                     resolve(responseData);
