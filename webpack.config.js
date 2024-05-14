@@ -17,7 +17,6 @@ const ENV = {
 };
 
 module.exports = (env, argv) => {
-module.exports = (env, argv) => {
   let version = pkg.version;
   let development = false;
   let production = false;
