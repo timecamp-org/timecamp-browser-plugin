@@ -78,7 +78,7 @@ const Footer: React.FC<FooterInterface> = (props) => {
                             <img className='user__img user-img' src={user.gravatarUrl} />
                             <div>
                                 <div className='user__display-name' style={user.displayName === null ? {marginTop: '10px'} : {}}>
-                                    {user.displayName === null ? user.email : user.displayName }
+                                    {user.displayName === null || user.displayName === '' ? user.email : user.displayName }
                                 </div>
                                 {user.displayName && <div className='user__email'>{user.email}</div>}
                             </div>

@@ -16,10 +16,6 @@ const ENV = {
   GOOGLE_ANALYTICS_ID: 'UA-4525089-16'
 };
 
-const CUSTOM_DOMAINS = {
-  73065: 'https://enterprise.timecamp.com/',
-};
-
 module.exports = (env, argv) => {
   let version = pkg.version;
   let development = false;
@@ -118,7 +114,6 @@ module.exports = (env, argv) => {
         SERVER_DOMAIN: ENV.SERVER_DOMAIN,
         NEXT_SERVER_DOMAIN: ENV.NEXT_SERVER_DOMAIN,
         DEBUG: development,
-        CUSTOM_DOMAINS: CUSTOM_DOMAINS,
         MARKETING_PAGE_DOMAIN: ENV.MARKETING_PAGE_DOMAIN,
         GOOGLE_ANALYTICS_ID: development ? '' : ENV.GOOGLE_ANALYTICS_ID
       }),
@@ -204,9 +199,8 @@ function transformOldConfig() {
 
       if (filePath.split(PATH_SEPARATOR).pop() === 'config.js') {
           let serverUrl = 'var serverUrl="' + ENV.SERVER_PROTOCOL + '://' + ENV.SERVER_DOMAIN + '/' + '";';
-          let customDomain = 'var customDomain=' + JSON.stringify(CUSTOM_DOMAINS) + ';';
 
-          return Buffer.from(serverUrl + customDomain + content.toString());
+          return Buffer.from(serverUrl + content.toString());
       }
 
       return Buffer.from(content.toString());

@@ -1,23 +1,17 @@
 import DateTime from "./helpers/DateTime";
 
-const CUSTOM_DOMAINS = process.env.CUSTOM_DOMAINS;
 const LOGIN_GET_KEY = 'loginToBrowserPlugin';
 
 export default class PathService {
     serverUrl = process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/';
-    CUSTOM_DOMAINS = process.env.CUSTOM_DOMAINS;
     nextServerUrl =  process.env.SERVER_PROTOCOL + '://' + process.env.NEXT_SERVER_DOMAIN + '/';
     marketingPageUrl = process.env.SERVER_PROTOCOL + '://' + process.env.MARKETING_PAGE_DOMAIN + '/';
 
     constructor() {
     }
 
-    changeBaseUrlForRootGroup(rootGroupId) {
-        if (this.CUSTOM_DOMAINS[rootGroupId]) {
-            this.serverUrl = this.CUSTOM_DOMAINS[rootGroupId];
-        }
-
-        return this.serverUrl;
+    changeBaseUrl(url) {
+        this.serverUrl = url;
     }
 
     getBaseUrl() {
@@ -70,6 +64,10 @@ export default class PathService {
 
     getAddEntryUrl() {
         return this.serverUrl + 'chrome_plugin/api' + '/entries';
+    }
+
+    getDiscoveryUrl() {
+        return this.serverUrl + 'chrome_plugin/api' + '/discovery';
     }
 
     getMeUrl() {
