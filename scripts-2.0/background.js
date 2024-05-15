@@ -518,6 +518,7 @@ const TcButton = {
         TcButton.currentEntry = null;
         apiService.rootGroupId = null;
         apiService.userId = null;
+        apiService.discoveryEndpointChecked = false;
         CACHE = {};
 
         TcButton.updateIcon();

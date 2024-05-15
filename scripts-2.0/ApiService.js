@@ -16,6 +16,7 @@ export default class ApiService {
     defaultServiceName = 'ChromePlugin';
     rootGroupId = null;
     userId = null;
+    discoveryEndpointChecked = false;
 
     constructor() {
     }
@@ -26,8 +27,14 @@ export default class ApiService {
             this.me().then((response) => {
                 this.rootGroupId = parseInt(response.root_group_id);
                 this.userId = parseInt(response.user_id);
+            }).catch((response) => {
+                return false;
+            }).catch((response) => {
+                return false;
             });
         });
+
+        return true;
     }
 
     handleErrors(xhr) {
@@ -70,8 +77,14 @@ export default class ApiService {
     }
 
     call(opts) {
-        if (this.rootGroupId === null || this.userId === null) {
-            this.setSuitableDomain();
+        if (!this.discoveryEndpointChecked) {
+            this.discoveryEndpointChecked = true;
+            let isSetCorrectly = this.setSuitableDomain();
+            if (!isSetCorrectly) {
+                setTimeout(() => {
+                    this.discoveryEndpointChecked = false;
+                }, 60 * 1000);
+            }
         }
 
         return new Promise((resolve, reject) => {
