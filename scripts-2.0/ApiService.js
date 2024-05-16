@@ -79,7 +79,7 @@ export default class ApiService {
     call(opts) {
         if (!this.discoveryEndpointChecked) {
             this.discoveryEndpointChecked = true;
-            let isSetCorrectly = this.setSuitableDomain();
+            const isSetCorrectly = this.setSuitableDomain();
             if (!isSetCorrectly) {
                 setTimeout(() => {
                     this.discoveryEndpointChecked = false;
