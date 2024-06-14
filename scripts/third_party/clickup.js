@@ -96,7 +96,7 @@ function ClickupTimer () {
                 $this.buttonInsertionInProgress = false;
             });
 
-        var clickupUserTaskHeaderSection = $(".task__toolbar").find( ".cu-task-header__section" )[0];
+        var clickupUserTaskHeaderSection = $(".cu-task-hero-section__actions").find("cu-content-assistant-task-ai" )[0];
         
         if (!clickupUserTaskHeaderSection) {
           clickupUserTaskHeaderSection = document
