@@ -19,11 +19,11 @@ export default class StorageManager {
             browser.storage.sync.get(key).then((items) => {
                 let data = items[key];
 
-                if (browser.runtime.lastError === undefined) {
+                if (!browser.runtime.lastError) {
                     resolve(data);
                 } else {
-                    logger.error(browser.runtime.lastError.message);
-                    reject(browser.runtime.lastError.message);
+                    logger.error(browser.runtime.lastError?.error);
+                    reject(browser.runtime.lastError?.error);
                 }
             }).catch((e) => {
                 reject(e);
@@ -34,11 +34,11 @@ export default class StorageManager {
     set(key, data) {
         return new Promise((resolve, reject) => {
             browser.storage.sync.set({[key]: data}).then(() => {
-                if (browser.runtime.lastError === undefined) {
+                if (!browser.runtime.lastError) {
                     resolve();
                 } else {
-                    logger.error(browser.runtime.lastError.message);
-                    reject(browser.runtime.lastError.message);
+                    logger.error(browser.runtime.lastError?.error);
+                    reject(browser.runtime.lastError?.error);
                 }
             }).catch((e) => {
                 reject(e);

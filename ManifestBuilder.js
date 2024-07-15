@@ -1,49 +1,64 @@
 "use strict";
 
-const integrations = require("./integrationList.json");
+const integrations = require('./integrationList.json');
 
 module.exports = {
-  build: function (isDebug = false) {
-    if (isDebug) {
-      integrations.push({
-        matches: ["http://localhost/*"],
-        script: ["for-development-only.js"],
-      });
-    }
+    build: function (serverProtocol, serverDomain, browser, isDebug = false) {
+        if (isDebug) {
+            integrations.push({
+                "matches": ["*://localhost/*/*"],
+                "script": ["for-development-only.js"]
+            })
+        }
 
-    let contentScripts = [];
-    for (const integration of integrations) {
-      if (!isDebug && integration.isActiveInProd !== true) {
-        continue;
-      }
+        if (browser === "firefox") {
+            integrations.push({
+                "matches": [serverProtocol + '://' + serverDomain + '/*'],
+                "script": ["timecamp-firefox-helper.js"]
+            })
+        }
 
-      const excludeMatches = [
-        ...this.defaults.exclude_matches,
-        ...(integration.exclude_matches ? integration.exclude_matches : []),
-      ];
+        let contentScripts = [];
+        for (const integration of integrations) {
+            if (!isDebug && integration.isActiveInProd !== true) {
+                continue;
+            }
 
-      const excludeMatchesOptions =
-        excludeMatches.length > 0 ? { exclude_matches: excludeMatches } : {};
+            let item = {
+                'matches': [
+                    ...this.defaults.matches,
+                    ...integration.matches
+                ],
+                'exclude_matches': [
+                    ...this.defaults.exclude_matches,
+                    ...(integration.exclude_matches ? integration.exclude_matches : [])
+                ],
+                'css': this.defaults.css,
+                'js': [
+                    ...this.defaults.js,
+                    'scripts-2.0/third_party/' + integration.script,
+                ],
+            };
 
-      contentScripts.push({
-        matches: [...this.defaults.matches, ...integration.matches],
-        ...excludeMatchesOptions,
-        css: this.defaults.css,
-        js: [
-          ...this.defaults.js,
-          "scripts-2.0/third_party/" + integration.script,
+            if (item.exclude_matches.length === 0) {
+                delete item.exclude_matches;
+            }
+
+            contentScripts.push(item);
+        }
+
+        return contentScripts;
+    },
+    defaults: {
+        matches: [],
+        exclude_matches: [],
+        css: [
+            'scripts-2.0/style/main.min.css',
         ],
-      });
+        js: [
+            'scripts-2.0/common.js',
+        ],
     }
-
-    return contentScripts;
-  },
-  defaults: {
-    matches: [],
-    exclude_matches: [],
-    css: ["scripts-2.0/style/main.min.css"],
-    js: ["scripts-2.0/common.js"],
-  },
 };
 
 //Add this entires to integrations.json when custom domain feature will be done

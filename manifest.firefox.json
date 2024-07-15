@@ -1,5 +1,10 @@
 {
   "background": {
-    "scripts": ["scripts/background.firefox.js"]
+    "scripts": ["scripts/background.js"]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dev@timecamp.com"
+    }
   }
 }

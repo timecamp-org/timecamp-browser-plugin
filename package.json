@@ -9,10 +9,9 @@
     "start": "webpack-cli --mode development --watch",
     "build-prod": "bash -c \"if [ ! -z \"$SERVER_DOMAIN\" ]; then echo 'Server domain must be empty in production build'; else npm run build-prod-unsafe; fi\"",
     "build-dev": "webpack-cli --mode development && npm run merge-background-files",
-    "build-dev-firefox": "BROWSER=firefox webpack-cli --mode development && npm run merge-background-files",
     "build-prod-unsafe": "webpack-cli --mode production && npm run merge-background-files && npm run zip",
     "merge-background-files": "cat 'dist/plugin/scripts-2.0/background-2.0.js' >> 'dist/plugin/scripts/background.js'",
-    "zip": "bash -c \"pushd dist/plugin && zip -rq ../timecamp-browser-extension-`node -p \"require('./package.json').version\"`.zip * && popd\""
+    "zip": "bash -c \" pushd dist/plugin && zip -rq ../timecamp-browser-extension-`node -p \"require('./package.json').version\"`-`if [ $BROWSER == \"firefox\" ]; then echo \"firefox\"; else echo \"chromium\"; fi`.zip * && popd\""
   },
   "babel": {
     "presets": [

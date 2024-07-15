@@ -369,6 +369,9 @@ const TcButton = {
                             reject(error);
                         });
                         break;
+                    case 'tokenUpdate':
+                        TcButton.login(request.token);
+                        break;
                 }
             } catch (e) {
                 logger.error(e);
@@ -377,13 +380,13 @@ const TcButton = {
         });
     },
 
+    //used only by chrome
     newMessageExternal: (request, sender, sendResponse) => {
         return new Promise((resolve, reject) => {
             try {
                 switch (request.type) {
                     case 'tokenUpdate':
-                        apiService.storeToken(request.token);
-                        TcButton.doAfterLogin();
+                        TcButton.login(request.token);
                         break;
                 }
             } catch (e) {
@@ -455,6 +458,11 @@ const TcButton = {
                 resolve(data)
             });
         });
+    },
+
+    login: (token) => {
+        apiService.storeToken(token);
+        TcButton.doAfterLogin();
     },
 
     doAfterLogin: () => {
@@ -723,6 +731,8 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     //tracking
     return analyticsService.logEvent(request, sender, sendResponse)
 });
+
+//used only by chrome
 browser.runtime.onMessageExternal.addListener(TcButton.newMessageExternal);
 setInterval(() => {
     const promise = TcButton.updateCurrentEntry();

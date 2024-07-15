@@ -863,9 +863,9 @@ export default class ApiService {
 
     removeStoredToken() {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.clear();
-            chrome.storage.sync.set({ 'removed': true }, function () {
-                if (chrome.runtime.lastError) {
+            browser.storage.sync.clear();
+            browser.storage.sync.set({ 'removed': true }).then(() => {
+                if (browser.runtime.lastError) {
                     reject();
                 } else {
                     resolve(true);
@@ -876,10 +876,10 @@ export default class ApiService {
 
     storeToken(token) {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.set({ 'token': token, 'removed': false }, function () {
+            browser.storage.sync.set({ 'token': token, 'removed': false }).then(() => {
                 resolve();
-                if (chrome.runtime.lastError) {
-                    logger.error(chrome.runtime.lastError.message);
+                if (browser.runtime.lastError) {
+                    logger.error(browser.runtime.lastError.message);
                 }
             });
         });
@@ -887,10 +887,10 @@ export default class ApiService {
 
     storeNextToken(token) {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.set({ 'next_token': token, 'removed': false }, function () {
+            browser.storage.sync.set({ 'next_token': token, 'removed': false }).then(() => {
                 resolve();
-                if (chrome.runtime.lastError) {
-                    logger.error(chrome.runtime.lastError.message);
+                if (browser.runtime.lastError) {
+                    logger.error(browser.runtime.lastError.message);
                 }
             });
         });
@@ -898,9 +898,9 @@ export default class ApiService {
 
     getStoredToken() {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.get('token', function (items) {
+            browser.storage.sync.get('token').then((items) => {
                 var token = items['token'];
-                if (token && !chrome.runtime.lastError) {
+                if (token && !browser.runtime.lastError) {
                     resolve(token);
                 } else {
                     reject();
@@ -911,9 +911,9 @@ export default class ApiService {
 
     getStoredNextToken() {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.get('next_token', function (items) {
+            browser.storage.sync.get('next_token').then((items) => {
                 var token = items['next_token'];
-                if (token && !chrome.runtime.lastError) {
+                if (token && !browser.runtime.lastError) {
                     resolve(token);
                 } else {
                     reject();
@@ -924,8 +924,8 @@ export default class ApiService {
 
     getLoggedOutFlag() {
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.get('removed', function (items) {
-                if (chrome.runtime.lastError) {
+            browser.storage.sync.get('removed').then((items) => {
+                if (browser.runtime.lastError) {
                     reject();
                     return;
                 }
