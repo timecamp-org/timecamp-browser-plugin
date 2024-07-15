@@ -161,7 +161,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
               {taskPickerHook.searchText.length < MIN_SEARCH_TEXT_LENGTH && taskPickerHook.recentlyUsedTaskList.length > 0 && (
                 <div className="TaskPicker__content_box">
                   <div className="TaskPicker__label">
-                    {translate("recently_used")}
+                    {translate("suggested")}
                   </div>
                   {taskPickerHook.recentlyUsedTaskList.map((task) =>
                     renderRecentlyUsed(task)
