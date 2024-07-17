@@ -1,64 +1,96 @@
 "use strict";
 
-// Task
+//Task
 tcbutton.render(
-  ".conversationsPanelHeader.rowCommentsMode",
-  { observe: true, debounceInterval: 500 },
-  function (elem) {
-    const task = $(".centeredTitle", elem);
-    if (!task) {
-      return;
+    ".conversationsPanelHeader.rowCommentsMode:not(.tc)",
+    { observe: true, debounceInterval: 500 },
+    (elem) => {
+        const task = $(".centeredTitle", elem);
+        if (!task) {
+            return false;
+        }
+
+        let title = task.textContent.trim();
+        let colonIndex = title.indexOf(':');
+        if (colonIndex !== -1) {
+            title = title.substring(colonIndex + 1);
+        }
+
+        const link = tcbutton.createTimerLink({
+            className: "smartsheet-task",
+            buttonType: "minimal",
+            description: title,
+        });
+
+        $(".centeredTitle", elem).appendChild(link);
+
+        return true;
     }
-
-    const taskName = task.textContent;
-
-    const alreadyCreatedButton = $(".tc-button", elem);
-    if (alreadyCreatedButton) {
-      if (taskName === alreadyCreatedButton.title) {
-        return false;
-      }
-      alreadyCreatedButton.remove();
-    }
-
-    const link = tcbutton.createTimerLink({
-      className: "smartsheet-task",
-      buttonType: "minimal",
-      description: taskName,
-    });
-
-    $(".centeredTitle", elem).appendChild(link);
-
-    return true;
-  }
 );
 
-// Sheet title
+//Sheet title
 tcbutton.render(
-  ".containerNameWrapper",
-  { observe: true, debounceInterval: 500 },
-  function (elem) {
-    const project = $(".containerName.editable > .titleDiv", elem);
-    const projectName = project.textContent.trim();
+    ".containerNameWrapper:not(.tc)",
+    { observe: true, debounceInterval: 500 },
+    (elem) => {
+        const project = $(".containerName.editable > .titleDiv", elem);
+        const projectName = project.textContent.trim();
 
-    const alreadyCreatedButton = $(".tc-button", elem);
-    if (alreadyCreatedButton) {
-      const title = `${projectName} - ${projectName}`;
-      if (title === alreadyCreatedButton.title) {
-        return false;
-      }
+        const link = tcbutton.createTimerLink({
+            className: "smartsheet",
+            buttonType: "minimal",
+            projectName: projectName,
+            description: projectName,
+        });
 
-      alreadyCreatedButton.remove();
+        $('.refreshIcon', elem).insertAdjacentElement("beforebegin", link);
+
+        return true;
     }
+);
 
-    const link = tcbutton.createTimerLink({
-      className: "smartsheet",
-      buttonType: "minimal",
-      projectName: projectName,
-      description: projectName,
-    });
+//Grid cell and gantt cell
+tcbutton.render(
+    ".gridPrimaryCell:not(.tc)",
+    { observe: true, debounceInterval: 500 },
+    (elem) => {
+        const title = $(".gridCellContent", elem)?.textContent.trim();
+        if (!title) {
+            return false;
+        }
 
-    elem.appendChild(link);
+        const link = tcbutton.createTimerLink({
+            className: "smartsheet-grid",
+            buttonType: "minimal",
+            projectName: title,
+            description: title,
+        });
 
-    return true;
-  }
+        elem.insertAdjacentElement("beforebegin", link);
+
+        return true;
+    }
+);
+
+//Card view
+tcbutton.render(
+    ".clscvC .clscvTitle:not(.tc)",
+    { observe: true, debounceInterval: 500 },
+    (elem) => {
+        const title = elem?.textContent.trim();
+        if (!title) {
+            return false;
+        }
+
+        const link = tcbutton.createTimerLink({
+            className: "smartsheet-card",
+            buttonType: "minimal",
+            projectName: title,
+            description: title,
+        });
+
+        elem.insertAdjacentElement("afterbegin", link);
+
+        return true;
+    }
 );
