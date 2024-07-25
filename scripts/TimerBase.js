@@ -513,13 +513,13 @@ function TimerBase() {
         switch ($this.isWatching)
         {
             case $this.canWatch.DOM:
-                document.addEventListener("DOMNodeInserted", function() {
-                    if ($this.DOMChangeTimeout)
-                    {
+                const observer = new MutationObserver((mutationList) => {
+                    if ($this.DOMChangeTimeout) {
                         clearTimeout($this.DOMChangeTimeout)
                     }
                     $this.DOMChangeTimeout = setTimeout($this.onDomModified, 100);
                 });
+                observer.observe(document, {childList: true, subtree: true});
                 break;
             case $this.canWatch.URL:
                 setInterval($this.URLWatcher, 100);
