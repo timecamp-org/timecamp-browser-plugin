@@ -96,8 +96,7 @@ function ClickupTimer () {
                 $this.buttonInsertionInProgress = false;
             });
 
-        var clickupUserTaskHeaderSection = $(".cu-task-hero-section__actions").find("cu-content-assistant-task-ai" )[0];
-        
+        var clickupUserTaskHeaderSection = $(".cu-task-hero-section__actions .cu-task-hero-actions .container");
         if (!clickupUserTaskHeaderSection) {
           clickupUserTaskHeaderSection = document
               .querySelector('[data-test="task-hero-section__row"]')
