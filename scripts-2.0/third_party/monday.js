@@ -16,7 +16,7 @@ tcbutton.render(
         if (!pulseId){
             return false;
         }
-        const externalTaskId = buildExternalIdForMonday(pulseId[0]);
+        const externalTaskId = buildExternalIdForMonday(pulseId[1] ?? pulseId[0]);
         if (!externalTaskId) {
             return false;
         }
