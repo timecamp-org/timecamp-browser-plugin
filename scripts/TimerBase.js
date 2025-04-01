@@ -34,7 +34,7 @@ function TimerBase() {
     this.insertButtonIntoPage   = function () {};
     this.insertInfoIntoPage     = function () {};
     this.updateTopMessage       = function (taskId, duration) {};
-    this.getAvailableButtons    = function () {};
+    this.getAvailableButtons    = async function () {};
     this.onTrackingDisabled     = function () {};
 
     this.isButtonInserted       = function () {
@@ -203,10 +203,10 @@ function TimerBase() {
         $(document).trigger('tcTaskChangeDetected', args);
     };
 
-    this.onDomModified = function () {
+    this.onDomModified = async function () {
         if ($this.multiButton)
         {
-            var tasks = $this.getAvailableButtons();
+            var tasks = await $this.getAvailableButtons();
             for (i in tasks)
             {
                 if (!$this.isButtonInserted(tasks[i].taskId)) {
