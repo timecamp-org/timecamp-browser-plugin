@@ -4,17 +4,27 @@ const browser = require('webextension-polyfill');
 const LOGIN_GET_KEY = 'loginToBrowserPlugin';
 const DOMAIN_STORAGE_KEY = 'timecamp_domain';
 const DEFAULT_DOMAIN = process.env.SERVER_DOMAIN;
+
+// Include the local domain in the available domains
 const AVAILABLE_DOMAINS = [
     DEFAULT_DOMAIN,
     'ue2.timecamp.com'
 ];
 
+// Make sure local dev domain is also included if it's different
+if (DEFAULT_DOMAIN && DEFAULT_DOMAIN !== 'app.timecamp.com' && !AVAILABLE_DOMAINS.includes(DEFAULT_DOMAIN)) {
+    AVAILABLE_DOMAINS.push(DEFAULT_DOMAIN);
+}
+
 export default class PathService {
     serverUrl = '';
     nextServerUrl = '';
     marketingPageUrl = process.env.SERVER_PROTOCOL + '://' + process.env.MARKETING_PAGE_DOMAIN + '/';
+    initialized = false;
 
     constructor() {
+        // Set default domain immediately so methods work before initialization completes
+        this.setDomain(DEFAULT_DOMAIN);
         this.initDomain();
     }
 
@@ -23,13 +33,16 @@ export default class PathService {
             const data = await browser.storage.local.get(DOMAIN_STORAGE_KEY);
             const domain = data[DOMAIN_STORAGE_KEY] || DEFAULT_DOMAIN;
             this.setDomain(domain);
+            this.initialized = true;
         } catch (error) {
             console.error('Error loading domain setting:', error);
             this.setDomain(DEFAULT_DOMAIN);
+            this.initialized = true;
         }
     }
 
     setDomain(domain) {
+        console.log('Setting domain to:', domain);
         this.serverUrl = process.env.SERVER_PROTOCOL + '://' + domain + '/';
         this.nextServerUrl = process.env.SERVER_PROTOCOL + '://' + process.env.NEXT_SERVER_DOMAIN + '/';
         // Save the domain to storage

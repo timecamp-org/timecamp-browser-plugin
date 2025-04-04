@@ -17,19 +17,29 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
     const [open, setOpen] = useState(true);
     const [domains, setDomains] = useState<string[]>([]);
     const [selectedDomain, setSelectedDomain] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setOpen(true);
         document.addEventListener("click", onClickOutside);
         
-        // Get available domains and currently selected domain
-        const availableDomains = pathService.getAvailableDomains();
-        setDomains(availableDomains);
-        
-        // Set the current domain as the selected domain
-        pathService.initDomain().then(() => {
+        // Initialize asynchronously
+        const initDomains = async () => {
+            setIsLoading(true);
+            
+            // Wait for pathService to initialize
+            if (!pathService.initialized) {
+                await pathService.initDomain();
+            }
+            
+            // Get available domains and currently selected domain
+            const availableDomains = pathService.getAvailableDomains();
+            setDomains(availableDomains);
             setSelectedDomain(pathService.getCurrentDomain());
-        });
+            setIsLoading(false);
+        };
+        
+        initDomains();
 
         return () => {
             document.removeEventListener("click", onClickOutside);
@@ -44,7 +54,12 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
     const onLoginClick = (e) => {
         setOpen(false);
         e.stopPropagation();
-        window.open(pathService.getLoginUrl(), '_blank');
+        
+        // Make sure we're using the current selected domain
+        pathService.setDomain(selectedDomain);
+        const loginUrl = pathService.getLoginUrl();
+        console.log('Opening login URL:', loginUrl);
+        window.open(loginUrl, '_blank');
     };
 
     const handleDomainChange = (e) => {
@@ -64,6 +79,7 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
                 onClick={(e) => {
                     onLoginClick(e);
                 }}
+                disabled={isLoading}
             >
                 {translate('log_in')}
             </Button>
@@ -75,6 +91,7 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
                     value={selectedDomain}
                     onChange={handleDomainChange}
                     className="loginWindow__domain-select"
+                    disabled={isLoading}
                 >
                     {domains.map(domain => (
                         <option key={domain} value={domain}>{domain}</option>
@@ -84,7 +101,18 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
             
             <div className='loginWindow__bottom-info'>
                 No account?&nbsp;
-                <a href={pathService.getRegisterUrl()} target="_blank" className='loginWindow__bottom-info-link'>{translate('sign_up')}</a>
+                <a 
+                    href={pathService.getRegisterUrl()} 
+                    target="_blank" 
+                    className='loginWindow__bottom-info-link'
+                    onClick={(e) => {
+                        // Ensure the current domain is used for the sign-up URL too
+                        e.preventDefault();
+                        window.open(pathService.getRegisterUrl(), '_blank');
+                    }}
+                >
+                    {translate('sign_up')}
+                </a>
             </div>
         </div>
     );
