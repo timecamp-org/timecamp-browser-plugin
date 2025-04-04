@@ -244,10 +244,10 @@
 		"message": "No internet connection"
 	},
 	"no_internet_error_message": {
-		"message": "See now, this might mean a couple of things: <br>1. Either there's something wrong with your router <br>2. Or… you haven't paid your internet bills… <br><br> Regardless of the reason, we hope to see you back once you're reconnected!"
+		"message": "See now, this might mean a couple of things: <br>1. Either there’s something wrong with your router <br>2. Or… you haven’t paid your internet bills… <br><br> Regardless of the reason, we hope to see you back once you’re reconnected!"
 	},
 	"maintenance_mode_error_title": {
-		"message": "Sorry, we're down for maintenance"
+		"message": "Sorry, we’re down for maintenance"
 	},
 	"maintenance_mode_error_message": {
 		"message": "Our Chrome Plugin is currently undergoing scheduled maintenance. We should back shortly"
