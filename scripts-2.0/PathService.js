@@ -1,13 +1,49 @@
 import DateTime from "./helpers/DateTime";
+const browser = require('webextension-polyfill');
 
 const LOGIN_GET_KEY = 'loginToBrowserPlugin';
+const DOMAIN_STORAGE_KEY = 'timecamp_domain';
+const DEFAULT_DOMAIN = process.env.SERVER_DOMAIN;
+const AVAILABLE_DOMAINS = [
+    DEFAULT_DOMAIN,
+    'ue2.timecamp.com'
+];
 
 export default class PathService {
-    serverUrl = process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/';
-    nextServerUrl =  process.env.SERVER_PROTOCOL + '://' + process.env.NEXT_SERVER_DOMAIN + '/';
+    serverUrl = '';
+    nextServerUrl = '';
     marketingPageUrl = process.env.SERVER_PROTOCOL + '://' + process.env.MARKETING_PAGE_DOMAIN + '/';
 
     constructor() {
+        this.initDomain();
+    }
+
+    async initDomain() {
+        try {
+            const data = await browser.storage.local.get(DOMAIN_STORAGE_KEY);
+            const domain = data[DOMAIN_STORAGE_KEY] || DEFAULT_DOMAIN;
+            this.setDomain(domain);
+        } catch (error) {
+            console.error('Error loading domain setting:', error);
+            this.setDomain(DEFAULT_DOMAIN);
+        }
+    }
+
+    setDomain(domain) {
+        this.serverUrl = process.env.SERVER_PROTOCOL + '://' + domain + '/';
+        this.nextServerUrl = process.env.SERVER_PROTOCOL + '://' + process.env.NEXT_SERVER_DOMAIN + '/';
+        // Save the domain to storage
+        browser.storage.local.set({[DOMAIN_STORAGE_KEY]: domain});
+        return this.serverUrl;
+    }
+
+    getAvailableDomains() {
+        return AVAILABLE_DOMAINS;
+    }
+
+    getCurrentDomain() {
+        const url = new URL(this.serverUrl);
+        return url.hostname;
     }
 
     changeBaseUrl(url) {
