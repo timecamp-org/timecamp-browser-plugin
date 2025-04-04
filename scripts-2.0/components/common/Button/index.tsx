@@ -4,12 +4,17 @@ import './styles.scss';
 
 export interface ButtonInterface {
     class: string,
-    onClick: any
+    onClick: any,
+    disabled?: boolean
 }
 
 const Button: React.FC<ButtonInterface> = (props) => {
     return (
-        <button className={'button ' + props.class} onClick={props.onClick}>
+        <button 
+            className={'button ' + props.class + (props.disabled ? ' button--disabled' : '')} 
+            onClick={props.onClick}
+            disabled={props.disabled}
+        >
             {props.children}
         </button>
     );

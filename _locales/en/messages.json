@@ -269,5 +269,8 @@
 	},
 	"click_the_button_below_to_login_to_your_timecamp_account": {
 		"message": "Click the button below to login to your TimeCamp account"
+	},
+	"select_domain": {
+		"message": "Select domain"
 	}
 }
