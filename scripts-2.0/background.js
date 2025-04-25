@@ -393,8 +393,11 @@ const TcButton = {
                                 reject(error);
                             });
                         });
+                        break;
 
-                        break;                        
+                    case 'reloadDomainInWorker':
+                        apiService.reloadCustomDomain();
+                        break;
                 }
             } catch (e) {
                 logger.error(e);

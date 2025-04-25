@@ -1,0 +1,82 @@
+@import '../../../style/common';
+
+.timecamp {
+  .CustomDomain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    text-align: center;
+    padding: 20px;
+
+    .button {
+      font-family: $defaultFontFamily;
+      font-size: $defaultFontSize;
+      background-color: var(--buttonColor);
+      color: var(--buttonTextColor);
+      border-radius: $defaultBorderRadius;
+      border: solid 1px var(--primaryBorderColor);
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: auto;
+
+      &__save {
+        border: none;
+        background-color: var(--buttonActiveColor);
+        color: var(--buttonActiveTextColor);
+      }
+      &__clear {
+        border: none;
+        background-color: var(--redOrangeColor);
+        color: var(--buttonActiveTextColor);
+      }
+    }
+
+    .inner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .prefix {
+      color: var(--popupGray);
+      font-family: $defaultFontFamily;
+      font-size: $defaultFontSize;
+    }
+
+    .suffix {
+      color: var(--popupGray);
+      font-family: $defaultFontFamily;
+      font-size: $defaultFontSize;
+    }
+
+    .input {
+      padding: 8px;
+      width: 200px;
+      border: 1px solid var(--defaultBorderColor);
+      border-radius: 4px;
+      font-family: $defaultFontFamily;
+      font-size: $defaultFontSize;
+    }
+
+    .buttons-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .link {
+      font-size: 16px;
+      text-decoration: underline;
+      color: var(--infoFieldBorderColor);
+    }
+  }
+}

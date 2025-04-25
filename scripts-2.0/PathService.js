@@ -1,4 +1,5 @@
 import DateTime from "./helpers/DateTime";
+import StorageManager from "./StorageManager";
 
 const LOGIN_GET_KEY = 'loginToBrowserPlugin';
 
@@ -8,7 +9,28 @@ export default class PathService {
     marketingPageUrl = process.env.SERVER_PROTOCOL + '://' + process.env.MARKETING_PAGE_DOMAIN + '/';
 
     constructor() {
+        if (PathService.instance) {
+            return PathService.instance;
+        }
+
+        this.storageManager = new StorageManager();
+
+        this.init();
+
+        PathService.instance = this;
     }
+
+    init() {
+        this.storageManager.get(StorageManager.STORAGE_KEY_DOMAIN).then((value) => {
+            console.log('Loaded domain:', value);
+            if (value) {
+                this.changeBaseUrl(value);
+            }
+        }).catch((e) => {
+            console.error('Failed to load domain:', e);
+        });
+    }
+
 
     changeBaseUrl(url) {
         this.serverUrl = url;

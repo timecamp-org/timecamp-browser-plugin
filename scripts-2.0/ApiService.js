@@ -2,6 +2,7 @@ import PathService from './PathService';
 import Logger from './Logger';
 import browser from "webextension-polyfill";
 import Response from "./Response";
+import StorageManager from "./StorageManager";
 
 const pathService = new PathService();
 const logger = new Logger();
@@ -17,8 +18,13 @@ export default class ApiService {
     rootGroupId = null;
     userId = null;
     discoveryEndpointChecked = false;
+    storageManager = new StorageManager();
 
     constructor() {
+    }
+
+    reloadCustomDomain() {
+        pathService.init();
     }
 
     setSuitableDomain() {
@@ -894,16 +900,7 @@ export default class ApiService {
     }
 
     removeStoredToken() {
-        return new Promise((resolve, reject) => {
-            chrome.storage.sync.clear();
-            chrome.storage.sync.set({ 'removed': true }, function () {
-                if (chrome.runtime.lastError) {
-                    reject();
-                } else {
-                    resolve(true);
-                }
-            });
-        });
+        return this.storageManager.clear();
     };
 
     storeToken(token) {

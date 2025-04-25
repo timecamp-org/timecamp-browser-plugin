@@ -5,6 +5,7 @@ import './styles.scss';
 import translate from "../../Translator";
 import Button from "../common/Button";
 import PathService from '../../PathService';
+import CustomDomainSection from './CustomDomainSection/CustomDomainSection';
 
 const pathService = new PathService();
 
@@ -49,6 +50,9 @@ const LoginWindow: React.FC<LoginWindowInterface> = (props) => {
             >
                 {translate('log_in')}
             </Button>
+
+            <CustomDomainSection />
+
             <div className='loginWindow__bottom-info'>
                 No account?&nbsp;
                 <a href={pathService.getRegisterUrl()} target="_blank" className='loginWindow__bottom-info-link'>{translate('sign_up')}</a>
