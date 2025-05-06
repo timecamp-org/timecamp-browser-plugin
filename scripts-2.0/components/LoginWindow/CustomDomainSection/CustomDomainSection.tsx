@@ -126,7 +126,6 @@ const CustomDomain = () => {
                             onChange={(e) => setDomain(e.target.value)}
                             className="input"
                         />
-                        <span className="suffix">/</span>
                     </div>
                     {errorMessage && <div className="error-message">{errorMessage}</div>}
                     <div className="buttons-container">
