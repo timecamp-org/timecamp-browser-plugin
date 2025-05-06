@@ -33,6 +33,12 @@ export default class PathService {
 
 
     changeBaseUrl(url) {
+        if (!url || url === '') {
+            this.serverUrl = process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/';
+
+            return;
+        }
+
         this.serverUrl = url;
     }
 

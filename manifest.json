@@ -4,7 +4,7 @@
     "manifest_version": 3,
     "description": "__MSG_DESCRIPTION__",
     "externally_connectable": {
-        "matches": ["*://*.timecamp.com/*", "*://*.tcstaging.dev/*"]
+        "matches": ["*://*.timecamp.com/*", "*://*.tcstaging.dev/*", "*://*.timecamp.local/*"]
     },
     "icons": {
         "14": "images/icon-14.png",

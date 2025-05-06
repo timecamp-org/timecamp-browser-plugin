@@ -276,12 +276,6 @@
     "edit": {
         "message": "Edit"
     },
-    "clear": {
-        "message": "Clear"
-    },
-    "domain_empty_error": {
-        "message": "Domain can not be empty"
-    },
     "domain_invalid_pattern_error": {
         "message": "This domain will not work with this version of extension. Please contact TimeCamp support"
     }

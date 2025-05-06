@@ -41,7 +41,7 @@ const CustomDomain = () => {
 
     const validateDomainPattern = (domain: string) => {
         //this is externally_connectable.matches from manifest
-        const matchPatterns = ["*://*.timecamp.com/*", "*://*.tcstaging.dev/*"];
+        const matchPatterns = ["*://*.timecamp.com/*", "*://*.tcstaging.dev/*", "*://*.timecamp.local/*"];
 
         try {
             const url = new URL(domain);
@@ -80,7 +80,7 @@ const CustomDomain = () => {
 
     const saveDomain = useCallback(async () => {
         if (!domain.trim()) {
-            setErrorMessage(translate('domain_empty_error'));
+            await updateDomain('');
             return;
         }
 
@@ -96,10 +96,6 @@ const CustomDomain = () => {
             console.error('Failed to validate and save domain:', err);
         }
     }, [domain, updateDomain]);
-
-    const clearDomain = useCallback(async () => {
-        await updateDomain('');
-    }, [updateDomain]);
 
     useEffect(() => {
         const loadDomain = async () => {
@@ -143,9 +139,6 @@ const CustomDomain = () => {
                             setShowInput(false);
                         }} className="button">
                             {translate('cancel')}
-                        </button>
-                        <button onClick={clearDomain} className="button button__clear">
-                            {translate('clear')}
                         </button>
                     </div>
                 </div>
