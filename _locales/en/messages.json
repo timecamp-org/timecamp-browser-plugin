@@ -269,5 +269,14 @@
 	},
 	"click_the_button_below_to_login_to_your_timecamp_account": {
 		"message": "Click the button below to login to your TimeCamp account"
-	}
+	},
+    "set_custom_domain": {
+        "message": "Set custom domain"
+    },
+    "edit": {
+        "message": "Edit"
+    },
+    "domain_invalid_pattern_error": {
+        "message": "This domain will not work with this version of extension. Please contact TimeCamp support"
+    }
 }
