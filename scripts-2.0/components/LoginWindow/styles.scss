@@ -2,11 +2,12 @@
 
 .timecamp {
   .loginWindow {
+    @include theme-variables;
     font-family: $defaultFontFamily;
     font-size: $defaultFontSize;
     color: var(--primaryTextColor);
     width: 440px;
-    height: 563px;
+    height: 600px;
     padding: 27px;
     box-sizing: border-box;
     border: var(--defaultBorderColor) 1px solid;

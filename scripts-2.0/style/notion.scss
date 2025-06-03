@@ -1,41 +1,11 @@
-.tc-button.notion:not(.min) {
-  margin: 0 0 18px 0;
-  svg {
-    width: 120px;
-  }
-}
-
-.tc-button-notion-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 28px;
-  border-radius: 3px;
-  padding: 0 8px;
-  cursor: pointer !important;
-}
-
-.tc-button-notion-wrapper + *:not(*[role=button]) {
-  margin-left: 8px;
-}
-
 .tc-button.notion {
-  color: rgb(55, 53, 47);
-  text-decoration: none;
-  cursor: pointer !important;
+  cursor: pointer!important;
 }
-
-body.notion-body.dark .tc-button.notion {
-  color: rgba(255, 255, 255, 0.9);
+.tc-button.notion:not(.min) {
+  margin: -3px 0px 0px 10px;
 }
-
 .tc-button.notion.min {
-  cursor: pointer !important;
-  position: absolute;
-  top: 16px;
-  left: -30px;
-}
-
-.notion-peek-renderer .tc-button.min {
-  display: none !important;
+  display: flex!important;
+  margin: 5px 0 0 0;
+  padding: 0 2px 0 0;
 }
