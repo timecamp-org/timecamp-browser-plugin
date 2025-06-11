@@ -33,15 +33,25 @@ const getTaskIdFromUrl = () => {
     return null;
 };
 
-// Main form view
+const getProjectNameFromBreadcrumb = () => {
+    // Look for breadcrumb items with project links
+    const $projectLinks = document.querySelectorAll('.o_breadcrumb .breadcrumb-item a[href*="/project/"]');
+    
+    if ($projectLinks.length > 0) {
+        // Get the last project link (most specific)
+        const lastProjectLink = $projectLinks[$projectLinks.length - 1];
+        return lastProjectLink.textContent.trim();
+    }
+    
+    return null;
+};
+
 tcbutton.render(
     '.o_statusbar_buttons:not(.tc)',
     { observe: true, debounceInterval: 300 },
     $container => {
         const taskId = getTaskIdFromUrl();
         const externalTaskId = buildExternalIdForOdoo(taskId);
-
-        console.log('externalTaskId', externalTaskId);
 
         const descriptionSelector = () => {
             const $breadcrumb = $('.o_last_breadcrumb_item span');
@@ -57,15 +67,15 @@ tcbutton.render(
             return 'Odoo Task';
         };
 
+
         const link = tcbutton.createTimerLink({
             className: ODOO,
             description: descriptionSelector,
-            // buttonType: 'minimal',
             externalTaskId: externalTaskId,
-            isBackendIntegration: !!externalTaskId
+            isBackendIntegration: !!externalTaskId,
+            projectName: getProjectNameFromBreadcrumb()
         });
 
-        // Insert as first item in the statusbar buttons
         $container.insertAdjacentElement('afterbegin', link);
 
         return true;
