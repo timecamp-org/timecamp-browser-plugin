@@ -19,7 +19,8 @@ tcbutton.render(
         const link = tcbutton.createTimerLink({
             className: LINEAR,
             description: title || 'Linear Issue',
-            projectName: project
+            projectName: project,
+            buttonType: 'text_with_pin'
         });
 
         const sidebar = $container.parentElement.parentElement.lastElementChild.firstElementChild;
