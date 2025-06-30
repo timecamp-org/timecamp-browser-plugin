@@ -1,0 +1,10 @@
+.tc-button.gqueues {
+  margin: 5px 5px 0 0;
+  display: none!important;
+}
+
+.gq-task-container:hover {
+  .tc-button.gqueues {
+    display: block!important;
+  }
+}
