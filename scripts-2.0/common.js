@@ -168,7 +168,6 @@ window.tcbutton = {
         button.innerHTML = startButtonSVG;
         button.innerHTML += stopButtonSVG;
 
-        // Add text content for text_with_pin button type
         if (params.buttonType === 'text_with_pin') {
             const textSpan = document.createElement('span');
             textSpan.className = 'tc-button-text';
@@ -501,7 +500,6 @@ window.tcbutton = {
         link.querySelector('.tc-stop-button').style.display = timerActive ? 'inline-block' : 'none';
         link.querySelector('.tc-start-button').style.display = timerActive ? 'none' : 'inline-block';
         
-        // Update text for text_with_pin button type
         const textSpan = link.querySelector('.tc-button-text');
         if (textSpan) {
             textSpan.textContent = timerActive ? 'Stop timer' : 'Start timer';
