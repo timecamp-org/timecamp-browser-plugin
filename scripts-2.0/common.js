@@ -159,10 +159,21 @@ window.tcbutton = {
             button.classList.add('min');
             startButtonSVG = tcStartButtonSmall;
             stopButtonSVG = tcStopButtonSmall;
+        } else if (params.buttonType === 'text_with_pin') {
+            button.classList.add('text-with-pin');
+            startButtonSVG = tcStartButtonSmall;
+            stopButtonSVG = tcStopButtonSmall;
         }
 
         button.innerHTML = startButtonSVG;
         button.innerHTML += stopButtonSVG;
+
+        if (params.buttonType === 'text_with_pin') {
+            const textSpan = document.createElement('span');
+            textSpan.className = 'tc-button-text';
+            textSpan.textContent = 'Start timer';
+            button.appendChild(textSpan);
+        }
 
         button.addEventListener('click', (e) => {
             tcbutton.onTimerButtonClick(
@@ -488,6 +499,11 @@ window.tcbutton = {
     changeButtonsVisibility: function (link, timerActive = true) {
         link.querySelector('.tc-stop-button').style.display = timerActive ? 'inline-block' : 'none';
         link.querySelector('.tc-start-button').style.display = timerActive ? 'none' : 'inline-block';
+        
+        const textSpan = link.querySelector('.tc-button-text');
+        if (textSpan) {
+            textSpan.textContent = timerActive ? 'Stop timer' : 'Start timer';
+        }
     },
 
     doAfterLogout: () => {

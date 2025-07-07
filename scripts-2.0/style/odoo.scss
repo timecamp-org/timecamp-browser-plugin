@@ -1,0 +1,10 @@
+.tc-button.odoo{
+    height: 30px;
+    margin-right: 10px;
+    svg {
+      width: 120px;
+    }
+    &:hover {
+       opacity: 0.8;
+    }
+  }
