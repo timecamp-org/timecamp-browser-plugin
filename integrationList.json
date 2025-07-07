@@ -326,6 +326,11 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://*.linear.app/*"],
+    "script": ["linear.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://*.onlyoffice.com/*"],
     "script": ["onlyoffice.js"],
     "isActiveInProd": false
