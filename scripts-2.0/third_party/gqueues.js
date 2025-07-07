@@ -5,13 +5,12 @@ function insertAfter (newNode, referenceNode) {
 }
 
 tcbutton.render(
-    '#gqItemList .gq-item-row:not(.tc)',
+    '#gqItemList .gq-task-row:not(.tc)',
     { observe: true },
     function (elem) {
         let link;
         const container = createTag('div', 'taskItem-tc');
-        const titleElem = $('.gq-i-description', elem);
-        const projectContainer = $('.gq-queue-container.selected .gq-queue-name');
+        const titleElem = $('.gq-task-title', elem);
 
         if (!titleElem) {
             return false;
@@ -20,8 +19,7 @@ tcbutton.render(
         link = tcbutton.createTimerLink({
             className: 'gqueues',
             buttonType: 'minimal',
-            description: titleElem.textContent,
-            projectName: projectContainer.textContent
+            description: titleElem.textContent ?? '',
         });
 
         container.appendChild(link);
