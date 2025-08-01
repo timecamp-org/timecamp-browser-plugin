@@ -1,4 +1,4 @@
-﻿function HeySpaceTimer() {
+﻿function PlannerTimer() {
 
     var $this = this;
 
@@ -7,7 +7,7 @@
     Messages.set('synchronizing', 'SYNCING');
     Messages.set('buttonTimerStopping', 'BUTTON_TIMER_STOPPING_SHORT');
 
-    this.currentTaskId = function () {
+    this.currentTaskId = function (includePrefix = true) {
         let name = 'taskId';
         let url = window.location.href;
 
@@ -18,12 +18,13 @@
         if (!results) return null;
         if (!results[2]) return '';
 
-        return 'task_' + decodeURIComponent(results[2].replace(/\+/g, ' '));
+        const taskId = decodeURIComponent(results[2].replace(/\+/g, " "));
+        return includePrefix ? "task_" + taskId : taskId;
     };
 
     this.currentTaskName = function () {
         if(this.currentTaskId()) {
-            let el = document.getElementById(this.currentTaskId());
+            let el = document.getElementById(this.currentTaskId(false));
             if (el) {
                 return el.innerHTML;
             }
@@ -146,7 +147,7 @@
                 $this.buttonInsertionInProgress = false;
             });
 
-        var iconsCont = $(".taskProgressWrapper__app-heySpace-components-tasks-taskProgress-TaskStatusAndProgressController-styles__3ycZY");
+        var iconsCont = $(".headerLeft__app-heySpace-components-tasks-CardDetailsModal-styles__1VE1M");
         iconsCont.append(button);
         buttonObj.insertInProgress = false;
         $(".time").css("color", "white");
@@ -160,7 +161,7 @@
         var link = $('<a/>', {
             class:'quiet-button',
             text:'Integration settings',
-            href:'https://www.timecamp.com/addons/heyspace/index/'+this.lastParentId,
+            href:'https://www.timecamp.com/addons/planner/index/'+this.lastParentId,
             title:'Synchronize tasks to start tracking time.',
             target:'_blank'}
         );
@@ -181,9 +182,9 @@
     this.bindEvents(this);
 }
 $(document).ready(function () {
-    HeySpaceTimer.prototype = new TimerBase();
-    timer = new HeySpaceTimer();
+    PlannerTimer.prototype = new TimerBase();
+    timer = new PlannerTimer();
 });
 
 
-Service = "heyspace";
+Service = "planner";
