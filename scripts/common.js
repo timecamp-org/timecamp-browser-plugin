@@ -129,11 +129,8 @@ function addLeadingZero(value)
 }
 
 $(document).ready(function() {
-    var manifest = chrome.runtime.getManifest();
-
     $.ajaxSetup({
         beforeSend: function(request) {
-            request.setRequestHeader("X-Chrome-Timer", manifest.version);
             request.setRequestHeader("Accept", "application/json");
         }
     });
