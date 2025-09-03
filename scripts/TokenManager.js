@@ -58,17 +58,30 @@ function TokenManager() {
 
     this.obtainNewToken = function() {
         return $.Deferred(function(dfd) {
-            $.get(tokenUrl)
-                .done(function (response) {
-                    if (response.toUpperCase() === 'NO_SESSION' || response.length > 50) {
+            fetch(tokenUrl, {
+                method: 'GET',
+                credentials: 'include'
+            })
+                .then(async response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP error ' + response.status);
+                    }
+
+                    return await response.json();
+                })
+                .then(response => {
+                    const message = (response.message || '').toString().toUpperCase();
+                    if (message === 'NO_SESSION') {
                         dfd.reject();
                     } else {
-                        $this.storeToken(response);
-                        dfd.resolve(response);
+                        const token = response.token ?? '';
+
+                        $this.storeToken(token);
+                        dfd.resolve(token);
                     }
                 })
-                .fail(function () {
-                    dfd.reject();
+                .catch(error => {
+                    dfd.reject(error);
                 });
         });
     };

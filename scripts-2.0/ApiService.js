@@ -795,29 +795,11 @@ export default class ApiService {
     }
 
     obtainNewToken() {
-        console.log('executing obtainNewToken')
         return new Promise((resolve, reject) => {
             this.call(
                 {
                     url: pathService.getTokenUrl(),
                     method: METHOD_GET,
-
-                    onLoad: function (xhr) {
-                        let status = xhr.status;
-                        let response = xhr.response;
-
-                        if (status !== 200 || response.toUpperCase() === 'NO_SESSION' || response.length > 50) {
-                            reject();
-                        } else {
-                            this.storeToken(response).then(() => {
-                                resolve({
-                                    'status': status,
-                                    'response': response
-                                });
-                            });
-                        }
-                    },
-
                     onError: function (xhr) {
                         let status = xhr.status;
                         let response = xhr.response;
@@ -830,17 +812,19 @@ export default class ApiService {
                 }
 
             )
-                .then((response) => {
+                .then(async (response) => {
                     let status = response.status;
-                    let responseData = response.response;
+                    let responseData = JSON.parse(response.response);
+                    const message = (responseData.message || '').toString().toUpperCase();
+                    const token = responseData.token ?? '';
 
-                    if (status !== 200 || responseData.toUpperCase() === 'NO_SESSION' || responseData.length > 50) {
+                    if (status !== 200 || message === 'NO_SESSION') {
                         reject();
                     } else {
-                        this.storeToken(responseData).then(() => {
+                        this.storeToken(token).then(() => {
                             resolve({
                                 'status': status,
-                                'response': responseData
+                                'response': token
                             });
                         });
                     }

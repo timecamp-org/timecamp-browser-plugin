@@ -55,7 +55,7 @@ export default class PathService {
     }
 
     getTokenUrl() {
-        return this.serverUrl + 'auth/token';
+        return this.serverUrl + 'auth/getToken';
     }
 
     getOpenIdTokenUrl() {
