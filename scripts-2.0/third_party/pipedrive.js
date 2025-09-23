@@ -3,16 +3,38 @@
 const SERVICE = 'pipedrive';
 
 tcbutton.render('[data-testid="header-title"]:not(.tc)', {observe: true}, function (elem) {
-    let description = $('textarea', elem).innerText;
-    
+    const description = function () {
+        const textArea = $('textarea', elem);
+        if (textArea) {
+            const value = (textArea.value || textArea.innerText || '').trim();
+            if (value) {
+                return value;
+            }
+        }
+
+        const nameElement = $(
+            '[data-test="editable-input-content"], [data-testid="editable-input-content"], h1, [data-test="deal-title"], [data-testid="header-title"]',
+            elem
+        ) || elem;
+
+        let text = (nameElement.textContent || '').trim();
+        text = text.replace(/\s*Start timer\s*$/i, '').trim();
+        return text;
+    };
+
     const link = tcbutton.createTimerLink({
         className: SERVICE,
-        description,
+        description: description,
     });
-    elem.style.display = "flex"
+
+    elem.style.display = "flex";
+    elem.style.alignItems = "center";
+    elem.style.justifyContent = "space-between";
+
     link.style.display = "block";
     link.style.paddingTop = "0";
     link.style.paddingBottom = "0";
+    link.style.marginLeft = "10px";
     link.style.marginBottom = "10px";
     link.style.marginTop = "10px";
     link.style.cursor = 'pointer';
