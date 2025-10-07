@@ -10,7 +10,17 @@ export const useTheme = (): IUseTheme => {
         browser.runtime.sendMessage({
             type: 'getTheme',
         }).then((value) => {
-            setTheme(value);
+            switch (value) {
+                case 'darkmode':
+                case 'default':
+                    setTheme(value);
+                    break;
+                case 'system':
+                default:
+                    setTheme(
+                        window.matchMedia('(prefers-color-scheme: dark)').matches ? 'darkmode' : 'system'
+                    );
+            }
         }).catch(() => {});
     }, []);
 
