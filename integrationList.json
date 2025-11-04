@@ -380,7 +380,7 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.proworkflow.net/*"],
+    "matches": ["*://*.proworkflow.com/*"],
     "script": ["proworkflow.js"],
     "isActiveInProd": true
   },
@@ -571,7 +571,7 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://app.hubspot.com/*"],
+    "matches": ["*://*.hubspot.com/*"],
     "script": ["hubspot.js"],
     "isActiveInProd": true
   },

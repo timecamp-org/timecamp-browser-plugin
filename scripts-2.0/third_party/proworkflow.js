@@ -1,21 +1,20 @@
 'use strict';
 
 tcbutton.render(
-    '#viewTask-infoSummary:not(.tc)',
+    'span[data-testid="project-title"]:not(.tc)',
     { observe: true },
     function (elem) {
-        const projectNr = elem.querySelector('dd').textContent;
-        const project = $('#viewTask-projectName', elem).textContent;
-        const title = $('h2', elem).textContent;
-        const description = projectNr + ' - ' + project + ' : ' + title;
+        const description = elem.textContent?.trim();
 
+        console.log({elem, description});
+        
         const link = tcbutton.createTimerLink({
             className: 'proworkflow',
             description: description,
-            projectName: projectNr + ' - ' + project
         });
 
-        elem.appendChild(link);
+        elem.insertAdjacentElement('afterend', link);
+
 
         return true;
     }
