@@ -35,6 +35,11 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://*.teamwork.com/*"],
+    "script": ["teamwork.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://ticktick.com/*", "*://*.ticktick.com/*"],
     "script": ["ticktick.js"],
     "isActiveInProd": true
