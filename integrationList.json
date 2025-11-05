@@ -620,6 +620,11 @@
     "script": ["wikipedia.js"],
     "isActiveInProd": true
   },
+{
+    "matches": ["*://*.wrike.com/*"],
+    "script": ["wrike.js"],
+    "isActiveInProd": true
+},
   {
     "matches": ["*://zenkit.com/*"],
     "script": ["zenkit.js"],
