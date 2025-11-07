@@ -330,11 +330,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.planbox.com/*"],
-    "script": ["planbox.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.producteev.com/*"],
     "script": ["producteev.js"],
     "isActiveInProd": false
