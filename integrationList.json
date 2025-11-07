@@ -20,11 +20,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.produck.io/*"],
-    "script": ["produck.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.redbooth.com/*"],
     "script": ["redbooth.js"],
     "isActiveInProd": true
