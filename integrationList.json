@@ -105,11 +105,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.axosoft.com/*"],
-    "script": ["axosoft.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.supportsystem.com/*"],
     "script": ["osticket.js"],
     "isActiveInProd": true
