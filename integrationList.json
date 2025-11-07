@@ -85,11 +85,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.phacility.com/*"],
-    "script": ["phabricator.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.redmine.org/*"],
     "script": ["redmine.js"],
     "isActiveInProd": true
