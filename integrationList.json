@@ -165,11 +165,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.corgee.com/*"],
-    "script": ["corgee.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.desk.com/web/agent/*"],
     "script": ["desk.js"],
     "isActiveInProd": false
