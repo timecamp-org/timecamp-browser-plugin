@@ -410,11 +410,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://plan.toggl.com/*"],
-    "script": ["toggl-plan.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://trac.edgewall.org/*", "*://*.trac.wordpress.org/*"],
     "script": ["trac.js"],
     "isActiveInProd": false
