@@ -15,18 +15,8 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://app.liquidplanner.com/*"],
-    "script": ["liquidplanner.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.openproject.com/*"],
     "script": ["openproject.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.produck.io/*"],
-    "script": ["produck.js"],
     "isActiveInProd": true
   },
   {
@@ -90,11 +80,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.phacility.com/*"],
-    "script": ["phabricator.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.redmine.org/*"],
     "script": ["redmine.js"],
     "isActiveInProd": true
@@ -102,11 +87,6 @@
   {
     "matches": ["*://sprint.ly/*"],
     "script": ["sprintly.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.axosoft.com/*"],
-    "script": ["axosoft.js"],
     "isActiveInProd": true
   },
   {
@@ -170,11 +150,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.corgee.com/*"],
-    "script": ["corgee.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.desk.com/web/agent/*"],
     "script": ["desk.js"],
     "isActiveInProd": false
@@ -213,11 +188,6 @@
     "matches": ["*://*.eproject.me/*"],
     "script": ["eproject.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://*.esa.io/*"],
-    "script": ["esa.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://*.feedly.com/*"],
@@ -283,16 +253,6 @@
     "matches": ["*://app.heflo.com/*"],
     "script": ["heflo.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://*.kanbanery.com/*"],
-    "script": ["kanbanery.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.kanban.ist/*"],
-    "script": ["kanbanist.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://*.kantree.io/*"],
@@ -363,11 +323,6 @@
     "matches": ["*://*.placker.com/*"],
     "script": ["placker.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://*.planbox.com/*"],
-    "script": ["planbox.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://*.producteev.com/*"],
@@ -450,11 +405,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://plan.toggl.com/*"],
-    "script": ["toggl-plan.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://trac.edgewall.org/*", "*://*.trac.wordpress.org/*"],
     "script": ["trac.js"],
     "isActiveInProd": false
@@ -471,19 +421,9 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.v1host.com/*"],
-    "script": ["versionone.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.visualstudio.com/*"],
     "script": ["visualstudio.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://app.vivifyscrum.com/*"],
-    "script": ["vivifyscrum.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://waffle.io/*"],
@@ -514,11 +454,6 @@
     "matches": ["*://*.worksection.com/*"],
     "script": ["worksection.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://app.zenhub.com/*"],
-    "script": ["zenhub.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://books.zoho.com/*"],
@@ -609,11 +544,6 @@
     "matches": ["*://*.usepixie.net/*"],
     "script": ["usepixie.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://*.wikipedia.org/*"],
-    "script": ["wikipedia.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://zenkit.com/*"],
