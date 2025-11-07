@@ -556,11 +556,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.wikipedia.org/*"],
-    "script": ["wikipedia.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://zenkit.com/*"],
     "script": ["zenkit.js"],
     "isActiveInProd": false
