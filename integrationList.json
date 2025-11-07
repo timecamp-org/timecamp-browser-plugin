@@ -426,11 +426,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.v1host.com/*"],
-    "script": ["versionone.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.visualstudio.com/*"],
     "script": ["visualstudio.js"],
     "isActiveInProd": false
