@@ -270,11 +270,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.kanban.ist/*"],
-    "script": ["kanbanist.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.kantree.io/*"],
     "script": ["kantree.js"],
     "isActiveInProd": true
