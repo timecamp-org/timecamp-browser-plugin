@@ -431,11 +431,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://app.vivifyscrum.com/*"],
-    "script": ["vivifyscrum.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://waffle.io/*"],
     "script": ["waffle.js"],
     "isActiveInProd": false
