@@ -15,11 +15,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://app.liquidplanner.com/*"],
-    "script": ["liquidplanner.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.openproject.com/*"],
     "script": ["openproject.js"],
     "isActiveInProd": true
