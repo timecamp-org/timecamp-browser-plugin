@@ -461,11 +461,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://app.zenhub.com/*"],
-    "script": ["zenhub.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://books.zoho.com/*"],
     "script": ["zohobooks.js"],
     "isActiveInProd": false
