@@ -205,11 +205,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.esa.io/*"],
-    "script": ["esa.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.feedly.com/*"],
     "script": ["feedly.js"],
     "isActiveInProd": true
