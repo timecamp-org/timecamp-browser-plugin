@@ -740,8 +740,10 @@ const TcButton = {
 }
 
 const showInstructionsPage = () => {
+    const redirectUrl = process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/browser-plugin-update';
+    const loginUrl = process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/auth/login?redirect=' + redirectUrl;
     chrome.tabs.create({
-        url: process.env.SERVER_PROTOCOL + '://' + process.env.SERVER_DOMAIN + '/browser-plugin-update'
+        url: loginUrl
     });
 }
 
