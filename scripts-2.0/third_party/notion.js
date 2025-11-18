@@ -15,16 +15,19 @@ tcbutton.render(
     '.notion-table-view .notion-collection-item:not(.tc)',
     { observe: true, debounceInterval: 500 },
     function (elem) {
-        const titleElement = elem.querySelector('.notion-table-view-cell div:nth-child(2) div');
+        const titleElement = elem.querySelector('.notion-table-view-cell div:nth-child(2)');
         const srcElem = titleElement;
-        function getDescription () {
+        function getDescription() {
             return titleElement ? titleElement.textContent.trim() : '';
         }
 
         const externalTaskId = buildExternalIdForNotion(elem?.dataset?.blockId ?? null, ENTITY_TYPE_PAGE);
-        console.log({externalTaskId});
-        
+
         if (!externalTaskId) {
+            return false;
+        }
+
+        if (!srcElem) {
             return false;
         }
 
@@ -37,7 +40,7 @@ tcbutton.render(
             buttonType: 'minimal'
         });
 
-        srcElem.insertAdjacentElement('afterend', link);
+        srcElem.insertAdjacentElement('beforebegin', link);
 
         return true;
     }
@@ -46,12 +49,12 @@ tcbutton.render(
 //List view 2
 tcbutton.render(
     '.notion-frame .notion-page-controls:not(.tc)',
-    { observe: true, debounceInterval: 500  },
+    { observe: true, debounceInterval: 500 },
     function (elem) {
         const titleElement = elem.parentElement.parentElement.parentElement.querySelector('.notion-selectable');
         const externalTaskId = buildExternalIdForNotion(titleElement?.dataset?.blockId ?? null, ENTITY_TYPE_DB);
 
-        function getDescription () {
+        function getDescription() {
             return titleElement ? titleElement.textContent.trim() : '';
         }
 
