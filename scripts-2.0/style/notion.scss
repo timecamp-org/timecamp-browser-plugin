@@ -1,11 +1,17 @@
 .tc-button.notion {
-  cursor: pointer!important;
+  opacity: 0;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  margin: 0 6px 0 0;
+  height: 28px;
 }
-.tc-button.notion:not(.min) {
-  margin: -3px 0px 0px 10px;
+
+.layout-content:hover .tc-button.notion {
+  opacity: 1;
 }
+
 .tc-button.notion.min {
-  display: flex!important;
+  display: flex !important;
   margin: 5px 0 0 0;
   padding: 0 2px 0 0;
 }
