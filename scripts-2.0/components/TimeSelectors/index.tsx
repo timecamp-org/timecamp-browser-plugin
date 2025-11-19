@@ -23,9 +23,11 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
     const [startTime, setStartTime] = useState<Date|null>(props.startTime);
     const [stopTime, setStopTime] = useState<Date|null>(props.stopTime);
     const [duration, setDuration] = useState<string>();
+    const [durationInput, setDurationInput] = useState<string>(duration || "");
     const [durationFormat, setDurationFormat] = useState<number>(timeFormatter.DEFAULT_FORMAT);
     const [is12hFormat, setIs12hFormat] = useState<boolean>(false);
     const [startTimeModifiedManually, setStartTimeModifiedManually] = useState<boolean>(false);
+    const ignoreBlur = React.useRef(false);
 
     useEffect(() => {
         setIs12hFormat(props.is12hFormat);
@@ -55,8 +57,13 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
     }, [props.clearFormTrigger]);
 
     useEffect(() => {
+        setDurationInput(duration || "");
+    }, [duration]);
+
+    useEffect(() => {
         props.onStartTimeValueChange(startTime);
         validateBoth();
+        validateStartTime();
         calculateAndSetDuration();
     }, [startTime]);
 
@@ -67,6 +74,18 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
         calculateAndSetDuration();
     }, [stopTime]);
 
+    useEffect(() => {
+        if (startTime && stopTime) {
+            let durationSeconds = Math.abs((stopTime.getTime() - startTime.getTime()) / 1000);
+
+            if (durationSeconds > 86400) durationSeconds = 86400;
+
+            const formattedDuration = timeFormatter.formatToDuration(durationSeconds, durationFormat);
+            setDuration(formattedDuration);
+            setDurationInput(formattedDuration);
+        }
+    }, [startTime, stopTime, durationFormat]);
+
     const clearForm = () => {
         setStopTime(null);
         setStartTime(dateTime.getNowDateForDuration());
@@ -74,10 +93,9 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
     }
 
     const validateBoth = () => {
-        //set stop time same as start time if stopTime is bigger
         if (
-            startTime != undefined &&
-            stopTime != undefined &&
+            startTime !== undefined && startTime !== null &&
+            stopTime !== undefined && stopTime !== null &&
             stopTime.getTime() < startTime.getTime()
         ) {
             setStopTime(startTime);
@@ -85,7 +103,9 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
     }
 
     const validateStartTime = () => {
-        if (stopTime == undefined && startTime != undefined
+        if (
+            (stopTime === undefined || stopTime === null) &&
+            startTime !== undefined && startTime !== null
             && startTime > dateTime.getNowDateForDuration()
         ) {
             setStartTime(dateTime.getNowDateForDuration());
@@ -94,18 +114,22 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
 
     const calculateDurationInSeconds = () => {
         let stopTimeToCalculate = stopTime;
-        if (stopTimeToCalculate == undefined) {
+        if (stopTimeToCalculate == undefined || stopTimeToCalculate === null) {
             stopTimeToCalculate = dateTime.getNowDateForDuration();
         }
 
+        if (startTime == undefined || startTime == null) {
+            return 0;
+        }
+
         // @ts-ignore
-        let durationInMilliseconds = startTime.getTime() - stopTimeToCalculate.getTime();
+        let durationInMilliseconds = stopTimeToCalculate.getTime() - startTime.getTime();
 
         return Math.abs(durationInMilliseconds / 1000);
     }
 
     const calculateAndSetDuration = () => {
-        if (startTime === null) {
+        if (startTime === null || startTime === undefined) {
             return;
         }
 
@@ -113,6 +137,134 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
         let secondsFormatted = timeFormatter.formatToDuration(durationInSeconds, durationFormat);
         setDuration(secondsFormatted);
     }
+
+    const parseDuration = (input: string): number | null => {
+        const trimmed = input.trim().toLowerCase();
+
+        //12h 20m, 1.5h,  30m
+        const regex = /(\d+(\.\d+)?)(h|m)/g;
+        let match;
+        let totalSeconds = 0;
+
+        while ((match = regex.exec(trimmed)) !== null) {
+            const value = parseFloat(match[1]);
+            const unit = match[3];
+
+            if (unit === 'h') {
+                if (value > 24) return null;
+                totalSeconds += value * 3600;
+            } else if (unit === 'm') {
+                if (value > 1440) return null;
+                totalSeconds += value * 60;
+            }
+        }
+
+        if (totalSeconds > 0) {
+            return totalSeconds;
+        }
+
+        //hh:mm
+        const hourMinuteMatch = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+        if (hourMinuteMatch) {
+            const h = parseInt(hourMinuteMatch[1], 10);
+            const m = parseInt(hourMinuteMatch[2], 10);
+            if (h < 24 && m < 60) {
+                return h * 3600 + m * 60;
+            }
+            return null;
+        }
+
+        return null;
+    }
+
+    const onDurationInputConfirm = () => {
+        const seconds = parseDuration(durationInput);
+        if (seconds === null || seconds > 86400) {
+            setDurationInput(duration || "");
+            return;
+        }
+
+        const now = new Date();
+
+        const todayStart = new Date(now);
+        todayStart.setHours(0, 0, 0, 0);
+
+        const todayEnd = new Date(now);
+        todayEnd.setHours(23, 59, 59, 999);
+
+        // Seconds from midnight to current start time or now if startTime is null
+        const currentStartTime = startTime || now;
+        const secondsFromMidnightToStart = (currentStartTime.getTime() - todayStart.getTime()) / 1000;
+
+        if (seconds > secondsFromMidnightToStart) {
+            // Duration is longer than time passed since midnight to startTime
+            // Set startTime to midnight
+            const newStartTime = todayStart;
+
+            // Calculate stopTime as startTime + duration
+            let newStopTime = new Date(newStartTime.getTime() + seconds * 1000);
+
+            // Clamp stopTime to 23:59 if it exceeds today's end
+            if (newStopTime > todayEnd) {
+                newStopTime = todayEnd;
+                const adjustedDuration = (newStopTime.getTime() - newStartTime.getTime()) / 1000;
+                const formattedDuration = timeFormatter.formatToDuration(adjustedDuration, durationFormat);
+                setDuration(formattedDuration);
+                setDurationInput(formattedDuration);
+            } else {
+                setDuration(durationInput);
+            }
+
+            setStartTime(newStartTime);
+            setStopTime(newStopTime);
+        } else {
+            // Duration fits between startTime and now
+            // Set stopTime to now
+            let newStopTime = now;
+
+            // Calculate startTime as stopTime - duration
+            let newStartTime = new Date(newStopTime.getTime() - seconds * 1000);
+
+            // If startTime is before midnight, adjust stopTime to 23:59
+            if (newStartTime < todayStart) {
+                newStopTime = todayEnd;
+                newStartTime = new Date(newStopTime.getTime() - seconds * 1000);
+
+                if (newStartTime < todayStart) {
+                    newStartTime = todayStart;
+                    const adjustedDuration = (newStopTime.getTime() - newStartTime.getTime()) / 1000;
+                    const formattedDuration = timeFormatter.formatToDuration(adjustedDuration, durationFormat);
+                    setDuration(formattedDuration);
+                    setDurationInput(formattedDuration);
+                } else {
+                    setDuration(durationInput);
+                }
+            } else {
+                setDuration(durationInput);
+            }
+
+            setStartTime(newStartTime);
+            setStopTime(newStopTime);
+        }
+
+        setStartTimeModifiedManually(true);
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            ignoreBlur.current = true;
+            onDurationInputConfirm();
+            setTimeout(() => { ignoreBlur.current = false; }, 100);
+        }
+    };
+
+    const handleBlur = () => {
+        if (ignoreBlur.current) {
+            return;
+        }
+        onDurationInputConfirm();
+    };
 
     return (
         <div className='time-selectors'>
@@ -123,20 +275,15 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
                     time={startTime}
                     placeholder={''}
                     onValueChange={(value) => {
-                        if (value != undefined) {
+                        if (value !== undefined && value !== null) {
                             value = new Date(value.getTime());
                         }
                         setStartTime(value);
 
                         let durationInSeconds = calculateDurationInSeconds();
-                        let isModifiedManually = false;
-                        if (durationInSeconds !== 0) {
-                            isModifiedManually = true;
-                        }
-                        setStartTimeModifiedManually(isModifiedManually);
+                        setStartTimeModifiedManually(durationInSeconds !== 0);
                     }}
                 />
-
             </div>
 
             <div className='time-selector time-selectors__stop'>
@@ -147,10 +294,11 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
                     placeholder={translate('stop time')}
                     canBeNull={true}
                     onValueChange={(value) => {
-                        if (value != undefined) {
+                        if (value !== undefined && value !== null) {
                             value = new Date(value.getTime());
                         }
                         setStopTime(value);
+                        setStartTimeModifiedManually(true);
                     }}
                 />
             </div>
@@ -158,7 +306,10 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
                 <label>{translate('duration')}</label>
                 <input
                     className='time-selector__input'
-                    value={duration}
+                    value={durationInput}
+                    onChange={(e) => setDurationInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    onBlur={handleBlur}
                 />
             </div>
         </div>
