@@ -16,6 +16,10 @@
   npm install  --legacy-peer-deps
 ```
 
+## Docker
+### Build for development
+`docker compose run --rm app npm run build-dev`
+
 ## Build for production
 
 1. `unset SERVER_DOMAIN` or revert domain changes - just in case if you changed for development
