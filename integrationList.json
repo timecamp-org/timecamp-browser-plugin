@@ -25,6 +25,11 @@
     "isActiveInProd": true
   },
   {
+    "matches": ["*://*.teamwork.com/*"],
+    "script": ["teamwork.js"],
+    "isActiveInProd": true
+  },
+  {
     "matches": ["*://ticktick.com/*", "*://*.ticktick.com/*"],
     "script": ["ticktick.js"],
     "isActiveInProd": true
@@ -335,7 +340,7 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.proworkflow.net/*"],
+    "matches": ["*://*.proworkflow.com/*"],
     "script": ["proworkflow.js"],
     "isActiveInProd": true
   },
@@ -506,7 +511,7 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://app.hubspot.com/*"],
+    "matches": ["*://*.hubspot.com/*"],
     "script": ["hubspot.js"],
     "isActiveInProd": true
   },
@@ -544,6 +549,11 @@
     "matches": ["*://*.usepixie.net/*"],
     "script": ["usepixie.js"],
     "isActiveInProd": false
+  },
+  {
+    "matches": ["*://*.wrike.com/*"],
+    "script": ["wrike.js"],
+    "isActiveInProd": true
   },
   {
     "matches": ["*://zenkit.com/*"],
