@@ -207,6 +207,9 @@
 	"salesforce_task_not_found_in_backend_integration_info": {
 		"message": "This task is not synchronized in TimeCamp. Choose task by yourself or check integration settings"
 	},
+	"teamwork_task_not_found_in_backend_integration_info": {
+		"message": "This task is not synchronized in TimeCamp. Choose task by yourself or check integration settings"
+	},
 	"backend_integration_ad_message_admin": {
 		"message": "Turn on *linkStart* *service* *linkClose* Integration to import your projects and tasks to TimeCamp automatically."
 	},

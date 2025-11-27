@@ -2,34 +2,33 @@
 
 const SERVICE = 'hubspot';
 
-tcbutton.render('[data-test-id="sticky-subject-header"]:not(.tc)', { observe: true }, elem => {
-    setTimeout(function(){
-        const subject = document.querySelector('[data-test-id="sticky-subject-header"]').textContent;
-        const contact = document.querySelector('[data-test-id="known-contact-info-highlight"]').textContent;
-        const ticketId = window.location.href.split('/')[6].replace("#reply-editor", "");
-        const description = "[#" + ticketId + "] " + subject + " [" + contact + "]";
+tcbutton.render(
+    'td[data-table-external-id*="name-"][data-column-index="0"] [data-test-id="truncated-object-label"] span:not(.tc),' +
+    'td[data-table-external-id*="cell-"][data-column-index="0"] [data-test-id="truncated-object-label"] span:not(.tc)',
+    { observe: true, debounceInterval: 500 },
+    elem => {
+        const getDescription = () => {
+            return elem.textContent?.trim();
+        }
 
         const link = tcbutton.createTimerLink({
             className: SERVICE,
-            description: description,
+            description: getDescription,
+            buttonType: "minimal",
         });
-        
-        link.style.position = 'absolute';
-        link.style.right = '10px';
-        link.style.top = '65px';
 
-        elem.appendChild(link);
-    }, 500);
+        elem.insertAdjacentElement("beforebegin", link);
 
-    return true;
+        return true;
 });
 
-tcbutton.render('[data-selenium-test="highlightTitle"]:not(.tc)', { observe: true }, elem => {
-    setTimeout(function(){
+tcbutton.render(
+    '[data-selenium-test="highlightTitle"]:not(.tc)',
+    { observe: true },
+    elem => {
         const container = elem.parentElement;
         const ticketId = window.location.href.split('/')[6].replace("/", "");
         let description = '';
-        
         if (document.querySelector(".width-100 a.private-link.uiLinkWithoutUnderline.uiLinkDark")) {
             let contact = document.querySelector(".width-100 a.private-link.uiLinkWithoutUnderline.uiLinkDark").textContent;
             description = "[#" + ticketId + "] " + elem.textContent + " (" + contact + ")";
@@ -41,11 +40,10 @@ tcbutton.render('[data-selenium-test="highlightTitle"]:not(.tc)', { observe: tru
             className: SERVICE,
             description: description,
         });
-        
+
         link.style.display = 'block';
 
         container.appendChild(link);
-    }, 500);
 
-    return true;
+        return true;
 });

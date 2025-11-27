@@ -1,9 +1,9 @@
 'use strict';
 
 const renderTcButton = () => {
-    tcbutton.render('div.ObjectEditor:not(.tc)', { observe: true }, $container => {
+    tcbutton.render('.object_panel:not(.tc)', { observe: true }, $container => {
         const descriptionSelector = () => {
-            const $description = $('.HeaderLayout textarea', $container);
+            const $description = $('textarea', $container);
             return $description ? $description.textContent.trim() : '';
         };
 
@@ -12,7 +12,7 @@ const renderTcButton = () => {
             description: descriptionSelector
         });
 
-        $('div.ObjectEditorHeader > .HeaderLayout').appendChild(link);
+        $('.content_header', $container).insertAdjacentElement('beforebegin', link);
 
         return true;
     });
