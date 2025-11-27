@@ -3,7 +3,8 @@
 const SERVICE = 'hubspot';
 
 tcbutton.render(
-    'td[data-table-external-id*="name-"][data-column-index="0"] [data-test-id="truncated-object-label"]:not(.tc)',
+    'td[data-table-external-id*="name-"][data-column-index="0"] [data-test-id="truncated-object-label"] span:not(.tc),' +
+    'td[data-table-external-id*="cell-"][data-column-index="0"] [data-test-id="truncated-object-label"] span:not(.tc)',
     { observe: true, debounceInterval: 500 },
     elem => {
         const getDescription = () => {
@@ -16,7 +17,7 @@ tcbutton.render(
             buttonType: "minimal",
         });
 
-        elem.insertAdjacentElement("beforeend", link);
+        elem.insertAdjacentElement("beforebegin", link);
 
         return true;
 });
