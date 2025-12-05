@@ -141,7 +141,7 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
     const parseDuration = (input: string): number | null => {
         const trimmed = input.trim().toLowerCase();
 
-        //12h 20m, 1.5h,  30m
+        // 12h 20m, 1.5h, 30m
         const regex = /(\d+(\.\d+)?)(h|m)/g;
         let match;
         let totalSeconds = 0;
@@ -163,13 +163,15 @@ const TimeSelectors: React.FC<TimeSelectorsInterface> = (props) => {
             return totalSeconds;
         }
 
-        //hh:mm
-        const hourMinuteMatch = trimmed.match(/^(\d{1,2}):(\d{2})$/);
-        if (hourMinuteMatch) {
-            const h = parseInt(hourMinuteMatch[1], 10);
-            const m = parseInt(hourMinuteMatch[2], 10);
-            if (h < 24 && m < 60) {
-                return h * 3600 + m * 60;
+        // hh:mm:ss or hh:mm
+        const timeMatch = trimmed.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+        if (timeMatch) {
+            const h = parseInt(timeMatch[1], 10);
+            const m = parseInt(timeMatch[2], 10);
+            const s = timeMatch[3] !== undefined ? parseInt(timeMatch[3], 10) : 0;
+
+            if (h < 24 && m < 60 && s < 60) {
+                return h * 3600 + m * 60 + s;
             }
             return null;
         }
