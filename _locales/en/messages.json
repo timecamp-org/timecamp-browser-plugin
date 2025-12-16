@@ -281,5 +281,11 @@
     },
     "domain_invalid_pattern_error": {
         "message": "This domain will not work with this version of extension. Please contact TimeCamp support"
-    }
+    },
+	"timecamp_error_starting_timer": {
+		"message": "TimeCamp: can not start timer"
+	},
+	"timecamp_error_adding_time_entry": {
+		"message": "TimeCamp: can not add time entry"
+	}
 }
