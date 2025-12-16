@@ -295,6 +295,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             if(selectedTags.length) {
                 assignTagsToEntry(response.entry_id, selectedTags);
             }
+        }).catch(() => {
+            alert(translate('timecamp_error_starting_timer'));
         });
     };
 
@@ -312,6 +314,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
             if(selectedTags.length) {
                 assignTagsToEntry(response.entry_id, selectedTags);
             }
+        }).catch(() => {
+            alert(translate('timecamp_error_adding_time_entry'));
         });
     };
 
