@@ -45,6 +45,7 @@ const TcButton = {
                                 resolve(response);
                             })
                             .catch((e) => {
+                                reject(e);
                             });
                         break;
 
@@ -54,6 +55,7 @@ const TcButton = {
                                 resolve(response);
                             })
                             .catch((e) => {
+                                reject(e);
                             });
                         break;
 
