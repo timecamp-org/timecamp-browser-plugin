@@ -82,16 +82,12 @@
 
 //Overriding main styles for integrations
 @import 'asana';
-@import 'airtable';
 @import 'backlog';
-@import 'bitbucket';
 @import 'bitrix24';
 @import 'brokerengine';
 @import 'bugherd';
 @import 'bugzilla';
 @import 'cerb';
-@import 'cloudes';
-@import 'clubhouse';
 @import 'coda';
 @import 'codeable';
 @import 'codebase';
@@ -100,23 +96,19 @@
 @import 'dobambam';
 @import 'doit';
 @import 'dokuwiki';
-@import 'draftin';
 @import 'drupal';
 @import 'dynamics';
 @import 'eproject';
 @import 'eventum';
-@import 'feedly';
 @import 'fibery';
 @import 'figma';
 @import 'flow';
 @import 'focuster';
-@import 'fogbugz';
 @import 'freedcamp';
 @import 'freshrelease';
 @import 'freshservice';
 @import 'gemini';
 @import 'getflow';
-@import 'gingkoapp';
 @import 'gogs';
 @import 'google-classroom';
 @import 'google-docs';
@@ -124,7 +116,6 @@
 @import 'google-keep';
 @import 'google-mail';
 @import 'google-calendar';
-@import 'gqueues';
 @import 'groupnwork';
 @import 'habitica';
 @import 'heflo';
@@ -134,8 +125,6 @@
 @import 'kanboard';
 @import 'kantree';
 @import 'khanacademy';
-@import 'liveagent';
-@import 'mantishub';
 @import 'manuscript';
 @import 'minicrm';
 @import 'monday';
@@ -148,7 +137,6 @@
 @import 'onshape';
 @import 'openproject';
 @import 'osticket';
-@import 'outlook';
 @import 'overv';
 @import 'pagerduty';
 @import 'pipedrive';
@@ -156,10 +144,7 @@
 @import 'placker';
 @import 'processwire';
 @import 'producteev';
-@import 'protonmail';
-@import 'proworkflow';
 @import 'redbooth';
-@import 'redmine';
 @import 'rememberthemilk';
 @import 'reviewboard';
 @import 'rindle';
