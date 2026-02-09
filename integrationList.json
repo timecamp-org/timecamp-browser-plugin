@@ -40,21 +40,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://airtable.com/*"],
-    "script": ["airtable.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.bitbucket.org/*"],
-    "script": ["bitbucket.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://app.clubhouse.io/*"],
-    "script": ["clubhouse.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://keep.google.com/*"],
     "script": ["google-keep.js"],
     "isActiveInProd": true
@@ -70,23 +55,8 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.ladesk.com/*"],
-    "script": ["liveagent.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.mantishub.io/*"],
-    "script": ["mantishub.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.notion.so/*"],
     "script": ["notion.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.redmine.org/*"],
-    "script": ["redmine.js"],
     "isActiveInProd": true
   },
   {
@@ -140,11 +110,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.cloudes.me/*"],
-    "script": ["cloudes.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://app.codeable.io/*"],
     "script": ["codeable.js"],
     "isActiveInProd": false
@@ -175,11 +140,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://*.draftin.com/*"],
-    "script": ["draftin.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.drupal.org/*"],
     "script": ["drupal.js"],
     "isActiveInProd": false
@@ -195,11 +155,6 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://*.feedly.com/*"],
-    "script": ["feedly.js"],
-    "isActiveInProd": true
-  },
-  {
     "matches": ["*://*.fibery.io/*"],
     "script": ["fibery.js"],
     "isActiveInProd": true
@@ -207,11 +162,6 @@
   {
     "matches": ["*://*.focuster.com/*"],
     "script": ["focuster.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.fogbugz.com/*"],
-    "script": ["fogbugz.js"],
     "isActiveInProd": true
   },
   {
@@ -223,11 +173,6 @@
     "matches": ["*://*.getflow.com/*"],
     "script": ["getflow.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://gingkoapp.com/*"],
-    "script": ["gingkoapp.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://*.gogs.io/*"],
@@ -243,11 +188,6 @@
     "matches": ["*://inbox.google.com/*"],
     "script": ["google-inbox.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://*.gqueues.com/*"],
-    "script": ["gqueues.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://habitica.com/*"],
@@ -306,15 +246,6 @@
     "isActiveInProd": true
   },
   {
-    "matches": ["*://outlook.live.com/*"],
-    "script": ["outlook.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://outlook.live.com/*"],
-    "script": ["outlook.js"]
-  },
-  {
     "matches": ["*://overv.io/*"],
     "script": ["overv.js"],
     "isActiveInProd": false
@@ -333,16 +264,6 @@
     "matches": ["*://*.producteev.com/*"],
     "script": ["producteev.js"],
     "isActiveInProd": false
-  },
-  {
-    "matches": ["*://*.protonmail.com/*"],
-    "script": ["protonmail.js"],
-    "isActiveInProd": true
-  },
-  {
-    "matches": ["*://*.proworkflow.com/*"],
-    "script": ["proworkflow.js"],
-    "isActiveInProd": true
   },
   {
     "matches": ["*://*.rememberthemilk.com/*"],
