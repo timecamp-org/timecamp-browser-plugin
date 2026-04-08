@@ -482,7 +482,7 @@
     "isActiveInProd": false
   },
   {
-    "matches": ["*://app.smartsheet.com/*"],
+    "matches": ["*://app.smartsheet.com/*", "*://*.smartsheet.eu/*"],
     "script": ["smartsheet.js"],
     "isActiveInProd": true
   }

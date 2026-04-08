@@ -55,54 +55,11 @@ tcbutton.render(
     }
 );
 
-//Calendar view
-tcbutton.render(
-    '.deadline-task-component:not(.tc)',
-    {observe: true, debounceInterval: 500},
-    elem => {
-        if ($('.tc-button', elem)) {
-            return false;
-        }
-
-        try {
-            const pulseId = $('.button_link', elem).href.split('/').pop();
-            const externalTaskId = buildExternalIdForMonday(pulseId);
-            if (!externalTaskId) {
-                return false;
-            }
-
-            const description = () => {
-                return $('.pulse-name-text .ds-text-component span', elem).textContent.trim();
-            };
-
-            const link = tcbutton.createTimerLink({
-                className: MONDAY,
-                additionalClasses: [MONDAY + '__calendar-view'],
-                description: description,
-                buttonType: 'minimal',
-                externalTaskId: externalTaskId,
-                isBackendIntegration: true,
-                taskNotFoundInfo: TASK_NOT_FOUND_INFO
-            });
-
-            $('.pulse-name-wrapper .ds-text-component', elem).insertAdjacentElement('beforeend', link);
-
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-);
-
 //Edit view
 tcbutton.render(
-    '.slide-panel-content .flexible-header:not(.tc)',
-    {observe: true, debounceInterval: 500},
+    '.item-page-header-title-section .item-page-item-name h2',
+    {observe: true, debounceInterval: 50},
     elem => {
-        if ($('.tc-button', elem)) {
-            return false;
-        }
-
         try {
             const pulseId = document.URL.split('/').pop();
 
@@ -111,8 +68,30 @@ tcbutton.render(
                 return false;
             }
 
+            const insertTarget = elem.parentElement.parentElement.parentElement.parentElement.parentElement;
+            const alreadyCreatedButtons = $$('.tc-button.monday__edit-view', insertTarget.parentElement);
+
+            if (alreadyCreatedButtons.length > 0) {
+                const buttonsArray = Array.from(alreadyCreatedButtons);
+
+                const correctButtons = buttonsArray.filter(button => {
+                    return button.dataset.externalTaskId === externalTaskId;
+                });
+                const incorrectButtons = buttonsArray.filter(button => {
+                    return button.dataset.externalTaskId !== externalTaskId;
+                });
+
+                if (correctButtons.length) {
+                    correctButtons.slice(1).forEach(button => button.remove());
+                }
+
+                incorrectButtons.forEach(button => button.remove());
+
+                return false;
+            }
+
             const description = () => {
-                return $('.heading-component', elem).textContent.trim();
+                return elem?.textContent?.trim()
             };
 
             const link = tcbutton.createTimerLink({
@@ -124,7 +103,7 @@ tcbutton.render(
                 taskNotFoundInfo: TASK_NOT_FOUND_INFO
             });
 
-            $('.item-board-subset-tabs-component .add-board-subset-picker-wrapper-v2', elem).insertAdjacentElement('beforeend', link);
+            insertTarget.insertAdjacentElement('afterend', link);
 
             return true;
         } catch (e) {
