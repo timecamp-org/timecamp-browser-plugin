@@ -10,12 +10,31 @@
 }
 
 .tc-button.smartsheet-grid {
-  position: absolute;
-  left: 4px;
+  position: relative;
+  left: 0;
+  top: -2px;
+  margin-right: 4px;
+  vertical-align: middle;
 }
 .tc-button.smartsheet-card {
   height: 20px;
   margin: -4px 5px 0 1px;
+}
+
+.tc-smartsheet-board-card-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tc-smartsheet-board-card-title > [data-client-id="boardvw-inline-edit-text-field"] {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.tc-button.smartsheet-board-card {
+  flex: 0 0 auto;
+  margin: -3px 0px 0px 4px;
 }
 
 .timecamp .footer__buttons {

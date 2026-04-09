@@ -1,26 +1,13 @@
 .tc-button.monday {
   &__table-view {
     height: 100%;
+    top: 7px;
+    position: relative;
 
-    svg {
-      width: 20px;
-    }
   }
 
   &__edit-view {
-    svg {
-      width: 115px;
-    }
-  }
-
-  &__calendar-view {
-    margin: 3px 0 0 5px;
-    position: absolute;
-    opacity: 0;
-
-    svg {
-      width: 18px;
-    }
+    margin: 5px 0 0 0;
   }
 }
 

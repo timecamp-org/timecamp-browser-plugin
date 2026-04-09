@@ -18,7 +18,7 @@ export const useTheme = (): IUseTheme => {
                 case 'system':
                 default:
                     setTheme(
-                        window.matchMedia('(prefers-color-scheme: dark)').matches ? 'darkmode' : 'system'
+                        window.matchMedia('(prefers-color-scheme: dark)').matches ? 'darkmode' : 'default'
                     );
             }
         }).catch(() => {});
