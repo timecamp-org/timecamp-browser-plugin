@@ -1,7 +1,7 @@
 'use strict';
 tcbutton.render(
-    '.work-item-view__container .title:not(.tc)',
-    {observe: true, debounceInterval: 500},
+    '.navigation-toolbar-wrapper__content .navigation-toolbar:not(.tc)',
+    { observe: true, debounceInterval: 500 },
     elem => {
         const link = tcbutton.createTimerLink({
             className: 'wrike',
