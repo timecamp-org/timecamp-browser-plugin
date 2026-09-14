@@ -142,19 +142,25 @@ export default class ApiService {
             }
 
             fetch(url, requestOptions)
-                .then(function (response) {
-                    if (response.ok) {
-                        return response.text();
+                .then(async function (response) {
+                    const result = {
+                        status: response.status,
+                        response: await response.text(),
+                    };
+
+                    if (!response.ok) {
+                        reject(result);
+                        return;
                     }
 
-                    throw response.text();
-                })
-                .then(function (text) {
-                    resolve({ status: 200, response: text });
+                    resolve(result);
                 })
                 .catch(function (error) {
-                    console.log({ status: 500, response: error });
-                    resolve({ status: 500, response: error });
+                    const result = error && error.status
+                        ? error
+                        : { status: 500, response: error };
+                    console.log(result);
+                    reject(result);
                 });
         });
     }
@@ -187,20 +193,15 @@ export default class ApiService {
 
     status(service = this.defaultServiceName) {
         return this.authorizeAndCall((token, resolve, reject) => {
-            let data = {
-                action: 'status',
-                service: service
-            };
-
             this.call({
                 url: pathService.getStatusUrl(),
-                method: METHOD_POST,
+                method: METHOD_GET,
                 apiToken: token,
-                payload: data,
+                queryStringParams: { service: service },
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
-                    resolve(responseData);
+                    resolve(this.mapV3TimerStatusToLegacy(responseData));
                 })
                 .catch((response) => {
                     logger.error(response);
@@ -221,17 +222,17 @@ export default class ApiService {
 
         return this.authorizeAndCall((token, resolve, reject) => {
             let data = {
-                action: 'start',
-                entry_id: 'create',
+                service: service,
+                entryId: 'create',
                 note: title,
-                external_task_id: externalTaskId,
-                started_at: startedAt,
-                browser_plugin_button_hash: buttonHash,
-                service: service
+                externalTaskId: externalTaskId || null,
+                externalTaskName: externalTaskId ? title : null,
+                startedAt: startedAt,
+                browserPluginButtonHash: buttonHash,
             };
 
             if (taskId !== null) {
-                data.task_id = taskId;
+                data.taskId = Number(taskId);
             }
 
             this.call({
@@ -239,10 +240,11 @@ export default class ApiService {
                 method: METHOD_POST,
                 apiToken: token,
                 payload: data,
+                queryStringParams: { service: service },
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
-                    resolve(responseData);
+                    resolve(this.mapV3TimerStartToLegacy(responseData));
                 })
                 .catch((response) => {
                     logger.error(response);
@@ -267,17 +269,16 @@ export default class ApiService {
         return this.authorizeAndCall((token, resolve, reject) => {
             let data = {
                 date: date,
-                start_time: startTime,
-                end_time: endTime,
+                startTime: startTime,
+                endTime: endTime,
                 description: title,
-                task_id: taskId,
-                external_task_id: externalTaskId,
-                browser_plugin_button_hash: buttonHash,
-                service: service
+                externalTaskId: externalTaskId,
+                billable: Boolean(billable),
+                service: service,
             };
 
             if (taskId !== null) {
-                data.task_id = taskId;
+                data.taskId = Number(taskId);
             }
 
             this.call({
@@ -288,7 +289,7 @@ export default class ApiService {
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
-                    resolve(responseData);
+                    resolve({ entry_id: responseData.data.id });
                 })
                 .catch((response) => {
                     logger.error(response);
@@ -300,20 +301,16 @@ export default class ApiService {
 
     stop(service = this.defaultServiceName) {
         return this.authorizeAndCall((token, resolve, reject) => {
-            let data = {
-                action: 'stop',
-                service: service,
-            };
-
             this.call({
                 url: pathService.getStopUrl(),
                 method: METHOD_POST,
                 apiToken: token,
-                payload: data,
+                payload: {},
+                queryStringParams: { service: service },
             })
                 .then((response) => {
                     let responseData = JSON.parse(response.response);
-                    resolve(responseData);
+                    resolve(this.mapV3TimerStopToLegacy(responseData));
                 })
                 .catch((response) => {
                     logger.error(response);
@@ -331,10 +328,7 @@ export default class ApiService {
         service = this.defaultServiceName
     ) {
         return this.authorizeAndCall((token, resolve, reject) => {
-            let data = {
-                id: entryId,
-                service: service,
-            };
+            let data = {};
 
             if (billable !== null) {
                 data.billable = billable;
@@ -345,17 +339,18 @@ export default class ApiService {
             }
 
             if (taskId !== null) {
-                data.task_id = taskId;
+                data.taskId = Number(taskId);
             }
 
             this.call({
-                url: pathService.getEditEntryUrl(),
+                url: pathService.getEditEntryUrl(entryId),
                 method: METHOD_PUT,
                 apiToken: token,
                 payload: data,
+                queryStringParams: { service: service },
             })
                 .then((response) => {
-                    resolve(JSON.parse(response.response));
+                    resolve(JSON.parse(response.response).data);
                 })
                 .catch((response) => {
                     logger.error(response);
@@ -363,6 +358,56 @@ export default class ApiService {
                 });
         }
         );
+    }
+
+    mapV3TimerStatusToLegacy(response) {
+        const timer = response.timer || {};
+        const entry = response.entry || {};
+        const task = response.task || {};
+        const presentation = response.presentation || {};
+
+        return {
+            isTimerRunning: Boolean(timer.isRunning),
+            elapsed: timer.elapsed || 0,
+            timer_id: timer.id,
+            entry_id: entry.id,
+            start_time: timer.startedAt,
+            browser_plugin_button_hash: timer.browserPluginButtonHash,
+            task_id: task.id,
+            name: task.name,
+            external_task_id: task.externalTaskId,
+            billable: task.billable,
+            note: entry.note,
+            color: presentation.color,
+            breadcrumb: presentation.breadcrumb,
+        };
+    }
+
+    mapV3TimerStartToLegacy(response) {
+        const timer = response.timer || {};
+        const entry = response.entry || {};
+        const task = response.task || {};
+
+        return {
+            new_timer_id: timer.id,
+            timer_id: timer.id,
+            entry_id: entry.id,
+            stopped_timer: timer.stoppedTimerId,
+            elapsed: timer.elapsed,
+            name: task.name || '',
+            external_task_id: task.externalTaskId,
+            note: entry.note,
+        };
+    }
+
+    mapV3TimerStopToLegacy(response) {
+        const timer = response.timer || {};
+        const entry = response.entry || {};
+
+        return {
+            elapsed: timer.elapsed || 0,
+            entry_id: entry.id,
+        };
     }
 
     discovery() {
@@ -710,6 +755,7 @@ export default class ApiService {
                 payload: data,
                 queryStringParams: {
                     ignoreAdminRights: true,
+                    perms: 'track_time',
                 }
             })
                 .then((response) => {

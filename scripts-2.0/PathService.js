@@ -75,23 +75,23 @@ export default class PathService {
     }
 
     getStatusUrl() {
-        return this.serverUrl + 'chrome_plugin/api' + '/timer';
+        return `${this.serverUrl}chrome_plugin/api/v3/timer/status`;
     }
 
     getStartUrl() {
-        return this.serverUrl + 'chrome_plugin/api' + '/timer';
+        return `${this.serverUrl}chrome_plugin/api/v3/timer/start`;
     }
 
     getStopUrl() {
-        return this.serverUrl + 'chrome_plugin/api' + '/timer';
+        return `${this.serverUrl}chrome_plugin/api/v3/timer/stop`;
     }
 
-    getEditEntryUrl() {
-        return this.serverUrl + 'chrome_plugin/api' + '/entries';
+    getEditEntryUrl(entryId) {
+        return `${this.serverUrl}chrome_plugin/api/v3/time-entries/${entryId}`;
     }
 
     getAddEntryUrl() {
-        return this.serverUrl + 'chrome_plugin/api' + '/entries';
+        return `${this.serverUrl}chrome_plugin/api/v3/time-entries/create`;
     }
 
     getDiscoveryUrl() {

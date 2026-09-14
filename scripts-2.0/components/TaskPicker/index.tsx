@@ -42,6 +42,13 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
   const dropdownHook = useDropdownHook();
   const [isSearching, setIsSearching] = React.useState<boolean>(false);
 
+  const canTrackTimeOnTask = (taskId: number): boolean => {
+    const permissions = taskPickerHook.taskPermissionsMap[taskId];
+
+    return !Array.isArray(permissions)
+      && Number(permissions?.[CAN_TRACK_TIME_PERMISSION_ID] || 0) >= TASK_MIN_ACCESS_LEVEL;
+  };
+
   function* treeWalker(refresh) {
     const stack = [] as any;
 
@@ -91,8 +98,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
     style,
     toggle,
   }) => {
-    const canTrackTime = Array.isArray(taskPickerHook.taskPermissionsMap[task.node.id])
-        || taskPickerHook.taskPermissionsMap[task.node.id][CAN_TRACK_TIME_PERMISSION_ID] >= TASK_MIN_ACCESS_LEVEL;
+    const canTrackTime = canTrackTimeOnTask(task.node.id);
 
     return <React.Fragment>
         <div
@@ -127,8 +133,8 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
       }
       <a title={canTrackTime ? "" : translate('time_traking_to_' + (nestingLevel === 0 ? 'project' : 'task') +'_not_allowed')}
         className={"TaskPicker__TaskRow" + (canTrackTime ? "" : " TaskPicker__TaskRow__disabled")}
-        onClick={() => {
-          canTrackTime && onTaskClick(task.node);
+        onClick={(event) => {
+          canTrackTime && onTaskClick(task.node, event);
         }}
       >
             {name}
@@ -200,7 +206,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
     );
   };
 
-  const onTaskClick = (task: Task) => {
+  const onTaskClick = (task: Task, event: React.MouseEvent<HTMLElement>) => {
     taskPickerHook.selectTask(task);
     dropdownHook.onBackdropClick(event);
 
@@ -216,13 +222,16 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
   };
 
   const renderRecentlyUsed = (task: Task) => {
+    const canTrackTime = canTrackTimeOnTask(task.id);
+
     return (
       <li>
         <a
           key={task.id}
-          className="TaskPicker__TaskRow"
-          onClick={() => {
-            onTaskClick(task);
+          title={canTrackTime ? "" : translate('time_traking_to_task_not_allowed')}
+          className={"TaskPicker__TaskRow" + (canTrackTime ? "" : " TaskPicker__TaskRow__disabled")}
+          onClick={(event) => {
+            canTrackTime && onTaskClick(task, event);
           }}
         >
           {task.name}

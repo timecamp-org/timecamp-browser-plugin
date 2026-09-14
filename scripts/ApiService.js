@@ -40,16 +40,19 @@ function ApiService() {
         else
             method = method.toUpperCase();
 
-        data.service = Service;
+        var isV3Request = url.indexOf('/v3/') !== -1;
+        if (!isV3Request)
+            data.service = Service;
 
-        apiAddress = restUrl;
+        apiAddress = isV3Request ? serverUrl + 'chrome_plugin/api' : restUrl;
         url = apiAddress + url;
 
         var params = {
             type: method,
             url: url,
             data: data,
-            headers: {"Authorization": "Bearer " + this.ApiToken}
+            headers: {"Authorization": "Bearer " + this.ApiToken},
+            json: isV3Request
         };
 
         switch (method) {
@@ -151,15 +154,22 @@ function ApiService() {
 
     this.Timer = {
         status: function () {
-            var data = {action: 'status'};
-            return ApiService.call('/timer', data, 'POST');
+            return ApiService.call(
+                '/v3/timer/status?service=' + encodeURIComponent(Service),
+                {},
+                'GET'
+            ).then(mapV3TimerStatusToLegacy);
         },
         start: function (external_task_id, startedAt) {
-            var data = {action: 'start', external_task_id: external_task_id};
+            var data = {entryId: 'create', externalTaskId: external_task_id};
             if (startedAt != null)
-                data['started_at'] = startedAt;
+                data.startedAt = startedAt;
 
-            return ApiService.call('/timer', data, 'POST').fail(function(msg) {
+            return ApiService.call(
+                '/v3/timer/start?service=' + encodeURIComponent(Service),
+                data,
+                'POST'
+            ).then(mapV3TimerStartToLegacy).fail(function(msg) {
                 function formatTextForErrorNotice(formatedResponseText) {
 
                     if (formatedResponseText.charAt(0) != '{') formatedResponseText = formatedResponseText.replace(/\s/g, '');
@@ -189,24 +199,198 @@ function ApiService() {
             });
         },
         cancel: function (timer_id){
-            var data = {};
+            var query = '?service=' + encodeURIComponent(Service);
             if(timer_id)
-                data.timer_id = timer_id;
-            return ApiService.call('/timer', data, 'DELETE');
+                query += '&timerId=' + encodeURIComponent(timer_id);
+            return ApiService.call('/v3/timer' + query, {}, 'DELETE');
         },
         stop: function (stoppedAt){
-            var data = {action: 'stop'};
+            var data = {};
             if(stoppedAt)
-                data.stopped_at = stoppedAt;
-            return ApiService.call('/timer', data, 'POST');
+                data.stoppedAt = stoppedAt;
+            return ApiService.call(
+                '/v3/timer/stop?service=' + encodeURIComponent(Service),
+                data,
+                'POST'
+            ).then(mapV3TimerStopToLegacy);
         }
     };
 
-    this.Entries = new ApiResource('/entries', ["get","post", "put"]);
+    this.Entries = {
+        get: function (params) {
+            params = params || {};
+            var externalTaskIds = String(params.external_task_id || '')
+                .split(',')
+                .filter(Boolean);
+            var taskRequests = externalTaskIds.map(function (externalTaskId) {
+                return ApiService.call('/tasks', {
+                    external_task_id: externalTaskId,
+                    service: Service
+                }, 'GET').then(function (task) {
+                    return task.task_id;
+                });
+            });
+
+            return Promise.all(taskRequests).then(function (taskIds) {
+                taskIds = taskIds.filter(Boolean);
+                if (externalTaskIds.length && !taskIds.length)
+                    return [];
+
+                var data = {
+                    startDate: params.from,
+                    endDate: params.to,
+                    userIds: params.user_ids ? String(params.user_ids).split(',').filter(Boolean) : undefined,
+                    taskIds: taskIds.map(String),
+                    withSubtasks: Boolean(params.with_subtasks),
+                    useLegacyDefaultUserScope: true
+                };
+
+                return ApiService.call('/v3/time-entries/list', data, 'POST').then(function (entries) {
+                    return entries
+                        .filter(function (entry) {
+                            return !externalTaskIds.length || externalTaskIds.some(function (externalTaskId) {
+                                return matchesExternalTaskId(entry.addons_external_id, externalTaskId, Service);
+                            });
+                        })
+                        .map(mapV3EntryToLegacy);
+                });
+            });
+        },
+        post: function (data) {
+            data = data || {};
+            var payload = {
+                service: Service,
+                date: data.date,
+                duration: data.duration,
+                startTime: data.start_time,
+                endTime: data.end_time,
+                taskId: data.task_id == null ? undefined : Number(data.task_id),
+                externalTaskId: data.external_task_id,
+                note: data.note,
+                description: data.description,
+                billable: data.billable == null ? undefined : Boolean(Number(data.billable)),
+                tags: data.tags
+            };
+            return ApiService.call('/v3/time-entries/create', payload, 'POST').then(function (response) {
+                return {entry_id: response.data.id};
+            });
+        },
+        put: function (data) {
+            data = data || {};
+            var entryId = data.id;
+            var payload = {
+                date: data.date,
+                startTime: data.start_time,
+                endTime: data.end_time,
+                duration: data.duration == null ? undefined : Number(data.duration),
+                note: data.note,
+                description: data.description,
+                billable: data.billable == null ? undefined : Boolean(Number(data.billable)),
+                taskId: data.task_id == null ? undefined : Number(data.task_id)
+            };
+            return ApiService.call(
+                '/v3/time-entries/' + encodeURIComponent(entryId) + '?service=' + encodeURIComponent(Service),
+                payload,
+                'PUT'
+            ).then(function (response) {
+                return response.data;
+            });
+        }
+    };
     this.me = new ApiResource('/me/service/chrome-plugin', ["get"]);
     this.getWrikeId = new ApiResource('/wrikeV3',["get"]);
 
     this.TagLists = new ApiResource('/tag_list', ["get"]);
+
+    function mapV3TimerStatusToLegacy(response) {
+        var timer = response.timer || {};
+        var entry = response.entry || {};
+        var task = response.task || {};
+        var presentation = response.presentation || {};
+
+        return {
+            isTimerRunning: Boolean(timer.isRunning),
+            elapsed: timer.elapsed || 0,
+            timer_id: timer.id,
+            entry_id: entry.id,
+            start_time: timer.startedAt,
+            browser_plugin_button_hash: timer.browserPluginButtonHash,
+            task_id: task.id,
+            name: task.name,
+            external_task_id: task.externalTaskId,
+            billable: task.billable,
+            note: entry.note,
+            color: presentation.color,
+            breadcrumb: presentation.breadcrumb
+        };
+    }
+
+    function mapV3TimerStartToLegacy(response) {
+        var timer = response.timer || {};
+        var entry = response.entry || {};
+        var task = response.task || {};
+
+        return {
+            new_timer_id: timer.id,
+            timer_id: timer.id,
+            entry_id: entry.id,
+            stopped_timer: timer.stoppedTimerId,
+            elapsed: timer.elapsed,
+            name: task.name || '',
+            external_task_id: task.externalTaskId,
+            note: entry.note
+        };
+    }
+
+    function mapV3TimerStopToLegacy(response) {
+        return {
+            elapsed: response.timer && response.timer.elapsed || 0,
+            entry_id: response.entry && response.entry.id
+        };
+    }
+
+    function mapV3EntryToLegacy(entry) {
+        var task = entry.task || {};
+        var user = entry.user || {};
+
+        return {
+            id: entry.id,
+            duration: String(entry.duration),
+            user_id: String(user.id || ''),
+            user_name: user.display_name || user.email || '',
+            task_id: String(task.id || ''),
+            task_note: task.note || '',
+            last_modify: entry.last_modify || '',
+            date: entry.date,
+            start_time: entry.start_time,
+            end_time: entry.end_time || '',
+            locked: String(entry.locked || 0),
+            name: task.name || '',
+            addons_external_id: entry.addons_external_id || '',
+            billable: entry.billable ? 1 : 0,
+            invoiceId: String(entry.invoice_id || ''),
+            color: task.color || '',
+            description: entry.description || ''
+        };
+    }
+
+    function matchesExternalTaskId(value, requestedId, service) {
+        if (value === requestedId)
+            return true;
+
+        var prefixes = {
+            trello: 'card_',
+            asana: 'asana_',
+            activecollab: 'activecollab_',
+            podio: 'podio_',
+            zendesk: 'zendesk_',
+            teamwork: 'teamwork_',
+            insightly: 'insightly_',
+            todoist: 'todoist_',
+            wrike: 'wrike_task_'
+        };
+        var prefix = prefixes[String(service || '').toLowerCase()] || '';
+
+        return value === prefix + requestedId;
+    }
 }
-
-
