@@ -7,18 +7,35 @@ const objectToFormdata = (obj) => {
 };
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.id === "apiService") {
-    const { data, headers, type, url } = request.params;
+    const { data, headers, type, url, json } = request.params;
+    let requestUrl = url;
     const params = {
       method: type,
       headers: {
         ...headers,
         Accept: "application/json",
-        "content-type": "application/x-www-form-urlencoded",
+        "content-type": json ? "application/json" : "application/x-www-form-urlencoded",
       },
-      body: objectToFormdata(data),
     };
-    fetch(url, params)
-      .then((response) => response.json())
+    if (type !== "GET" && type !== "HEAD") {
+      params.body = json ? JSON.stringify(data) : objectToFormdata(data);
+    } else if (data && Object.keys(data).length) {
+      const query = objectToFormdata(data);
+      requestUrl += (requestUrl.includes("?") ? "&" : "?") + query;
+    }
+    fetch(requestUrl, params)
+      .then(async (response) => {
+        const data = response.status === 204 ? null : await response.json();
+        if (!response.ok) {
+          throw {
+            status: response.status,
+            statusText: response.statusText,
+            responseText: typeof data === "string" ? data : JSON.stringify(data),
+          };
+        }
+
+        return data;
+      })
       .then((data) => sendResponse({ resolve: true, data: data }))
       .catch((error) => {
         if (error.status && error.status === 403 && !request.isRetry) {

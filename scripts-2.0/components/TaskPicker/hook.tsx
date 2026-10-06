@@ -21,12 +21,10 @@ export const useTaskPickerHook = () => {
     const [searchText, setSearchText] = React.useState<string>("");
 
     const selectTask = (task: Task): void => {
-        selectedTask["id"] = task.id;
-        selectedTask["name"] = task.name;
-        selectedTask["parentId"] = task.parentId;
-        selectedTask["path"] = task.path;
-
-        setSelectedTask(selectedTask);
+        setSelectedTask({
+            ...task,
+            path: task.path || [],
+        });
     };
 
     return {
