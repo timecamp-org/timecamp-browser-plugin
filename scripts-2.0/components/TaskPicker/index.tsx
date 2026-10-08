@@ -45,8 +45,9 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
   const canTrackTimeOnTask = (taskId: number): boolean => {
     const permissions = taskPickerHook.taskPermissionsMap[taskId];
 
-    return !Array.isArray(permissions)
-      && Number(permissions?.[CAN_TRACK_TIME_PERMISSION_ID] || 0) >= TASK_MIN_ACCESS_LEVEL;
+      return permissions === undefined
+        || Array.isArray(permissions)
+        || Number(permissions?.[CAN_TRACK_TIME_PERMISSION_ID] || 0) >= TASK_MIN_ACCESS_LEVEL;
   };
 
   function* treeWalker(refresh) {
