@@ -42,7 +42,8 @@ export interface ContextMenuInterface {
     addTimeEntryCallback: Function,
     onCloseCallback: Function,
     billableInputVisibility: boolean|null,
-    externalTaskId: string,
+    externalTaskId: string|null,
+    externalTaskIdCandidates?: string[],
     buttonHash: string|null,
     isBackendIntegration: boolean,
     taskNotFoundInBackendIntegrationInfo: string,
@@ -99,6 +100,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
         setBillableInputVisibility(props.billableInputVisibility);
         setService(props.service);
         setExternalTaskId(props.externalTaskId);
+        setTaskId(0);
+        setNoTaskFoundDisplayAlert(false);
         setButtonHash(props.buttonHash);
         setTaskIdToPreset(null);
         setIsBackendIntegrationAndUserHasIntegration(props.isBackendIntegration);
@@ -464,6 +467,10 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     browser={browser}
                     onTaskClick={
                         (task) => {
+                            if (props.externalTaskIdCandidates) {
+                                setExternalTaskId(props.externalTaskIdCandidates.includes(task.externalTaskId || '')
+                                    ? task.externalTaskId : null);
+                            }
                             setBillable(task.billable);
                             setTaskId(task.id);
                         }
@@ -471,7 +478,8 @@ const ContextMenu: React.FC<ContextMenuInterface> = (props) => {
                     onNotFoundTaskForActiveBackendIntegration={onNotFoundTaskForActiveBackendIntegration}
                     onAutoDetectTaskForActiveBackendIntegration={onAutoDetectTaskForActiveBackendIntegration}
                     userId={userId}
-                    presetTaskByExternalId={isBackendIntegration ? externalTaskId : null}
+                    presetTaskByExternalId={isBackendIntegration && !props.externalTaskIdCandidates ? externalTaskId : null}
+                    presetTaskByExternalIdCandidates={isBackendIntegration ? props.externalTaskIdCandidates : undefined}
                     presetTaskByTaskId={taskIdToPreset}
                 />
                 {isTagModuleEnabled && renderTagPicker()}
