@@ -1,3 +1,10 @@
-.tc-button.wrike svg {
-  height: 20px;
+.tc-button.wrike {
+  height: 28px;
+  line-height: 28px;
+  margin-right: 12px;
+
+  svg {
+    height: 28px;
+    width: auto;
+  }
 }

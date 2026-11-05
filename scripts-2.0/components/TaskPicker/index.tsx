@@ -28,11 +28,13 @@ export interface TaskPicker {
     userId: number,
     presetTaskByTaskId: number|null,
     presetTaskByExternalId: string|null,
+    presetTaskByExternalIdCandidates?: string[],
     onNotFoundTaskForActiveBackendIntegration(): any,
     onAutoDetectTaskForActiveBackendIntegration(): any,
 }
 
 const TaskPicker: React.FC<TaskPicker> = (props) => {
+  const presetTask = React.useRef<Function>(() => {});
   const MIN_SEARCH_TEXT_LENGTH = 2;
 
   const CAN_TRACK_TIME_PERMISSION_ID = 3;
@@ -328,7 +330,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
                   taskPickerHook.setTaskList(taskTree);
                   taskPickerHook.setFullTaskTree(taskTree);
 
-                  findAndPresetTask(taskListWithExternalTaskId, taskTree);
+                  presetTask.current(taskListWithExternalTaskId, taskTree);
 
                   resolve(null);
               });
@@ -440,9 +442,11 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
         }
 
         //try to set task by externalTaskId (used for all backend integrations)
-        if (props.presetTaskByExternalId !== null) {
-            if (props.presetTaskByExternalId in taskListWithExternalTaskId) {
-                let task = taskListWithExternalTaskId[props.presetTaskByExternalId];
+        if (props.presetTaskByExternalIdCandidates || props.presetTaskByExternalId !== null) {
+            const id = (props.presetTaskByExternalIdCandidates || [props.presetTaskByExternalId])
+                .find(id => id !== null && id in taskListWithExternalTaskId);
+            if (id) {
+                const task = taskListWithExternalTaskId[id];
                 pickTask(task);
 
                 return;
@@ -450,6 +454,9 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
             props.onNotFoundTaskForActiveBackendIntegration();
         }
     }
+    // A pending fetch must use the current preset after navigating to another task.
+    presetTask.current = findAndPresetTask;
+
     //recursively sorting an array of tasks based on their name
     const sortTasksAlphabetically = (taskTree) => {
       taskTree.sort((a, b) => a.name.localeCompare(b.name));
@@ -471,7 +478,7 @@ const TaskPicker: React.FC<TaskPicker> = (props) => {
               findAndPresetTask(taskPickerHook.taskListWithExternalTaskId, taskPickerHook.fullTaskTree);
           }
       }
-  }, [props.userId, props.presetTaskByExternalId, props.presetTaskByTaskId]);
+  }, [props.userId, props.presetTaskByExternalId, props.presetTaskByExternalIdCandidates, props.presetTaskByTaskId]);
 
   React.useEffect(() => {
     if (taskPickerHook.searchText.length >= MIN_SEARCH_TEXT_LENGTH) {

@@ -711,7 +711,7 @@ export default class ApiService {
                 method: METHOD_GET,
                 apiToken: token,
                 queryStringParams: {
-                    integration: integration,
+                    integration: pathService.getIntegrationNameFromTimeCampApp(integration),
                     service: service,
                 }
             })

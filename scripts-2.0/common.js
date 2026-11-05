@@ -146,6 +146,11 @@ window.tcbutton = {
         tcbutton.serviceName = params.className;
         button.title = description + (project ? ' - ' + project : '');
         button.dataset.externalTaskId = externalTaskId;
+        // Alternative IDs of the same remote task (e.g. Wrike MA… / IE…).
+        // The picker matches them against TC2; only the matched ID is sent to the timer.
+        if (params.externalTaskIdCandidates) {
+            button.dataset.externalTaskIdCandidates = JSON.stringify(params.externalTaskIdCandidates);
+        }
         button.dataset.buttonHash = buttonHash;
         button.classList.add(params.className);
 
@@ -235,6 +240,7 @@ window.tcbutton = {
                 billableInputVisibility={tcbutton.billableInputVisibility}
                 isBackendIntegration={isBackendIntegration}
                 externalTaskId={externalTaskId}
+                externalTaskIdCandidates={JSON.parse(tcbutton.element.dataset.externalTaskIdCandidates || 'null')}
                 buttonHash={buttonHash}
                 startTimerCallback={tcbutton.startTimerCallback}
                 addTimeEntryCallback={tcbutton.addTimeEntryCallback}
@@ -459,7 +465,8 @@ window.tcbutton = {
         let matchingButtons = [];
         for (const button of buttons) {
             if (externalTaskId) {
-                if (button.dataset.externalTaskId === externalTaskId) {
+                if (button.dataset.externalTaskId === externalTaskId
+                    || JSON.parse(button.dataset.externalTaskIdCandidates || '[]').includes(externalTaskId)) {
                     matchingButtons.push(button);
                 }
                 continue;
